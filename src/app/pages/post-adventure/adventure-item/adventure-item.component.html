@@ -5,16 +5,23 @@
         <img class="card-img" [src]="item.user?.profile_image" />
       </ion-avatar>
       <ion-label class="ion-margin-start">
-        <h2 (click)="goToProfile(item)">{{ item.user?.name }}</h2>
+        <!-- (click)="goToProfile(item)" -->
+        <h2 >{{ item.user?.name }}</h2>
         <p>{{ item.created_at }}</p>
       </ion-label>
-
+<div class="dot-icon" (click)="show = !show">
       <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon>
+    </div>
       <!-- <ion-popover trigger="click-trigger" triggerAction="click">
         <ng-template>
           <ion-content class="ion-padding">Hello World!</ion-content>
         </ng-template>
       </ion-popover> -->
+      <div class="pop-over" *ngIf="show">
+        <span>Report post</span><br>
+        <span>Delete post</span>
+      </div>
+
 
       <ion-icon
         *ngIf="item.isMyPost"

@@ -1,0 +1,48 @@
+.pop-over{
+  height: 54px;
+    width: 120px;
+    background-color: whitesmoke;
+    position: absolute;
+    top: 7%;
+    left: 54%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 6px 3px;
+
+    ion-button{
+      // font-size: 12px;
+      // text-align: center;
+      // padding: 12px 30px;
+      background-color: whitesmoke;
+      color:whitesmoke ;
+
+    }
+
+  span{
+    font-size: 12px;
+    text-align: center;
+    font-weight: 5600;
+    padding: 12px 30px;
+    line-height: 21px;
+    span:hover{
+      color: white;
+    }
+  }
+}
+.pop-over:after {
+  transform: rotate(45deg);
+  content: "";
+  height: 17px;
+  width: 16px;
+  background-color: whitesmoke;
+  position: absolute;
+  top: 27%;
+  left: 91%;
+}
+.dot-icon{
+  position: absolute;
+    top: 20%;
+    right: 4%;
+}

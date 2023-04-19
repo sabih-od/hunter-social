@@ -14,7 +14,7 @@
 
 <ion-content>
 
-  <ion-item class="ion-no-padding ion-margin-start" *ngFor="let item of _comments">
+  <ion-item class="ion-no-padding ion-margin-start" *ngFor="let item of _comments; let i = index">
     <ion-avatar>
       <img [src]="item.user?.profile_image" />
     </ion-avatar>
@@ -24,12 +24,16 @@
       <p>{{item.comment}}</p>
 
       <p>{{item.created_at | date:'short'}}</p>
+      <div class="dot-icon"(click)="showSubItem(i)">
       <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon>
-      <!-- <ion-popover trigger="click-trigger" triggerAction="click">
-        <ng-template>
-          <ion-content class="ion-padding">Hello World!</ion-content>
-        </ng-template>
-      </ion-popover> -->
+    </div>
+    <div class="pop-over" *ngIf="visibleIndex === i">
+      <span>Report post</span><br>
+      <span>Delete post</span>
+      <!-- <ion-button>report post</ion-button><br>
+      <ion-button>delete post</ion-button> -->
+
+    </div>
     </ion-label>
 
   </ion-item>

@@ -7,12 +7,14 @@ import { MenusComponent } from '../menus/menus.component';
 import { Share } from '@capacitor/share';
 import { SocialMenusComponent } from '../social-menus/social-menus.component';
 
+
 @Component({
   selector: 'adventure-item',
   templateUrl: './adventure-item.component.html',
   styleUrls: ['./adventure-item.component.scss'],
 })
 export class AdventureItemComponent extends BasePage implements OnInit {
+  show=false
   @Input() item: any;
   contentLabel = '';
   constructor(injector: Injector, public popoverController: PopoverController) {
@@ -29,6 +31,7 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     // } else{
     //   this.contentLabel = ""
     // }
+
   }
 
   async like() {
@@ -140,3 +143,4 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   //     return popover.present();
   //   }
 }
+

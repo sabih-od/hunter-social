@@ -7,6 +7,7 @@ import { BasePage } from '../../base-page/base-page';
   styleUrls: ['./comments.component.scss'],
 })
 export class CommentsComponent extends BasePage implements OnInit {
+  visibleIndex=-1
   _comments;
   _post_id;
   comment;
@@ -19,6 +20,8 @@ export class CommentsComponent extends BasePage implements OnInit {
         profile_image: this.image.getImageUrl(item.user.profile_image),
       },
     }));
+    console.log("this._comments",this._comments);
+
   }
 
   get commments() {
@@ -57,5 +60,13 @@ export class CommentsComponent extends BasePage implements OnInit {
 
   close(refresh, comments) {
     this.modals.dismiss({ refresh: refresh, comments });
+  }
+
+  showSubItem(ind) {
+    if (this.visibleIndex === ind) {
+      this.visibleIndex = -1;
+    } else {
+      this.visibleIndex = ind;
+    }
   }
 }
