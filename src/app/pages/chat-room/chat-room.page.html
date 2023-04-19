@@ -1,0 +1,51 @@
+<app-header
+  [title]="'FRIENDS'"
+  [showcurve]="true"
+  [back]="true"
+  [showMenu]="false"
+></app-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="spinner" *ngIf="isLoading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+  </div>
+
+  <ion-grid>
+    <ion-row class="ion-margin-top">
+      <ion-col size="12">
+        <ion-item>
+          <ion-searchbar
+            [(ngModel)]="search"
+            class="ion-margin-bottom"
+            placeholder="Search"
+          ></ion-searchbar>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let item of friends  |filter:search">
+      <ion-col size="12">
+        <chat-row [item]="item"></chat-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" (click)="addNew()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <div
+    *ngIf="friends?.length == 0"
+    style="text-align: center; text-transform: uppercase"
+  >
+    <p>
+      You Have No friends <br />
+      Click The Plus Icon To Add Friends
+    </p>
+  </div>
+</ion-content>

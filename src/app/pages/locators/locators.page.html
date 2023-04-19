@@ -1,0 +1,23 @@
+<app-header
+  [title]="'RANCH Guide And Locators'"
+  [showcurve]="false"
+  [back]="false"
+  [showMenu]="true"
+  [searchVisible]="true"
+></app-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h2 class="f-pop-smb title">HUNTING BRANCHES IN TEXAS</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="card" size="6" *ngFor="let item of guideLocators">
+        <app-locator [item]="item"></app-locator>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

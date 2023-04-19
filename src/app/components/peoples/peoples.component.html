@@ -1,0 +1,19 @@
+<app-header [title]="'Peoples'" [showcurve]="true" [back]="true" [showMenu]="false"></app-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-margin-top">
+      <ion-col size="12">
+        <ion-item>
+          <ion-searchbar [(ngModel)]="search" class="ion-margin-bottom" placeholder="Search"></ion-searchbar>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let item of users |filter:search">
+      <ion-col size="12">
+        <people [item]="item"></people>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

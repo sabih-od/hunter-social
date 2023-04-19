@@ -1,0 +1,193 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@import "./theme/fonts.scss";
+@import "./theme/animations.scss";
+
+.btn {
+  height: 60px;
+  --border-radius: 10px;
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  object-fit: cover;
+}
+
+.center-align {
+  text-align: center !important;
+}
+
+.copywrite {
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+  right: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.input {
+  border: 1px solid #f1f1f1;
+  // height: 60px;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 3px 6px 2px rgba(0, 0, 0, 0.03);
+}
+
+.in-btn {
+  height: 60px;
+}
+
+.back-btn {
+  // height: 40px;
+  // width: 40px;
+  border-radius: 20px;
+}
+
+.relative {
+  position: relative;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.small-text {
+  font-size: 4px;
+}
+
+.white {
+  color: white;
+}
+
+.transparent-banner {
+  --background: rgba(0, 0, 0, 0.5);
+}
+
+app-header {
+  position: relative;
+}
+
+.padding-5 {
+  padding: 5px;
+}
+
+.title {
+  font-size: 1.5vh;
+}
+
+.content {
+  font-size: 1.3vh;
+}
+
+.shadow {
+  border: 1.5px solid #f1f1f1;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.02), 1px 1px 1px 1px rgba(0, 0, 0, 0.02);
+}
+
+.transparent-bg {
+  --background: transparent;
+  background-color: transparent;
+}
+
+.horizontal-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.f-white {
+  color: white;
+  --color: white;
+}
+
+.m-l-10 {
+  margin-left: 10px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.m-t-5 {
+  margin-top: 5px;
+}
+
+.highlight {
+  background-color: yellow;
+  --background: yellow;
+}
+
+// .top-bg {
+//   background-color: var(--ion-color-primary);
+//   height: 30px;
+//   border-radius: 25px;
+//   margin-top: -50px;
+//   position: absolute;
+//   z-index: 1;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   height: 16vh;
+// }
+
+.spinner {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+.failureToast {
+  --background: var(--ion-color-danger);
+  color: #fff;
+}
+.halfmodal {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  height: 98%;
+  padding-top: 15%;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

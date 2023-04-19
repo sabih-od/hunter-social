@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "image": "assets/signup-logo.png",
+    "heading": "About News",
+    "subheading": "World of Outlaws"
+  },
+  {
+    "id": 2,
+    "image": "assets/signup-logo.png",
+    "heading": "Racing Series",
+    "subheading": "Fascinating around the world"
+  },
+  {
+    "id": 3,
+    "image": "assets/signup-logo.png",
+    "heading": "Best Cup",
+    "subheading": "Join our next event !!"
+  }
+]

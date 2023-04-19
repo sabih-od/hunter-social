@@ -1,0 +1,87 @@
+<ion-content>
+  <ion-grid class="ion-no-padding ion-no-margin">
+    <ion-row class="ion-no-padding ion-no-margin padd">
+      <ion-col size="12" class="ion-text-center">
+        <ion-label color="primary" class="ion-text-center">
+          <ion-icon style="font-size: 25px; margin-right: 5px" name="filter-circle"></ion-icon>
+          <ion-text style="font-size: 25px; font-weight: bold">Filter</ion-text>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row class="ion-no-padding ion-no-margin padd">
+      <ion-col size="12">
+        <ion-label class="p-holder">Search</ion-label>
+        <div class="select" style="padding-left: 10px; padding-right: 10px">
+          <ion-input placeholder="Use filters to customize search results" [(ngModel)]="obj.search">
+          </ion-input>
+        </div>
+      </ion-col>
+    </ion-row> -->
+
+    <ion-row class="ion-no-padding ion-no-margin padd">
+      <ion-col size="12">
+        <ion-label class="p-holder">Age</ion-label>
+        <ion-select placeholder="Age" multiple="true" class="select" [(ngModel)]="obj.ages">
+          <ion-select-option value="18-22">18-22</ion-select-option>
+          <ion-select-option value="23-26">23-26</ion-select-option>
+          <ion-select-option value="27-33">27-33</ion-select-option>
+          <ion-select-option value="34-40">34-40</ion-select-option>
+          <ion-select-option value="41-45">41-45</ion-select-option>
+          <ion-select-option value="46-55">46-55</ion-select-option>
+          <ion-select-option value="56+">56+</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-no-margin padd">
+      <ion-col size="12">
+        <ion-label class="p-holder">Gender</ion-label>
+        <ion-select placeholder="Gender" multiple="true" class="select" [(ngModel)]="obj.genders">
+          <ion-select-option value="male">Male</ion-select-option>
+          <ion-select-option value="female">Female</ion-select-option>
+          <ion-select-option value="notsay">Rather, not say</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-no-margin padd">
+      <ion-col size="12">
+        <ion-label class="p-holder">Interests</ion-label>
+        <ion-select placeholder="Interests" multiple="true" class="select" [(ngModel)]="obj.interests">
+          <ion-select-option [value]="item" *ngFor="let item of interests">{{
+            item
+            }}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-no-margin padd">
+      <ion-col size="12">
+        <ion-label position="stacked" class="p-holder">States</ion-label>
+        <ion-select placeholder="Select States" multiple="false" class="select" (ionChange)="stateChanged($event)"
+          [(ngModel)]="obj.state">
+          <ion-select-option [value]="item.id" *ngFor="let item of states">
+            {{ item.name }}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="cities && cities.length > 0">
+      <ion-col size="12">
+        <ion-select placeholder="Select Cities" multiple="false" class="select" [(ngModel)]="obj.city">
+          <ion-select-option [value]="item.id" *ngFor="let item of cities">{{
+            item.name
+            }}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-no-margin padd">
+      <ion-col size="12" class="ion-text-end">
+        <ion-button color="medium" class="button" (click)="close()">Cancel</ion-button>
+        <ion-button color="primary" class="button" (click)="searchResult()">Done</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

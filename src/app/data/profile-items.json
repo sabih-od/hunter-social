@@ -1,0 +1,17 @@
+[
+  {
+    "icon": "assets/images/user-icon.png",
+    "content": "Edit Profile",
+    "url": "pages/edit-profile"
+  },
+  {
+    "icon": "assets/images/info-icon.png",
+    "content": "About Us",
+    "url": "pages/about-us"
+  },
+  {
+    "icon": "assets/images/terms-and-conditions-icon.png",
+    "content": "Terms & Conditions",
+    "url": "pages/terms-conditions"
+  }
+]

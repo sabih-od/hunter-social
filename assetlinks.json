@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.olivia.veenme",
+      "sha256_cert_fingerprints": [
+        "11:D6:33:AC:47:A4:47:BC:E8:4A:01:BF:7E:F4:7E:6B:69:F3:9D:1B:25:81:79:C0:12:B8:DF:0A:85:D2:D2:5D"
+      ]
+    }
+  }
+]

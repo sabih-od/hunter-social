@@ -1,0 +1,28 @@
+.bg-dark {
+  background-color: #222428;
+  ion-item {
+    --background: ##222428;
+  }
+}
+
+.title {
+  font-size: 23px;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+  height: 100px;
+}
+
+.text-white {
+  color: white;
+}
+.menu-image {
+  width: 100%;
+  height: 100px;
+  background: url(/assets/Images/update-logo.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}

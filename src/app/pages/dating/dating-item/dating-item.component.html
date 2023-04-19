@@ -1,0 +1,40 @@
+<ion-card (click)="goToProfile()" class="ion-no-margin">
+  <ion-img [src]="item.profile_image" style="height: 120px"></ion-img>
+
+  <ion-card-content>
+    <ion-card-title class="f-pop-smb title"> {{ item.name }} </ion-card-title>
+    <!-- <ion-card-subtitle class="f-pop-m content"
+      >Age {{ item.age }} Years</ion-card-subtitle
+    > -->
+
+    <ion-text *ngIf="item.is_sent_friend_request">
+      <p class="green-txt">Friend Request Sent</p>
+    </ion-text>
+
+    <ion-text *ngIf="item.is_friend_blocked">
+      <p class="red-txt">Blocked</p>
+    </ion-text>
+
+    <ion-button
+      shape="round"
+      color="primary"
+      class="ion-no-margin"
+      size="small"
+      (click)="unblockFriend()"
+      *ngIf="item.is_friend_blocked"
+    >
+      Unblock
+    </ion-button>
+
+    <ion-button
+      shape="round"
+      color="primary"
+      class="ion-no-margin"
+      size="small"
+      (click)="addFriend()"
+      *ngIf="item.canRequest"
+    >
+      ADD FRIEND
+    </ion-button>
+  </ion-card-content>
+</ion-card>

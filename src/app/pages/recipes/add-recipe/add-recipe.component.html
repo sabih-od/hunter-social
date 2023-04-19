@@ -1,0 +1,112 @@
+<app-header
+  [title]="'Add RECIPE'"
+  [showcurve]="false"
+  [back]="true"
+  [showMenu]="false"
+></app-header>
+<ion-content>
+  <form [formGroup]="aForm">
+    <ion-grid class="ion-margin">
+      <ion-row>
+        <ion-col>
+          <h1 class="f-anton heading">ADD NEW RECIPE</h1>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <p class="placeholder">Name*</p>
+          <ion-input
+            placeholder="Name"
+            class="input"
+            formControlName="name"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- 
+      <ion-row>
+        <form>
+          <ion-button color="light" data-cmd="justifyLeft"></ion-button>
+          <ion-button color="light" data-cmd="justifyCenter"></ion-button>
+          <ion-button color="light" data-cmd="justifyFull"></ion-button>
+          <ion-button color="light" data-cmd="justifyRight"></ion-button>
+          <ion-button color="light" data-cmd="bold"></ion-button>
+          <ion-button color="light" data-cmd="italic"></ion-button>
+          <ion-button color="light" data-cmd="underline"></ion-button>
+          <ion-button color="light" data-cmd="insertOrderList"></ion-button>
+          <ion-button color="light" data-cmd="insertUnorderList"></ion-button>
+          <ion-button color="light" data-cmd="createLink"></ion-button>
+          <ion-button color="light" data-cmd="showCode"></ion-button>
+        </form>
+      </ion-row> -->
+
+      <ion-row>
+        <ion-col size="12">
+          <p class="placeholder" style="margin-bottom: 10px">Ingredients*</p>
+
+          <!-- <quill-editor>
+            <div quill-editor-toolbar>
+              <ion-input placeholder="Ingredients" class="input" formControlName="ingredients"></ion-input>
+            </div>
+          </quill-editor> -->
+
+          <quill-editor
+            [styles]="{ height: '235px' }"
+            formControlName="ingredients"
+          ></quill-editor>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <p class="placeholder" style="margin-bottom: 10px">Description*</p>
+          <quill-editor
+            [styles]="{ height: '215px' }"
+            formControlName="description"
+          >
+          </quill-editor>
+          <!-- <ion-input placeholder="Ingredients" class="input" formControlName="description"></ion-input> -->
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" class="ion-text-end">
+          <ion-button color="light" (click)="doGetPicture()">
+            Image
+            <ion-icon
+              class="ion-margin-start"
+              name="cloud-upload-outline"
+            ></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="_image">
+        <ion-col size="12">
+          <ion-img [src]="_image"></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-button
+              style="width: 45%; height: 40px"
+              color="primary"
+              expand="block"
+              (click)="addRecipe()"
+              >Add Recipe
+            </ion-button>
+            <ion-button
+              style="width: 45%; height: 40px"
+              color="medium"
+              expand="block"
+              (click)="close()"
+              >Cancel
+            </ion-button>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

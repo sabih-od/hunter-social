@@ -1,0 +1,36 @@
+<app-header [title]="'User Profile'"></app-header>
+
+<ion-content>
+     <!-- <div style="background-color: greenyellow; width:20px; height:20px; border-radius: 50%;">
+    </div> -->
+    <ion-avatar>
+      <img
+        class="img-border"
+        [src]="user_image"
+        onerror="this.onerror=null;this.src='assets/images/avatar.png';"
+      />
+    </ion-avatar>
+
+
+    <ion-item *ngIf="!user_id" lines="none" style="margin-top: 5px">
+      <ion-label>
+        <h1 class="f-pop-smb">{{user?.name}}</h1>
+        <p class="f-pop-r" (click)="itemClicked({url: 'pages/edit-profile'})">
+          Edit Profile
+        </p>
+      </ion-label>
+    </ion-item>
+
+
+
+
+  <ion-list class="menu-list ion-margin-top ion-padding-top">
+    <profile-item
+      *ngFor="let item of profileItems"
+      [item]="item"
+      (click)="itemClicked(item)"
+    ></profile-item>
+  </ion-list>
+
+  <chat-floating-button></chat-floating-button>
+</ion-content>

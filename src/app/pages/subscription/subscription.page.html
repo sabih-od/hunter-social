@@ -1,0 +1,96 @@
+<app-header [title]="'Subscription'"></app-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <h1 class="mainHeading">Packages</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <div>
+          <ion-card class="card1">
+            <ion-card-header>
+              <ion-card-title class="maintitle1">Free</ion-card-title>
+              <ion-card-subtitle class="subtitle"
+                >0.00$/Monthly</ion-card-subtitle
+              >
+            </ion-card-header>
+
+            <ion-card-content>
+              <div class="features">
+                <p class="para" *ngFor="let item of free_features">
+                  <ion-icon
+                    color="dark"
+                    name="checkmark-circle-outline"
+                  ></ion-icon>
+                  {{item}}
+                </p>
+              </div>
+              <div class="ion-text-center">
+                <button class="btn1">Subscribe</button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <div>
+          <ion-card class="card2">
+            <ion-card-header>
+              <ion-card-title class="maintitle2">Gold</ion-card-title>
+              <ion-card-subtitle class="subtitle"
+                >9.95$/Monthly</ion-card-subtitle
+              >
+            </ion-card-header>
+
+            <ion-card-content>
+              <div class="features">
+                <p class="para" *ngFor="let item of gold_features">
+                  <ion-icon
+                    color="dark"
+                    name="checkmark-circle-outline"
+                  ></ion-icon>
+                  {{item}}
+                </p>
+              </div>
+              <div class="ion-text-center">
+                <button class="btn2">Subscribe</button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <div>
+          <ion-card class="card3">
+            <ion-card-header>
+              <ion-card-title class="maintitle3">Platinum</ion-card-title>
+              <ion-card-subtitle class="subtitle"
+                >31.95$/Monthly</ion-card-subtitle
+              >
+            </ion-card-header>
+
+            <ion-card-content>
+              <div class="features">
+                <p class="para" *ngFor="let item of platinum_features">
+                  <ion-icon
+                    color="dark"
+                    name="checkmark-circle-outline"
+                  ></ion-icon>
+                  {{item}}
+                </p>
+              </div>
+              <div class="ion-text-center">
+                <button class="btn3">Subscribe</button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

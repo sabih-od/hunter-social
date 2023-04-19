@@ -1,0 +1,47 @@
+<app-header [title]="'EQUIPMENT REVIEWS'" [showcurve]="false" [back]="false" [showMenu]="true">
+</app-header>
+
+<ion-content>
+  <app-equipment-banner></app-equipment-banner>
+
+  <!-- <ion-card style="background-color: gray" *ngIf="!closed">
+    <ion-card-header style="text-align: center">
+      <ion-card-title class="ion-float-right" style="margin-top: -5px; font-size: 20px">
+        <ion-icon color="light" name="close-outline" (click)="close()"></ion-icon>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content style="
+        margin-top: -10px;
+        font-size: 12px;
+        color: white;
+        text-align: center;
+      ">
+      This page is for members to post their reviews of equipments & view other
+      member's reviews as well. Click on a category of equipment you post a
+      review in.
+    </ion-card-content>
+  </ion-card> -->
+
+  <p style="
+  margin-left: 10px;
+  margin-right: 10px;
+   font-size: 14px;
+   text-align: center;
+ ">
+    This page is for members to post their reviews of equipment & view other
+    member's reviews as well. Click on an equipment category, to post a review.
+  </p>
+
+
+  <ion-grid>
+    <ion-row class="ion-no-margin">
+      <ion-col size="12" *ngFor="let item of reviews  |filter:search" (click)="showReviews(item)">
+        <equipment-row [item]="item" (review)="addReview(item)"></equipment-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <footer></footer>
+</ion-content>
+
+<chat-floating-button></chat-floating-button>

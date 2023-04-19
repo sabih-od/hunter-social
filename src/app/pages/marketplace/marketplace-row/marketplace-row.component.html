@@ -1,0 +1,85 @@
+<!-- <ion-card class="ion-no-padding ion-no-margin">
+  <ion-grid class="ion-no-margin ion-no-padding">
+    <ion-row class="ion-no-margin">
+      <ion-col size="2" class="image-bg ion-text-center">
+        <img class="image" [src]="item.media_upload?.url"
+          onerror="this.onerror=null;this.src='assets/images/m-shirt.png';" />
+      </ion-col>
+      <ion-col size="2" class="ion-margin-top ion-margin-bottom">
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">
+            <h2 class="f-pop-smb title">{{ item.name }}</h2>
+            <ion-row>
+              <ion-col>
+                <p class="f-pop-r content">${{ item.price?.substring(0,5) }}</p>
+              </ion-col>
+              <ion-col>
+                <img src="assets/images/stars.png" />
+              </ion-col>
+              <ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card> -->
+
+<!-- <p class="f-pop-r content" style="color: #707070">
+  ({{ item.count }})
+</p> -->
+<div class="market-place-content">
+  <h1>Market Place</h1>
+  <ion-searchbar
+    [(ngModel)]="topSearch"
+    (ionInput)="onTopInput($event)"
+    shape="round"
+  ></ion-searchbar>
+  <ion-list>
+    <ion-item (click)="products()">
+      <ion-label>Browse All</ion-label>
+    </ion-item>
+    <ion-item (click)="myListing()">
+      <ion-label>My Listing</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" class="" (click)="createListing()"
+    ><ion-icon name="add-outline"></ion-icon>Create New Listing</ion-button
+  >
+  <!-- <ion-button expand="block">Block</ion-button> -->
+  <h1>Filters</h1>
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionInput)="onInput($event)"
+    (ionChange)="onFilter()"
+    shape="round"
+  ></ion-searchbar>
+  <ion-list>
+    <ion-item>
+      <ion-label>Categories</ion-label>
+    </ion-item>
+    <ion-item *ngFor="let item of categories">
+      <ion-label (click)="getProducts(item)">{{ item?.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+</div>
+<ion-card *ngFor="let item of productList" (click)="details(item)">
+  <!-- <div class="image" style="background-repeat: no-repeat; background-size: cover;" [style.background-image]="'url(' + item.image_url + ')'"></div> -->
+  <div class="cover-photo">
+    <img [src]="item.image_url" />
+  </div>
+  <ion-card-header>
+    <ion-card-title>{{ item.price | currency }}</ion-card-title>
+    <ion-card-subtitle>{{ item.title }}</ion-card-subtitle>
+  </ion-card-header>
+</ion-card>
+<!-- <ion-card *ngFor="let item of filterProducts">
+  <div class="cover-photo">
+    <img [src]="item.image_url ? item.image_url : 'assets/car.jpg' " />
+  </div>
+  <ion-card-header>
+    <ion-card-title>{{ item.price | currency }}</ion-card-title>
+    <ion-card-subtitle>{{ item.title }}</ion-card-subtitle>
+  </ion-card-header>
+</ion-card> -->

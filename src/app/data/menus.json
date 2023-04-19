@@ -1,0 +1,93 @@
+[
+  {
+    "title": "Home",
+    "url": "pages/home",
+    "role": 2
+  },
+  {
+    "title": "Locators",
+    "isOpened": false,
+    "submenus": [
+      {
+        "title": "Ranch & Guide Locators",
+        "url": "pages/ranch-locator",
+        "role": 3
+      },
+      {
+        "title": "Taxidermy/ Processing",
+        "url": "pages/taxidermy",
+        "role": 3
+      },
+      {
+        "title": "Outfitters",
+        "url": "pages/outfitters",
+        "role": 3
+      }
+    ]
+  },
+  {
+    "title": "Around The Campfire",
+    "isOpened": false,
+    "submenus": [
+      {
+        "title": "Chatroom",
+        "url": "pages/chat-rooms",
+        "fireEvent": "SHOW_GROUPS",
+        "role": 2
+      }
+    ]
+  },
+  {
+    "title": "Recipe's",
+    "url": "pages/recipes",
+    "role": 3
+  },
+  {
+    "title": "Post Your Adventure",
+    "url": "pages/post-adventure",
+    "role": 3
+  },
+  {
+    "title": "Store",
+    "url": "pages/store",
+    "role": 2
+  },
+  {
+    "title": "More..",
+    "isOpened": false,
+    "submenus": [
+      {
+        "title": "Dating",
+        "url": "pages/dating",
+        "needsCheck": true,
+        "role": 4
+      },
+      {
+        "title": "Nationwide Laws And Regulations",
+        "url": "pages/nationwide-laws",
+        "externalUrl": "https://www.fws.gov",
+        "role": 3
+      },
+      {
+        "title": "Contact",
+        "url": "pages/contact-us",
+        "role": 3
+      },
+      {
+        "title": "How To",
+        "url": "pages/how-to",
+        "role": 3
+      },
+      {
+        "title": "Equipment Reviews",
+        "url": "pages/equipment-reviews",
+        "role": 3
+      },
+      {
+        "title": "Market place",
+        "url": "pages/marketplace",
+        "role": 3
+      }
+    ]
+  }
+]

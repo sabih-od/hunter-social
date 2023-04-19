@@ -1,0 +1,37 @@
+
+ion-avatar { 
+  width: 70px;  
+  height: 70px;
+
+.title {
+  font-size: 20px;
+}
+
+.content {
+  font-size: 14px;
+  color: #828282;
+}
+
+.light-bg {
+  background-color: #f5f5f5;
+}
+
+ion-item {
+  --background: #f5f5f5;
+}
+
+.img-border {
+  border: 1px solid black;;
+  }
+}
+ion-badge{
+  position: absolute;
+}
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: greenyellow;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+}

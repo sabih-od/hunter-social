@@ -1,0 +1,153 @@
+<app-header [title]="'Hunter Social'" [showcurve]="false" [back]="false" [showMenu]="true"></app-header>
+
+<ion-content>
+  <!-- <div class="top-bg"></div>
+
+  <div>
+    <div class="home-pic">
+      <div class="home-profile" (click)="openWebview()">
+        <p class="heading">Welcome To</p>
+        <h3 class="heading1">HUNTERS</h3>
+        <h1 class="heading2">SOCIAL.COM</h1>
+        <button class="shopBtn">SHOP NOW</button>
+      </div>
+    </div>
+  </div> -->
+  <app-home-banner> </app-home-banner>
+
+  <about-us></about-us>
+  <app-hunters></app-hunters>
+  <app-images></app-images>
+  <app-reviews></app-reviews>
+  <app-logos></app-logos>
+  <news-letter></news-letter>
+
+  <!-- <ion-slide *ngFor="let item of slides">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <img src="item.image" class="center" />
+            <ion-label>
+              <p style="color: white">{{item.subheading}}</p>
+              <h1 class="title">{{item.heading}}</h1>
+
+            </ion-label>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-button
+              class="details-btn center"
+              shape="round"
+              expand="block"
+              color="primary"
+            >
+              Shop Now
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide> -->
+
+  <ion-grid>
+    <!-- <ion-row class="ion-margin-top">
+      <ion-col>
+        <h2 class="f-pop-smb sub-title">RANCH & GUIDE LOCATOR</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <div class="scrolling-wrapper">
+        <ion-col class="card" size="4" *ngFor="let item of guideLocators">
+          <app-locator [item]="item"></app-locator>
+        </ion-col>
+      </div>
+    </ion-row> -->
+
+    <!-- <ion-row>
+      <ion-col>
+        <h2 class="f-pop-smb sub-title">POST YOUR ADVENTURE</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <div class="scrolling-wrapper">
+        <ion-col class="card" *ngFor="let item of items" (click)="openPostAdventure()">
+          <ion-img class="six-by-9 list-image" [src]="item.image"></ion-img>
+        </ion-col>
+      </div>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <h2 class="f-pop-smb sub-title">DATING</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <div class="scrolling-wrapper">
+        <ion-col class="item" *ngFor="let item of datings" (click)="openDatingAdventure()">
+          <dating [item]="item"></dating>
+        </ion-col>
+      </div>
+    </ion-row> -->
+
+    <!-- <ion-row>
+      <ion-col>
+        <h2 class="f-pop-smb sub-title">NATIONWIDE LAWS</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <div class="scrolling-wrapper">
+        <ion-col class="card" *ngFor="let item of laws">
+          <laws [item]="item"></laws>
+        </ion-col>
+      </div>
+    </ion-row> -->
+  </ion-grid>
+
+  <!-- <div class="ion-margin"></div> -->
+  <footer></footer>
+</ion-content>
+
+<chat-floating-button></chat-floating-button>
+
+<!-- <chat-floating-button></chat-floating-button> -->
+<!-- <app-search></app-search> -->
+<!-- <ion-footer>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="ion-no-padding">
+      <ion-col class="ion-no-padding">
+        <ion-card class="ion-no-margin tab-item">
+          <ion-img src="assets/races.png"></ion-img>
+          <ion-text>Races</ion-text>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-card class="ion-no-margin tab-item">
+          <ion-img src="assets/world.png"></ion-img>
+          <ion-text>News</ion-text>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-card class="ion-no-margin tab-item">
+          <ion-img src="assets/timetable.png"></ion-img>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-card class="ion-no-margin tab-item">
+          <ion-img src="assets/videos.png"></ion-img>
+          <ion-text>Videos</ion-text>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-card class="ion-no-margin tab-item">
+          <ion-img src="assets/house.png"></ion-img>
+          <ion-text>Store</ion-text>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer> -->

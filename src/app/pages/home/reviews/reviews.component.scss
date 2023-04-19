@@ -1,0 +1,23 @@
+.double-quote {
+    position: absolute;
+    left: 10%;
+    top: 3%;
+    z-index: 1;
+    font-size: 5vh;
+}
+
+.content:after {
+    content: "";
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid white;
+    position: absolute;
+    bottom: -20px;
+    left: 2rem;
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}

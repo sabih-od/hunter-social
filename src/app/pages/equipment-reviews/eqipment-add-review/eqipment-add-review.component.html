@@ -1,0 +1,88 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon class="back-icon" name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title> Add Review </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="padding: 10px; margin-top: -20px">
+    <div class="ion-margin">
+      <h2>Add a review</h2>
+      <p>
+        Your email address will not be published. Required fields are marked *
+      </p>
+      <div class="review-form">
+        <div>
+          <ion-label>Name *</ion-label>
+          <ion-input
+            [value]="user?.name"
+            [disabled]="true"
+            type="text"
+          ></ion-input>
+        </div>
+        <div>
+          <ion-label>Email *</ion-label>
+          <ion-input
+            [disabled]="true"
+            [value]="user?.email"
+            type="text"
+          ></ion-input>
+        </div>
+        <h1>Your rating *</h1>
+        <ion-row>
+          <ion-col style="margin-left: 10px">
+            <div>
+              <ion-icon
+                [name]="rating <= n ? 'star-outline' : 'star'"
+                [color]="rating <= n ? 'white' : ''"
+                *ngFor="let n of [1, 2, 3, 4, 5]"
+                style="margin-left: 5px"
+                (click)="changeRating(n)"
+              ></ion-icon>
+            </div>
+          </ion-col>
+        </ion-row>
+        <div class="rate">
+          <ion-radio-group value="1" [(ngModel)]="rating">
+            <span class="radio-button">
+              <ion-label>1 star</ion-label>
+              <ion-radio slot="start" value="1"></ion-radio>
+            </span>
+            <span class="radio-button">
+              <ion-label>2 star</ion-label>
+              <ion-radio slot="start" value="2"></ion-radio>
+            </span>
+            <span class="radio-button">
+              <ion-label>3 star</ion-label>
+              <ion-radio slot="start" value="3"></ion-radio>
+            </span>
+            <span class="radio-button">
+              <ion-label>4 star</ion-label>
+              <ion-radio slot="start" value="4"></ion-radio>
+            </span>
+            <span class="radio-button">
+              <ion-label>5 star</ion-label>
+              <ion-radio slot="start" value="5"></ion-radio>
+            </span>
+          </ion-radio-group>
+        </div>
+
+        <div>
+          <ion-label class="review-title">
+            <p>Your review *</p>
+          </ion-label>
+
+          <ion-textarea class="textarea" [(ngModel)]="comment"></ion-textarea>
+        </div>
+
+        <ion-button (click)="submit()" expand="block"> Submit </ion-button>
+      </div>
+    </div>
+  </ion-grid>
+</ion-content>

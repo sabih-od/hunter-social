@@ -1,0 +1,19 @@
+<ion-grid class="ion-no-padding news-item">
+  <ion-row>
+    <img [src]="news.image" class="list-image" />
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label>
+        <ion-label class="ion-text-wrap ion-margin-top">
+          <h2 class="f-pop-smb">
+            {{ news.name }}
+          </h2>
+          <p class="content">{{ news.description }}</p>
+        </ion-label>
+      </ion-label>
+    </ion-item>
+
+    <ion-button class="list-btn ion-no-margin" shape="round" size="small" color="primary">
+      View Details
+    </ion-button>
+  </ion-row>
+</ion-grid>

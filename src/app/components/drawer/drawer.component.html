@@ -1,0 +1,66 @@
+<ion-menu menuId="main" contentId="main" class="menu-list">
+  <menu-header [user]="user"></menu-header>
+  <ion-content>
+    <ion-list class="ion-margin-top" style="padding: 0">
+      <div *ngFor="let item of appPages; let i = index">
+        <ion-menu-toggle *ngIf="!item.submenus">
+          <!-- <menu-item [item]="p"></menu-item> -->
+          <!-- routerDirection="root"
+        [routerLink]="[item.url]"
+        detail="false"
+        routerLinkActive="selected" -->
+          <ion-item
+            (click)="menuClicked(item)"
+            class="bg-light ion-no-padding"
+            detail="item.submenus && item.submenus.length"
+          >
+            <ion-label class="ion-margin-start">
+              <h2 class="f-pop-r ion-padding-start">{{ item.title }}</h2>
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <div
+          *ngIf="item.submenus && item.submenus.length > 0"
+          (click)="item.isOpened = !item.isOpened"
+        >
+          <ion-item
+            class="bg-light ion-no-padding"
+            detail="item.submenus && item.submenus.length"
+          >
+            <ion-label class="ion-margin-start">
+              <h2 class="f-pop-r ion-padding-start">{{ item.title }}</h2>
+            </ion-label>
+          </ion-item>
+
+          <ion-item
+            *ngFor="let submenu of item.submenus"
+            [hidden]="!item.isOpened"
+            (click)="menuClicked(submenu)"
+          >
+            <div
+              style="
+                border: 5px solid white;
+                border-radius: 50%;
+                margin-left: 15px;
+              "
+            ></div>
+            <ion-label class="ion-margin-start bg-light">
+              <h2 class="f-pop-r" style="margin-left: 5%">
+                {{ submenu.title }}
+              </h2>
+            </ion-label>
+          </ion-item>
+        </div>
+      </div>
+    </ion-list>
+  </ion-content>
+
+  <ion-footer>
+    <menu-footer (click)="logout()"></menu-footer>
+  </ion-footer>
+</ion-menu>
+
+<ion-app>
+  <ion-router-outlet id="main"></ion-router-outlet>
+</ion-app>

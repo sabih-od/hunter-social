@@ -1,0 +1,33 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="spinner" *ngIf="isLoading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+  </div>
+
+  <ion-grid>
+    <!-- <ion-row>
+      <ion-col size="12">
+        <ion-img src="assets/images/chat-room-banner.jpg"></ion-img>
+      </ion-col>
+    </ion-row> -->
+    <ion-row class="ion-margin-top">
+      <ion-col size="12">
+        <ion-item>
+          <ion-searchbar [(ngModel)]="_search" class="ion-margin-bottom" placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar>
+          <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search"> </ion-icon> </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let item of groups |filter:search">
+      <ion-col size="12">
+        <chat-row2 [item]="item"></chat-row2>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <footer></footer>
+</ion-content>

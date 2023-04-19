@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "username": "John Smith",
+    "email": "john_smith22@gmail.com",
+    "password": "123456",
+    "gender": "Male",
+    "dob": "1994-04-12",
+    "location": "7812 Coopers Hawk Trail, Machesney Park, IL 61115, USA",
+    "number": 23,
+    "latitude": 44.163451584711275,
+    "longitude": -89.45129309578454,
+    "image": "assets/users/user1.jpg",
+    "country": "",
+    "home_town": "",
+    "relations": {
+      "racing_series_id": "1,2,3,4",
+      "role_id": "3"
+    }
+  },
+  {
+    "id": 2,
+    "username": "Michele Abbate",
+    "email": "michele_abbate@gmail.com",
+    "password": "123456",
+    "gender": "Male",
+    "dob": "1994-04-12",
+    "location": "",
+    "number": 28,
+    "latitude": 0,
+    "longitude": 0,
+    "image": "assets/users/user2.jpg",
+    "country": "",
+    "home_town": "",
+    "relations": {
+      "racing_series_id": "1,2,3,4",
+      "role_id": "3"
+    }
+  }
+]

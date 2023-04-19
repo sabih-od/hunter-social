@@ -1,0 +1,33 @@
+<ion-card class="ion-no-padding ion-no-margin">
+  <ion-grid class="ion-no-margin ion-no-padding">
+    <ion-row class="ion-no-margin">
+      <ion-col size="4" class="image-bg ion-text-center">
+        <img class="image" [src]="item.product.media_upload?.url"
+          onerror="this.onerror=null;this.src='assets/images/m-shirt.png';" />
+      </ion-col>
+      <ion-col size="8" class="ion-margin-bottom">
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">
+            <h2 class="f-pop-smb title">{{ item.product.name }}</h2>
+            <ion-row>
+              <ion-col>
+                <p class="f-pop-r content">{{ item.qty | number:'2.0-0' }} x {{ item.product.price | currency }}</p>
+                <p class="f-pop-r content">{{ item.product.price * item.qty | currency }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="qty-div">
+    <ion-icon name="remove-outline" (click)="sub()"></ion-icon>
+    {{item.qty | number: '2.0-0'}}
+    <ion-icon name="add-outline" (click)="add()"></ion-icon>
+  </div>
+  <div class="trash-div">
+    <ion-icon name="trash-outline" (click)="remove()"></ion-icon>
+  </div>
+
+</ion-card>

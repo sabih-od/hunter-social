@@ -1,0 +1,139 @@
+<app-header [title]="'CHECKOUT'" [showcurve]="false" [back]="true" [showMenu]="false"></app-header>
+<ion-content>
+  <form [formGroup]="aForm">
+    <ion-grid class="ion-margin">
+      <ion-row>
+        <ion-col>
+          <h1 class="f-anton heading">BILLING ADDRESS</h1>
+          <h4>Fill the form below to complete your purchase</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <p class="placeholder">First Name</p>
+          <ion-input placeholder="First Name" class="input" formControlName="first_name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <p class="placeholder">Last Name</p>
+          <ion-input placeholder="Last Name" class="input" formControlName="last_name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <p class="placeholder">Email</p>
+          <ion-input placeholder="Email" class="input" formControlName="email"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <p class="placeholder">Phone</p>
+          <ion-input placeholder="Phone" class="input" formControlName="phone"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <p class="placeholder">Address</p>
+          <ion-input placeholder="Address" class="input" formControlName="address"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="6">
+          <p class="placeholder">Country</p>
+          <ion-input placeholder="Country" class="input" formControlName="country"></ion-input>
+        </ion-col>
+        <ion-col size="6">
+          <p class="placeholder">City</p>
+          <ion-input placeholder="Name" class="input" formControlName="city"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="6">
+          <p class="placeholder">Zip</p>
+          <ion-input placeholder="Zip" class="input" formControlName="zip"></ion-input>
+        </ion-col>
+        <ion-col size="6">
+          <p class="placeholder">State</p>
+          <ion-input placeholder="State" class="input" formControlName="state"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item class="ion-no-padding">
+            <ion-checkbox formControlName="is_shipping_address"></ion-checkbox>
+            <ion-label class="ion-text-wrap">Ship To The Same Address Mentioned Above</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-grid *ngIf="!is_shipping_address">
+        <ion-row>
+          <ion-col size="12">
+            <p class="placeholder">Address</p>
+            <ion-input placeholder="Address" class="input" formControlName="shipping_address"></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6">
+            <p class="placeholder">Country</p>
+            <ion-input placeholder="Country" class="input" formControlName="shipping_country"></ion-input>
+          </ion-col>
+          <ion-col size="6">
+            <p class="placeholder">City</p>
+            <ion-input placeholder="Name" class="input" formControlName="shipping_city"></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6">
+            <p class="placeholder">Zip</p>
+            <ion-input placeholder="Zip" class="input" formControlName="shipping_zip"></ion-input>
+          </ion-col>
+          <ion-col size="6">
+            <p class="placeholder">State</p>
+            <ion-input placeholder="State" class="input" formControlName="shipping_state"></ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+      <ion-row>
+        <ion-col size="12">
+          <h1 class="f-anton heading">ORDER SUMMARY</h1>
+        </ion-col>
+        <ion-col size="12" class="ion-no-padding ion-no-margin">
+          <ion-card class="ion-no-padding ion-no-margin">
+            <ion-card-content class="ion-no-padding ion-no-margin">
+              <ion-item>
+                <ion-label>Subtotal ({{cart.quantity}} items)</ion-label>
+                <ion-label slot="end">USD {{cart.amount}}</ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Total</ion-label>
+                <ion-label slot="end">USD {{cart.amount}}</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" (click)="proceed()">Proceed to Pay</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+</ion-content>

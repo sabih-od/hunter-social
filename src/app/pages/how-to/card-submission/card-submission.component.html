@@ -1,0 +1,66 @@
+<ion-card style="text-align: center; border: 1px solid gray">
+  <p style="font-size: 20px; color: gray">Post a How to Video</p>
+  <ion-input
+    style="
+      margin-bottom: 8px;
+      border-radius: 5px;
+      border-color: gray;
+      background-color: white;
+      padding: 10px;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      border-bottom: 1px solid gray;
+    "
+    type="text"
+    id="title"
+    name="title"
+    placeholder="Enter Title"
+    [(ngModel)]="title"
+  >
+  </ion-input>
+  <br />
+  <video *ngIf="video" width="100%" height="100%" controls>
+    <source [src]="video" type="video/mp4" />
+  </video>
+
+  <input
+    [hidden]="true"
+    style="margin-left: 60px; height: 0px"
+    type="file"
+    id="fileInput"
+    name="fileInput"
+    accept="video/mp4,video/x-m4v,video/*"
+    onchange="fileSelected()"
+    #file
+  /><br /><br />
+
+  <ion-button
+    style="margin-bottom: 30px"
+    color="success"
+    (click)="file.click()"
+  >
+    <ion-icon style="padding-right: 5px" name="videocam"></ion-icon>
+    {{ item ? "Change" : "Select" }}
+    Video </ion-button
+  ><br />
+  <ion-item>
+    <ion-button
+      style="height: 62%; margin-bottom: 20px"
+      slot="end"
+      size="medium"
+      color="primary"
+      (click)="postData()"
+      >{{ item ? "Update" : "Post" }}
+    </ion-button>
+    <ion-button
+      style="height: 62%; margin-bottom: 20px"
+      slot="end"
+      size="medium"
+      color="danger"
+      (click)="cancel()"
+      *ngIf="item"
+      >Cancel</ion-button
+    >
+  </ion-item>
+</ion-card>

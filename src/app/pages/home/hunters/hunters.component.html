@@ -1,0 +1,28 @@
+<ion-grid class="bg">
+  <ion-row>
+    <ion-col size="12">
+      <ion-label>
+        <h2 class="heading1">
+          <b>{{ data?.title }}</b>
+        </h2>
+        <!-- <img [src]="data?.images[0]" /> -->
+        <h2 class="heading2">{{ data?.subtitle }}</h2>
+        <p class="text">{{ data?.description }}</p>
+        <ion-button color="light" class="btn2" (click)="navigate('post2')"
+          ><b>TAKE A SHOT !</b></ion-button
+        ><br />
+
+        <!-- <img [src]="data?.images[2]" />
+        <img [src]="data?.images[3]" />
+        <img [src]="data?.images[4]" />
+        <img class="img1" [src]="data?.images[5]" /> -->
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="6" *ngFor="let item of data.images">
+      <img [src]="item" class="image" />
+    </ion-col>
+  </ion-row>
+</ion-grid>

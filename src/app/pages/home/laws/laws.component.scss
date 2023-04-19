@@ -1,0 +1,27 @@
+.list-image {
+  border-radius: 20px;
+  // margin-top: 15px;
+  // height: 150px;
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.title {
+  font-size: 1.5vh;
+}
+
+.content {
+  color: #828282;
+  font-size: 1.3vh;
+}
+
+.detail-btn {
+  font-size: 9px;
+  width: 38%;
+  height: 22px;
+}
+
+.padding-left {
+  padding-left: 10px;
+}

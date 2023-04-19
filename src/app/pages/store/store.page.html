@@ -1,0 +1,21 @@
+<app-header
+  [title]="'STORE'"
+  [showcurve]="false"
+  [back]="false"
+  [showMenu]="true"
+></app-header>
+
+<ion-content>
+  <app-store-banner></app-store-banner>
+  <h2 *ngIf="!item" style="padding: 20px">No products found</h2>
+  <ion-grid>
+    <ion-row class="ion-no-margin">
+      <ion-col size="12" *ngFor="let item of stores |filter: search">
+        <!-- <store-row [item]="item" (click)="openStore(item.id)"></store-row> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <footer></footer>
+</ion-content>
+
+<chat-floating-button></chat-floating-button>

@@ -1,0 +1,26 @@
+.title {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.review-title {
+    p {
+        font-size: 1.1rem;
+        margin: 15px 8px;
+    }
+}
+
+.radio-button {
+    margin: 0 2px;
+    font-weight: 600;
+
+    ion-label {
+        margin: 0 3px;
+    }
+}
+
+.textarea {
+    border: 1px solid;
+    margin: 10px 0px;
+    border-radius: 5px;
+}

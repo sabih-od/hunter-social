@@ -1,0 +1,17 @@
+[
+    {
+        "image": "assets/images/john_smith.png",
+        "name": "John Smith",
+        "age": 30
+    },
+    {
+        "image": "assets/images/olivia.png",
+        "name": "James Olvia",
+        "age": 27
+    },
+    {
+        "image": "assets/images/john_doe.png",
+        "name": "John Doe",
+        "age": 29
+    }
+]

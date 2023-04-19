@@ -1,0 +1,54 @@
+{
+  "ios": {
+    "debug": {
+      "codeSignIdentity": "iPhone Distribution",
+      "provisioningProfile": "xxxxxxx-xxxxx-xxx-xxxx-xxxxx",
+      "developmentTeam": "xxxxxx",
+      "packageType": "ad-hoc",
+      "iCloudContainerEnvironment": "Development",
+      "buildFlag": [
+        "LD_RUNPATH_SEARCH_PATHS = \"@executable_path/Frameworks\""
+      ]
+    },
+    "release": {
+      "codeSignIdentity": "iPhone Distribution",
+      "provisioningProfile": "xxxxxxx-xxxxx-xxx-xxxx-xxxxx",
+      "developmentTeam": "xxxxxxx",
+      "packageType": "app-store",
+      "iCloudContainerEnvironment": "Production",
+      "buildFlag": [
+        "LD_RUNPATH_SEARCH_PATHS = \"@executable_path/Frameworks\""
+      ]
+    }
+  },
+  "android": {
+    "debug": {
+      "keystore": "../veenme-capacitor/resources/veenme.keystore",
+      "storePassword": "123456",
+      "alias": "veenme",
+      "password": "123456",
+      "keystoreType": ""
+    },
+    "release": {
+      "keystore": "../veenme-capacitor/resources/veenme.keystore",
+      "storePassword": "123456",
+      "alias": "veenme",
+      "password": "123456",
+      "keystoreType": ""
+    },
+    "device": {
+      "keystore": "../veenme-capacitor/resources/veenme.keystore",
+      "storePassword": "123456",
+      "alias": "veenme",
+      "password": "123456",
+      "keystoreType": ""
+    },
+    "emulator": {
+      "keystore": "../veenme-capacitor/resources/veenme.keystore",
+      "storePassword": "123456",
+      "alias": "veenme",
+      "password": "123456",
+      "keystoreType": ""
+    }
+  }
+}

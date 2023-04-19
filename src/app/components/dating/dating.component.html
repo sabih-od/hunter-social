@@ -1,0 +1,41 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="12">
+      <ion-item lines="none">
+        
+        <ion-searchbar [(ngModel)]="_search" class="ion-margin-bottom" placeholder="Find a friend..." (ionClear)="onSearch(true)">
+         
+        </ion-searchbar>
+        <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search"> </ion-icon> </ion-button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <div class="spinner" *ngIf="isLoading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <!-- <h2 class="f-pop-smb title ion-margin-start">DATING</h2> -->
+    <ion-item>
+      <!-- <ion-label>C</ion-label> -->
+      <ion-select placeholder="Select One" [(ngModel)]="dating_users" (ngModelChange)="getData()">
+        <ion-select-option [value]="0">HUNTING</ion-select-option>
+        <ion-select-option [value]="1" *ngIf="role_id == 4 && dating_enabled">DATING</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of datings | filter:search">
+        <dating-item [item]="item" (update)="getData()"></dating-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

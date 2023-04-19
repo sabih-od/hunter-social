@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1073288,
+    "name": "Alex Moore",
+    "team_id": 33121,
+    "image": "assets/drivers/driver1.png",
+    "card_no": "26",
+    "laps": "85",
+    "team_name": "Red Bull",
+    "nationality": "Thailand"
+  },
+  {
+    "id": 1073289,
+    "name": "Alex Moore",
+    "team_id": 33121,
+    "image": "assets/drivers/driver2.jpeg",
+    "card_no": "26",
+    "laps": "85",
+    "team_name": "Red Bull",
+    "nationality": "Thailand"
+  },
+  {
+    "id": 1073290,
+    "name": "Alex Moore",
+    "team_id": 33121,
+    "image": "assets/drivers/driver3.jpeg",
+    "card_no": "26",
+    "laps": "85",
+    "team_name": "Red Bull",
+    "nationality": "Thailand"
+  }
+]

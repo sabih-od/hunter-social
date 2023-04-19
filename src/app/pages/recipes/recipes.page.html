@@ -1,0 +1,49 @@
+<app-header
+  [title]="'GAME RECIPES'"
+  [showcurve]="false"
+  [back]="false"
+  [showMenu]="true"
+></app-header>
+
+<ion-content>
+  <app-recipe-banner></app-recipe-banner>
+  <div
+    style="
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-transform: capitalizes;
+    "
+  >
+    <ion-button (click)="addNew()" color="dark">Add Recipe Here</ion-button>
+  </div>
+  <ion-row class="ion-margin-top">
+    <ion-col size="12">
+      <ion-searchbar [(ngModel)]="search" placeholder="Search"></ion-searchbar>
+    </ion-col>
+  </ion-row>
+
+  <recipe *ngFor="let item of recipies  |filter:search" [item]="item"></recipe>
+
+  <div
+    style="
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-transform: capitalizes;
+    "
+  >
+    <ion-button *ngIf="last_page > page_num" (click)="loadMore()" color="dark"
+      >load more</ion-button
+    >
+  </div>
+
+  <footer></footer>
+</ion-content>
+
+<!-- <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+  <ion-fab-button color="medium">
+    <ion-icon color="dark" name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab> -->
+<chat-floating-button></chat-floating-button>

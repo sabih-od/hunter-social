@@ -1,0 +1,24 @@
+<ion-item>
+  <ion-avatar>
+    <img [src]="
+        Config.URL+'public/storage/uploads/' +
+        item?.user?.profile_image
+      " onerror="this.onerror=null;this.src='assets/images/avatar.png';" (click)="viewProfile(item)" />
+  </ion-avatar>
+  <ion-label class="ion-margin-start ion-text-wrap">
+    <b (click)="viewProfile(item)">{{ item?.user?.name ?? '' }}</b> -
+    <ion-icon style="font-size: 15px" *ngFor="let n of [1, 2, 3, 4, 5]" slot="end"
+      [name]="item?.rating + 1 <= n ? 'star-outline' : 'star'" [color]="item?.rating + 1 <= n ? 'tertiary' : 'dark'">
+    </ion-icon>
+
+    <br />
+
+    {{ item?.content }}
+
+    <p style="font-size: 11px; color: gray; text-align: end">
+      {{ item?.time }}
+    </p>
+  </ion-label>
+
+  <ion-icon slot="end" name="trash-outline" color="danger" (click)="deleteReview()" *ngIf="item.canDelete"></ion-icon>
+</ion-item>

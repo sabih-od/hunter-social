@@ -1,0 +1,13 @@
+<ion-grid class="ion-no-padding">
+  <ion-row class="ion-no-padding">
+    <ion-col class="ion-no-padding" size="12">
+      <ion-card class="ion-padding ion-no-margin f-pop-m" style="border-bottom-right-radius: 0px;">{{ item.content }}
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-no-margin ion-no-padding ion-margin-start">
+    <ion-col class="ion-no-padding" size="12">
+      <p class="f-pop-m time">{{ item.created_at | date:'short'}}</p>
+    </ion-col>
+  </ion-row>
+</ion-grid>

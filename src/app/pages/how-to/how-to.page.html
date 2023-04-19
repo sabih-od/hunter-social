@@ -1,0 +1,16 @@
+<app-header [title]="'Hunter Social'" [showcurve]="false" [back]="false" [showMenu]="true"></app-header>
+
+<ion-content>
+  <app-how-to-banner></app-how-to-banner>
+  <div class="text">
+    <h2 style="font-size: 35px"><b>HOW TO VIDEOS</b></h2>
+  </div>
+
+  <app-card-submission></app-card-submission>
+
+  <app-how-to-cards *ngFor="let item of list" [item]="item"></app-how-to-cards>
+
+  <footer></footer>
+</ion-content>
+
+<chat-floating-button></chat-floating-button>

@@ -1,0 +1,26 @@
+<app-header [title]="'AROUND THE CAMPFIRE'" [showcurve]="true" [searchVisible]="false"></app-header>
+
+<ion-content class="ion-padding-top">
+  <h2 class="f-pop-smb ion-margin-start title">CONNECT TO HUNTERS</h2>
+  <div class="pins">
+    <ion-card class="pin" *ngFor="let item of items">
+      <img [src]="item.image" />
+    </ion-card>
+  </div>
+
+  <ion-item lines="none">
+    <ion-label class="ion-text-center ion-text-wrap">
+      <h2 class="f-pop-smb">MADE FOR ADVENTURERS</h2>
+      <p class="f-pop-m ion-padding-horizontal content">
+        Build a membership profile into the dating or social side of the hunters
+        social community. <br />
+        Interact one on one and set up private hunting or fishing excursions.
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <ion-button class="f-pop-smb btn ion-margin-start ion-margin-end ion-margin-top" expand="block">​TAKE A SHOT!
+  </ion-button>
+
+  <chat-floating-button></chat-floating-button>
+</ion-content>

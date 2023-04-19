@@ -1,0 +1,12 @@
+<app-header [title]="'​HOW TO TIE A LURE'" [showcurve]="true"></app-header>
+
+<ion-content>
+  <h2 class="f-pop-smb title ion-margin-start">​HOW TO TIE A LURE</h2>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" *ngFor="let item of items">
+        <lure-item [item]="item" class="ion-margin-end"></lure-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,8 @@
+{
+  "name": "Veenme",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

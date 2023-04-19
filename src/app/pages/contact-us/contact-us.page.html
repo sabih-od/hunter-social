@@ -1,0 +1,48 @@
+<app-header [title]="'​CONTACT US'" [showcurve]="true"></app-header>
+
+<ion-content>
+  <app-contact-banner></app-contact-banner>
+  <ion-item lines="none" class="ion-margin-top">
+    <ion-label class="ion-text-wrap">
+      <h2 class="heading1 f-pop-smb title ion-margin-start">​GET IN TOUCH</h2>
+      <p class="text1 f-pop-r">
+        Edit this text to create your own blog post. To edit, simply click
+        directly on the text. Break up your text with more than one paragraph
+        for better readability. Add images, page breaks, and links to complete
+        your blog story.
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <ion-card class="ion-padding">
+    <ion-input placeholder="First Name" [(ngModel)]="fname"> </ion-input>
+  </ion-card>
+
+  <ion-card class="ion-padding">
+    <ion-input placeholder="Last Name" [(ngModel)]="lname"> </ion-input>
+  </ion-card>
+
+  <ion-card class="ion-padding">
+    <ion-input placeholder="Email Address" [(ngModel)]="email"> </ion-input>
+  </ion-card>
+
+  <ion-card class="ion-padding">
+    <ion-input placeholder="Phone Number" [(ngModel)]="phoneNumber"> </ion-input>
+  </ion-card>
+
+  <ion-card class="ion-padding">
+    <ion-textarea placeholder="Message" [(ngModel)]="message"> </ion-textarea>
+  </ion-card>
+
+  <ion-item lines="none">
+    <ion-checkbox></ion-checkbox>
+    <ion-label class="ion-margin-start">
+      <p class="content f-pop-r">I Agree with the terms and conditions</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-button class="f-pop-smb ion-margin" expand="block" (click)="sumit()">​SUBMIT NOW</ion-button>
+  <footer></footer>
+</ion-content>
+
+<chat-floating-button></chat-floating-button>

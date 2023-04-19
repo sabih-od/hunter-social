@@ -1,0 +1,62 @@
+ion-searchbar {
+  --border-radius: 20px;
+  --background: #808080;
+  --color: white;
+}
+
+ion-icon {
+  font-size: 28px;
+}
+
+.title {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.fab-list-width {
+  width: 120px;
+
+  ion-fab-button {
+    transform: translateX(-32px);
+  }
+}
+
+.label-social {
+  color: white; //
+  transform: translate(-115px, -13px);
+  font-weight: 500;
+  position: absolute;
+  font-size: 15px;
+  background-color: black;
+  padding: 5px;
+  width: 110px;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.label-dating {
+  color: white; //
+  transform: translate(-115px, -110px);
+
+  font-weight: 500;
+  position: absolute;
+  font-size: 15px;
+  background-color: black;
+  padding: 5px;
+  width: 110px;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.group-chat {
+  color: white; //
+  transform: translate(-115px, -60px);
+  font-weight: 500;
+  position: absolute;
+  font-size: 15px;
+  background-color: black;
+  padding: 5px;
+  width: 110px;
+  border-radius: 25px;
+  text-align: center;
+}

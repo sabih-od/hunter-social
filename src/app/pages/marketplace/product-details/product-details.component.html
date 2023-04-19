@@ -1,0 +1,43 @@
+<app-header [title]="'Product Details'" [back]="true"></app-header>
+<ion-content>
+  <ion-card>
+    <div class="cover-photo">
+      <!-- <img [src]="data.image_url" /> -->
+      <img [src]="data.image_url ? data.image_url : 'assets/car.jpg'" alt="" />
+    </div>
+    <ion-card-header>
+      <ion-card-title>{{ data?.price | currency }}</ion-card-title>
+      <ion-card-subtitle>{{ data?.title }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-header>
+      <ion-card-title>Seller Information</ion-card-title>
+    </ion-card-header>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img
+          [src]="
+            data.user.profile_image
+              ? data.user.profile_image
+              : 'https://ionicframework.com/docs/img/demos/thumbnail.svg'
+          "
+        />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ data.user.name }}</h2>
+        <p>{{ data.user.phone }}</p>
+      </ion-label>
+    </ion-item>
+    <!--
+    <ion-item>
+      <ion-item>
+        <ion-label>{{ data.user.name }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ data.user.phone }}</ion-label>
+      </ion-item>
+    </ion-item> -->
+    <ion-button (click)="mark()" *ngIf="isMark && data.user_id === user_id"
+      >Mark As Sold</ion-button
+    >
+  </ion-card>
+</ion-content>

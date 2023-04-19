@@ -1,0 +1,54 @@
+<app-header [title]="'Support'"></app-header>
+
+<ion-content class="bg-light">
+  <ion-item lines="none" class="ion-margin-top bg-light">
+    <ion-label class="ion-text-wrap">
+      <h2 class="f-pop-smb title">We're Happy To Hear Form You !!</h2>
+      <p class="f-pop-r content">Let us know queries & feedback</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-button class="f-pop-smb ion-margin-start">
+    <ion-icon slot="start" name="mail"></ion-icon>
+    MAIL US
+  </ion-button>
+
+  <ion-grid class="bg-white ion-margin-top">
+    <h2 class="sub-title f-pop-smb ion-margin-start">OR SEND YOUR MESSAGE</h2>
+    <ion-row>
+      <ion-col size="12">
+        <p class="placeholder f-pop-r">Full Name</p>
+        <ion-input
+          placeholder="Enter full name e.g John Smith"
+          class="ion-padding"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <p class="placeholder f-pop-r">Email Address</p>
+        <ion-input
+          placeholder="Enter email address"
+          class="ion-padding"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <p class="placeholder f-pop-r">Your Message</p>
+        <ion-textarea
+          placeholder="Write your message here"
+          class="ion-padding"
+        ></ion-textarea>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button class="f-pop-smb" expand="block">​SUBMIT NOW</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

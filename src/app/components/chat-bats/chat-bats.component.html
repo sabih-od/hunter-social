@@ -1,0 +1,65 @@
+<!-- <ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="pages/chat-room">
+      <ion-label>Friends</ion-label>
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="pages/chat-room">
+      <ion-label>People</ion-label>
+      <ion-icon name="person-outline"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="pages/chat-room">
+      <ion-label>Groups</ion-label>
+      <ion-icon name="people-outline"></ion-icon>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-buttons>
+        <ion-button (click)="close()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Individual / Group Chats</ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" [value]="tab">
+      <ion-segment-button value="friends">
+        <ion-label>Friends</ion-label>
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </ion-segment-button>
+
+      <ion-segment-button value="people">
+        <ion-label>People</ion-label>
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-segment-button>
+
+      <ion-segment-button value="groups">
+        <ion-label>Groups</ion-label>
+        <ion-icon name="people-outline"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <chat-room
+    *ngIf="tab === 'friends'"
+    style="height: 100%; width: 100%"
+  ></chat-room>
+  <dating *ngIf="tab === 'people'" style="height: 100%; width: 100%"> </dating>
+  <chat-rooms
+    *ngIf="tab === 'groups'"
+    style="height: 100%; width: 100%"
+  ></chat-rooms>
+</ion-content>

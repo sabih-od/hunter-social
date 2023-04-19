@@ -1,0 +1,34 @@
+<app-header [title]="'USER REVIEWS'" [showcurve]="false" [back]="true">
+</app-header>
+
+<ion-content>
+  <div class="spinner" [hidden]="!loading">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-searchbar [(ngModel)]="search"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid [hidden]="loading">
+    <ion-row>
+      <ion-col size="12" *ngFor="let item of reviewList | filter:search" class="ion-no-padding ion-no-margin">
+        <review [item]="item"></review>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<!-- <ion-fab horizontal="end" vertical="bottom" slot="fixed" (click)="addNew()">
+  <ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab> -->

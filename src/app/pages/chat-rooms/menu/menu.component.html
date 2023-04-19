@@ -1,0 +1,13 @@
+<ion-list>
+  <ion-item (click)="action('leave')" *ngIf="!_canJoin">
+    <ion-label>
+      Leave Group
+    </ion-label>
+  </ion-item>
+
+  <ion-item (click)="action('join')" *ngIf="_canJoin">
+    <ion-label>
+      Join Group
+    </ion-label>
+  </ion-item>
+</ion-list>

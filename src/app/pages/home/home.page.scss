@@ -1,0 +1,209 @@
+ion-searchbar {
+  --border-radius: 20px;
+  --background: black;
+  --color: white;
+  margin-top: 10px;
+}
+
+ion-slides {
+  --bullet-background-active: white;
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: normal;
+  src: url(/assets/fonts/Poppins-Medium.ttf);
+}
+@font-face {
+  font-family: "semiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url(/assets/fonts/Poppins-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: "PoppinsRegular";
+  font-style: normal;
+  font-weight: normal;
+  src: url(/assets/fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Anton";
+  font-style: normal;
+  font-weight: normal;
+  src: url(/assets/fonts/Anton-Regular.ttf);
+}
+.top-bg {
+  background-color: var(--ion-color-primary);
+  height: 300px;
+  border-radius: 25px;
+  margin-top: -50px;
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 250px;
+}
+
+.title {
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.side-icon {
+  font-size: 40px;
+  color: white;
+}
+
+.image {
+  border-radius: 20px;
+  width: "100%";
+  margin-top: 15px;
+  height: 220px;
+}
+
+.details-btn {
+  position: absoulute;
+  bottom: 8px;
+  left: 16px;
+}
+
+.home-pic {
+  background: url(/assets/images/hunt1.png);
+  background-repeat: no-repeat;
+  width: 85%;
+  height: 260px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: fill;
+  //border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+}
+
+.six-by-9 {
+  height: calc(25vh);
+  width: calc(13vh);
+  object-fit: cover;
+  /* border-radius: 19px; */
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 100%;
+}
+
+.profile-img {
+  border-radius: 10px;
+}
+
+.shopBtn {
+  margin: 2% 0px 14px 0px;
+  font-size: 10px;
+  color: #fff;
+  background-color: #707070;
+  border-radius: 29px;
+  width: 123px;
+  height: 32px;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.list-header {
+  margin-top: 20px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.list-row {
+  // white-space: nowrap;
+  // overflow-x: auto !important;
+  flex-wrap: nowrap;
+  overflow-x: scroll !important;
+  overflow-y: hidden;
+}
+
+.list-image {
+  border-radius: 20px;
+  // margin-top: 15px;
+  // height: 150px;
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.content {
+  width: 90%;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  margin-top: -10px;
+  width: 100%;
+  .card {
+    display: inline-block;
+    width: 70%;
+    // margin-left: 10px;
+  }
+
+  .item {
+    display: inline-block;
+    width: 40%;
+    // margin-left: 10px;
+  }
+}
+
+.scrolling-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+
+  .card {
+    flex: 0 0 auto;
+  }
+}
+
+.list-btn {
+  width: auto;
+}
+
+.tab-item {
+  --background: #fff;
+  padding: 5px 20px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  ion-img {
+    width: 30px;
+    margin: 0 auto;
+  }
+}
+
+.title {
+  font-size: 17px;
+}
+
+.sub-title {
+  font-size: 1.8vh;
+}

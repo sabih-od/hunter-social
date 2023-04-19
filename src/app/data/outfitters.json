@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "name": "North Texas Outfitters",
+        "detail": "The premier hunting destination in the Texas/Oklahoma Red River Valley",
+        "phone": "903-815-9842",
+        "email": "northtexasoutfitters@gmail.com",
+        "address": null,
+        "image": "https://hunterssocial.com/public/assets/images/out1.png"
+    },
+    {
+        "id": 2,
+        "name": "Red Dirt Outfitters",
+        "detail": null,
+        "phone": "(325) 338-7124",
+        "email": null,
+        "address": "Red Dirt Outfitters 925 County Road 216",
+        "image": "https://hunterssocial.com/public/assets/images/out2.png"
+    },
+    {
+        "id": 3,
+        "name": "Texas Elite Outfitters",
+        "detail": "Texas Elite Outfitters was formed to provide clients with a trulyoutstanding hunting or fishing trip of a lifetime.",
+        "phone": "979-587-1024",
+        "email": null,
+        "address": null,
+        "image": "https://hunterssocial.com/public/assets/images/out2.png"
+    },
+    {
+        "id": 4,
+        "name": "Dry Creek Outfitters",
+        "detail": "“Anything and Everything Outdoors“ WICHITA FALLS, TEXAS",
+        "phone": "1-940-257-9685",
+        "email": null,
+        "address": null,
+        "image": "https://hunterssocial.com/public/assets/images/out4.png"
+    },
+    {
+        "id": 5,
+        "name": "Southern Buck Outfitters",
+        "detail": "Southern Buck Outfitters is a guiding service dedicated to providing exciting hunts and delivering trophy Whitetail & Exotic Game",
+        "phone": "210-219-0707",
+        "email": null,
+        "address": null,
+        "image": "https://hunterssocial.com/public/assets/images/out5.png"
+    },
+    {
+        "id": 6,
+        "name": "B & H Outfitters",
+        "detail": null,
+        "phone": "903-243-6443",
+        "email": "northtexasoutfitters@gmail.com",
+        "address": "Located in Mount Vernon, Tx and offer fully guided waterfowl hunts and semi guided hog hunts.",
+        "image": "https://hunterssocial.com/public/assets/images/out6.png"
+    }
+]

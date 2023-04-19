@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "name": "Chevrolet"
+    },
+    {
+        "id": 2,
+        "name": "Formula1"
+    },
+    {
+        "id": 3,
+        "name": "Mazda MX-5"
+    },
+    {
+        "id": 4,
+        "name": "Porsche 911"
+    },
+    {
+        "id": 5,
+        "name": "Alpine A110"
+    },
+    {
+        "id": 6,
+        "name": "Porsche 718 Boxster/Cayman"
+    },
+    {
+        "id": 7,
+        "name": "BMW M3/M4"
+    },
+    {
+        "id": 8,
+        "name": "Toyota GR Supra"
+    }
+]

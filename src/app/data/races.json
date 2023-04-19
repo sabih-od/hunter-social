@@ -1,0 +1,65 @@
+[
+  {
+    "id": 300,
+    "name": "F1 CAR",
+    "season": 2020,
+    "rank": "Rank 1",
+    "image": "assets/races/race1.png"
+  },
+  {
+    "id": 686,
+    "name": "Vietnam Grand Pix",
+    "season": 2020,
+    "rank": "Rank 2",
+    "image": "assets/races/race2.png"
+  },
+  {
+    "id": 700,
+    "name": "Italy Grand Pix",
+    "season": 2020,
+    "rank": "Rank 3",
+    "image": "assets/races/race3.jpeg"
+  },
+  {
+    "id": 4,
+    "name": "BMW Energy Cup",
+    "season": 2020,
+    "rank": "Rank 4",
+    "image": "assets/races/race2.png"
+  },
+  {
+    "id": 5,
+    "name": "Audi Racing NASCAR Cup",
+    "season": 2020,
+    "rank": "Rank 5",
+    "image": "assets/races/race1.png"
+  },
+  {
+    "id": 6,
+    "name": "Monster Energy NASCAR Cup",
+    "season": 2020,
+    "rank": "Rank 6",
+    "image": "assets/races/race3.jpeg"
+  },
+  {
+    "id": 7,
+    "name": "F1",
+    "season": 2020,
+    "rank": "Rank 7",
+    "image": "assets/races/race1.png"
+  },
+  {
+    "id": 8,
+    "name": "IndyCar",
+    "season": 2020,
+    "rank": "Rank 8",
+    "image": "assets/races/race2.png"
+  },
+  {
+    "id": 9,
+    "name": "World of Outlaws",
+    "season": 2020,
+    "rank": "Rank 9",
+    "image": "assets/races/race3.jpeg"
+  }
+]

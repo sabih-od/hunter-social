@@ -1,0 +1,37 @@
+[
+  {
+    "image": "assets/images/m-shirt.png",
+    "title": "Hunters T-Shirts",
+    "price": "29.95",
+    "rating": 5,
+    "count": 200
+  },
+  {
+    "image": "assets/images/hat.png",
+    "title": "Hunters Hats",
+    "price": "14.95",
+    "rating": 5,
+    "count": 11
+  },
+  {
+    "image": "assets/images/camo_coozy.png",
+    "title": "Hunters Camo Coozy",
+    "price": "34.95",
+    "rating": 5,
+    "count": 11
+  },
+  {
+    "image": "assets/images/t-shirt.png",
+    "title": "Hunters T-Shirts",
+    "price": "31.95",
+    "rating": 5,
+    "count": 11
+  },
+  {
+    "image": "assets/images/m-shirt.png",
+    "title": "Hunters T-Shirts",
+    "price": "29.95",
+    "rating": 5,
+    "count": 200
+  }
+]

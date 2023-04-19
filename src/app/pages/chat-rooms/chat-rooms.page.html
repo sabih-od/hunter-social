@@ -1,0 +1,45 @@
+<app-header
+  [title]="'FRIENDS'"
+  [showcurve]="true"
+  [back]="true"
+  [showMenu]="false"
+></app-header>
+
+<ion-content>
+  <app-chatroom-banner></app-chatroom-banner>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="spinner" *ngIf="isLoading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+  </div>
+
+  <ion-grid>
+    <!-- <ion-row>
+      <ion-col size="12">
+        <ion-img src="assets/images/chat-room-banner.jpg"></ion-img>
+      </ion-col>
+    </ion-row> -->
+    <ion-row class="ion-margin-top">
+      <ion-col size="12">
+        <ion-searchbar
+          [(ngModel)]="search"
+          class="ion-margin-bottom"
+          placeholder="Search"
+        ></ion-searchbar>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let item of groups |filter:search">
+      <ion-col size="12">
+        <chat-row [item]="item"></chat-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <footer></footer>
+</ion-content>
+
+
+<chat-floating-button></chat-floating-button>

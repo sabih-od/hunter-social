@@ -1,0 +1,19 @@
+<ion-grid>
+  <ion-row class="content">
+    <ion-col size="12">
+      <ion-label>
+        <h2 class="heading1">
+          <b>{{ data?.title }}</b>
+        </h2>
+        <h1 class="heading2">
+          <b>{{ data?.subtitle }}</b>
+        </h1>
+        <p class="text">{{ data?.description }}</p>
+        <ion-button color="dark" (click)="navigate('post1')"
+          ><b>TAKE A SHOT !</b></ion-button
+        ><br />
+        <img class="img" [src]="data?.image" />
+      </ion-label>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item lines="none" class="ion-no-padding">
+      <ion-icon (click)="goBack()" class="back-icon" name="arrow-back-circle"></ion-icon>
+      <ion-avatar class="image ion-margin-horizontal">
+        <img [src]="item.isGroup ? item.media_upload?.url : item?.profile_image"
+          onerror="this.onerror=null;this.src='assets/images/avatar.png';" />
+        <!-- <div class="online-indicator"></div> -->
+      </ion-avatar>
+      <ion-label>
+        <h2 class="title f-pop-smb">{{item.isGroup ? item?.title :item?.name}}</h2>
+        <!-- <p class="f-pop-r content">Online {{item.time}} mins ago</p> -->
+      </ion-label>
+
+      <ion-icon slot="end" *ngIf="item.isGroup" name="person-remove-outline" (click)="leave()"></ion-icon>
+      <!-- <ion-img src="assets/images/call-ic.png" slot="end"></ion-img>
+      <ion-img src="assets/images/video-ic.png" slot="end"></ion-img>
+      <ion-img src="assets/images/user-ic.png" slot="end"></ion-img> -->
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content #content>
+  <ion-grid *ngIf="!isLoading">
+    <ion-row>
+      <ion-col size="12" *ngFor="let item of messages">
+        <div class="ion-float-left">
+          <left-row *ngIf="item.sender_id !== user.id" [item]="item"></left-row>
+        </div>
+        <div class="ion-float-right">
+          <right-row *ngIf="item.sender_id === user.id" [item]="item"></right-row>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <div class="spinner" *ngIf="isLoading">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+
+
+</ion-content>
+
+<ion-footer style="background-color: white">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="ion-no-padding ion-padding-start">
+          <ion-row class="ion-no-padding">
+            <ion-col size="9" style="margin-top: 8px" class="ion-no-padding">
+              <ion-input [(ngModel)]="text" placeholder="Type here...">
+              </ion-input>
+
+            </ion-col>
+            <ion-col size="3">
+              <ion-button fill="clear" (click)="sendMessage()" [disabled]="isMsgLoading">
+                Send
+                <!-- <img src="assets/images/microphone.png" /> -->
+                <!-- <ion-icon name="send"></ion-icon> -->
+              </ion-button>
+            </ion-col>
+
+          </ion-row>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

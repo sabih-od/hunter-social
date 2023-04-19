@@ -1,0 +1,33 @@
+<app-header [title]="'Cart'" [showcurve]="false" [back]="true" [showMenu]="false"></app-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-list-header class="f-anton" style="font-size: 3vh;">
+      Confirm Your Purchase
+    </ion-list-header>
+    <ion-list-header>
+      <strong>{{cart?.amount | currency }}</strong>
+    </ion-list-header>
+
+    <ion-grid *ngFor="let item of cart?.data">
+      <ion-row>
+        <ion-col size="12">
+          <store-row [item]="item" (updateQty)="updateQty($event)"></store-row>
+        </ion-col>
+        <ion-col size="12">
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="block" (click)="proceed()"> Proceed To Checkout </ion-button>
+</ion-footer>

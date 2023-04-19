@@ -1,0 +1,39 @@
+<ion-item class="ion-no-padding">
+  <ion-avatar class="image">
+    <img [src]="item.profile_image" onerror="this.onerror=null;this.src='assets/images/avatar.png';" />
+
+    <!-- <p class="counter f-pop-m">20</p> -->
+  </ion-avatar>
+
+  <ion-label class="f-pop-r ion-margin-start">
+    <h2 class="title f-pop-smb">{{ item.name }}</h2>
+    <!-- <p class="content">Created By:{{ item.created_by }}</p>
+    <p class="content">{{ item.participants }} Participants</p> -->
+  </ion-label>
+
+  <ion-item slot="end" lines="none" *ngIf="item.canChat">
+    <ion-icon (click)="viewChat()" name="chatbubble-outline" style="font-size: 20px; margin-right: 15px;">
+    </ion-icon>
+
+    <ion-icon (click)="showMenu($event)" name="ellipsis-vertical-outline" style="font-size: 20px;">
+    </ion-icon>
+  </ion-item>
+
+  <ion-icon *ngIf="item.canRequest" (click)="addFriend()" name="person-add-outline" style="font-size: 20px;">
+  </ion-icon>
+
+  <ion-icon *ngIf="item.is_sent_friend_request" name="checkmark-outline" style="font-size: 20px; color: green">
+  </ion-icon>
+
+  <ion-label slot="end" *ngIf="item.is_friend_blocked" (click)="unblock()">
+    Unblock
+  </ion-label>
+
+  <ion-label slot="end" *ngIf="item.is_blocked_by_friend" style="color:red">
+    Blocked
+  </ion-label>
+
+
+
+  <!-- <p class="time f-pop-m">{{ item.time }} Mins</p> -->
+</ion-item>

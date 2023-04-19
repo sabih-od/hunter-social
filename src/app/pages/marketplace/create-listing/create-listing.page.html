@@ -1,0 +1,82 @@
+<app-header [title]="'Create Listing'" [back]="true"></app-header>
+
+<ion-content class="ion-padding">
+  <div class="create-listing-main">
+    <form [formGroup]="aForm">
+      <div class="upload-image">
+        <!--
+        <div *ngIf="image_url" class="image" [style.background-image]="'url(' +
+          image_url + ')'"
+          style="
+          height: 200px;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-size: cover;
+          border: 1px solid black;"
+          for="file-input">
+
+        </div> -->
+        <label
+          for="file-input"
+          style="
+            height: 200px;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border: 1px solid black;
+          "
+          class="file-label"
+          [style.background-image]="'url(' +
+          picture + ')'"
+        >
+          <i class="fa fa-upload"></i>
+          <p [hidden]="image_url">Your Image Here</p>
+          <!-- <img [src]="picture"   /> -->
+        </label>
+        <ion-button
+          (click)="doGetPicture()"
+          style="margin-top: 10px; margin-bottom: 30px"
+          color="secondary"
+          >Upload Picture
+        </ion-button>
+      </div>
+      <div class="title">
+        <input type="text" id="" placeholder="Title" formControlName="title" />
+      </div>
+      <div class="price">
+        <input
+          type="number"
+          id=""
+          placeholder="Price"
+          formControlName="price"
+        />
+      </div>
+      <select formControlName="category" class="category">
+        <option *ngFor="let item of category">{{ item.name }}</option>
+      </select>
+
+      <div class="condition">
+        <select name="Condition" formControlName="condition">
+          <option value="New">New</option>
+          <option value="Used">Used</option>
+        </select>
+      </div>
+      <div class="description">
+        <input
+          type="text"
+          id=""
+          placeholder="Description"
+          formControlName="description"
+        />
+      </div>
+      <div class="post" (click)="post()">
+        <ion-button>Post Listing</ion-button>
+      </div>
+    </form>
+    <div class="preview">
+      <div class="imagePreview">
+        <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" />
+      </div>
+    </div>
+  </div>
+</ion-content>

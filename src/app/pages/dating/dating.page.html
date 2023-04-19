@@ -1,0 +1,69 @@
+<app-header [title]="'DATING'" [showcurve]="true" [showSearch]="false" [showMenu]="false" [back]="true"  >
+</app-header>
+
+<ion-content>
+
+  <app-dating-banner></app-dating-banner>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- <ion-row class="ion-margin-top">
+    <ion-col size="12">
+      <ion-item>
+        <ion-searchbar
+          [(ngModel)]="search"
+          (ngModelChange)="getData()"
+          class="ion-margin-bottom"
+          placeholder="Use filters to get desired results "
+        >
+        </ion-searchbar>
+      </ion-item>
+    </ion-col>
+  </ion-row> -->
+  <ion-row class="ion-margin-top">
+    <ion-searchbar placeholder="Search"  [(ngModel)]="search"
+    (ngModelChange)="getData()"></ion-searchbar>
+  </ion-row>
+
+
+  <div class="spinner" *ngIf="isLoading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <ion-item>
+      <!-- <ion-select placeholder="Select One" [(ngModel)]="dating_users" (ngModelChange)="getData()">
+        <ion-select-option [value]="0">HUNTING</ion-select-option>
+        <ion-select-option [value]="1">DATING</ion-select-option>
+      </ion-select> -->
+
+      <ion-button slot="end" (click)="filter()">
+        <ion-icon name="filter-outline"></ion-icon>
+        Filter
+      </ion-button>
+    </ion-item>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of datings | filter:search">
+        <dating-item [item]="item" (update)="getData()"></dating-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="datings?.length == 0">
+      <ion-col>
+        <ion-item>
+          <ion-label>
+            No Records Found
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <footer></footer>
+</ion-content>
+
+<chat-floating-button></chat-floating-button>

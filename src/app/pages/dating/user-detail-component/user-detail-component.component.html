@@ -1,0 +1,177 @@
+<app-header [title]="'DATING BIO'" [showcurve]="false" [profileVisible]="false"></app-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <p class="placeholder">Interests*</p>
+        <ion-item class="ion-no-padding" lines="none" style="
+            width: 93%;
+            margin: 2%;
+            border-radius: 5px;
+            border: 1px solid lightgray;
+          ">
+          <!-- <ion-input class="f-pop-m input ion-padding-start" [(ngModel)]="search" placeholder="Add Tag"
+            (ionChange)="interestSearched($event)" class="ion-margin-start f-pop-m">
+            (keyup.enter)="addInput()"
+          </ion-input> -->
+          <ion-select style="width: 100%; border-radius: 5px; border: 1px solid lightgray" placeholder="Interests"
+            multiple="true" class="select" [(ngModel)]="data.interests">
+            <ion-select-option [value]="item" *ngFor="let item of interests">{{
+              item
+              }}</ion-select-option>
+          </ion-select>
+          <!-- <ion-button (click)="addInput()" *ngIf="search && search != ''" style="font-size: 80%" slot="end"
+            fill="clear">
+            Submit
+          </ion-button> -->
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-chip *ngFor="let item of data.interests">
+          <ion-label>{{ item }}</ion-label>
+          <ion-icon (click)="removeInterest(item)" name="close"></ion-icon>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row>
+      <ion-col size="12">
+        <tag-input></tag-input>
+      </ion-col>
+    </ion-row> -->
+    <ion-row>
+      <ion-col size="12">
+        <p class="placeholder">Date of Birth*</p>
+        <ion-datetime [displayFormat]="'MM/DD/YYYY'" [(ngModel)]="data.dob" class="f-pop-m input"
+          placeholder="Date of Birth">
+        </ion-datetime>
+      </ion-col>
+    </ion-row>
+
+    <ion-radio-group [(ngModel)]="data.gender">
+      <ion-row>
+        <ion-col size="12" class="ion-no-margin ion-no-padding">
+          <p class="placeholder">Gender*</p>
+        </ion-col>
+        <ion-col size="4" class="ion-no-margin ion-no-padding">
+          <ion-item lines="none">
+            <ion-label>Male</ion-label>
+            <ion-radio slot="start" value="male"></ion-radio>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="8">
+          <ion-item lines="none">
+            <ion-label>Female</ion-label>
+            <ion-radio slot="start" value="female"></ion-radio>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label>Rather not say</ion-label>
+            <ion-radio slot="start" value="nosay"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-radio-group>
+
+    <ion-radio-group [(ngModel)]="data.marital_status">
+      <ion-row>
+        <ion-col size="12" class="ion-no-margin ion-no-padding">
+          <p class="placeholder">Marital status*</p>
+        </ion-col>
+        <ion-col size="3.5" class="ion-no-margin ion-no-padding">
+          <ion-item lines="none">
+            <ion-label>Single</ion-label>
+            <ion-radio slot="start" value="single"></ion-radio>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="4.25">
+          <ion-item lines="none">
+            <ion-label>Married </ion-label>
+            <ion-radio slot="start" value="married"></ion-radio>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="4.25">
+          <ion-item lines="none">
+            <ion-label>Divorced </ion-label>
+            <ion-radio slot="start" value="divorced"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-radio-group>
+
+    <ion-row>
+      <ion-col class="" size="12">
+        <p class="placeholder">State*</p>
+        <ion-select style="width: 100%; border-radius: 5px; border: 1px solid lightgray" cancelText="Cancel" okText="Ok"
+          title="Select State" placeholder="Select State" class="a1" multiple="false" (ionChange)="stateChanged($event)"
+          [(ngModel)]="data.state">
+          <ion-select-option [value]="item.id" *ngFor="let item of states">
+            {{ item.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="cities && cities.length > 0">
+      <ion-col size="12">
+        <p class="placeholder">City*</p>
+        <ion-select style="width: 100%; border-radius: 5px; border: 1px solid lightgray" cancelText="Cancel" okText="Ok"
+          placeholder="Select City" class="a1" multiple="false" [(ngModel)]="data.city">
+          <ion-select-option [value]="item.id" *ngFor="let item of cities">{{
+            item.name
+            }}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <p class="placeholder">Phone*</p>
+        <ion-input [(ngModel)]="data.phone" class="f-pop-m input ion-padding-start" type="tel"
+          placeholder="Enter Phone Number">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <p class="placeholder">Brief description of yourself*</p>
+        <ion-textarea [(ngModel)]="data.brief_yourself" class="f-pop-m input" style="padding-left: 15px"
+          placeholder="Enter Brief description of yourself">
+        </ion-textarea>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button color="primary" (click)="register()" expand="block">Register</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="list.length > 0" style="
+      width: 79%;
+      position: absolute;
+      left: 3%;
+      top: 17%;
+      background-color: white;
+      z-index: 4;
+      border: 2px solid lightgray;
+      border-radius: 5px;
+    ">
+    <ion-list class="ion-no-padding">
+      <ion-item *ngFor="let item of list" (click)="interestSelected(item)">
+        <ion-label> {{ item }} </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

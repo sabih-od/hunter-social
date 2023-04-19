@@ -1,0 +1,59 @@
+{
+  "about_us": {
+    "title": "ABOUT US",
+    "subtitle": "HUNTER-SOCIAL",
+    "description": "Finally! An online community dedicated to everyone who loves the outdoors! Complete with directories of destinations where an individual or a family can experience what it’s like to hunt, fish, and enjoy the outdoors like never before. Get one stop convenience when searching for things like: Directories for Game Ranches and Professional Guides, state by state. Directories for Taxidermist’s and Game Processors, state by state! Recipes to cook your catch, or post your own! Links to hunting and fishing regulations state by state A dating page where you can find that like minded soul mate! The latest equipment reviews on guns, archery, fishing and camping equipment! Or post your own reviews on equipment you have already purchased! And much more! Feel free to look around the website, but to get full access and the benefits that all of our members enjoy ya gotta,Take a Shot! Click on the Logo and become a member today, and enjoy your first month on us!",
+    "image": "https://hunterssocial.com/public/assets/images/img5.jpg"
+  },
+  "hunters": {
+    "title": "SOCIAL HUNTER",
+    "subtitle": "MADE FOR ADVENTURERS",
+    "description": "Build a membership profile into the dating or social side of the hunters social community. Interact one on one and set up private hunting, fishing excursions.",
+    "images": [
+      "https://hunterssocial.com/public/assets/images/img2.jpg",
+      "https://hunterssocial.com/public/assets/images/img3.jpg",
+      "https://hunterssocial.com/public/assets/images/img5.jpg",
+      "https://hunterssocial.com/public/assets/images/img4.jpg",
+      "https://hunterssocial.com/public/assets/images/img6.jpg",
+      "https://hunterssocial.com/public/assets/images/img7.jpg"
+    ]
+  },
+  "images": [
+    "https://hunterssocial.com/public/assets/images/unnamed1.jpg",
+    "https://hunterssocial.com/public/assets/images/unnamed4.jpg",
+    "https://hunterssocial.com/public/assets/images/unnamed2.jpg",
+    "https://hunterssocial.com/public/assets/images/unnamed3.jpg"
+  ],
+  "reviews": {
+    "title": "WHAT CLIENT SAY ABOUT US",
+    "subtitle": "TESTIMONIALS",
+    "reviews": [
+      {
+        "rating": 5,
+        "review": "Auspicious Laboratory was very quick in returning great lab test results. We will definitely be using them again in the near future.",
+        "image": "https://hunterssocial.com/public/assets/images/user2.jpg",
+        "name": "Amelia Keti."
+      },
+      {
+        "rating": 5,
+        "review": "Auspicious Laboratory was very quick in returning great lab test results. We will definitely be using them again in the near future.",
+        "image": "https://hunterssocial.com/public/assets/images/user3.jpg",
+        "name": "Tina Rowland"
+      },
+      {
+        "rating": 5,
+        "review": "Auspicious Laboratory was very quick in returning great lab test results. We will definitely be using them again in the near future.",
+        "image": "https://hunterssocial.com/public/assets/images/user1.jpg",
+        "name": "Amelia Keti."
+      }
+    ]
+  },
+  "logos": [
+    "https://hunterssocial.com/public/assets/images/sponsor1.jpg",
+    "https://hunterssocial.com/public/assets/images/sponsor2.jpg",
+    "https://hunterssocial.com/public/assets/images/sponsor3.jpg",
+    "https://hunterssocial.com/public/assets/images/sponsor4.jpg"
+  ],
+  "title": "SUBSCRIBE TO OUR NEWSLETTER",
+  "description": "Start by signing up for emails and get 15% off any order."
+}

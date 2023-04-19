@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Please Choose </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-col size="6">
+        <ion-card (click)="openWebview()" class="ion-padding-vertical">
+          <ion-item lines="none">
+            <ion-label class="ion-text-center">
+              <ion-icon name="home-outline" style="font-size: 50px;"></ion-icon>
+              <h2>
+                <b> Home </b>
+              </h2>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+
+
+      <ion-col size="6">
+        <ion-card (click)="editProfile()" class="ion-padding-vertical">
+          <ion-item lines="none">
+            <ion-label class="ion-text-center">
+              <ion-icon name="person-outline" style="font-size: 50px;"></ion-icon>
+              <h2>
+                <b> Edit Profile </b>
+              </h2>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+
+
+    </ion-row>
+
+    <!-- <ion-row>
+      <ion-col size=" 12">
+        <ion-button expand="block" color="secondary" (click)="openWebview()">
+          Go to Home
+        </ion-button>
+      </ion-col>
+    </ion-row> -->
+  </ion-grid>
+
+</ion-content>
