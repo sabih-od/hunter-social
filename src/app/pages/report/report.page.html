@@ -1,0 +1,24 @@
+<!-- <app-header [title]="'REPORT'" [showcurve]="false" [showSearch]="false" [showCart]="false"></app-header> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-buttons>
+        <ion-button (click)="close()">
+          <ion-icon class="back-icon" name="arrow-back-circle"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Report</ion-title>
+      <ion-buttons style="margin-left: 250px;">
+        <ion-button> Submit </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 style="padding: 10px">Report this post</h1>
+  <ion-item>
+    <ion-textarea placeholder="Describe reason"> </ion-textarea>
+  </ion-item>
+</ion-content>

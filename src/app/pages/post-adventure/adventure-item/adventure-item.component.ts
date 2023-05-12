@@ -6,6 +6,7 @@ import { CommentsComponent } from '../comments/comments.component';
 import { MenusComponent } from '../menus/menus.component';
 import { Share } from '@capacitor/share';
 import { SocialMenusComponent } from '../social-menus/social-menus.component';
+import { ReportPage } from '../../report/report.page';
 
 
 @Component({
@@ -41,6 +42,12 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     else this.item.count_likes++;
     this.item.has_liked = !this.item.has_liked;
   }
+
+  async openreport() {
+ await this.modals.present(ReportPage);
+    console.log('ReportComponent');
+  }
+
 
   async showComments() {
     let res = await this.modals.present(CommentsComponent, {

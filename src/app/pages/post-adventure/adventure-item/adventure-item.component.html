@@ -6,22 +6,25 @@
       </ion-avatar>
       <ion-label class="ion-margin-start">
         <!-- (click)="goToProfile(item)" -->
-        <h2 >{{ item.user?.name }}</h2>
+        <h2>{{ item.user?.name }}</h2>
         <p>{{ item.created_at }}</p>
       </ion-label>
-<div class="dot-icon" (click)="show = !show">
-      <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon>
-    </div>
+      <div class="dot-icon" (click)="show = !show">
+        <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon>
+      </div>
       <!-- <ion-popover trigger="click-trigger" triggerAction="click">
         <ng-template>
           <ion-content class="ion-padding">Hello World!</ion-content>
         </ng-template>
       </ion-popover> -->
-      <div class="pop-over" *ngIf="show">
-        <span>Report post</span><br>
-        <span>Delete post</span>
-      </div>
+      <!-- <div class="pop-over" *ngIf="show" >
+        <span click="openAmenities()"></span><br>
+      </div> -->
 
+      <ion-list *ngIf="show">
+        <ion-item (click)="openreport()"> Report post </ion-item>
+        <ion-item> Delete Post </ion-item>
+      </ion-list>
 
       <ion-icon
         *ngIf="item.isMyPost"

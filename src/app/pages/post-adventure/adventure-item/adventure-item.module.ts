@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { AdventureItemComponent } from './adventure-item.component';
 @NgModule({
   declarations: [AdventureItemComponent],
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule,],
   exports: [AdventureItemComponent],
 })
 export class AdventureItemModule {}
