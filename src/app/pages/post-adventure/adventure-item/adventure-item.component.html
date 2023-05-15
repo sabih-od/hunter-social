@@ -10,7 +10,12 @@
         <p>{{ item.created_at }}</p>
       </ion-label>
       <div class="dot-icon" (click)="show = !show">
-        <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon>
+        <ion-buttons slot="end">
+          <ion-button (click)="openPopup($event)">
+            <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <!-- <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon> -->
       </div>
       <!-- <ion-popover trigger="click-trigger" triggerAction="click">
         <ng-template>
@@ -21,10 +26,10 @@
         <span click="openAmenities()"></span><br>
       </div> -->
 
-      <ion-list *ngIf="show">
+      <!-- <ion-list *ngIf="show">
         <ion-item (click)="openreport()"> Report post </ion-item>
         <ion-item> Delete Post </ion-item>
-      </ion-list>
+      </ion-list> -->
 
       <ion-icon
         *ngIf="item.isMyPost"

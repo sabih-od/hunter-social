@@ -1,5 +1,6 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { BasePage } from '../../base-page/base-page';
+import { ReportPage } from '../../report/report.page';
 
 @Component({
   selector: 'app-comments',
@@ -42,6 +43,10 @@ export class CommentsComponent extends BasePage implements OnInit {
 
   ngOnInit() {}
 
+  openPopup($event) {
+    this.alert.presentPopoverReportingComponent($event);
+  }
+
   async addComment() {
     console.log(this.comment);
 
@@ -57,6 +62,10 @@ export class CommentsComponent extends BasePage implements OnInit {
       this.close(true, res.data.comments);
     }
   }
+  async openreport() {
+    await this.modals.present(ReportPage);
+       console.log('ReportComponent');
+     }
 
   close(refresh, comments) {
     this.modals.dismiss({ refresh: refresh, comments });

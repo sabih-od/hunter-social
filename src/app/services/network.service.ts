@@ -426,7 +426,9 @@ export class NetworkService {
       true
     );
   }
-
+  postReason(data){
+    return this.httpPostResponse("reported",data,null,false,false)
+  }
   deleteRecipe(id) {
     console.log(id);
 

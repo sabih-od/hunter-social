@@ -41,6 +41,9 @@
       <ion-button *ngIf="!isOwnProfile">
         Block User
       </ion-button>
+      <ion-button *ngIf="!isOwnProfile" (click)="openreport()">
+        Report User
+      </ion-button>
       <ion-button *ngIf="isOwnProfile" color="danger" (click)="deleteAccount(item)">
         Delete Account
       </ion-button>

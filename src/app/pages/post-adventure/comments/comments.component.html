@@ -25,15 +25,20 @@
 
       <p>{{item.created_at | date:'short'}}</p>
       <div class="dot-icon"(click)="showSubItem(i)">
-      <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon>
+        <ion-buttons slot="end">
+          <ion-button (click)="openPopup($event)">
+            <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
     </div>
-    <div class="pop-over" *ngIf="visibleIndex === i">
+    <!-- <div class="pop-over" *ngIf="visibleIndex === i">
       <span>Report post</span><br>
       <span>Delete post</span>
-      <!-- <ion-button>report post</ion-button><br>
-      <ion-button>delete post</ion-button> -->
-
-    </div>
+    </div> -->
+     <!-- <ion-list class="pop-over" *ngIf="visibleIndex === i">
+        <ion-item (click)="openreport()"> Report post </ion-item>
+        <ion-item> Delete Post </ion-item>
+      </ion-list> -->
     </ion-label>
 
   </ion-item>

@@ -2,6 +2,7 @@ import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { Config } from 'src/app/config/main.config';
 import { BasePage } from '../../base-page/base-page';
+import { ReportPage } from '../../report/report.page';
 
 @Component({
   selector: 'app-profile-ui',
@@ -35,6 +36,7 @@ export class ProfileUIComponent extends BasePage implements OnInit {
   ionViewWillEnter(): void {
     this.getUser();
   }
+
   async initialize() {
     this.getUser();
     this.current_user = await this.users.getUser();
@@ -89,6 +91,10 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
   itemClicked(item: { url: any }) {
     if (item.url) this.nav.push(item.url);
+  }
+  async openreport() {
+    await this.modals.present(ReportPage);
+    console.log('ReportComponent');
   }
 
   async getStates() {
@@ -148,4 +154,5 @@ export class ProfileUIComponent extends BasePage implements OnInit {
       Config?.URL + 'public/storage/uploads/' + this.user_profile?.profile_image
     );
   }
+  
 }

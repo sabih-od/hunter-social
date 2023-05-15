@@ -4,10 +4,8 @@ import { BasePage } from '../../base-page/base-page';
 import { PostAdventureContentPage } from '../../post-adventure-content/post-adventure-content.page';
 import { CommentsComponent } from '../comments/comments.component';
 import { MenusComponent } from '../menus/menus.component';
-import { Share } from '@capacitor/share';
 import { SocialMenusComponent } from '../social-menus/social-menus.component';
 import { ReportPage } from '../../report/report.page';
-
 
 @Component({
   selector: 'adventure-item',
@@ -15,7 +13,7 @@ import { ReportPage } from '../../report/report.page';
   styleUrls: ['./adventure-item.component.scss'],
 })
 export class AdventureItemComponent extends BasePage implements OnInit {
-  show=false
+  show = false;
   @Input() item: any;
   contentLabel = '';
   constructor(injector: Injector, public popoverController: PopoverController) {
@@ -23,7 +21,7 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.item.content);
+    console.log('post:', this.item);
 
     // if(this.item.content === undefined){
     //   this.contentLabel = this.item.content;
@@ -32,8 +30,20 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     // } else{
     //   this.contentLabel = ""
     // }
-
   }
+
+  openPopup($event) {
+    this.alert.presentPopoverReportingComponent($event);
+  }
+
+  // showPopover = async (event: MouseEvent) => {
+  //   const popover = await PopoverController.create({
+  //     component: 'popover-example-page',
+  //     event,
+  //     translucent: true
+  //   });
+  //   return popover.present();
+  // }
 
   async like() {
     let res = await this.network.likePost(this.item.id);
@@ -43,11 +53,13 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     this.item.has_liked = !this.item.has_liked;
   }
 
-  async openreport() {
- await this.modals.present(ReportPage);
-    console.log('ReportComponent');
-  }
-
+  // async openreport() {
+  //   var res = await this.modals.present(ReportPage, {
+  //     tag: 'post',
+  //     id: this.item.id,
+  //   });
+  //   console.log('ReportComponent');
+  // }
 
   async showComments() {
     let res = await this.modals.present(CommentsComponent, {
@@ -150,4 +162,3 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   //     return popover.present();
   //   }
 }
-
