@@ -1,6 +1,14 @@
-<app-header [title]="'Hunter Social'" [showcurve]="false" [back]="false" [showMenu]="true"></app-header>
+<app-header
+  [title]="'Hunter Social'"
+  [showcurve]="false"
+  [back]="false"
+  [showMenu]="true"
+></app-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content [color]="light"></ion-refresher-content>
+  </ion-refresher>
   <app-how-to-banner></app-how-to-banner>
   <div class="text">
     <h2 style="font-size: 35px"><b>HOW TO VIDEOS</b></h2>

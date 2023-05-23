@@ -6,6 +6,7 @@ import { NavService } from './services/basic/nav.service';
 import { FirebaseService } from './services/firebase.service';
 import { UserService } from './services/user.service';
 import { UtilityService } from './services/utility.service';
+import { SqliteService } from './services/sqlite.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent {
     public utility: UtilityService,
     private modalController: ModalController,
     public platform: Platform,
-    public fcm: FirebaseService
+    public fcm: FirebaseService,
+    private sqlite: SqliteService
   ) {
     platform.ready().then(() => {
       this.initialize();
@@ -50,6 +52,12 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(async () => {
+      this.sqlite
+        .initialize()
+        .then(() => {
+          console.log('sqlite initialized');
+        })
+        .catch((err) => alert(err));
       await this.fcm.setupFMC();
     });
   }

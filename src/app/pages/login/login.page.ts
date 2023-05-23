@@ -39,7 +39,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   setupPasswordForm() {
     const re = /\S+@\S+\.\S+/;
     this.aForm = this.formBuilder.group({
-      email: ['karlfreddie@mailinator.com', [Validators.required]],
+      email: ['', [Validators.required]],
     });
   }
 
@@ -48,11 +48,11 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
     this.aForm = this.formBuilder.group({
       email: [
-        'karlfreddie@mailinator.com', //test@test.com
+        '', //test@test.com
         Validators.compose([Validators.required, Validators.email]),
       ],
       password: [
-        '12345678', // 12345678
+        '', // 12345678
         Validators.compose([
           Validators.minLength(6),
           Validators.maxLength(30),

@@ -30,7 +30,8 @@ export class EquipmentReviewsPage extends BasePage implements OnInit {
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
 
-  showReviews(item) {
+  showReviews($event, item) {
+    $event.stopPropagation();
     this.dataService.equipment = item;
     this.nav.push('pages/equipment-reviews-list');
   }

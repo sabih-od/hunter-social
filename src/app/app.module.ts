@@ -30,6 +30,8 @@ import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions
 import { QuillModule } from 'ngx-quill';
 import { Stripe } from '@awesome-cordova-plugins/stripe/ngx';
 import { InAppPurchase2 } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
+import { SqliteService } from './services/sqlite.service';
+import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -64,7 +66,9 @@ import { InAppPurchase2 } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
     FilePath,
     AndroidPermissions,
     Stripe,
-    InAppPurchase2
+    InAppPurchase2,
+    SQLite,
+    SqliteService,
   ],
   bootstrap: [AppComponent],
 })

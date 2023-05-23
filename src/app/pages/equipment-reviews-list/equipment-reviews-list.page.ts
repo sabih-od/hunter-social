@@ -13,10 +13,16 @@ export class EquipmentReviewsListPage extends BasePage implements OnInit {
   next_page: any;
   current_page = 1;
   loading: boolean = true;
+  videos = [];
 
   constructor(injector: Injector) {
     super(injector);
   }
+
+  ionViewWillEnter() {
+    console.log('fdsafdsafdsafdsafdsa');
+  }
+
   async addNew() {
     let res = await this.modals.present(AddReviewComponent);
     console.log(res, 'addNew');
@@ -32,10 +38,19 @@ export class EquipmentReviewsListPage extends BasePage implements OnInit {
 
   async getData(paginate = false) {
     let item = this.dataService.equipment;
+
     let res = await this.network.getEquipmentReviews(
       item.id,
       this.current_page
     );
+
+    this.network.getEquipmentShow(item.id).then((data) => {
+      console.log(data);
+      if (data.data) {
+        let f = data.data;
+        this.videos = f.videos;
+      }
+    });
 
     console.log(res);
 

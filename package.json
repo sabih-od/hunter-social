@@ -36,6 +36,7 @@
     "@awesome-cordova-plugins/in-app-purchase-2": "^6.3.0",
     "@awesome-cordova-plugins/ionic-webview": "^5.37.1",
     "@awesome-cordova-plugins/media-capture": "^5.40.0",
+    "@awesome-cordova-plugins/sqlite": "^6.3.0",
     "@awesome-cordova-plugins/stripe": "^5.43.0",
     "@capacitor-community/http": "^1.4.1",
     "@capacitor/android": "3.3.2",

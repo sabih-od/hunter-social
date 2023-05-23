@@ -29,11 +29,15 @@ export class RecipeComponent extends BasePage implements OnInit {
 
   openPopup($event) {
     console.log(this.item);
-    this.alert.presentPopoverReportingComponent($event, {
-      item_id: this.item.id,
-      item_desc: this.item.content,
-      tag: 'recipe',
-    });
+    if (this.item.is_reported) {
+      this.alert.presentFailureToast('Already reported!');
+    } else {
+      this.alert.presentPopoverReportingComponent($event, {
+        item_id: this.item.id,
+        item_desc: this.item.content,
+        tag: 'recipe',
+      });
+    }
   }
 
   openLink() {

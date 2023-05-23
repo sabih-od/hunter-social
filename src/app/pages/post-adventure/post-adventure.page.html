@@ -1,6 +1,9 @@
 <app-header [title]="'POST YOUR ADVENTURE'" [showcurve]="false"></app-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content [color]="light"></ion-refresher-content>
+  </ion-refresher>
   <app-post-banner></app-post-banner>
 
   <!-- <ion-card style="background-color: gray" *ngIf="!closed">

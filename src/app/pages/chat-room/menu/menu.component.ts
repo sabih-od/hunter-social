@@ -9,26 +9,34 @@ import { ReportPage } from '../../report/report.page';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent extends BasePage implements OnInit {
-  @Input() user_profile: any;
-  item: any;
-  constructor(public popoverController: PopoverController, injector: Injector,public navParams:NavParams) {
+  // @Input() user_profile: any;
+  @Input() item: any;
+  constructor(
+    public popoverController: PopoverController,
+    injector: Injector,
+    public navParams: NavParams
+  ) {
     super(injector);
     this.item = this.navParams.get('key1');
-    
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   action(type) {
     this.popoverController.dismiss({ type });
   }
   async openreport() {
-    var res = await this.modals.present(ReportPage, {
-      tag: 'user',
-      item_id: this.user_profile,
-      item_desc: this.user_profile,
-      item: this.item,
-    });
+    console.log('PING432634', this.item);
+
+    if (this.item.is_reported) {
+      this.alert.presentFailureToast('Already reported!');
+    } else {
+      var res = await this.modals.present(ReportPage, {
+        tag: 'user',
+        item_id: this.item.id,
+        item_desc: '',
+        item: this.item,
+      });
+    }
   }
 }

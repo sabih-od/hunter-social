@@ -59,6 +59,9 @@ export class NetworkService {
   }
 
   getCities(id) {
+    if (!id || isNaN(id)) {
+      return;
+    }
     return this.httpGetResponse(`cities/${id}`);
   }
 
@@ -210,6 +213,10 @@ export class NetworkService {
       null,
       false
     );
+  }
+
+  getEquipmentShow(id) {
+    return this.httpGetResponse(`equipments/${id}`, null, false);
   }
 
   editreview(data, id) {
@@ -483,6 +490,10 @@ export class NetworkService {
       `charge-payment/${email}/${package_id}/${token}`,
       null
     );
+  }
+
+  getStripePublishableKey() {
+    return this.httpGetResponse(`get-stripe-key`, null);
   }
 
   httpPostResponse(

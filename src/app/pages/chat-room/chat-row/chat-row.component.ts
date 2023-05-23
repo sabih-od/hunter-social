@@ -23,8 +23,7 @@ export class ChatRowComponent extends BasePage implements OnInit {
     let menu = await this.popoverController.create({
       component: this.item.is_friend ? MenuComponent : MenuNotFriendComponent,
       event: $event,
-      componentProps:{key1:this.item}
-
+      componentProps: { key1: this.item, item: this.item },
     });
     menu.present();
     let data = await menu.onDidDismiss();

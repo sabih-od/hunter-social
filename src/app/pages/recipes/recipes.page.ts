@@ -15,21 +15,30 @@ export class RecipesPage extends BasePage implements OnInit {
     super(injector);
   }
 
+  handleRefresh(event) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      this.getData();
+      event.target.complete();
+    }, 2000);
+  }
+
   ngOnInit() {
     this.events.subscribe('RECEIPE_UPDATED', (data) => {
       console.log('recipe_updated');
-      this.recipies = this.recipies.map((x) =>
-        x.id !== data.id
-          ? x
-          : {
-              ...x,
-              auth_review: {
-                rating: data.rating,
-              },
-              reviews_count: (x.reviews_count += 1),
-              rating: Math.round(x.total_reviews / (x.reviews_count + 1)),
-            }
-      );
+      this.getData();
+      // this.recipies = this.recipies.map((x) =>
+      //   x.id !== data.id
+      //     ? x
+      //     : {
+      //         ...x,
+      //         auth_review: {
+      //           rating: data.rating,
+      //         },
+      //         reviews_count: (x.reviews_count += 1),
+      //         rating: Math.round(x.total_reviews / (x.reviews_count + 1)),
+      //       }
+      // );
       // this.getData();
     });
     // this.addNew();
@@ -49,7 +58,7 @@ export class RecipesPage extends BasePage implements OnInit {
         ...res.data.data.map((x) => ({
           ...x,
           created_by_me: x.user_id === user.id,
-          
+
           rating: Math.round(x.total_reviews / x.reviews_count),
           profile_image: this.users.getProfileImage(x.user.profile_image),
         })),

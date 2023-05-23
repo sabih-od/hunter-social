@@ -23,16 +23,17 @@ export class HowToCardsComponent extends BasePage implements OnInit {
     this.getComments();
   }
 
-  openPopup($event) {
+  async openPopup($event) {
     console.log(this.item);
-    if (this.item.is_reported == false) {
-      this.alert.presentPopoverReportingComponent($event, {
+    if (this.item.is_reported) {
+      this.alert.presentFailureToast('Already reported!');
+    } else {
+      await this.alert.presentPopoverReportingComponent($event, {
         item_id: this.item.id,
         item_desc: this.item.content,
-        tag: 'post',
+        tag: 'comment',
       });
-    } else {
-      this.alert.presentFailureToast('Already reported!');
+      this.getComments();
     }
   }
 

@@ -20,6 +20,14 @@ export class HowToPage extends BasePage implements OnInit {
     this.getData();
   }
 
+  handleRefresh(event) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      this.getData();
+      event.target.complete();
+    }, 2000);
+  }
+
   async getData() {
     let res = await this.network.howToVideos();
     console.log('howToVideos', res);

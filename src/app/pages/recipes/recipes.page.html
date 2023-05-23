@@ -6,6 +6,9 @@
 ></app-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content [color]="light"></ion-refresher-content>
+  </ion-refresher>
   <app-recipe-banner></app-recipe-banner>
   <div
     style="
