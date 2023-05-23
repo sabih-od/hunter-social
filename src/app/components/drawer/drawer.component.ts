@@ -11,24 +11,148 @@ import { UserDetailComponentComponent } from 'src/app/pages/dating/user-detail-c
 })
 export class DrawerComponent extends BasePage implements OnInit {
   public appPages = [];
-  user = {};
+  user: any = {};
+  packageId = 0;
   isEventSubscribed = false;
   isDatingEnabled = false;
   constructor(injector: Injector) {
     super(injector);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    let res = await this.network.getUser();
+    console.log('97892347894239hhkdfhsjkh', { res });
     this.appPages = this.dataService.getMenus();
     this.menuCtrl.swipeGesture(false, 'main');
     this.events.subscribe('USER_DATA_RECEIVED', async (data) => {
       console.log('USER_DATA_RECEIVED', data);
-      this.user = await this.users.getUser();
+      this.packageId = res?.data?.user?.profile_detail?.package_id;
     });
-    // this.user = this.dataService.getUser();
   }
 
   navigate(url) {
+    this.packageId = this.user.profile_detail.package_id;
+
+    console.log(url, this.packageId);
+    switch (url) {
+      case 'pages/ranch-locator':
+        if (this.packageId != 1) {
+          this.goto('pages/ranch-locator');
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+
+        break;
+      case 'pages/taxidermy':
+        if (this.packageId != 1) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+      case 'pages/outfitters':
+        if (this.packageId != 1) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+      case 'pages/chat-rooms':
+        if (this.packageId) {
+          this.goto(url);
+        }
+        break;
+      case 'pages/recipes':
+        if (this.packageId != 1) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+      case 'pages/post-adventure':
+        if (this.packageId != 1) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+      case 'pages/store':
+        if (this.packageId) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+      case 'pages/dating':
+        if (this.packageId != 1) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+      case 'pages/nationwide-laws':
+        if (this.packageId != 1) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+      case 'pages/contact-us':
+        if (this.packageId) {
+          this.goto(url);
+        }
+        break;
+      case 'pages/how-to':
+        if (this.packageId != 1) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+      case 'pages/equipment-reviews':
+        if (this.packageId != 1) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+      case 'pages/marketplace':
+        if (this.packageId != 1) {
+          this.goto(url);
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account.'
+          );
+        }
+        break;
+
+      default:
+        this.goto(url);
+        break;
+    }
+  }
+
+  goto(url) {
     if (this.menuCtrl.isOpen) this.menuCtrl.toggle();
     this.nav.push(url);
   }
@@ -69,21 +193,21 @@ export class DrawerComponent extends BasePage implements OnInit {
   }
 
   async menuClicked(item) {
-    console.log('Subscribe now', item);
+    this.user = await this.users.getUser();
+    this.packageId = this.user.profile_detail.package_id;
+    console.log('Subscribe now', this.user);
     this.user = await this.users.getUser();
     console.log('USER', this.user, item.role);
-    // if (item.role > this.user['role_id']) {
-    //   alert(
-    //     'You are not allowed to view this page, Please upgrade your account'
-    //   );
-    //   return;
-    // }
 
     if (item.url == 'pages/dating') {
-      // await this.utility.showLoader();
-      let flag = await this.datingEnable();
-      this.isDatingEnabled = flag;
-      // await this.utility.hideLoader();
+      if (this.packageId != 1) {
+        let flag = await this.datingEnable();
+        this.isDatingEnabled = flag;
+      } else {
+        this.utility.presentFailureToast(
+          'You are not allowed to view this page. Please upgrade your account.'
+        );
+      }
     }
 
     if (item.submenus) {
@@ -143,9 +267,17 @@ export class DrawerComponent extends BasePage implements OnInit {
   }
 
   async editUser() {
-    let data = await this.modals.present(UserDetailComponentComponent);
-    console.log(data);
-    if (data.data?.success) this.openDatingChatRoom();
+    this.user = await this.users.getUser();
+    this.packageId = this.user.profile_detail.package_id;
+    if (this.packageId === 3) {
+      let data = await this.modals.present(UserDetailComponentComponent);
+      console.log(data);
+      if (data.data?.success) this.openDatingChatRoom();
+    } else {
+      this.utility.presentFailureToast(
+        'You are not allowed to view this page. Please upgrade your account.'
+      );
+    }
   }
 
   openDatingChatRoom() {

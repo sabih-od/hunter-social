@@ -17,7 +17,6 @@ export class EquipmentReviewsListPage extends BasePage implements OnInit {
   constructor(injector: Injector) {
     super(injector);
   }
-
   async addNew() {
     let res = await this.modals.present(AddReviewComponent);
     console.log(res, 'addNew');

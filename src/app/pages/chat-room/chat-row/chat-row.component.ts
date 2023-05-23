@@ -15,12 +15,16 @@ export class ChatRowComponent extends BasePage implements OnInit {
     super(injector);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.item);
+  }
 
   async showMenu($event) {
     let menu = await this.popoverController.create({
       component: this.item.is_friend ? MenuComponent : MenuNotFriendComponent,
       event: $event,
+      componentProps:{key1:this.item}
+
     });
     menu.present();
     let data = await menu.onDidDismiss();

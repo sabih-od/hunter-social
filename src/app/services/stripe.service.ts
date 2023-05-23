@@ -12,7 +12,9 @@ export class StripeService {
 
   init() {
     this.stripe.setPublishableKey(
-      'pk_live_51LphEFDlVwvNPd3Id77f7BuGkVeWudwFty5xGNQeHfF0n28RU0gcR81G2WD8p0udfsxrhZC1fOEVcl5QVeJPsoTy00QvFzcEAj'
+      // 'pk_live_51LphEFDlVwvNPd3Id77f7BuGkVeWudwFty5xGNQeHfF0n28RU0gcR81G2WD8p0udfsxrhZC1fOEVcl5QVeJPsoTy00QvFzcEAj'
+      // 'sk_test_lUp78O7PgN08WC9UgNRhOCnr'
+      'pk_test_0rY5rGJ7GN1xEhCB40mAcWjg'
     );
 
     console.log('Init');

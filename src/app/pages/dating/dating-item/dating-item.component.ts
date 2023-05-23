@@ -24,6 +24,16 @@ export class DatingItemComponent extends BasePage implements OnInit {
 
   ngOnInit() {}
 
+
+  openPopup($event) {
+    console.log(this.item);
+    this.alert.presentPopoverReportingComponent($event, {
+      item_id: this.item.id,
+      item_desc: this.item.content,
+      tag: 'User',
+    });
+  }
+
   async addFriend() {
     if (this.item.is_sent_friend_request) {
       return this.utility.presentToast('Friend Request Already Sent');

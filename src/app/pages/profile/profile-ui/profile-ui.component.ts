@@ -92,10 +92,6 @@ export class ProfileUIComponent extends BasePage implements OnInit {
   itemClicked(item: { url: any }) {
     if (item.url) this.nav.push(item.url);
   }
-  async openreport() {
-    await this.modals.present(ReportPage);
-    console.log('ReportComponent');
-  }
 
   async getStates() {
     let res = await this.network.getStates();
@@ -145,7 +141,6 @@ export class ProfileUIComponent extends BasePage implements OnInit {
     // let res = await this.network.logout();
     this.users.removeToken();
     this.users.removeUser();
-    console.log(data);
     this.nav.navigateTo('pages/login');
   }
 
@@ -154,5 +149,12 @@ export class ProfileUIComponent extends BasePage implements OnInit {
       Config?.URL + 'public/storage/uploads/' + this.user_profile?.profile_image
     );
   }
-  
+
+  async openreport() {
+    var res = await this.modals.present(ReportPage, {
+      tag: 'user',
+      item_id: this.user_profile.id,
+      item_desc: this.user_profile.name,
+    });
+  }
 }

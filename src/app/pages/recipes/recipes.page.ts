@@ -49,6 +49,7 @@ export class RecipesPage extends BasePage implements OnInit {
         ...res.data.data.map((x) => ({
           ...x,
           created_by_me: x.user_id === user.id,
+          
           rating: Math.round(x.total_reviews / x.reviews_count),
           profile_image: this.users.getProfileImage(x.user.profile_image),
         })),

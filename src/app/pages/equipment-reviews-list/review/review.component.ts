@@ -1,6 +1,7 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { BasePage } from '../../base-page/base-page';
-
+import { Config } from 'src/app/config/main.config';
+import { AddReviewComponent } from '../../equipment-reviews-list/add-review/add-review.component';
 @Component({
   selector: 'review',
   templateUrl: './review.component.html',
@@ -8,12 +9,21 @@ import { BasePage } from '../../base-page/base-page';
 })
 export class ReviewComponent extends BasePage implements OnInit {
   @Input() item;
+  url: any;
   constructor(injector: Injector) {
     super(injector);
+    this.url = Config.URL;
   }
 
   ngOnInit() {}
 
+  async editReview(item) {
+    await this.modals.present(AddReviewComponent, {
+      reviewItem: item,
+      tag: 'edit',
+    });
+    this.events.publish('UPDATE_REVIEWS');
+  }
   async deleteReview() {
     let res = await this.network.deleteReview(this.item.id);
     console.log('deleteReview', res);

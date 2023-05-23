@@ -64,6 +64,8 @@ export class HomePage extends BasePage implements OnInit {
     },
   ];
   dashboardData;
+  user: any = [];
+  packageId: 0;
   constructor(
     injector: Injector,
     private iab: InAppBrowser,
@@ -123,6 +125,8 @@ export class HomePage extends BasePage implements OnInit {
 
   async initialize() {
     this.datings = this.dataService.getDatings();
+    this.packageId = await this.user.profile_detail.package_id;
+
     console.log(localStorage.getItem('token'));
     this.dashboardData = this.dataService.getDashboardData();
     console.log(this.dashboardData);

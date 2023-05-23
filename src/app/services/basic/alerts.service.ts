@@ -42,6 +42,7 @@ export class AlertsService {
       duration: 5000,
       position: 'top',
       cssClass: 'successToast',
+      color: 'success',
       buttons: [
         {
           side: 'end',
@@ -145,10 +146,13 @@ export class AlertsService {
     });
   }
 
-  presentPopoverReportingComponent(event) {
+  presentPopoverReportingComponent(event, data: any = {}) {
     return new Promise(async (resolve) => {
       const popover = await this.popover.create({
         component: PopoverComponent,
+        componentProps: {
+          data,
+        },
         event,
         translucent: true,
       });

@@ -16,7 +16,11 @@ export class PostAdventurePage extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    this.events.subscribe('UPDATE_POSTS', this.getData.bind(this));
+    this.events.subscribe('HOW_TO_POST_UPDATED', () => {
+      console.log('uyyyyy686796789');
+      this.getData();
+    });
+    // this.events.subscribe('UPDATE_POSTS', this.getData.bind(this));
     //this.items = this.dataService.getAdventres();
     this.getData();
   }

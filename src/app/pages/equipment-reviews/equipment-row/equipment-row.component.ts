@@ -33,7 +33,9 @@ export class EquipmentRowComponent extends BasePage implements OnInit {
     });
   }
   async addNew() {
-    let res = await this.modals.present(AddReviewComponent);
+    let res = await this.modals.present(AddReviewComponent, {
+      item: this.item,
+    });
     let refresh = res.data.refresh;
     console.log(res, 'addNew', refresh);
     if (refresh) this.events.publish('UPDATE_REVIEWS');

@@ -1,5 +1,7 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { BasePage } from '../../base-page/base-page';
+import { PopoverController } from '@ionic/angular';
+import { MenusComponent } from '../../post-adventure/menus/menus.component';
 
 @Component({
   selector: 'app-how-to-cards',
@@ -11,7 +13,7 @@ export class HowToCardsComponent extends BasePage implements OnInit {
   comment;
   profile_image;
   comments = [];
-  constructor(injector: Injector) {
+  constructor(injector: Injector, public popoverController: PopoverController) {
     super(injector);
   }
 
@@ -20,6 +22,37 @@ export class HowToCardsComponent extends BasePage implements OnInit {
     this.profile_image = this.users.getProfileImage(user.profile_image);
     this.getComments();
   }
+
+  openPopup($event) {
+    console.log(this.item);
+    if (this.item.is_reported == false) {
+      this.alert.presentPopoverReportingComponent($event, {
+        item_id: this.item.id,
+        item_desc: this.item.content,
+        tag: 'post',
+      });
+    } else {
+      this.alert.presentFailureToast('Already reported!');
+    }
+  }
+
+  // async showMenu($event) {
+  //   let menu = await this.popoverController.create({
+  //     component: MenusComponent,
+  //     event: $event,
+  //   });
+  //   menu.present();
+  //   let data = await menu.onDidDismiss();
+  //   console.log(data);
+  //   if (data.data?.type === 'delete') this.deletePost();
+  //   else if (data.data?.type === 'edit') {
+  //     let res = await this.modals.present(CardSubmissionComponent, {
+  //       item: this.item,
+  //     });
+  //     console.log(res);
+  //     if (res && res.data.refresh) this.events.publish('UPDATE_POSTS');
+  //   }
+  // }
 
   async deleteVideo() {
     let res = await this.network.deleteHowToVideo(this.item.id);

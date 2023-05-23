@@ -4,13 +4,13 @@
   <ion-toolbar>
     <ion-item lines="none">
       <ion-buttons>
-        <ion-button (click)="close()">
+        <ion-button slot="start" (click)="close()">
           <ion-icon class="back-icon" name="arrow-back-circle"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-title style="margin-left: 100px;">Report</ion-title>
-      <ion-buttons style="margin-left: 50px" (click)="submit()">
-        <ion-button> Submit </ion-button>
+      <ion-title>Report</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="submit()"> Submit </ion-button>
       </ion-buttons>
     </ion-item>
   </ion-toolbar>
@@ -18,6 +18,8 @@
 
 <ion-content>
   <h1 style="padding: 10px">Report this {{tag}}</h1>
+  <p style="padding: 10px">{{item_desc}}</p>
+  <p style="margin-left: 13px; margin-top: -50px;">{{item?.name}}</p>
   <ion-item>
     <ion-textarea placeholder="Describe reason" [(ngModel)]="reason">
     </ion-textarea>

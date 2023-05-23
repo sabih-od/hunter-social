@@ -1,4 +1,6 @@
 <ion-list>
-  <ion-item button (click)="openreport()">Report</ion-item>
-  <ion-item button>Delete Post</ion-item>
+  <ion-item button (click)="ab(showReport)">{{
+    showReport ? "Report" : "Delete"
+  }}</ion-item>
+  <!-- <ion-item button (click)="deleteComment()"> </ion-item> -->
 </ion-list>

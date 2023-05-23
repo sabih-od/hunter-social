@@ -8,10 +8,12 @@ import { ReportPage } from '../../report/report.page';
   styleUrls: ['./comments.component.scss'],
 })
 export class CommentsComponent extends BasePage implements OnInit {
-  visibleIndex=-1
+  visibleIndex = -1;
   _comments;
   _post_id;
   comment;
+  userData;
+  item: any;
 
   @Input() set commments(val) {
     this._comments = val?.map((item) => ({
@@ -21,8 +23,7 @@ export class CommentsComponent extends BasePage implements OnInit {
         profile_image: this.image.getImageUrl(item.user.profile_image),
       },
     }));
-    console.log("this._comments",this._comments);
-
+    console.log('this._comments', this._comments);
   }
 
   get commments() {
@@ -41,10 +42,28 @@ export class CommentsComponent extends BasePage implements OnInit {
     super(injector);
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.userData = await this.users.getUser();
+    console.log('USER', this.userData);
 
-  openPopup($event) {
-    this.alert.presentPopoverReportingComponent($event);
+    this.events.subscribe('HOW_TO_POST_UPDATED_DELETECOMMENT', () => {
+      this.modals.dismiss();
+    });
+  }
+
+  openPopup(item: any, $event) {
+
+    console.log(item);
+    if (item.is_reported == false)
+      this.alert.presentPopoverReportingComponent($event, {
+        item_id: item.id,
+        item_desc: item.comment,
+        user_id: item.user_id,
+        tag: 'comment',
+      });
+    else {
+      this.alert.presentFailureToast('Already reported!');
+    }
   }
 
   async addComment() {
@@ -62,10 +81,11 @@ export class CommentsComponent extends BasePage implements OnInit {
       this.close(true, res.data.comments);
     }
   }
-  async openreport() {
+  async openreport(item) {
+    console.log('ReportComponent', item);
+
     await this.modals.present(ReportPage);
-       console.log('ReportComponent');
-     }
+  }
 
   close(refresh, comments) {
     this.modals.dismiss({ refresh: refresh, comments });

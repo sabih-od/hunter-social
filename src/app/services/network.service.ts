@@ -32,7 +32,7 @@ export class NetworkService {
   }
 
   logout() {
-    return this.httpPostResponse('auth/delete-account', null, true);
+    return this.httpPostResponse('auth/logout', null);
   }
 
   deleteAccount(data) {
@@ -212,6 +212,10 @@ export class NetworkService {
     );
   }
 
+  editreview(data, id) {
+    return this.httpPostResponse(`reviews/${id}`, data, null, true);
+  }
+
   addReview(data, id) {
     return this.httpPostResponse(`equipments/reviews/${id}`, data, null, true);
   }
@@ -365,6 +369,10 @@ export class NetworkService {
     return this.httpPostResponse(`recipes`, data, null, true);
   }
 
+  editRecipe(data, id) {
+    return this.httpPutResponse(`recipes/` + id, data, null);
+  }
+
   increaseDecrese(data, isIncreased = true) {
     return this.httpPostResponse(
       isIncreased ? 'cart/increase' : 'cart/decrease',
@@ -426,8 +434,8 @@ export class NetworkService {
       true
     );
   }
-  postReason(data){
-    return this.httpPostResponse("reported",data,null,false,false)
+  postReason(data) {
+    return this.httpPostResponse('reported', data, null, false, false);
   }
   deleteRecipe(id) {
     console.log(id);
@@ -457,6 +465,10 @@ export class NetworkService {
 
   updatePackage(id, data) {
     return this.httpPostResponse(`update-package/${id}`, data);
+  }
+
+  subscribeNewsletter(data) {
+    return this.httpPostResponse(`subscribe`, data);
   }
 
   updateMemership(user_id, payment_status, package_id) {

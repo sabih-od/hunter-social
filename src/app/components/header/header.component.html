@@ -26,6 +26,7 @@
       *ngIf="isSearchVisible"
       style="border-bottom: 2px solid lightgray"
       [(ngModel)]="search_text"
+      (ionChange)="searchNow()"
     ></ion-input>
 
     <ion-buttons slot="end">

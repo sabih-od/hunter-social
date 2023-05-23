@@ -173,7 +173,7 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
     let res = await this.network.postData(data, this._item?.id);
     console.log(res);
     if (res && res.data) {
-      this.utility.presentFailureToast(res.message);
+      this.utility.presentSuccessToast(res.message);
       this.close(true);
     } else
       this.utility.presentFailureToast(

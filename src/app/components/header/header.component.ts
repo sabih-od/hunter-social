@@ -115,6 +115,7 @@ export class HeaderComponent extends BasePage implements OnInit {
   }
 
   searchNow() {
+    console.log(this.search_text);
     this.search();
   }
 

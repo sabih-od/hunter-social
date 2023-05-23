@@ -1,22 +1,47 @@
-<ion-card style="margin-top: 30px; border: 1px solid gray" class="ion-no-padding">
+<ion-card
+  style="margin-top: 30px; border: 1px solid gray"
+  class="ion-no-padding"
+>
   <ion-card-content class="ion-no-padding ion-no-margin">
     <ion-row>
       <ion-col size="12">
         <ion-item class="ion-no-padding">
-          <ion-avatar (click)="viewProfile(item.user_id)" class="ion-margin-start">
+          <ion-avatar
+            (click)="viewProfile(item.user_id)"
+            class="ion-margin-start"
+          >
             <img style="border-radius: 50%" [src]="item.user.profile_image" />
           </ion-avatar>
-          <h1 (click)="viewProfile(item.user_id)" style="color: black; margin-left: 15px">
+          <h1
+            (click)="viewProfile(item.user_id)"
+            style="color: black; margin-left: 15px"
+          >
             <b>{{ item.user?.name }}</b>
           </h1>
           <ion-buttons *ngIf="item.selfPost" slot="end">
-            <ion-button style="margin-right: -5px" color="secondary" (click)="editVideo()">
+            <ion-button
+              style="margin-right: -5px"
+              color="secondary"
+              (click)="editVideo()"
+            >
               <ion-icon name="create"></ion-icon>
             </ion-button>
-            <ion-button (click)="deleteVideo()" style="margin-right: -15px" color="danger">
+            <ion-button
+              (click)="deleteVideo()"
+              style="margin-right: -15px"
+              color="danger"
+            >
               <ion-icon name="trash"></ion-icon>
             </ion-button>
           </ion-buttons>
+          <ion-icon
+            *ngIf="item.isMyPost"
+            (click)="showMenu($event)"
+            name="ellipsis-vertical-outline"
+            style="font-size: 14px"
+            slot="end"
+          >
+          </ion-icon>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -37,17 +62,26 @@
           <ion-avatar>
             <img style="border-radius: 50%" [src]="profile_image" />
           </ion-avatar>
-          <ion-input style="
+          <ion-input
+            style="
               background-color: white;
               border-color: gray;
               border-radius: 5px;
               width: 80%;
               margin-left: 10px;
-            " class="input-field margin-left" [(ngModel)]="comment" type="text" placeholder="Leave Your Comment..."
-            name="Comment">
+            "
+            class="input-field margin-left"
+            [(ngModel)]="comment"
+            type="text"
+            placeholder="Leave Your Comment..."
+            name="Comment"
+          >
           </ion-input>
-          <ion-icon style="margin-top: -3px; margin-left: 5px; font-size: 25px" name="send-sharp"
-            (click)="addComment()"></ion-icon>
+          <ion-icon
+            style="margin-top: -3px; margin-left: 5px; font-size: 25px"
+            name="send-sharp"
+            (click)="addComment()"
+          ></ion-icon>
         </ion-item>
         <div style="border-bottom: 1px solid gray; margin-top: 15px"></div>
       </ion-col>
@@ -62,10 +96,24 @@
 
           <p style="margin-left: 20px; color: gray">{{ item.comment }}</p>
 
-          <div *ngIf="item.selfComment" slot="end" style="background-color: red; border-radius: 5px; padding: 3px"
-            (click)="deleteComment(item)">
-            <ion-icon color="light" name="trash-outline"></ion-icon>
+          <div *ngIf="item.selfComment" slot="end">
+            <ion-icon
+              color="danger"
+              name="trash-outline"
+              (click)="deleteComment(item)"
+            ></ion-icon>
           </div>
+          <div *ngIf="item.selfComment" slot="end">
+            <ion-icon name="create-outline" color="primary"></ion-icon>
+          </div>
+          <ion-buttons slot="end" *ngIf="!item.selfComment">
+            <ion-button (click)="openPopup($event)">
+              <ion-icon
+                id="click-trigger"
+                name="ellipsis-vertical-outline"
+                style="font-size: 14px"
+              ></ion-icon> </ion-button
+          ></ion-buttons>
         </ion-item>
       </ion-col>
     </ion-row>

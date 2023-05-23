@@ -5,7 +5,9 @@
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title style="font-size: 25px">Add Review</ion-title>
+
+    <ion-title *ngIf="tag != 'edit'" style="font-size: 25px">Add Review</ion-title>
+    <ion-title *ngIf="tag == 'edit'" style="font-size: 25px">Edit Review</ion-title>
   </ion-toolbar>
 </ion-header>
 

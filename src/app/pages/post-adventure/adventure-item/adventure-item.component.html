@@ -9,10 +9,14 @@
         <h2>{{ item.user?.name }}</h2>
         <p>{{ item.created_at }}</p>
       </ion-label>
-      <div class="dot-icon" (click)="show = !show">
+      <div class="dot-icon" (click)="show = !show" *ngIf="!item.isMyPost">
         <ion-buttons slot="end">
           <ion-button (click)="openPopup($event)">
-            <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon>
+            <ion-icon
+              id="click-trigger"
+              name="ellipsis-vertical-outline"
+              style="font-size: 14px"
+            ></ion-icon>
           </ion-button>
         </ion-buttons>
         <!-- <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon> -->

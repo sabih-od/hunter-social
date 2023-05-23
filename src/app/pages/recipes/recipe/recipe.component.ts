@@ -1,5 +1,6 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { BasePage } from '../../base-page/base-page';
+import { AddRecipeComponent } from '../add-recipe/add-recipe.component';
 
 @Component({
   selector: 'recipe',
@@ -13,12 +14,26 @@ export class RecipeComponent extends BasePage implements OnInit {
     super(injector);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.item.auth_review) this.rating = this.item.auth_review.rating;
+    this.userData = await this.users.getUser();
+    console.log('USER', this.userData);
+  }
+  userData(arg0: string, userData: any) {
+    throw new Error('Method not implemented.');
   }
 
   changeRate(_rating) {
     if (!this.item.auth_review) this.rating = _rating;
+  }
+
+  openPopup($event) {
+    console.log(this.item);
+    this.alert.presentPopoverReportingComponent($event, {
+      item_id: this.item.id,
+      item_desc: this.item.content,
+      tag: 'recipe',
+    });
   }
 
   openLink() {
@@ -55,6 +70,13 @@ export class RecipeComponent extends BasePage implements OnInit {
           res?.message ?? 'Something went wrong'
         );
     }
+  }
+
+  async editRecipe() {
+    let res = await this.modals.present(AddRecipeComponent, {
+      item: this.item,
+    });
+    this.events.publish('RECEIPE_UPDATED');
   }
 
   viewProfile(user_id) {

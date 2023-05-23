@@ -39,7 +39,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   setupPasswordForm() {
     const re = /\S+@\S+\.\S+/;
     this.aForm = this.formBuilder.group({
-      email: ['', [Validators.required]],
+      email: ['karlfreddie@mailinator.com', [Validators.required]],
     });
   }
 
@@ -48,11 +48,11 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
     this.aForm = this.formBuilder.group({
       email: [
-        '', //test@test.com
+        'karlfreddie@mailinator.com', //test@test.com
         Validators.compose([Validators.required, Validators.email]),
       ],
       password: [
-        '', // 12345678
+        '12345678', // 12345678
         Validators.compose([
           Validators.minLength(6),
           Validators.maxLength(30),
@@ -114,7 +114,9 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     console.log(formdata);
     try {
       const res = await this.network.forgotPassword(formdata);
+      this.showForgotpass = false;
       console.log(res);
+      this.utility.presentSuccessToast('Email sent Successfullty');
     } catch (err) {
       console.log(err);
       this.utility.presentFailureToast('Wrong Email');

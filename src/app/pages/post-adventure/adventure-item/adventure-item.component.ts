@@ -21,29 +21,26 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log('post:', this.item);
-
     // if(this.item.content === undefined){
     //   this.contentLabel = this.item.content;
     //   console.log("this.contentLabel",this.contentLabel);
-
     // } else{
     //   this.contentLabel = ""
     // }
   }
 
   openPopup($event) {
-    this.alert.presentPopoverReportingComponent($event);
+    console.log(this.item);
+    if (this.item.is_reported == false) {
+      this.alert.presentPopoverReportingComponent($event, {
+        item_id: this.item.id,
+        item_desc: this.item.content,
+        tag: 'post',
+      });
+    } else {
+      this.alert.presentFailureToast('Already reported!');
+    }
   }
-
-  // showPopover = async (event: MouseEvent) => {
-  //   const popover = await PopoverController.create({
-  //     component: 'popover-example-page',
-  //     event,
-  //     translucent: true
-  //   });
-  //   return popover.present();
-  // }
 
   async like() {
     let res = await this.network.likePost(this.item.id);
@@ -52,14 +49,6 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     else this.item.count_likes++;
     this.item.has_liked = !this.item.has_liked;
   }
-
-  // async openreport() {
-  //   var res = await this.modals.present(ReportPage, {
-  //     tag: 'post',
-  //     id: this.item.id,
-  //   });
-  //   console.log('ReportComponent');
-  // }
 
   async showComments() {
     let res = await this.modals.present(CommentsComponent, {

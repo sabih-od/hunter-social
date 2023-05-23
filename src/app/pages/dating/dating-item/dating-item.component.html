@@ -1,8 +1,18 @@
-<ion-card (click)="goToProfile()" class="ion-no-margin">
-  <ion-img [src]="item.profile_image" style="height: 120px"></ion-img>
+<ion-card class="ion-no-margin">
+  <ion-img [src]="item.profile_image" style="height: 120px"  (click)="goToProfile()"></ion-img>
 
   <ion-card-content>
+    <ion-buttons slot="end" >
+      <ion-button style="margin-top: -230px;" (click)="openPopup($event)">
+        <ion-icon
+          id="click-trigger"
+          name="ellipsis-vertical-outline"
+          style="font-size: 14px; margin-left: 100px;"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-card-title class="f-pop-smb title"> {{ item.name }} </ion-card-title>
+   
     <!-- <ion-card-subtitle class="f-pop-m content"
       >Age {{ item.age }} Years</ion-card-subtitle
     > -->
