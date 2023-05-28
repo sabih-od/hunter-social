@@ -66,6 +66,8 @@ export class HomePage extends BasePage implements OnInit {
   dashboardData;
   user: any = [];
   packageId: 0;
+  isLoading = false;
+
   constructor(
     injector: Injector,
     private iab: InAppBrowser,
@@ -185,5 +187,11 @@ export class HomePage extends BasePage implements OnInit {
       location: 'no',
       zoom: 'no',
     }); /*3*/
+  }
+  async doRefresh($event) {
+    this.isLoading = true;
+    await this.getData();
+    $event.target.complete();
+    this.isLoading = false;
   }
 }

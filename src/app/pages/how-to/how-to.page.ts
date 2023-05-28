@@ -45,4 +45,5 @@ export class HowToPage extends BasePage implements OnInit {
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
     }
   }
+  
 }

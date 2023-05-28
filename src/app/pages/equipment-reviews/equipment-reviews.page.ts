@@ -11,6 +11,7 @@ const reviews_data = require('../../data/reviews.json');
 export class EquipmentReviewsPage extends BasePage implements OnInit {
   reviews;
   closed = false;
+  isLoading = false;
   constructor(injector: Injector) {
     super(injector);
   }
@@ -45,5 +46,11 @@ export class EquipmentReviewsPage extends BasePage implements OnInit {
 
   close() {
     this.closed = true;
+  }
+  async doRefresh($event) {
+    this.isLoading = true;
+    await this.getData();
+    $event.target.complete();
+    this.isLoading = false;
   }
 }
