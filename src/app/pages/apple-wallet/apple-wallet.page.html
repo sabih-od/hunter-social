@@ -33,7 +33,11 @@
     </ion-card-header>
     <ion-card-content style="font-size: 12px">
       Subscription will not charge for 6 months after which you have to pay
-      <ion-button slot="end" style="width: 100%; margin-top: 20px">
+      <ion-button
+        slot="end"
+        style="width: 100%; margin-top: 20px"
+        (click)="purchase(p)"
+      >
         {{ p?.price }} {{ p?.currency }}
       </ion-button>
       <div

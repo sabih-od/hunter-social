@@ -98,6 +98,13 @@ export class AppleWalletPage extends BasePage implements OnInit {
           // throw new Error('Function not implemented.');
           return;
         },
+        type: '',
+        state: '',
+        priceMicros: 0,
+        loaded: false,
+        valid: false,
+        canPurchase: false,
+        owned: false,
       };
 
       this.products.push(item1);
@@ -143,6 +150,13 @@ export class AppleWalletPage extends BasePage implements OnInit {
           // throw new Error('Function not implemented.');
           return;
         },
+        type: '',
+        state: '',
+        priceMicros: 0,
+        loaded: false,
+        valid: false,
+        canPurchase: false,
+        owned: false,
       };
 
       this.products.push(item2);
@@ -254,20 +268,20 @@ export class AppleWalletPage extends BasePage implements OnInit {
   }
   //
   purchase(product: IAPProduct) {
-    // this.store.order(product).then(
-    //   (p) => {
-    //     // Purchase in progress!
-    //     console.log('purcahse:', p);
+    this.store.order(product).then(
+      (p) => {
+        // Purchase in progress!
+        console.log('purcahse:', p);
 
-    //     this.utility.presentSuccessToast('Product Initiated');
-    this.updateMemberShipPayment(product.id);
+        this.utility.presentSuccessToast('Product Initiated');
+        this.updateMemberShipPayment(product.id);
 
-    //     // this.nav.push('pages/home');
-    //   },
-    //   (e) => {
-    //     this.presentAlert('Failed', `Failed to purchase: ${e}`);
-    //   }
-    // );
+        this.nav.push('pages/home');
+      },
+      (e) => {
+        this.presentAlert('Failed', `Failed to purchase: ${e}`);
+      }
+    );
   }
 
   async updateMemberShipPayment(id) {

@@ -79,7 +79,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
 
     this.aForm = this.formBuilder.group({
       name: [
-        '',
+        'danna johns',
         Validators.compose([
           Validators.minLength(3),
           Validators.maxLength(30),
@@ -87,10 +87,13 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
           Validators.required,
         ]),
       ],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: [
+        'danna15@email.com',
+        Validators.compose([Validators.required, Validators.email]),
+      ],
       // phone: ['', Validators.compose([Validators.required])],
       password: [
-        '',
+        '12345678',
         Validators.compose([
           Validators.minLength(8),
           Validators.maxLength(30),
@@ -98,7 +101,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
         ]),
       ],
       password_confirmation: [
-        '',
+        '12345678',
         Validators.compose([
           Validators.minLength(8),
           Validators.maxLength(30),
@@ -158,39 +161,41 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
 
     const res = await this.network.register(formdata);
     console.log(res);
+    alert(res.data.token);
+    var token = null;
+    if (res?.data?.token) {
+      token = res.data.token;
+      localStorage.setItem('token', res.data.token);
+    }
 
-    // console.log(data);
-
-    if (res && res.data) {
-      this.users.setToken(res.data.token);
+    if (res) {
       if (this.signupObj.package_id != PLAN_TYPE.FREE) {
-        let _res = await this.network.getUser();
-        console.log('User', _res);
-        if (_res && _res.data && _res.data.user) {
-          this.users.setUser(_res.data.user);
-          console.log('Updating User');
-          if (this.platform.is('ios')) {
-            // if (this.aForm.controls['pay_apple'].value) {
-            this.nav.push('pages/apple-wallet', {
-              package_id: this.signupObj.package_id,
-              shouldRedirect: true,
-            });
-            // this.wallet();
-            return;
-          } else {
-            this.nav.push('pages/stripe-payment', {
-              package_id: this.signupObj.package_id,
-              shouldRedirect: true,
-            });
-          }
+        let _res = null;
+        if (token) {
+          _res = await this.network.getUser();
+        }
+
+        console.log('Updating User', Capacitor.getPlatform());
+        // if (_res) {
+        if (Capacitor.getPlatform() == 'ios') {
+          alert();
+          // if (this.aForm.controls['pay_apple'].value) {
+          this.nav.push('pages/apple-wallet', {
+            package_id: this.signupObj.package_id,
+            shouldRedirect: true,
+          });
+          // this.wallet();
+          return;
         } else {
-          this.utility.presentFailureToast(
-            _res?.message ?? 'Something went wrong'
-          );
+          this.nav.push('pages/stripe-payment', {
+            package_id: this.signupObj.package_id,
+            shouldRedirect: true,
+          });
         }
       } else {
         console.log('freee');
-
+        let _res = await this.network.getUser();
+        this.users.setUser(_res.data.user);
         this.utility.presentSuccessToast('Success');
         // this.nav.navigateTo('home');
         this.nav.push('pages/home');
