@@ -152,6 +152,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     };
 
     console.log(formdata);
+    localStorage.setItem('userDataa', JSON.stringify(formdata));
 
     // formdata['phone'] = '+1' + this.strings.getOnlyDigits(formdata['phone']);
 
@@ -161,24 +162,21 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
 
     const res = await this.network.register(formdata);
     console.log(res);
-    alert(res.data.token);
+
     var token = null;
-    if (res?.data?.token) {
-      token = res.data.token;
-      localStorage.setItem('token', res.data.token);
+    if (res?.data?.user?.token) {
+      token = res.data.user.token;
+      localStorage.setItem('token', token);
     }
 
     if (res) {
       if (this.signupObj.package_id != PLAN_TYPE.FREE) {
-        let _res = null;
-        if (token) {
-          _res = await this.network.getUser();
-        }
+        // let _res = null;
+        let _res = await this.network.getUser();
+        this.users.setUser(_res.data.user);
 
-        console.log('Updating User', Capacitor.getPlatform());
         // if (_res) {
         if (Capacitor.getPlatform() == 'ios') {
-          alert();
           // if (this.aForm.controls['pay_apple'].value) {
           this.nav.push('pages/apple-wallet', {
             package_id: this.signupObj.package_id,

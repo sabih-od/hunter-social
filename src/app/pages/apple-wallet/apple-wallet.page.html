@@ -13,7 +13,6 @@
   <h3 style="padding-left: 20px">Your Selected Package</h3>
   <ion-card
     *ngFor="let p of products"
-    (click)="purchase(p)"
     detail="false"
     [class.abc-6786]="package_id == 2"
     [class.abc-6756]="package_id == 3"
@@ -48,14 +47,14 @@
           margin-top: 30px;
         "
       >
-        <h2 style="margin-top: 15px">Free Mambership Plan</h2>
+        <!-- <h2 style="margin-top: 15px">Free Mambership Plan</h2>
         <ion-text style="margin-top: 15px; font-size: 12px">
           <ion-icon name="checkmark-circle"></ion-icon>
           The users will be able to get the Free membership plan without any
           payments and will have limited access. The pages that a user will be
           able to access through the Free membership are Home, Chatroom, Store &
           Profile</ion-text
-        >
+        > -->
         <h2 style="margin-top: 15px">Access for all pages</h2>
         <ion-text style="margin-top: 15px; font-size: 12px">
           <ion-icon name="checkmark-circle"></ion-icon>

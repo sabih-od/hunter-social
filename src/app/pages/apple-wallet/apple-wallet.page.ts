@@ -107,7 +107,7 @@ export class AppleWalletPage extends BasePage implements OnInit {
         owned: false,
       };
 
-      this.products.push(item1);
+      // this.products.push(item1);
     }
 
     if (Number(this.package_id) == 3) {
@@ -159,7 +159,7 @@ export class AppleWalletPage extends BasePage implements OnInit {
         owned: false,
       };
 
-      this.products.push(item2);
+      // this.products.push(item2);
     }
 
     console.log(this.nav.getQueryParams());
@@ -167,7 +167,7 @@ export class AppleWalletPage extends BasePage implements OnInit {
       // Only for debugging!
       this.store.verbosity = this.store.DEBUG;
 
-      if (Capacitor.getPlatform() != 'ios') {
+      if (Capacitor.getPlatform() == 'ios') {
         this.registerProducts();
         this.setupListeners();
       }
@@ -268,6 +268,9 @@ export class AppleWalletPage extends BasePage implements OnInit {
   }
   //
   purchase(product: IAPProduct) {
+    // this.updateMemberShipPayment(product.id);
+    // return;
+    alert();
     this.store.order(product).then(
       (p) => {
         // Purchase in progress!
@@ -276,7 +279,7 @@ export class AppleWalletPage extends BasePage implements OnInit {
         this.utility.presentSuccessToast('Product Initiated');
         this.updateMemberShipPayment(product.id);
 
-        this.nav.push('pages/home');
+        // this.nav.push('pages/home');
       },
       (e) => {
         this.presentAlert('Failed', `Failed to purchase: ${e}`);
@@ -285,12 +288,23 @@ export class AppleWalletPage extends BasePage implements OnInit {
   }
 
   async updateMemberShipPayment(id) {
-    let user = await this.users.getUser();
+    let resee = await this.network.getUser();
+    let user = null;
+    if (resee?.data?.user) {
+      user = resee?.data?.user;
+    }
+    console.log('getUser', user);
+
+    if (!user) {
+      this.utility.presentFailureToast('failed');
+      return;
+    }
+
     let { package_id, shouldRedirect } = this.nav.getQueryParams();
     let res = await this.network.updateMemershipPayment(
       user.email,
-      package_id,
-      id
+      this.package_id,
+      user.id
     );
     console.log('updatePackageOnServer', res);
     if (res && res.data) {

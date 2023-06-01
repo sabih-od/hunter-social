@@ -123,8 +123,9 @@ export class ProfileUIComponent extends BasePage implements OnInit {
           : [];
 
       this.city = cities && cities.length > 0 ? cities[0].name : 'N/A';
-    } else
-      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+    } 
+    // else
+    //   this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
 
   gotoSubscription() {
