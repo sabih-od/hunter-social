@@ -7,6 +7,8 @@ import { BasePage } from '../base-page/base-page';
 import { AlertController } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
+import { PrivacyPage } from '../privacy/privacy.page';
+import { TermsConditionsPage } from '../terms-conditions/terms-conditions.page';
 
 @Component({
   selector: 'app-signup',
@@ -87,7 +89,10 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
           Validators.required,
         ]),
       ],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: [
+        '',
+        Validators.compose([Validators.required, Validators.email]),
+      ],
       // phone: ['', Validators.compose([Validators.required])],
       password: [
         '',
@@ -149,6 +154,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     };
 
     console.log(formdata);
+    localStorage.setItem('userDataa', JSON.stringify(formdata));
 
     // formdata['phone'] = '+1' + this.strings.getOnlyDigits(formdata['phone']);
 
@@ -159,38 +165,37 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     const res = await this.network.register(formdata);
     console.log(res);
 
-    // console.log(data);
+    var token = null;
+    if (res?.data?.user?.token) {
+      token = res.data.user.token;
+      localStorage.setItem('token', token);
+    }
 
-    if (res && res.data) {
-      this.users.setToken(res.data.token);
+    if (res) {
       if (this.signupObj.package_id != PLAN_TYPE.FREE) {
+        // let _res = null;
         let _res = await this.network.getUser();
-        console.log('User', _res);
-        if (_res && _res.data && _res.data.user) {
-          this.users.setUser(_res.data.user);
-          console.log('Updating User');
-          if (this.platform.is('ios')) {
-            // if (this.aForm.controls['pay_apple'].value) {
-            this.nav.push('pages/apple-wallet', {
-              package_id: this.signupObj.package_id,
-              shouldRedirect: true,
-            });
-            // this.wallet();
-            return;
-          } else {
-            this.nav.push('pages/stripe-payment', {
-              package_id: this.signupObj.package_id,
-              shouldRedirect: true,
-            });
-          }
+        this.users.setUser(_res.data.user);
+
+        // if (_res) {
+        if (Capacitor.getPlatform() == 'ios') {
+          // if (this.aForm.controls['pay_apple'].value) {
+          this.nav.push('pages/apple-wallet', {
+            package_id: this.signupObj.package_id,
+            shouldRedirect: true,
+          });
+          // this.wallet();
+          return;
         } else {
-          this.utility.presentFailureToast(
-            _res?.message ?? 'Something went wrong'
-          );
+          this.nav.push('pages/stripe-payment', {
+            package_id: this.signupObj.package_id,
+            shouldRedirect: true,
+          });
         }
       } else {
         console.log('freee');
-
+        let _res = await this.network.getUser();
+        this.users.setUser(_res.data.user);
         this.utility.presentSuccessToast('Success');
         // this.nav.navigateTo('home');
         this.nav.push('pages/home');
@@ -246,13 +251,18 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
   }
 
   async privacyPolicy() {
-    await Browser.open({ url: `https://hunterssocial.com/privacy` });
+    // await Browser.open({ url: `https://hunterssocial.com/privacy` });
+        await this.modals.present(PrivacyPage);
+
+
+
   }
 
   async TermofUse() {
-    await Browser.open({
-      url: `https://hunterssocial.com/terms`,
-    });
+    // await Browser.open({
+    //   url: `https://hunterssocial.com/terms`,
+    // });
+     await this.modals.present(TermsConditionsPage);
   }
 
   // packageChanged($event) {

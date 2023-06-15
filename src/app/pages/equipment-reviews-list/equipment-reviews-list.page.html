@@ -2,6 +2,9 @@
 </app-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="spinner" [hidden]="!loading">
     <ion-spinner color="primary"></ion-spinner>
   </div>
@@ -16,6 +19,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12" *ngFor="let v of videos">
+        <ion-tital>{{v?.title}}</ion-tital>
         <video [src]="v.url" width="100%" height="240" controls></video>
       </ion-col>
     </ion-row>

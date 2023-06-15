@@ -103,9 +103,9 @@
               (click)="deleteComment(item)"
             ></ion-icon>
           </div>
-          <div *ngIf="item.selfComment" slot="end">
+          <!-- <div *ngIf="item.selfComment" slot="end">
             <ion-icon name="create-outline" color="primary"></ion-icon>
-          </div>
+          </div> -->
           <ion-buttons slot="end" *ngIf="!item.selfComment">
             <ion-button (click)="openPopup($event)">
               <ion-icon

@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class ModalService {
+  PrivacyPage: any;
   constructor(public modal: ModalController) {}
 
   present(component, data = {}, cssClass = ''): Promise<any> {

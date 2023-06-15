@@ -69,7 +69,6 @@
     "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-media-capture": "^3.0.3",
     "cordova-plugin-purchase": "^11.0.0",
-    "cordova-plugin-stripe": "^1.5.3",
     "cordova-res": "^0.15.4",
     "i": "^0.3.7",
     "ng2-search-filter": "^0.5.1",

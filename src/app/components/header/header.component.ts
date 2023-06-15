@@ -17,11 +17,14 @@ export class HeaderComponent extends BasePage implements OnInit {
   @Input() profileVisible = true;
   @Input() showCart = true;
   @Input() showSearch = true;
+  @Input() shouldCallApi = true;
+  @Input() shouldCallApii = true;
+
   cart_count;
   search_text;
-
   isSearchVisible = false;
   user_image;
+ 
 
   total_found = 0;
   first_selected = false;
@@ -34,6 +37,7 @@ export class HeaderComponent extends BasePage implements OnInit {
   }
 
   ngOnInit() {
+
     HeaderComponent.instances.push(this);
     if (!this.user_image) this.getUser();
     this.events.subscribe('USER_DATA_RECEIVED', () => {
@@ -58,6 +62,13 @@ export class HeaderComponent extends BasePage implements OnInit {
   }
 
   async getUser() {
+
+    if(!this.shouldCallApi == !this.shouldCallApii){
+      return;
+    };
+    
+
+
     let res = await this.network.getUser();
     console.log('getUser', res);
     if (res && res.data && res.data.user) {

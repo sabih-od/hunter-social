@@ -13,6 +13,7 @@ export class EquipmentReviewsListPage extends BasePage implements OnInit {
   next_page: any;
   current_page = 1;
   loading: boolean = true;
+  isLoading = false;
   videos = [];
 
   constructor(injector: Injector) {
@@ -86,5 +87,11 @@ export class EquipmentReviewsListPage extends BasePage implements OnInit {
       await this.getData(true);
     }
     $event.target.complete();
+  }
+  async doRefresh($event) {
+    this.isLoading = true;
+    await this.getData();
+    $event.target.complete();
+    this.isLoading = false;
   }
 }

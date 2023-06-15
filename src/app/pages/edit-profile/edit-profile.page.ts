@@ -5,6 +5,8 @@ import { StripeService } from 'src/app/services/stripe.service';
 import { BasePage } from '../base-page/base-page';
 import { StripePaymentPage } from '../stripe-payment/stripe-payment.page';
 import { Browser } from '@capacitor/browser';
+import { PrivacyPage } from '../privacy/privacy.page';
+import { TermsConditionsPage } from '../terms-conditions/terms-conditions.page';
 
 @Component({
   selector: 'app-edit-profile',
@@ -85,8 +87,8 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     if (res && res.data && res.data.user) {
       this.user = res.data.user;
       console.log(this.user);
-      this.selected_package = this.user.role_id - 1;
-      this.new_package = this.user.role_id - 1;
+      this.selected_package = this.user.profile_detail.package_id;
+      this.new_package = this.user.profile_detail.package_id;
       this.state = parseInt(this.user.profile_detail.state);
       this.user.interests =
         this.dataService.user_data?.user_interests?.map((x) => x.title) ?? [];
@@ -321,10 +323,14 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
   }
 
   async privacyPolicy() {
-    await Browser.open({ url: `https://hunterssocial.com/privacy` });
+    // await Browser.open({ url: `https://hunterssocial.com/privacy` });
+    await this.modals.present(PrivacyPage);
+
   }
 
   async TermofUse() {
-    await Browser.open({ url: `https://hunterssocial.com/terms` });
+    // await Browser.open({ url: `https://hunterssocial.com/terms` });
+    await this.modals.present(TermsConditionsPage);
+
   }
 }
