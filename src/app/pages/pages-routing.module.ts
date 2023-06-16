@@ -238,7 +238,11 @@ const routes: Routes = [
   {
     path: 'create-listing',
     loadChildren: () => import('./marketplace/create-listing/create-listing.module').then( m => m.CreateListingPageModule)
+  },  {
+    path: 'blocked-users',
+    loadChildren: () => import('./blocked-users/blocked-users.module').then( m => m.BlockedUsersPageModule)
   },
+
   
 
 ];

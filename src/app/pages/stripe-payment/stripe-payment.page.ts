@@ -2,8 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { StripeService } from 'src/app/services/stripe.service';
 import { BasePage } from '../base-page/base-page';
-//import { ApplePay } from '@ionic-native/apple-pay/ngx';
-//import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-stripe-payment',
   templateUrl: './stripe-payment.page.html',

@@ -4,7 +4,7 @@
   <app-edit-banner></app-edit-banner>
   <ion-grid class="header-jumbotron" style="margin-bottom: 20px">
     <ion-card
-      style="border-radius: 10px; margin-top: -140px"
+      style="border-radius: 10px; margin-top: 0px"
       class="ion-text-center light-bg ion-padding-top top-item"
       lines="none"
     >
@@ -57,9 +57,8 @@
     </ion-item>
 
     <ion-label style="font-size: 15px; margin-left: 18px">Name</ion-label>
-    <ion-item class="margin-ver ion-no-padding" lines="none">
+    <ion-item class="margin-ver" lines="none">
       <ion-input
-        style="border-radius: 5px; border: 1px solid lightgray"
         [(ngModel)]="user.name"
         class="ion-margin-start f-pop-m"
       >
@@ -69,9 +68,8 @@
     <ion-label style="font-size: 15px; margin-left: 18px"
       >Phone Number</ion-label
     >
-    <ion-item class="margin-ver ion-no-padding" lines="none">
+    <ion-item class="margin-ver" lines="none">
       <ion-input
-        style="border-radius: 5px; border: 1px solid lightgray"
         [(ngModel)]="user.phone"
         class="ion-margin-start f-pop-m"
         placeholder="Phone Number"
@@ -82,9 +80,8 @@
     <ion-label style="font-size: 15px; margin-left: 18px"
       >Email Address</ion-label
     >
-    <ion-item class="margin-ver ion-no-padding" lines="none">
+    <ion-item class="margin-ver" lines="none">
       <ion-input
-        style="border-radius: 5px; border: 1px solid lightgray"
         [(ngModel)]="user.email"
         class="ion-margin-start f-pop-m"
       >
@@ -92,8 +89,7 @@
     </ion-item>
     <ion-label style="font-size: 15px; margin-left: 18px">Interests</ion-label>
     <ion-item
-      style="width: 93%; margin: 4%"
-      class="margin-ver ion-no-padding"
+      class=""
       lines="none"
     >
       <!-- <ion-select placeholder="Slect Interests">
@@ -102,10 +98,9 @@
       </ion-select> -->
 
       <ion-select
-        style="width: 100%; border-radius: 5px; border: 1px solid lightgray"
         placeholder="Interests"
         multiple="true"
-        class="select"
+        class="a1"
         [(ngModel)]="user.interests"
       >
         <ion-select-option [value]="item" *ngFor="let item of interests"
@@ -147,7 +142,6 @@
     <ion-label style="font-size: 15px; margin-left: 18px">State</ion-label>
     <ion-item lines="none" class="margin-ver ion-no-padding">
       <ion-select
-        style="width: 100%; border-radius: 5px; border: 1px solid lightgray"
         cancelText="Cancel"
         okText="Ok"
         title="Select State"
@@ -287,6 +281,15 @@
           color="secondary"
           >Update Package
         </ion-button>
+
+        <ion-button
+          *ngIf="isIos()"
+          (click)="restorePurchases()"
+          style="margin-top: 10px; margin-bottom: 30px"
+          color="dark"
+          >Restore Purchases
+        </ion-button>
+
         <!-- <ion-button color="p">
           Update Package
         </ion-button> -->

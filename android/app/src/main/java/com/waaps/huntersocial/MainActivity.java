@@ -1,4 +1,4 @@
-package com.waaps.huntersocial;
+package com.huntersocial.app;
 
 import com.getcapacitor.BridgeActivity;
 

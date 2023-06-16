@@ -62,12 +62,16 @@ export class InterceptorService implements HttpInterceptor {
       Authorization: 'Bearer ' + v
     }
 
-
     obj['Accept'] = 'application/json';
     let cnt = request.headers.get('Content-Type');
+    
+    // obj['Content-Type'] = 'application/x-www-form-urlencoded';
+
     if (cnt == 'application/json') {
       obj['Content-Type'] = request.headers.get('Content-Type');
     }
+    // console.log('Here => ', obj);
+    
 
     const clone = request.clone(
       {

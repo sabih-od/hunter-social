@@ -25,28 +25,28 @@
     "debug": {
       "keystore": "../veenme-capacitor/resources/veenme.keystore",
       "storePassword": "123456",
-      "alias": "veenme",
+      "alias": "huntersocial",
       "password": "123456",
       "keystoreType": ""
     },
     "release": {
       "keystore": "../veenme-capacitor/resources/veenme.keystore",
       "storePassword": "123456",
-      "alias": "veenme",
+      "alias": "huntersocial",
       "password": "123456",
       "keystoreType": ""
     },
     "device": {
       "keystore": "../veenme-capacitor/resources/veenme.keystore",
       "storePassword": "123456",
-      "alias": "veenme",
+      "alias": "huntersocial",
       "password": "123456",
       "keystoreType": ""
     },
     "emulator": {
       "keystore": "../veenme-capacitor/resources/veenme.keystore",
       "storePassword": "123456",
-      "alias": "veenme",
+      "alias": "huntersocial",
       "password": "123456",
       "keystoreType": ""
     }

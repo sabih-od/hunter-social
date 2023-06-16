@@ -82,6 +82,8 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
       this.users.setUser(res.data);
       console.log('LOGIN_SUCCESS', res.data);
 
+      this.aForm.setValue({email: '', password: ''})
+
       this.nav.push('pages/home');
       this.events.publish('USER_DATA_RECEIVED');
       this.events.publish('ROUTE_CHANGED');

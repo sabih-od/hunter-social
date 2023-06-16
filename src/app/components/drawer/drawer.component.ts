@@ -185,10 +185,10 @@ export class DrawerComponent extends BasePage implements OnInit {
 
   async logout() {
     this.menuCtrl.toggle();
-    this.nav.push('pages/login');
     let res = await this.network.logout();
     this.users.removeToken();
     this.users.removeUser();
+    this.nav.push('pages/login');
     console.log(res);
   }
 

@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.hunterssocial.app',
+  appId: 'com.huntersocial.app',
   appName: 'Hunters Social',
   webDir: 'www',
   bundledWebRuntime: false,

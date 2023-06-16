@@ -7,23 +7,26 @@ import { BasePage } from '../base-page/base-page';
   styleUrls: ['./store.page.scss'],
 })
 export class StorePage extends BasePage implements OnInit {
-  stores;
+  stores = [];
+  isLoading = true;
   constructor(injector: Injector) {
     super(injector);
   }
 
   ngOnInit() {
-    this.stores = this.dataService.getStores();
-    // this.getData();
+    // this.stores = this.dataService.getStores();
+    this.getData();
   }
 
   async getData() {
     let res = await this.network.getProducts();
     console.log('getProducts', res);
     if (res && res.data) {
+      this.isLoading = false;
       this.stores = res.data;
     } else {
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+      this.isLoading = false;
     }
   }
 
@@ -31,6 +34,7 @@ export class StorePage extends BasePage implements OnInit {
     this.nav.navigateTo('pages/store/product-detail', {
       queryParams: { product_id: id },
     });
-    this.utility.openInternalUrl(`store/${id}`);
+    // this.utility.openInternalUrl(`store/${id}`);
   }
+  
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { EventsService } from './basic/events.service';
 import { UtilityService } from './utility.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class NetworkService {
   }
 
   logout() {
-    return this.httpPostResponse('auth/logout', null);
+    return this.httpPostResponse('auth/logout', null, null, true);
   }
 
   deleteAccount(data) {
@@ -79,6 +80,10 @@ export class NetworkService {
       null,
       true
     );
+  }
+
+  getBloackedUsers() {
+    return this.httpGetResponse(`users/my-block-list`, null, true);
   }
 
   likePost(postId) {
@@ -161,6 +166,13 @@ export class NetworkService {
     );
   }
 
+  updateProfilePicture(data) {
+    let body = new URLSearchParams();
+    body.set('profile_image', data);
+    // alert(body)
+    return this.httpPostResponse('user/profile-image-upload', body.toString(), null, true, true, 'application/x-www-form-urlencoded');
+  }
+
   // https://testv23.demowebsitelinks.com/hunter_social.com/public/api/my-products
   broadcastAuth(token) {
     return this.httpPostResponse(`broadcasting/auth?token=${token}`, null);
@@ -180,7 +192,7 @@ export class NetworkService {
       str += `&search=name:${search};email:${search}`;
     }
 
-    return this.httpGetResponse(str, null, false);
+    return this.httpGetResponse(str, null, true);
   }
 
   searchDatingUsers(data) {
@@ -195,7 +207,7 @@ export class NetworkService {
   }
 
   saveFcmToken(data) {
-    return new Promise<any>((res) => {});
+    return new Promise<any>((res) => { });
     // Todo
   }
 
@@ -272,7 +284,7 @@ export class NetworkService {
     return this.httpGetResponse(`products/mark-as-sold`, null, false);
   }
   getProducts() {
-    return this.httpGetResponse(`products`, null, false);
+    return this.httpGetResponse(`products`, null, true);
   }
 
   getProductDetail(id) {
@@ -370,7 +382,7 @@ export class NetworkService {
     );
   }
 
-  sendChatGroupMessage() {}
+  sendChatGroupMessage() { }
 
   addRecipe(data) {
     return this.httpPostResponse(`recipes`, data, null, true);
@@ -444,6 +456,15 @@ export class NetworkService {
   postReason(data) {
     return this.httpPostResponse('reported', data, null, false, false);
   }
+
+  blockUser(data) {
+    return this.httpPostResponse('users/block', data, null, true);
+  }
+
+  unblockUser(userid, data) {
+    return this.httpPostResponse(`users/unblock/${userid}`, data, null, true);
+  }
+
   deleteRecipe(id) {
     console.log(id);
 
@@ -485,9 +506,15 @@ export class NetworkService {
     );
   }
 
-  updateMemershipPayment(email, package_id, token) {
+  updateMemershipPayment(email, package_id, userid) {
+    // let obj = {
+    //   email :email,
+    //   packageid : package_id,
+    //   userid
+    // }
+    // alert(JSON.stringify(obj));
     return this.httpGetResponse(
-      `charge-payment/${email}/${package_id}/${token}`,
+      `charge-payment/${email}/${package_id}/${userid}`,
       null
     );
   }
@@ -504,6 +531,7 @@ export class NetworkService {
     showError = true,
     contenttype = 'application/json'
   ) {
+    // alert(contenttype);
     return this.httpResponse(
       'post',
       key,
@@ -614,8 +642,13 @@ export class NetworkService {
       id = id ? '/' + id : '';
       const url = key + id;
 
-      const seq =
-        type === 'get' ? this.api.get(url, {}) : this.api.post(url, data);
+      let headerobj = {}
+      if (contenttype == 'application/x-www-form-urlencoded') {
+        const headers = new HttpHeaders({ "Content-Type": contenttype });
+        headerobj = { headers: headers }
+      }
+
+      const seq = type === 'get' ? this.api.get(url, {}) : Object.keys(headerobj).length > 0 ? this.api.post(url, data, headerobj) : this.api.post(url, data);
 
       seq.subscribe(
         (res: any) => {

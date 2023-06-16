@@ -7,6 +7,8 @@ import { BasePage } from '../base-page/base-page';
 import { AlertController } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
+import { PrivacyPage } from '../privacy/privacy.page';
+import { TermsConditionsPage } from '../terms-conditions/terms-conditions.page';
 
 @Component({
   selector: 'app-signup',
@@ -79,7 +81,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
 
     this.aForm = this.formBuilder.group({
       name: [
-        'danna johns',
+        '',
         Validators.compose([
           Validators.minLength(3),
           Validators.maxLength(30),
@@ -88,12 +90,12 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
         ]),
       ],
       email: [
-        'danna15@email.com',
+        '',
         Validators.compose([Validators.required, Validators.email]),
       ],
       // phone: ['', Validators.compose([Validators.required])],
       password: [
-        '12345678',
+        '',
         Validators.compose([
           Validators.minLength(8),
           Validators.maxLength(30),
@@ -101,7 +103,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
         ]),
       ],
       password_confirmation: [
-        '12345678',
+        '',
         Validators.compose([
           Validators.minLength(8),
           Validators.maxLength(30),
@@ -249,13 +251,18 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
   }
 
   async privacyPolicy() {
-    await Browser.open({ url: `https://hunterssocial.com/privacy` });
+    // await Browser.open({ url: `https://hunterssocial.com/privacy` });
+        await this.modals.present(PrivacyPage);
+
+
+
   }
 
   async TermofUse() {
-    await Browser.open({
-      url: `https://hunterssocial.com/terms`,
-    });
+    // await Browser.open({
+    //   url: `https://hunterssocial.com/terms`,
+    // });
+     await this.modals.present(TermsConditionsPage);
   }
 
   // packageChanged($event) {

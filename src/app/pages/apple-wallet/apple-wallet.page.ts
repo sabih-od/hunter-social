@@ -46,13 +46,13 @@ export class AppleWalletPage extends BasePage implements OnInit {
     // this.initialize();
   }
 
-  async gotoPrivacy() {
-    await Browser.open({ url: `https://hunterssocial.com/privacy` });
-  }
+  // async gotoPrivacy() {
+  //   await Browser.open({ url: `https://hunterssocial.com/privacy` });
+  // }
 
-  async gotoTerms() {
-    await Browser.open({ url: `https://hunterssocial.com/terms` });
-  }
+  // async gotoTerms() {
+  //   await Browser.open({ url: `https://hunterssocial.com/terms` });
+  // }
 
   initialize() {
     this.package_id = this.nav.getQueryParams().package_id;
@@ -238,7 +238,7 @@ export class AppleWalletPage extends BasePage implements OnInit {
       })
       .verified((p: IAPProduct) => {
         console.log('finished', p);
-        this.updateMemberShipPayment(p.id);
+        // this.updateMemberShipPayment(p.id);
         p.finish();
       });
 
@@ -248,7 +248,7 @@ export class AppleWalletPage extends BasePage implements OnInit {
         // this.isPro = true;
         console.log('p owned');
         this.utility.presentSuccessToast('Product Purchased set');
-
+        this.updateMemberShipPayment(p.id);
         this.nav.push('pages/home');
       });
     } else if (this.package_id === '3') {
@@ -257,7 +257,6 @@ export class AppleWalletPage extends BasePage implements OnInit {
         console.log('p owned');
         this.utility.presentSuccessToast('Product Purchased set');
         this.updateMemberShipPayment(p.id);
-
         // this.nav.push('pages/home');
       });
     }
@@ -270,7 +269,7 @@ export class AppleWalletPage extends BasePage implements OnInit {
   purchase(product: IAPProduct) {
     // this.updateMemberShipPayment(product.id);
     // return;
-    alert();
+    // alert();
     this.store.order(product).then(
       (p) => {
         // Purchase in progress!
@@ -306,11 +305,15 @@ export class AppleWalletPage extends BasePage implements OnInit {
       this.package_id,
       user.id
     );
-    console.log('updatePackageOnServer', res);
+    console.log('updatePackageOnServer', res);   
+
     if (res && res.data) {
       let _res = await this.network.getUser();
       console.log('User', _res);
       if (_res && _res.data && _res.data.user) {
+
+      // alert(JSON.stringify(_res.data.user));
+
         this.users.setUser(_res.data.user);
         console.log('Updating User');
         this.utility.presentSuccessToast('Package updated successfully!');

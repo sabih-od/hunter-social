@@ -3,6 +3,7 @@ import { ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { Config } from 'src/app/config/main.config';
 import { BasePage } from '../../base-page/base-page';
 import { ReportPage } from '../../report/report.page';
+import { ChatBatsComponent } from 'src/app/components/chat-bats/chat-bats.component';
 
 @Component({
   selector: 'app-profile-ui',
@@ -64,9 +65,14 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
       if (this.user['profile_image'] && this.user['profile_image'] !== '')
         console.log('hello');
-
-      this.user_image = this.image.getImageUrl(this.user['profile_image']);
-      console.log('user_image', this.user_image);
+      if (this.isOwnProfile){
+        this.user_image =  this.user['profile_image'] == null ? '../../../assets/Images/avatar.png' : this.image.getImageUrl(this.user['profile_image']);
+        console.log('user_image', this.user_image);
+      }else{
+        this.user_image = this.user_profile?.profile_image == null ? '../../../assets/Images/avatar.png' : this.image.getImageUrl(this.user_profile?.profile_image);
+        // console.log('this.user_profile => ', this.user_profile.profile_image);
+      }
+      
 
       console.log('hello1');
     } else
@@ -157,5 +163,19 @@ export class ProfileUIComponent extends BasePage implements OnInit {
       item_id: this.user_profile.id,
       item_desc: this.user_profile.name,
     });
+  }
+
+  async blockUser() {
+    let formData = new FormData();
+    console.log('block user => ', this.user_id)
+    formData.append('user_id', this.user_id);
+    // alert(JSON.stringify(formData))
+    // alert(JSON.stringify(this.user_id))
+    var res = await this.network.blockUser(formData);
+    if(res){
+      this.utility.presentSuccessToast(res.message);
+      this.modals.present(ChatBatsComponent);
+      // this.nav.navigateTo('pages/chat-room');
+    }
   }
 }

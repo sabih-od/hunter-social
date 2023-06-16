@@ -19,8 +19,8 @@
     </ion-col>
     <ion-col>
       <ion-label class="ion-margin-start">
-        <div style="margin-top: -4%; display: flex; flex-direction: row">
-          <h2 style="margin-left: 3%">
+        <div style="margin-top: -7%; display: flex; flex-direction: row">
+          <h2 style="margin-left: 3%; text-transform: capitalize;">
             {{ user_profile?.name }}
           </h2>
         </div>
@@ -38,7 +38,9 @@
       >
         Edit Profile
       </ion-button>
-      <ion-button *ngIf="!isOwnProfile">
+      <ion-button *ngIf="!isOwnProfile" color="danger" 
+      (click)="blockUser()"
+      >
         Block User
       </ion-button>
       <ion-button *ngIf="!isOwnProfile" (click)="openreport()">
@@ -46,6 +48,12 @@
       </ion-button>
       <ion-button *ngIf="isOwnProfile" color="danger" (click)="deleteAccount(item)">
         Delete Account
+      </ion-button>
+      <ion-button
+        *ngIf="isOwnProfile"
+        (click)="itemClicked({ url: 'pages/blocked-users' })"
+      >
+        Blocked Users
       </ion-button>
     </ion-col>
     <ion-col size="7">

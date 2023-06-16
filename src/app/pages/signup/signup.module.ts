@@ -8,6 +8,8 @@ import { SignupPageRoutingModule } from './signup-routing.module';
 
 import { SignupPage } from './signup.page';
 import { FooterModule } from 'src/app/components/footer/footer.module';
+import { HeaderModule } from 'src/app/components/header/header.module';
+import { PrivacyPage } from '../privacy/privacy.page';
 
 @NgModule({
   imports: [
@@ -18,8 +20,10 @@ import { FooterModule } from 'src/app/components/footer/footer.module';
     FormsModule,
     ReactiveFormsModule,
     FooterModule,
+    HeaderModule,
+
   ],
-  declarations: [SignupPage],
+  declarations: [SignupPage,PrivacyPage],
   providers: [],
 
 })

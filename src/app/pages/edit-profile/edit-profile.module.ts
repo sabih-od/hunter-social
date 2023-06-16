@@ -8,7 +8,6 @@ import { EditProfilePageRoutingModule } from './edit-profile-routing.module';
 
 import { EditProfilePage } from './edit-profile.page';
 import { HeaderModule } from 'src/app/components/header/header.module';
-import { EditBannerComponent } from './edit-banner/edit-banner.component';
 
 @NgModule({
   imports: [
@@ -18,6 +17,6 @@ import { EditBannerComponent } from './edit-banner/edit-banner.component';
     EditProfilePageRoutingModule,
     HeaderModule,
   ],
-  declarations: [EditProfilePage, EditBannerComponent],
+  declarations: [EditProfilePage],
 })
-export class EditProfilePageModule {}
+export class EditProfilePageModule { }
