@@ -499,6 +499,10 @@ export class NetworkService {
     return this.httpPostResponse(`subscribe`, data);
   }
 
+  getSettings() {
+    return this.httpGetResponse(`user/settings`, null, false, false);
+  }
+
   updateMemership(user_id, payment_status, package_id) {
     return this.httpPostResponse(
       `membership/${user_id}/${payment_status}/${package_id}`,

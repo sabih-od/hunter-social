@@ -76,7 +76,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     const formdata = this.aForm.value;
     this.loading = true;
     let res = await this.network.login(this.aForm.value);
-    console.log(res);
+    console.log('login res => ', res);
     if (res && res.data) {
       this.users.setToken(res.data.token);
       this.users.setUser(res.data);
@@ -89,10 +89,11 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
       this.events.publish('ROUTE_CHANGED');
       this.menuCtrl.enable(true, 'main');
     } else
+    if(res?.error?.message != 'Unauthenticated.'){
       this.utility.presentFailureToast(
         res?.error?.message ?? 'Something went wrong'
       );
-
+    }
     return;
 
     const user = await this.users.login(formdata);

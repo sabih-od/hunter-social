@@ -61,10 +61,10 @@
     </div>
   </div> -->
 
-  <!-- <div class="contact ion-margin-start ion-text-center">
+  <div class="contact ion-margin-start ion-text-center">
     <ion-label style="font-size: 25px" color="light"> CONTACT US: </ion-label>
     <div class="bottom-line"></div>
-    <ion-item class="transparent-bg ion-no-padding" lines="none">
+    <ion-item *ngIf="settings?.phone" class="transparent-bg ion-no-padding" lines="none">
       <div class="icon center">
         <ion-icon name="call-outline"></ion-icon>
       </div>
@@ -72,13 +72,13 @@
       <ion-label class="f-white m-l-10" color="light">
         <a
           style="color: white; text-decoration: none"
-          href="tel:+1 (123) 456 7890"
-          >+1 (123) 456 7890</a
+          href="tel:{{settings?.phone}}"
+          >{{settings?.phone}}</a
         >
       </ion-label>
     </ion-item>
 
-    <ion-item class="transparent-bg ion-no-padding ion-margin-top" lines="none">
+    <ion-item *ngIf="settings?.email" class="transparent-bg ion-no-padding ion-margin-top" lines="none">
       <div class="icon center">
         <ion-icon name="mail-outline"></ion-icon>
       </div>
@@ -86,12 +86,12 @@
       <ion-label class="f-white m-l-10" color="light">
         <a
           style="color: white; text-decoration: none"
-          href="mailto:info@huntersocial.com"
-          >info@huntersocial.com</a
+          href="mailto:{{settings?.email}}"
+          >{{settings?.email}}</a
         >
       </ion-label>
     </ion-item>
-  </div> -->
+  </div>
   <div class="footer2">
     <p>© 2021 Hunter Social All Rights Reserved.</p>
   </div>
