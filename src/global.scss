@@ -179,6 +179,7 @@ app-header {
   --background: var(--ion-color-danger);
   color: #fff;
 }
+
 .halfmodal {
   margin-left: auto;
   margin-right: auto;
@@ -191,4 +192,19 @@ app-header {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.freeuserslimittext h2 {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.freeuserslimittext p {
+  margin: 0;
+}
+
+.freeuserslimittext {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 13px;
 }

@@ -10,6 +10,7 @@ import { SignupPage } from './signup.page';
 import { FooterModule } from 'src/app/components/footer/footer.module';
 import { HeaderModule } from 'src/app/components/header/header.module';
 import { PrivacyPage } from '../privacy/privacy.page';
+// import { FeebackComponent } from 'src/app/components/feeback/feeback.component';
 
 @NgModule({
   imports: [
@@ -23,8 +24,10 @@ import { PrivacyPage } from '../privacy/privacy.page';
     HeaderModule,
 
   ],
-  declarations: [SignupPage,PrivacyPage],
+  declarations: [SignupPage, PrivacyPage, 
+    // FeebackComponent
+  ],
   providers: [],
 
 })
-export class SignupPageModule {}
+export class SignupPageModule { }

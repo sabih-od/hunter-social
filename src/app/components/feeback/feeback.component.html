@@ -1,0 +1,16 @@
+<ion-grid>
+  <form [formGroup]="feedbackForm">
+    <ion-row>
+      <ion-col size="12">
+        <p>Please be patient, the website is under construction, please leave a feedback for us that would help us
+          improve</p>
+        <ion-input formControlName="comment" class="input f-pop-li" placeholder="Comment..."></ion-input>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button class="f-pop-r btn" expand="block" color="primary" (click)="submitFeedback()">
+          Submit
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-grid>

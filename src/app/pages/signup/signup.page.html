@@ -76,7 +76,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="showpackage">
         <ion-col>
           <h2 style="font-weight: bold">Please Select Your Package</h2>
           <h5 *ngFor="let item of packages">
@@ -100,9 +100,17 @@
           </form> -->
         </ion-col>
       </ion-row>
+
+      <div class="freeuserslimittext" *ngIf="!showpackage">
+        <h2>First Lifetime User</h2>
+        <p>{{usertoavail}} / 5000</p>
+      </div>
       <!-- *ngIf="isIOS" -->
       <!-- [hidden]="aForm.invalid" -->
       <!-- *ngIf="isIOS" [hidden]="aForm.invalid" -->
+
+      
+
       <ion-row>
         <ion-col>
           <div>
@@ -110,7 +118,7 @@
               ><u>Privacy Policy</u></a
             >
           </div>
-          <div  style="margin-top: 20px; margin-bottom: 20px">
+          <div  style="margin-top: 10px; margin-bottom: 20px">
             <a (click)="TermofUse()"> <u>Term of Use</u></a>
           </div>
         </ion-col>
@@ -128,6 +136,7 @@
           </ion-button>
         </ion-col>
       </ion-row>
+      
 
       <div>
         <ion-row>
@@ -156,6 +165,25 @@
             </ion-button>
           </ion-col>
         </ion-row>
+
+        <!-- <app-feeback></app-feeback> -->
+      <ion-grid>
+        <form [formGroup]="feedbackForm">
+          <ion-row>
+            <ion-col size="12">
+              <p>Please be patient, the application is under construction, please leave a feedback for us that would help us
+                improve</p>
+              <ion-input formControlName="comment" class="input f-pop-li" placeholder="Comment..."></ion-input>
+            </ion-col>
+            <ion-col size="12">
+              <ion-button class="f-pop-r btn" expand="block" color="primary" (click)="submitFeedback()">
+                Submit
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-grid>
+
       </div>
     </ion-grid>
   </form>

@@ -2,11 +2,10 @@ ion-icon {
   font-size: 25px;
 }
 
-// ion-card {
-//   width: 97%;
-//   height: 90%;
-
-// }
+ion-card {
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+}
 
 .title {
   font-size: 12px;
@@ -55,10 +54,26 @@ ion-image{
 
 }
 .cover-photo {
+  position: relative;
+  overflow: hidden;
   img {
       height: 145px;
       object-fit: cover;
       width: 100%;
       border-radius: 25px 25px 0px 0px;
   }
+}
+
+
+.solditem {
+  width: 60px;
+  height: 33px;
+  position: absolute;
+  bottom: 3px;
+  right: 1px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
 }

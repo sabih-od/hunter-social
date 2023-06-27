@@ -114,13 +114,13 @@ export class CreateListingPage extends BasePage implements OnInit {
   }
   setupForm() {
     this.aForm = this.formBuilder.group({
-      title: ['this is title', Validators.compose([Validators.required])],
-      price: ['34', Validators.compose([Validators.required])],
+      title: ['', Validators.compose([Validators.required])],
+      price: ['', Validators.compose([Validators.required])],
       description: [
-        'this is the description of the product',
+        '',
         Validators.compose([Validators.required]),
       ],
-      condition: ['New', Validators.compose([Validators.required])],
+      condition: ['', Validators.compose([Validators.required])],
       category: ['', Validators.compose([Validators.required])],
       image: ['', Validators.compose([Validators.required])],
       user_id: ['', Validators.compose([Validators.required])],
@@ -155,8 +155,10 @@ export class CreateListingPage extends BasePage implements OnInit {
     // this.aForm.value.category = this.selected;
     // this.aForm.value.picture = this.picture
 
-    let data = this.network.createListing(datas);
-    console.log('this is data', data);
-    this.nav.pop();
+    let data = await this.network.createListing(datas);
+    if(data){
+      console.log('this is data', data);
+      this.nav.pop();
+    }
   }
 }

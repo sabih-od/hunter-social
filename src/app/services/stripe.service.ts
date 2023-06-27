@@ -16,7 +16,7 @@ export class StripeService {
     ) {}
 
   async init() {
-    let res = await this.network.getSettings();
+    let res = await this.network.getUserSettings();
     if(res && res.data){
       this.settings = res.data;
       console.log('settings => ', this.settings);
@@ -41,7 +41,7 @@ export class StripeService {
   }
 
   // async getSetting(){
-  //   let res = await this.network.getSettings();
+  //   let res = await this.network.getUserSettings();
   //   if(res && res.data){
   //     this.settings = res.data
   //   }

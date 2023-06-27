@@ -8,6 +8,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 import { FooterModule } from 'src/app/components/footer/footer.module';
+// import { FeebackComponent } from './../../components/feeback/feeback.component';
 // import { GooglePlus } from '@awesome-cordova-plugins/google-plus/ngx';
 
 @NgModule({
@@ -20,6 +21,8 @@ import { FooterModule } from 'src/app/components/footer/footer.module';
     ReactiveFormsModule,
     FooterModule,
   ],
-  declarations: [LoginPage],
+  declarations: [
+    // FeebackComponent, 
+    LoginPage],
 })
 export class LoginPageModule {}

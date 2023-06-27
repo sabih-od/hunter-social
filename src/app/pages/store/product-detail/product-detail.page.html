@@ -87,10 +87,6 @@
 
 
         <div class="review-div">
-
-
-
-
         </div>
 
       </ion-card-content>
@@ -104,33 +100,27 @@
         <ion-label>
           <h2>Reviews ({{ reviews?.length }})</h2>
         </ion-label>
-
         <ion-icon slot="end" name="add-circle-outline"></ion-icon>
       </ion-item>
 
       <ion-item *ngFor="let item of reviews" lines="none">
         <ion-label class="ion-text-wrap">
           <p>
-
             <ion-icon [name]="item.rating <= n ? 'star-outline' : 'star'" [color]="item.rating <= n ? 'white' : ''"
               *ngFor="let n of [1,2,3,4,5]" style="margin-right: 5px;"></ion-icon>
-
           </p>
           <h2>
             {{item.user.name}}
-
           </h2>
-
           <p>
             {{item.comment}}
           </p>
         </ion-label>
-
-
+        <ion-icon (click)="deleteProductReview(item.id)" name='trash-outline'></ion-icon>
+        <ion-icon (click)="openEditReview(item)" name="create-outline"></ion-icon>
+        <!-- <ion-icon slot="end" name="add-trash-outline"></ion-icon> -->
       </ion-item>
+
     </ion-list>
-
   </ion-card>
-
-
 </ion-content>

@@ -1200,9 +1200,9 @@
       <ion-item lines="none">
         <ion-label class="ion-text-wrap">
           <ion-card-title>{{item.name}}</ion-card-title>
-          <ion-card-subtitle>{{item.address}}</ion-card-subtitle>
-          <ion-card-subtitle>Phone : {{item.phone}}</ion-card-subtitle>
-          <ion-card-subtitle>Rating : {{item.rating}}</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="item.address && item.address !== ''">{{item.address}}</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="item.phone && item.phone !== ''">Phone : {{item.phone}}</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="item.rating && item.rating !== ''">Rating : {{item.rating}}</ion-card-subtitle>
           <ion-card-subtitle (click)="showWebsite(item)" *ngIf="item.website && item.website !== ''">Visit Website
           </ion-card-subtitle>
         </ion-label>

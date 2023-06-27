@@ -251,11 +251,11 @@ export class NetworkService {
     );
   }
   getMyProducts() {
-    return this.httpPostResponse(`my-products`, null, false);
+    return this.httpPostResponse(`my-products`, null, false, true);
   }
 
   getMyListing(data) {
-    return this.httpPostResponse(`my-products`, data, false);
+    return this.httpPostResponse(`my-products`, data, false, true);
   }
 
   getProductss() {
@@ -271,7 +271,7 @@ export class NetworkService {
       `marketplace/product/create`,
       data,
       null,
-      false
+      true
     );
   }
   getCategories(data: string) {
@@ -280,9 +280,15 @@ export class NetworkService {
   getCategoriess(data: string) {
     return this.httpPostResponse(`categories`, data, null, false);
   }
-  markAsSold() {
-    return this.httpGetResponse(`products/mark-as-sold`, null, false);
+  markAsSold(productid) {
+    return this.httpGetResponse(`products/mark-as-sold/${productid}`, null, true);
   }
+
+  openToSell(productid) {
+    return this.httpGetResponse(`products/open-to-sell/${productid}`, null, true);
+  }
+  
+
   getProducts() {
     return this.httpGetResponse(`products`, null, true);
   }
@@ -294,6 +300,15 @@ export class NetworkService {
   addProductReview(data) {
     return this.httpPostResponse('reviews', data);
   }
+
+  editProductReview(review_id, data) {
+    return this.httpPostResponse(`reviews/${review_id}`, data, null, true);
+  }
+
+  deleteProductReview(id) {
+    return this.httpDeleteResponse(`reviews/${id}`);
+  }
+
 
   addEquipmentReview(id, data) {
     return this.httpPostResponse(
@@ -500,6 +515,10 @@ export class NetworkService {
   }
 
   getSettings() {
+    return this.httpGetResponse(`settings`, null, false, false);
+  }
+
+  getUserSettings() {
     return this.httpGetResponse(`user/settings`, null, false, false);
   }
 
@@ -508,6 +527,10 @@ export class NetworkService {
       `membership/${user_id}/${payment_status}/${package_id}`,
       null
     );
+  }
+
+  feedback(data){
+    return this.httpPostResponse(`feedback`, data, null, true);
   }
 
   updateMemershipPayment(email, package_id, userid) {

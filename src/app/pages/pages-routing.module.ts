@@ -242,6 +242,10 @@ const routes: Routes = [
     path: 'blocked-users',
     loadChildren: () => import('./blocked-users/blocked-users.module').then( m => m.BlockedUsersPageModule)
   },
+  {
+    path: 'my-orders',
+    loadChildren: () => import('./my-orders/my-orders.module').then( m => m.MyOrdersPageModule)
+  },
 
   
 

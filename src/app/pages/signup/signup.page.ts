@@ -27,11 +27,17 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     package_id: 1,
   };
 
+  userslimit = 0;
+  usertoavail = 0;
+  showpackage = false;
+
   isIOS = false;
 
   loading = false;
 
   aForm: FormGroup;
+  feedbackForm: FormGroup;
+
   packages: any;
 
   submitted = false;
@@ -112,9 +118,34 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
       ],
       // pay_apple: [false],
     });
+
+    this.feedbackForm = this.formBuilder.group({
+      comment: ['', Validators.compose([Validators.required, Validators.minLength(10)]),],
+    });
+
+  }
+
+  async submitFeedback() {
+    if (!this.feedbackForm.valid) {
+      this.utility.presentFailureToast('Pleae fill all fields properly');
+      return;
+    }
+
+    const formdata = this.feedbackForm.value;
+    this.loading = true;
+    let res = await this.network.feedback(this.feedbackForm.value);
+    console.log('feedback res => ', res);
+    if (res && res.data) { 
+      this.utility.presentSuccessToast('Feedback sent successfully');
+      this.feedbackForm.setValue({ comment: '' })
+    }
+
   }
 
   ngOnInit() {
+
+    this.getSetting();
+
     this.packages = [
       {
         id: 1,
@@ -129,6 +160,17 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
         name: 'Platinum - $31.95/Month',
       },
     ];
+  }
+
+  async getSetting() {
+    let res = await this.network.getSettings();
+    if (res) {
+      this.userslimit = res.data.lifetime_users_limit;
+      this.usertoavail = 5000 - this.userslimit
+      if(this.userslimit == 0){
+        this.showpackage = true;
+      }
+    }
   }
 
   async singUp() {
@@ -172,7 +214,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     }
 
     if (res) {
-      if (this.signupObj.package_id != PLAN_TYPE.FREE) {
+      if (this.signupObj.package_id != PLAN_TYPE.FREE && this.showpackage) {
         // let _res = null;
         let _res = await this.network.getUser();
         this.users.setUser(_res.data.user);
@@ -252,7 +294,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
 
   async privacyPolicy() {
     // await Browser.open({ url: `https://hunterssocial.com/privacy` });
-        await this.modals.present(PrivacyPage);
+    await this.modals.present(PrivacyPage);
 
 
 
@@ -262,7 +304,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     // await Browser.open({
     //   url: `https://hunterssocial.com/terms`,
     // });
-     await this.modals.present(TermsConditionsPage);
+    await this.modals.present(TermsConditionsPage);
   }
 
   // packageChanged($event) {

@@ -67,6 +67,7 @@
 <ion-card *ngFor="let item of productList" (click)="details(item)">
   <!-- <div class="image" style="background-repeat: no-repeat; background-size: cover;" [style.background-image]="'url(' + item.image_url + ')'"></div> -->
   <div class="cover-photo">
+    <div *ngIf="item.is_sold" class="solditem">Sold</div>
     <img [src]="item.image_url" />
   </div>
   <ion-card-header>
@@ -74,6 +75,10 @@
     <ion-card-subtitle>{{ item.title }}</ion-card-subtitle>
   </ion-card-header>
 </ion-card>
+<div *ngIf="productList?.length == 0" style="text-align: center;">
+  <p>No products found</p>
+</div>
+
 <!-- <ion-card *ngFor="let item of filterProducts">
   <div class="cover-photo">
     <img [src]="item.image_url ? item.image_url : 'assets/car.jpg' " />

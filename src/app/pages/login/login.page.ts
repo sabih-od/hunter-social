@@ -18,8 +18,13 @@ import { Config } from 'src/app/config/main.config';
 })
 export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   aForm: FormGroup;
+  feedbackForm: FormGroup;
   loading = false;
   showForgotpass = false;
+
+  userslimit = 0;
+  usertoavail = 0;
+  showpackage = false;
 
   constructor(
     injector: Injector,
@@ -33,6 +38,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   }
 
   ngOnInit() {
+    this.getSetting();
     this.setupForm();
   }
 
@@ -60,6 +66,11 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
         ]),
       ],
     });
+
+    this.feedbackForm = this.formBuilder.group({
+      comment: ['', Validators.compose([Validators.required, Validators.minLength(10)]),],
+    });
+
   }
 
   openSignup() {
@@ -82,18 +93,18 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
       this.users.setUser(res.data);
       console.log('LOGIN_SUCCESS', res.data);
 
-      this.aForm.setValue({email: '', password: ''})
+      this.aForm.setValue({ email: '', password: '' })
 
       this.nav.push('pages/home');
       this.events.publish('USER_DATA_RECEIVED');
       this.events.publish('ROUTE_CHANGED');
       this.menuCtrl.enable(true, 'main');
     } else
-    if(res?.error?.message != 'Unauthenticated.'){
-      this.utility.presentFailureToast(
-        res?.error?.message ?? 'Something went wrong'
-      );
-    }
+      if (res?.error?.message != 'Unauthenticated.') {
+        this.utility.presentFailureToast(
+          res?.error?.message ?? 'Something went wrong'
+        );
+      }
     return;
 
     const user = await this.users.login(formdata);
@@ -126,10 +137,39 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     }
   }
 
+  async getSetting() {
+    let res = await this.network.getSettings();
+    if (res) {
+      this.userslimit = res.data.lifetime_users_limit;
+      this.usertoavail = 5000 - this.userslimit
+      if (this.userslimit == 0) {
+        this.showpackage = true;
+      }
+    }
+  }
+
   showLoginSignup() {
     this.showForgotpass = false;
     this.setupForm();
   }
+
+  async submitFeedback() {
+    if (!this.feedbackForm.valid) {
+      this.utility.presentFailureToast('Pleae fill all fields properly');
+      return;
+    }
+
+    const formdata = this.feedbackForm.value;
+    this.loading = true;
+    let res = await this.network.feedback(this.feedbackForm.value);
+    console.log('feedback res => ', res);
+    if (res && res.data) { 
+      this.utility.presentSuccessToast('Feedback sent successfully');
+      this.feedbackForm.setValue({ comment: '' })
+    }
+
+  }
+
   // async facebookLogin() {
   //   await FirebaseAuthentication.signInWithFacebook();
   // }

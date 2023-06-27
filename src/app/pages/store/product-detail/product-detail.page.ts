@@ -35,6 +35,16 @@ export class ProductDetailPage extends BasePage implements OnInit {
     this.modals.present(ProductReviewPage, { product_id: this.id });
   }
 
+  async openEditReview(review) {
+    let res = await this.modals.present(ProductReviewPage, { product_id: this.id, review: review });
+    // let res = await this.modals.present(AddRecipeComponent);
+    if (res && res.data.reload) {
+      const review_res = await this.network.getProductReviews(this.id);
+      console.log(review_res);
+      this.reviews = review_res.data;
+    }
+  }
+
   add() {
     if (this.quantity < this.product_detail.qty) {
       this.quantity++;
@@ -44,6 +54,20 @@ export class ProductDetailPage extends BasePage implements OnInit {
   sub() {
     if (this.quantity > 1) {
       this.quantity--;
+    }
+  }
+
+  async deleteProductReview(reviewid) {
+    const res = await this.network.deleteProductReview(reviewid);
+    console.log(res);
+    if (res) {
+      this.utility.presentSuccessToast(res.message);
+      const review_res = await this.network.getProductReviews(this.id);
+      console.log(review_res);
+      this.reviews = review_res.data;
+      console.log(this.reviews);
+      // this.product_detail = res.data;
+      // console.log(this.product_detail);
     }
   }
 

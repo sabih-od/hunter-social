@@ -14,11 +14,11 @@ const routes: Routes = [
   },
   {
     path: 'report',
-    loadChildren: () => import('./pages/report/report.module').then( m => m.ReportPageModule)
+    loadChildren: () => import('./pages/report/report.module').then(m => m.ReportPageModule)
   },
   {
     path: 'report',
-    loadChildren: () => import('./pages/report/report.module').then( m => m.ReportPageModule)
+    loadChildren: () => import('./pages/report/report.module').then(m => m.ReportPageModule)
   }
 ];
 
@@ -28,4 +28,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -98,9 +98,10 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
 
   async getData() {
     let res = await this.network.getDatings(this.dating_users, this.search);
-    if (res && res.data) {
-      var newdata = res.data.splice(0,10)
-      this.datings = newdata.map((obj) => ({
+    console.log('getDating => ', res.data.data);
+    if (res && res.data.data) {
+      // var newdata = res.data.splice(0,10)
+      this.datings = res.data.data.map((obj) => ({
         ...obj,
         profile_image: obj.profile_image
           ? this.image.getImageUrl(obj.profile_image)

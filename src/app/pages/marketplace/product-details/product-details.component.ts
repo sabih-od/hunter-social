@@ -19,11 +19,27 @@ export class ProductDetailsComponent extends BasePage implements OnInit {
 
   async ngOnInit() {
     this.user_id = JSON.parse(await this.storage.get('user')).id;
+    console.log('product data => ', this.data);
   }
 
-  async mark() {
-    let data = await this.network.markAsSold();
-    console.log('data', data);
-    this.isMark = !this.isMark;
+  async mark(productid) {
+    let res = await this.network.markAsSold(productid);
+    if (res) {
+      this.utility.presentSuccessToast(res.message);
+      this.isMark = !this.isMark;
+    }
+    console.log('res', res);
   }
+
+  async opentosell(productid) {
+    let res = await this.network.openToSell(productid);
+    if (res) {
+      this.utility.presentSuccessToast(res.message);
+      this.isMark = !this.isMark;
+    }
+    console.log('res', res);
+    
+  }
+  
+
 }

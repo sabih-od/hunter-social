@@ -24,6 +24,7 @@
       </ion-avatar>
       <ion-label>
         <h2>{{ data.user.name }}</h2>
+        <p>{{ data.user.email }}</p>
         <p>{{ data.user.phone }}</p>
       </ion-label>
     </ion-item>
@@ -36,8 +37,9 @@
         <ion-label>{{ data.user.phone }}</ion-label>
       </ion-item>
     </ion-item> -->
-    <ion-button (click)="mark()" *ngIf="isMark && data.user_id === user_id"
-      >Mark As Sold</ion-button
-    >
+    <ion-button (click)="mark(data.id)" *ngIf="!isMark && data.user_id === user_id"
+      >Mark As Sold</ion-button>
+    <ion-button (click)="opentosell(data.id)" *ngIf="isMark && data.user_id === user_id"
+      >Open To Sell</ion-button>
   </ion-card>
 </ion-content>

@@ -14,6 +14,7 @@ export class FooterComponent extends BasePage implements OnInit {
     super(injector);
   }
   @Input() linksVisible = true;
+  @Input() forpage: string;
 
   links;
 

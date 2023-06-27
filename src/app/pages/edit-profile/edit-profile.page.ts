@@ -59,6 +59,7 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
   }
   ionViewWillEnter(): void {
     if (this.user) this.getUser();
+    console.log('this.user => ', this.user);
   }
 
   async ngOnInit() {
