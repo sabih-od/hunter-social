@@ -82,7 +82,7 @@ export class HowToCardsComponent extends BasePage implements OnInit {
   async getComments() {
     let user = await this.users.getUser();
     let res = await this.network.getHowToVideoComments(this.item.id);
-    console.log('getComments', res);
+    // console.log('getComments', res);
 
     if (res && res.data) {
       this.comments = res.data.data.map((item) => ({

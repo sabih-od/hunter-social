@@ -59,7 +59,7 @@
     <br />
 
     <img *ngIf="!item.isVideo" [src]="item.media_upload.url" />
-    <video *ngIf="item.isVideo" width="100%" height="240" controls>
+    <video *ngIf="item.isVideo" width="100%" height="240" preload="none" controls>
       <source
         [src]="item.media_upload.url"
         [type]="item.media_upload.mime_type"

@@ -1,22 +1,31 @@
 ion-card {
   border-radius: 15px;
+  padding: 7px 20px;
+  margin: 12px 15px;
+
+  ion-input {
+    font-family: poppins !IMPORTANT;
+  }
 }
 
 .title {
   font-size: 17px;
 }
+
 .content {
   font-size: 12px;
   color: #828282;
   margin-top: 5px;
 }
-.heading1{
+
+.heading1 {
   text-align: center;
   font-size: 32px;
   font-family: Anton;
   margin-top: 73px;
 }
-.text1{
+
+.text1 {
   text-align: center;
   color: #A2A1A1;
   font-size: 1rem;

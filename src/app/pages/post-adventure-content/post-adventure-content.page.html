@@ -50,7 +50,7 @@
   <ion-card>
     <ion-card-content *ngIf="post_image">
       <img *ngIf="!isVideo" [src]="post_image" />
-      <video *ngIf="isVideo" width="320" height="240" controls>
+      <video *ngIf="isVideo" width="320" height="240" preload="none" controls>
         <source [src]="post_image" type="video/mp4" />
       </video>
     </ion-card-content>

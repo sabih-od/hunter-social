@@ -246,6 +246,10 @@ const routes: Routes = [
     path: 'my-orders',
     loadChildren: () => import('./my-orders/my-orders.module').then( m => m.MyOrdersPageModule)
   },
+  {
+    path: 'hiking',
+    loadChildren: () => import('./hiking/hiking.module').then( m => m.HikingPageModule)
+  },
 
   
 

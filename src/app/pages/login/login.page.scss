@@ -1,3 +1,8 @@
+ion-header {
+  margin-top: constant(safe-area-inset-top);
+  margin-top: env(safe-area-inset-top);
+}
+
 .heading {
   font-size: 35px;
   margin-top: 0;
@@ -17,31 +22,24 @@
   font-size: 13px;
   height: 50px;
 }
-.sign1{
-  font-size: 18px;
-  text-transform: capitalize;
+
+
+
+.authcontainer {
+  padding: 20px 15px;
 }
-// .sub-heading {
-//   font-size: 1rem;
-//   font-weight: 400;
-//   margin-bottom: 10px;
-// }
 
-// .btn {
-//   height: 50px;
-//   font-weight: 900;
-//   font-size: 1.2rem;
-// }
+.forgetpassword {
+  font-family: poppinsSemiBold;
+  font-size: 15px;
+  text-transform: uppercase;
+}
 
-// .social-div {
-//   text-align: center;
-//   margin-top: 40px;
-// }
 
-// .social-btn {
-//   height: 48px;
-// }
-
-// .back-btn {
-//   font-size: larger;
-// }
+.freeuserslimittext {
+  // font-family: 'Poppins';
+  h5 {
+    // font-size: 16px;
+    strong {}
+  }
+}

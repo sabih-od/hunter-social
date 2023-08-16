@@ -4,7 +4,7 @@
       <ion-icon (click)="goBack()" class="back-icon" name="arrow-back-circle"></ion-icon>
       <ion-avatar class="image ion-margin-horizontal">
         <img [src]="item.isGroup ? item.media_upload?.url : item?.profile_image"
-          onerror="this.onerror=null;this.src='assets/images/avatar.png';" />
+          onerror="this.onerror=null;this.src='../../../assets/images/avatar.png';" />
         <!-- <div class="online-indicator"></div> -->
       </ion-avatar>
       <ion-label>
@@ -40,6 +40,12 @@
     <ion-spinner color="primary"></ion-spinner>
   </div>
 
+  <div class="tempimage" *ngIf="_img">
+    <button (click)="removeTempImg()">
+      <ion-icon name="trash-outline"></ion-icon>
+    </button>
+    <img src="{{_img}}" />
+  </div>
 
 </ion-content>
 
@@ -54,11 +60,14 @@
               </ion-input>
 
             </ion-col>
-            <ion-col size="3">
+            <ion-col size="3" style=" display: flex; align-items: center; ">
+              <ion-button fill="clear" (click)="uploadPicture()">
+                <ion-icon name="attach-outline"></ion-icon>
+              </ion-button>
               <ion-button fill="clear" (click)="sendMessage()" [disabled]="isMsgLoading">
-                Send
+                <!-- Send -->
                 <!-- <img src="assets/images/microphone.png" /> -->
-                <!-- <ion-icon name="send"></ion-icon> -->
+                <ion-icon name="send"></ion-icon>
               </ion-button>
             </ion-col>
 

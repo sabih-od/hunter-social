@@ -51,6 +51,8 @@ export class HomePage extends BasePage implements OnInit {
   datings;
   items = [];
 
+  showmodal = true;
+
   laws = [
     {
       image: 'assets/images/hunt.png',
@@ -188,6 +190,11 @@ export class HomePage extends BasePage implements OnInit {
       zoom: 'no',
     }); /*3*/
   }
+
+  hideModal(){
+    this.showmodal = false;
+  }
+
   async doRefresh($event) {
     this.isLoading = true;
     await this.getData();

@@ -8,6 +8,11 @@ import { BasePage } from '../base-page/base-page';
 })
 export class HowToPage extends BasePage implements OnInit {
   list = [];
+  search_text: string;
+  
+  onSearchTextChange(searchText: string) {
+    this.search_text = searchText;
+  }
 
   constructor(injector: Injector) {
     super(injector);

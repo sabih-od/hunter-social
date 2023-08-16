@@ -1,7 +1,43 @@
 .bg {
-    background-image: url(/assets/images/news_letter_bg.jpg);
+    background-image: url('../../../../assets/images/news_letter_bg.jpg');
     background-attachment: fixed;
-    margin-bottom: -10px;
+    // margin-bottom: -10px;
+    padding: 20px 10px;
+
+    h2 {
+        color: #fff;
+        font-size: 28px;
+    }
+
+    p {
+        color: #fff;
+    }
+
+    .newletterinput {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+        ion-input {
+            /* border-bottom: 1px solid gray; */
+            color: #fff;
+            font-family: poppins;
+            font-size: 14px;
+            background: #eee;
+            color: #000;
+            --padding-start: 12px;
+            height: 44px;
+        }
+    
+        ion-button {
+            /* color: #000; */
+            /* --background: #fff; */
+            /* margin-top: 9px; */
+            --border-radius: 0;
+            margin: 0;
+            height: 44px;
+        }
+    }
+    
 }
 
 .btn2 {

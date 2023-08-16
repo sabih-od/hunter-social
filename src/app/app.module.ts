@@ -32,11 +32,13 @@ import { Stripe } from '@awesome-cordova-plugins/stripe/ngx';
 import { InAppPurchase2 } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
 import { SqliteService } from './services/sqlite.service';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
+import { RequestAGroupModule } from './components/request-a-group/request-a-group.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    RequestAGroupModule,
     IonicModule.forRoot(),
     HttpClientModule,
     AppRoutingModule,

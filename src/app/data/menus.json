@@ -87,6 +87,11 @@
         "title": "Market place",
         "url": "pages/marketplace",
         "role": 3
+      },
+      {
+        "title": "Hiking",
+        "url": "pages/hiking",
+        "role": 3
       }
     ]
   }

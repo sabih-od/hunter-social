@@ -31,8 +31,13 @@ export class ProductDetailPage extends BasePage implements OnInit {
     console.log(this.product_detail);
   }
 
-  openAddReview() {
-    this.modals.present(ProductReviewPage, { product_id: this.id });
+  async openAddReview() {
+    let res = await this.modals.present(ProductReviewPage, { product_id: this.id });
+    if (res && res.data.reload) {
+      const review_res = await this.network.getProductReviews(this.id);
+      console.log(review_res);
+      this.reviews = review_res.data;
+    }
   }
 
   async openEditReview(review) {

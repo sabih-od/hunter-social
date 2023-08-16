@@ -2,27 +2,15 @@
   <ion-row>
     <ion-col size="12">
       <ion-label color="light">
-        <h2 class="f-anton" style="font-size: 3vh; color: black">
-          SUBSCRIBE TO OUR NEWSLETTER
-        </h2>
-        <p style="color: white">
-          Start by signing up for emails and get 15% off any order.
-        </p>
+        <h2 class="f-anton">SUBSCRIBE TO OUR NEWSLETTER</h2>
+        <p>Start by signing up for emails and get 15% off any order. </p>
       </ion-label>
-      <ion-input
-      [hidden]="subs"
-        placeholder="Email Address"
-        [(ngModel)]="email"
-        style="border-bottom: 1px solid gray"
-      >
-      </ion-input>
-
-      <ion-button
-        class="ion-margin-top"
-        (click)="subscribeNewsletter()"
-        [disabled]="subs || !email"
-        >{{ !subs ? "SUBSCRIBE" : "SUBSCRIBED" }}</ion-button
-      >
+      <div class="newletterinput">
+        <ion-input [hidden]="subs" placeholder="Email Address" [(ngModel)]="email">
+        </ion-input>
+        <ion-button class="ion-margin-top" (click)="subscribeNewsletter()" [disabled]="subs || !email">{{ !subs ?
+          "SUBSCRIBE" : "SUBSCRIBED" }}</ion-button>
+      </div>
     </ion-col>
   </ion-row>
 </ion-grid>

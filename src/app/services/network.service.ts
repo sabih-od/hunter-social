@@ -287,7 +287,7 @@ export class NetworkService {
   openToSell(productid) {
     return this.httpGetResponse(`products/open-to-sell/${productid}`, null, true);
   }
-  
+
 
   getProducts() {
     return this.httpGetResponse(`products`, null, true);
@@ -334,6 +334,14 @@ export class NetworkService {
 
   updatePassword(data) {
     return this.httpPostResponse(`user/password`, data, null, false);
+  }
+
+  getGroupTypes() {
+    return this.httpGetResponse(`get-groups`, null, false);
+  }
+
+  requestGroup(data) {
+    return this.httpPostResponse(`request-group`, data, null, false);
   }
 
   getGroups() {
@@ -529,7 +537,7 @@ export class NetworkService {
     );
   }
 
-  feedback(data){
+  feedback(data) {
     return this.httpPostResponse(`feedback`, data, null, true);
   }
 

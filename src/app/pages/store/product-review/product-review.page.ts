@@ -8,7 +8,7 @@ import { BasePage } from '../../base-page/base-page';
 })
 
 export class ProductReviewPage extends BasePage implements OnInit {
-  rating: any;
+  rating: any = 5;
   comment: any;
   product_id: any;
   review: any;

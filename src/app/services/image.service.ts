@@ -787,4 +787,12 @@ export class ImageService {
   getDefaultImg() {
     return Config.URL + '/public/assets/images/ph-avatar.png';
   }
+
+
+
+  /* ----------------------------------------------------------- */
+
+  
+  
+  
 }

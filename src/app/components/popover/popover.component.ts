@@ -49,12 +49,29 @@ export class PopoverComponent extends BasePage implements OnInit {
   }
 
   async openreport() {
+    this.popover.dismiss()
     var res = await this.modals.present(ReportPage, {
       tag: this.data.tag,
       item_id: this.data.item_id,
       item_desc: this.data.item_desc,
     });
   }
+
+  async block(){
+    this.popover.dismiss()
+    console.log('this.data => ', this.data.item_id)
+    let formData = new FormData();
+    console.log('block user => ', this.data.item_id)
+    formData.append('user_id', this.data.item_id);
+    // alert(JSON.stringify(formData))
+    // alert(JSON.stringify(this.data.item_id))
+    var res = await this.network.blockUser(formData);
+    if(res){
+      this.utility.presentSuccessToast(res.message);
+      // this.nav.navigateTo('pages/chat-room');
+    }
+  }
+
   async deleteComment() {
     console.log(this.data);
     let res = await this.network.deleteHowToComment(this.data.item_id);

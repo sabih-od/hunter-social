@@ -1,18 +1,14 @@
-<ion-grid>
+<ion-grid *ngIf="data">
   <ion-row class="content">
     <ion-col size="12">
       <ion-label>
-        <h2 class="heading1">
-          <b>{{ data?.title }}</b>
-        </h2>
-        <h1 class="heading2">
-          <b>{{ data?.subtitle }}</b>
-        </h1>
+        <h2 class="heading1"> {{ data?.title }} </h2>
+        <h1 class="heading2"> {{ data?.subtitle }} </h1>
         <p class="text">{{ data?.description }}</p>
-        <ion-button color="dark" (click)="navigate('post1')"
-          ><b>TAKE A SHOT !</b></ion-button
-        ><br />
+        <ion-button color="dark" class="takeashort" (click)="navigate('post1')">TAKE A SHOT !</ion-button>
         <img class="img" [src]="data?.image" />
+        <h3 class="newbrandtext">We Are Brand New, And Building This Site Together With Its Members. So Please Bear With
+          Us While We Grow</h3>
       </ion-label>
     </ion-col>
   </ion-row>

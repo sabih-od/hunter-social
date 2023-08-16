@@ -13,6 +13,7 @@ import { HeaderModule } from 'src/app/components/header/header.module';
 import { HowToCardsComponent } from './how-to-cards/how-to-cards.component';
 import { CardSubmissionComponent } from './card-submission/card-submission.component';
 import { ChatFloatingButtonModule } from 'src/app/components/chat-floating-button/chat-floating-button.module';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ChatFloatingButtonModule } from 'src/app/components/chat-floating-butto
     HowToPageRoutingModule,
     FooterModule,
     HeaderModule,
-    ChatFloatingButtonModule
+    ChatFloatingButtonModule,
+    Ng2SearchPipeModule
   ],
   declarations: [
     HowToPage,

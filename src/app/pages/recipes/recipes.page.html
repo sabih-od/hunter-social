@@ -3,6 +3,7 @@
   [showcurve]="false"
   [back]="false"
   [showMenu]="true"
+  (searchTextChange)="onSearchTextChange($event)"
 ></app-header>
 
 <ion-content>
@@ -20,13 +21,13 @@
   >
     <ion-button (click)="addNew()" color="dark">Add Recipe Here</ion-button>
   </div>
-  <ion-row class="ion-margin-top">
+  <!-- <ion-row class="ion-margin-top">
     <ion-col size="12">
       <ion-searchbar [(ngModel)]="search" placeholder="Search"></ion-searchbar>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
-  <recipe *ngFor="let item of recipies  |filter:search" [item]="item"></recipe>
+  <recipe *ngFor="let item of recipies | filter:search_text" [item]="item"></recipe>
 
   <div
     style="

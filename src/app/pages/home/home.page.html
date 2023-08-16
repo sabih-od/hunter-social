@@ -4,6 +4,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
   <!-- <div class="top-bg"></div>
 
   <div>
@@ -18,10 +19,23 @@
   </div> -->
   <app-home-banner> </app-home-banner>
 
+
+  <div *ngIf="showmodal" class="disclaimer-modal"> <!--  -->
+    <div class="overlay"></div>
+    <div class="contentmodal">
+      <h3>Disclaimer</h3>
+      <strong>Dont use Abusive words on chat and post</strong>
+      <p>Violating the abusive language policy may result in temporary or permanent suspension of your Account. Our team
+        reserves the right to determine the appropriate course of action based on the severity and frequency of the
+        offense.</p>
+      <button (click)="hideModal()">Ok</button>
+    </div>
+  </div>
+
   <about-us></about-us>
   <app-hunters></app-hunters>
   <app-images></app-images>
-  <app-reviews></app-reviews>
+  <!-- <app-reviews></app-reviews> -->
   <app-logos></app-logos>
   <news-letter></news-letter>
 
@@ -53,8 +67,8 @@
       </ion-grid>
     </ion-slide> -->
 
-  <ion-grid>
-    <!-- <ion-row class="ion-margin-top">
+   <!-- <ion-grid>
+   <ion-row class="ion-margin-top">
       <ion-col>
         <h2 class="f-pop-smb sub-title">RANCH & GUIDE LOCATOR</h2>
       </ion-col>
@@ -108,8 +122,8 @@
           <laws [item]="item"></laws>
         </ion-col>
       </div>
-    </ion-row> -->
-  </ion-grid>
+    </ion-row> 
+  </ion-grid>-->
 
   <!-- <div class="ion-margin"></div> -->
   <footer></footer>

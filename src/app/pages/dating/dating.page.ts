@@ -20,6 +20,7 @@ export class DatingPage
   isLoading = false;
   search = '';
   dating_users = 1;
+  showmodal = true;
 
   constructor(injector: Injector, private iab: InAppBrowser) {
     super(injector);
@@ -35,6 +36,7 @@ export class DatingPage
       this.datings = this.all_datings.filter((dating) =>
         dating.name?.toLowerCase().includes(e.toLowerCase())
       );
+      console.log('dataService.searchValueChanged res => ', this.datings);
       console.log('DatingPage Search', e);
     });
   }
@@ -72,8 +74,9 @@ export class DatingPage
 
   async getData() {
     let res = await this.network.getDatings(this.dating_users, this.search);
+    console.log('network.getDatings res => ', res);
     if (res && res.data) {
-      this.datings = res.data.map((obj) => ({
+      this.datings = res?.data?.data?.map((obj) => ({
         ...obj,
         profile_image: obj.profile_image
           ? this.image.getImageUrl(obj.profile_image)
@@ -128,6 +131,11 @@ export class DatingPage
       location: 'no',
       zoom: 'no',
     }); /*3*/
+  }
+
+
+  hideModal(){
+    this.showmodal = false;
   }
 
   async editUser() {

@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnInit } from '@angular/core';
+import { Component, Injector, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ViewWillEnter } from '@ionic/angular';
 import { BasePage } from 'src/app/pages/base-page/base-page';
 import { NavService } from 'src/app/services/basic/nav.service';
@@ -21,10 +21,13 @@ export class HeaderComponent extends BasePage implements OnInit {
   @Input() shouldCallApii = true;
 
   cart_count;
-  search_text;
+  // search_text;
   isSearchVisible = false;
   user_image;
- 
+
+  search_text: string;
+  @Output() searchTextChange = new EventEmitter<string>();
+
 
   total_found = 0;
   first_selected = false;
@@ -66,10 +69,10 @@ export class HeaderComponent extends BasePage implements OnInit {
     let user = JSON.parse(localStorage.getItem('user'));
     this.user_image = this.image.getImageUrl(user?.profile_image);
 
-    if(!this.shouldCallApi == !this.shouldCallApii){
+    if (!this.shouldCallApi == !this.shouldCallApii) {
       return;
     };
-    
+
 
 
     let res = await this.network.getUser();
@@ -142,6 +145,11 @@ export class HeaderComponent extends BasePage implements OnInit {
   }
 
   search() {
+
+    this.searchTextChange.emit(this.search_text);
+    const currentRoute = this.nav.router.url;
+    // console.log('Current Active Route:', currentRoute);
+
     this.first_selected = false;
     this.removeHighlight();
     if (this.search_text.trim() === '') return;
@@ -154,9 +162,26 @@ export class HeaderComponent extends BasePage implements OnInit {
       ) {
       } else this.searchAndHighlightTag(tag);
     });
+
+    // if (currentRoute == '/pages/how-to' || currentRoute == '/pages/equipment-reviews-list') {
+    //   const allCards = document.querySelectorAll('.searchcard');
+    //   allCards.forEach(card => {
+    //     const highlightElement = card.querySelector('.highlight');
+    //     if (highlightElement) {
+    //       // card.style.display = 'block';
+    //       card.classList.remove('hidecard');
+    //     } else {
+    //       // card.style.display = 'none';
+    //       card.classList.add('hidecard');
+    //     }
+    //   });
+    // }
+
   }
 
   searchAndHighlightTag = (tag) => {
+
+
     if (tag.hasAttribute('data-hl-text')) {
       tag.innerHTML = decodeURI(tag.getAttribute('data-hl-text'));
     }

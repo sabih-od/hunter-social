@@ -11,7 +11,14 @@ export class HomeBannerComponent extends BasePage implements OnInit {
     super(injector);
   }
 
-  ngOnInit() {}
+
+  userslimit = 0;
+  usertoavail = 0;
+  showpackage = false;
+
+  ngOnInit() {
+    this.getSetting();
+  }
 
   navigate(arg) {
     //arg == chat
@@ -38,4 +45,16 @@ export class HomeBannerComponent extends BasePage implements OnInit {
     //else if()
     //else
   }
+
+  async getSetting() {
+    let res = await this.network.getSettings();
+    if (res) {
+      this.userslimit = res.data.lifetime_users_limit;
+      this.usertoavail = 5000 - this.userslimit
+      if (this.userslimit == 0) {
+        this.showpackage = true;
+      }
+    }
+  }
+
 }

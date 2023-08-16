@@ -24,6 +24,8 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   channel: any;
   isLoading = true;
   isMsgLoading = false;
+  _img: any;
+  testimg: String = 'https://hunterssocial.com/storage/398/DreamShaper_v5_A_small_kif_with_perfect_cute_realistic_face_pl_2.jpg'
 
   constructor(injector: Injector, public pusher: PusherService) {
     super(injector);
@@ -84,6 +86,20 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     }
   }
 
+  removeTempImg() {
+    this._img = null;
+  }
+
+  async uploadPicture() {
+    // return new Promise(async resolve => {
+    this._img = await this.image.openCamera();
+    console.log(this._img)
+
+    // let blob = (await this.image.base64ToBlob(this._img)) as string;
+
+  }
+
+
   listenMessages() {
     let token = localStorage.getItem('token');
     this.pusher.init(this.channel_id, token);
@@ -96,6 +112,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
         content: message.content,
         channel_id: message.channel_id,
         sender_id: message.sender_id,
+        media_upload: message.media_upload,
         created_at: message.created_at,
       });
       self.scrollToBottom();
@@ -103,7 +120,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     });
   }
 
-  chatNotifyListener() {}
+  chatNotifyListener() { }
 
   scrollToBottom() {
     let self = this;
@@ -116,8 +133,26 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     this.isMsgLoading = true;
     console.log(this.text);
     if (this.text && this.text !== '') {
+      // let blob = (await this.image.base64ToBlob(this._img)) as string;
+
+      const base64Data = this._img.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+      const binaryData = new Uint8Array(atob(base64Data).split('').map((char) => char.charCodeAt(0)));
+      const blob = new Blob([binaryData], { type: 'image/jpeg' }); // Update the MIME type if needed
+      // const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+      // const binaryData = atob(this._img);
+      // // Create a Blob from binary data
+      // const blob = new Blob([new Uint8Array(binaryData.length).map((_, i) => binaryData.charCodeAt(i))], {
+      //   type: 'image/jpeg', // Specify the MIME type of the image
+      // });
+
+      console.log('blob => ', blob)
+      let formData = new FormData();
+      formData.append('content', this.text);
+      formData.append('file', blob);
       let res = await this.network.sendChatMessages(
-        { content: this.text },
+        formData
+        // { content: this.text, file: blob }
+        ,
         this.channel_id
       );
       this.isMsgLoading = false;
@@ -136,6 +171,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       //   id: this.messages[this.messages.length - 1].id + 1,
       // }); 3
       this.text = '';
+      this._img = '';
     } else {
       this.isMsgLoading = false;
     }

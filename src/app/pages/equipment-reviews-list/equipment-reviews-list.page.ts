@@ -15,7 +15,11 @@ export class EquipmentReviewsListPage extends BasePage implements OnInit {
   loading: boolean = true;
   isLoading = false;
   videos = [];
-
+  search_text: string;
+  
+  onSearchTextChange(searchText: string) {
+    this.search_text = searchText;
+  }
   constructor(injector: Injector) {
     super(injector);
   }

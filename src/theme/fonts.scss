@@ -2,31 +2,40 @@
   font-family: "Anton";
   src: url(/assets/fonts/Anton-Regular.ttf);
 }
-@font-face {
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: normal;
-  src: url(/assets/fonts/Poppins-Regular.ttf);
-}
-@font-face {
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: lighter;
-  src: url(/assets/fonts/Poppins-Light.ttf);
-}
 
 @font-face {
   font-family: "Poppins";
-  font-style: normal;
-  font-weight: medium;
-  src: url(/assets/fonts/Poppins-Medium.ttf);
+  // font-style: normal;
+  // font-weight: normal;
+  src: url('./../assets/fonts/Poppins-Regular.ttf');
 }
 
 @font-face {
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: semibold;
+  font-family: "PoppinsLight";
+  // font-style: normal;
+  // font-weight: lighter;
+  src: url('./../assets/fonts/Poppins-Light.ttf');
+}
+
+@font-face {
+  font-family: "PoppinsMedium";
+  // font-style: normal;
+  // font-weight: medium;
+  src: url('./../assets/fonts/Poppins-Medium.ttf');
+}
+
+@font-face {
+  font-family: "PoppinsSemiBold";
+  // font-style: normal;
+  // font-weight: semibold;
   src: url("../assets/fonts/Poppins-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "PoppinsBold";
+  // font-style: normal;
+  // font-weight: semibold;
+  src: url("../assets/fonts/Poppins-Bold.ttf");
 }
 
 .f-anton {
@@ -45,15 +54,15 @@
 
 .f-pop-li {
   font-family: "Poppins";
-  font-weight: lighter;
+  // font-weight: lighter;
 }
 
 .f-pop-m {
-  font-family: "Poppins";
-  font-weight: medium;
+  font-family: "PoppinsMedium";
+  // font-weight: medium;
 }
 
 .f-pop-smb {
-  font-family: "Poppins";
-  font-weight: semibold;
+  font-family: "PoppinsSemiBold";
+  // font-weight: semibold;
 }

@@ -4,46 +4,126 @@
   background-size: cover;
   width: 100%;
   height: 450px;
-  margin-top: -16px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  &:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgb(0 0 0 / 40%);
+    z-index: 0;
+    left: 0;
+    top: 0;
+  }
 }
+
 .content {
-  border: 2px solid transparent;
-  width: 400px;
-  margin-top: 16px;
-  padding-top: 80px;
-  padding-left: 20px;
+  z-index: 1;
+  position: relative;
 }
+
 .text {
   color: #fff;
-  margin-bottom: -10px;
   font-size: 18px;
+  margin: 0;
 }
 
 .heading1 {
   color: #fff;
   font-family: Anton;
   font-size: 50px;
+  margin: 0;
+  line-height: 1;
 }
+
 .heading2 {
   color: #fff;
-  margin-top: -10px;
   font-family: Anton;
-  font-size: 65px;
-  margin-bottom: 25px;
+  font-size: 56px;
+  margin: 0;
+  line-height: 1;
+  margin-bottom: 10px;
 }
+
+ion-button {
+  font-size: 14px;
+  margin-right: 8px;
+
+  b {
+    font-weight: normal;
+    font-family: poppinsSemiBold;
+  }
+}
+
 .btn1 {
-  color: white;
-  // background-color: black;
-  width: 130px;
-  height: 45px;
-  margin-right: 30px;
-  font-size: 15px;
+  // color: white;
+  // // background-color: black;
+  // width: 130px;
+  // height: 45px;
+  // margin-right: 30px;
+  // font-size: 15px;
 }
+
 .btn2 {
-  color: black;
-  // background-color: white;
-  width: 130px;
-  margin-left: -10px;
-  height: 45px;
-  font-size: 15px;
+  // color: black;
+  // // background-color: white;
+  // width: 130px;
+  // margin-left: -10px;
+  // height: 45px;
+  // font-size: 15px;
 }
+
+.freeuserslimittext {
+  text-align: left;
+  color: #fff;
+  margin-top: 25px;
+
+  h3 {
+    margin-top: 0px;
+  }
+
+  h2 {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1;
+    margin-top: 5px;
+  }
+
+  &:after,
+  &:before {
+    content: none;
+  }
+}
+
+// .freeuserslimittext {
+//   color: #fff;
+//   border: 0;
+//   margin-bottom: 0;
+//   padding-bottom: 0;
+// }
+// .freeuserslimittext p {
+//   font-size: 14px;
+// }
+
+// .freeuserslimittext h3 {
+//   font-size: 20px;
+//   font-weight: 700;
+// }
+
+// .freeuserslimittext h2 {
+//   font-size: 18px;
+//   margin-top: 10px;
+// }
+
+// .content {
+//   padding-top: 16px !important;
+// }

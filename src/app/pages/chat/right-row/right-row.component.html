@@ -1,7 +1,11 @@
-<ion-grid class="ion-no-padding">
+<ion-grid class="ion-no-padding chatitem">
   <ion-row class="ion-no-padding">
     <ion-col class="ion-no-padding" size="12">
-      <ion-card class="ion-padding ion-no-margin f-pop-m" style="border-bottom-right-radius: 0px;">{{ item.content }}
+      <ion-card class="ion-padding ion-no-margin f-pop-m" style="border-bottom-right-radius: 0px;">
+        <img *ngIf="item?.media_upload?.url" src="{{item?.media_upload?.url}}" class="chatimage" />
+        <ion-card-content *ngIf="item.content">
+          {{ item.content }}
+        </ion-card-content>
       </ion-card>
     </ion-col>
   </ion-row>

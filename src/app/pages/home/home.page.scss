@@ -9,32 +9,6 @@ ion-slides {
   --bullet-background-active: white;
 }
 
-@font-face {
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: normal;
-  src: url(/assets/fonts/Poppins-Medium.ttf);
-}
-@font-face {
-  font-family: "semiBold";
-  font-style: normal;
-  font-weight: normal;
-  src: url(/assets/fonts/Poppins-SemiBold.ttf);
-}
-
-@font-face {
-  font-family: "PoppinsRegular";
-  font-style: normal;
-  font-weight: normal;
-  src: url(/assets/fonts/Poppins-Regular.ttf);
-}
-
-@font-face {
-  font-family: "Anton";
-  font-style: normal;
-  font-weight: normal;
-  src: url(/assets/fonts/Anton-Regular.ttf);
-}
 .top-bg {
   background-color: var(--ion-color-primary);
   height: 300px;
@@ -157,6 +131,7 @@ ion-slides {
   white-space: nowrap;
   margin-top: -10px;
   width: 100%;
+
   .card {
     display: inline-block;
     width: 70%;
@@ -194,6 +169,7 @@ ion-slides {
   text-align: center;
   text-transform: uppercase;
   font-size: 12px;
+
   ion-img {
     width: 30px;
     margin: 0 auto;
@@ -207,3 +183,5 @@ ion-slides {
 .sub-title {
   font-size: 1.8vh;
 }
+
+

@@ -13,11 +13,16 @@
         <ion-img src="assets/images/chat-room-banner.jpg"></ion-img>
       </ion-col>
     </ion-row> -->
+
+    <button class="requestgroupbtn" (click)="showGroupRequestModal()">Request A Group</button>
+
     <ion-row class="ion-margin-top">
       <ion-col size="12">
         <ion-item>
-          <ion-searchbar [(ngModel)]="_search" class="ion-margin-bottom" placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar>
-          <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search"> </ion-icon> </ion-button>
+          <ion-searchbar [(ngModel)]="_search" class="ion-margin-bottom" placeholder="Search"
+            (ionClear)="onSearch(true)"></ion-searchbar>
+          <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search">
+            </ion-icon> </ion-button>
         </ion-item>
       </ion-col>
     </ion-row>

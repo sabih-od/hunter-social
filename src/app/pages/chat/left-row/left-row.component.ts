@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'left-row',
@@ -7,6 +8,21 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class LeftRowComponent implements OnInit {
   @Input() item;
-  constructor() {}
-  ngOnInit() {}
+  constructor(
+    public utility: UtilityService,
+  ) { }
+  ngOnInit() { }
+
+  downloadimage(url) {
+    console.log('downloadimage => ', url)
+    this.utility.downloadImage(url).subscribe(
+      (success) => {
+        console.log('sucess image downloaded')
+      },
+      (error) => {
+        console.error('Image download error:', error);
+      }
+    );
+  }
+
 }

@@ -1,0 +1,27 @@
+.reqgrpfrom {
+    ion-input {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        --padding-start: 14px;
+        font-size: 14px;
+
+        input {
+            padding: 12px !important;
+            border-radius: 10px !important;
+        }
+    }
+
+    ion-textarea {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        --padding-start: 14px;
+        font-size: 14px;
+        height: 100px;
+    }
+
+    ion-select {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+}

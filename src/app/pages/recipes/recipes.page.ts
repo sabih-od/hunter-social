@@ -11,6 +11,13 @@ export class RecipesPage extends BasePage implements OnInit {
   recipies = [];
   page_num = 1;
   last_page;
+
+  search_text: string;
+  
+  onSearchTextChange(searchText: string) {
+    this.search_text = searchText;
+  }
+  
   constructor(injector: Injector) {
     super(injector);
   }

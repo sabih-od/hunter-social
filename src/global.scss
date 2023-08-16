@@ -28,6 +28,19 @@
 @import "./theme/fonts.scss";
 @import "./theme/animations.scss";
 
+* {
+  font-family: 'Poppins';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: PoppinsSemiBold;
+}
+
 .btn {
   height: 60px;
   --border-radius: 10px;
@@ -150,8 +163,12 @@ app-header {
 }
 
 .highlight {
-  background-color: yellow;
-  --background: yellow;
+  // background-color: yellow;
+  // --background: yellow;
+}
+
+.hidecard {
+  display: none;
 }
 
 // .top-bg {
@@ -194,17 +211,155 @@ app-header {
   align-items: center;
 }
 
-.freeuserslimittext h2 {
-  font-weight: 600;
-  margin-bottom: 8px;
-}
 
-.freeuserslimittext p {
-  margin: 0;
+
+.disclaimer-modal {
+  z-index: 41;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+
+  .overlay {
+    position: absolute;
+    background: rgb(0 0 0 / 56%);
+    width: 100%;
+    height: 100%;
+  }
+
+  .contentmodal {
+    background: #fff;
+    position: absolute;
+    top: 0;
+    width: 95%;
+    border-radius: 7px;
+    padding: 1px 15px;
+    top: 0;
+    bottom: 0;
+    height: 228px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h3 {
+      margin-bottom: 3px;
+      font-weight: normal;
+    }
+
+    strong {
+      font-size: 14px;
+    }
+
+    p {
+      margin-top: 0px;
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 0;
+    }
+
+    button {
+      background: #333;
+      color: #fff;
+      padding: 7px 0px;
+      border-radius: 4px;
+      margin-left: auto;
+      width: 70px;
+      display: block;
+      font-size: 15px;
+    }
+  }
 }
 
 .freeuserslimittext {
-  margin-bottom: 15px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 13px;
+  // margin-bottom: 15px;
+  // border-bottom: 1px solid #ddd;
+  // padding-bottom: 13px;
+  font-family: "Poppins";
+  text-align: center;
+
+  &:after,
+  &:before {
+    content: "";
+    width: 25px;
+    height: 1px;
+    background: #ddd;
+    display: block;
+    margin: 15px auto;
+  }
+
+  h2 {
+    // font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 22px;
+    // font-family: 'Poppins';
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.donthavebtn {
+  ion-text {
+    margin-bottom: 6px;
+    display: block;
+    font-size: 15px;
+  }
+
+  h2 {
+    font-family: poppinsSemiBold;
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+}
+
+.feedbackfrom {
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 13px;
+    font-family: 'Poppins';
+    text-align: center;
+  }
+}
+
+.chatitem {
+  ion-card-content {
+    font-size: 14px !important;
+    padding: 10px 12px;
+  }
+
+  ion-card {
+    // padding-bottom: 10px !important;
+    max-width: 292px !important;
+    padding: 0;
+    position: relative;
+  }
+
+  .downloadimg {
+    position: absolute;
+    background: #fff;
+    width: 40px;
+    height: 40px;
+    z-index: 1;
+    left: 10px;
+    top: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    color: #000;
+    border-radius: 11px;
+}
+
+  .chatimage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
 }

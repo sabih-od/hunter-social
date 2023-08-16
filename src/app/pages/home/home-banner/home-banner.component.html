@@ -9,5 +9,10 @@
     <ion-button color="light" class="btn2" (click)="navigate('contact')"
       ><b>CONTACT US</b></ion-button
     >
+    <div class="freeuserslimittext" *ngIf="!showpackage">
+      <h3>First 5000 Members: Free Lifetime Membership</h3>
+      <h2>First Lifetime User</h2>
+      <p>{{usertoavail}} / 5000</p>
+    </div>
   </div>
 </div>

@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-buttons>
+        <ion-button (click)="close()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Request a Group</ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="requestGroupForm" class="reqgrpfrom">
+    <ion-grid class="ion-margin">
+      <ion-row>
+        <ion-col size="12">
+          <ion-input placeholder="Group Name" formControlName="group_name"></ion-input>
+        </ion-col>
+        <ion-col size="12">
+          <ion-select placeholder="Select Types" formControlName="group_type">
+            <ion-select-option *ngFor="let item of groups" [value]="item">{{item}}</ion-select-option>
+              <!-- <ion-select-option value="Guns">Guns</ion-select-option>
+              <ion-select-option value="Archery">Archery</ion-select-option>
+              <ion-select-option value="Fishing">Fishing</ion-select-option>
+              <ion-select-option value="Camping">Camping</ion-select-option>
+              <ion-select-option value="Political">Political</ion-select-option>
+              <ion-select-option value="Religious">Religious</ion-select-option>
+              <ion-select-option value="Photography">Photography</ion-select-option>
+              <ion-select-option value="Food Request">Food Request</ion-select-option> -->
+          </ion-select>
+        </ion-col>
+        <ion-col size="12">
+          <ion-textarea placeholder="Group Description" formControlName="group_description"></ion-textarea>
+        </ion-col>
+        <ion-col>
+          <ion-button class="f-pop-r btn" expand="block" color="primary" (click)="onSubmitRequest()">
+            Request A Group
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

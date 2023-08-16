@@ -1,6 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ViewWillEnter } from '@ionic/angular';
 import { BasePage } from 'src/app/pages/base-page/base-page';
+import { RequestAGroupComponent } from '../request-a-group/request-a-group.component';
 
 @Component({
   selector: 'chat-rooms',
@@ -9,8 +10,7 @@ import { BasePage } from 'src/app/pages/base-page/base-page';
 })
 export class ChatRoomsComponent
   extends BasePage
-  implements OnInit, ViewWillEnter
-{
+  implements OnInit, ViewWillEnter {
   chatList = [
     // {
     //   image: 'assets/images/riffle.png',
@@ -95,4 +95,9 @@ export class ChatRoomsComponent
       this.nav.push('pages/chat');
     }
   }
+
+  showGroupRequestModal(){
+    this.modals.present(RequestAGroupComponent);
+  }
+
 }

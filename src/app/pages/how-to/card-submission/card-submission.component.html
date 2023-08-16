@@ -21,7 +21,7 @@
   </ion-input>
   <br />
   
-  <video *ngIf="video" width="100%" height="100%" controls>
+  <video *ngIf="video" width="100%" height="100%" preload="none" controls>
     <source [src]="video" type="video/mp4" />
   </video>
 

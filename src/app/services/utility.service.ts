@@ -10,6 +10,9 @@ import {
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { Browser } from '@capacitor/browser';
 import { Config } from '../config/main.config';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +24,9 @@ export class UtilityService {
     public strings: StringsService,
     public geolocations: GeolocationsService,
     private launchNavigator: LaunchNavigator,
-    private iab: InAppBrowser
-  ) {}
+    private iab: InAppBrowser,
+    private http: HttpClient
+  ) { }
 
   showLoader(msg = 'Please wait...') {
     return this.loading.showLoader(msg);
@@ -109,6 +113,23 @@ export class UtilityService {
 
     //  console.log(diff.toString());
     return diff;
+  }
+
+  downloadImage(url: string): Observable<boolean> {
+    return this.http.get(url, { responseType: 'blob' }).pipe(
+      map((blob: Blob) => {
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'downloaded_image.jpg'; // Set the desired filename
+        link.click();
+        window.URL.revokeObjectURL(link.href);
+        return true; // Return true on successful download
+      }),
+      catchError((error) => {
+        console.error('Error downloading image:', error);
+        return throwError(error);
+      })
+    );
   }
 
   msToTime(s) {

@@ -3,6 +3,7 @@
   [showcurve]="false"
   [back]="false"
   [showMenu]="true"
+  (searchTextChange)="onSearchTextChange($event)"
 ></app-header>
 
 <ion-content>
@@ -16,7 +17,7 @@
 
   <app-card-submission></app-card-submission>
 
-  <app-how-to-cards *ngFor="let item of list" [item]="item"></app-how-to-cards>
+  <app-how-to-cards *ngFor="let item of list | filter: search_text" [item]="item"></app-how-to-cards>
 
   <footer></footer>
 </ion-content>
