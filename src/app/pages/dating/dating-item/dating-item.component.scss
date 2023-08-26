@@ -1,10 +1,37 @@
-ion-img {
-  height: 120px;
+figure {
+  width: 100%;
+  margin: 0;
+  position: relative;
+
+  ion-img {
+    // height: 120px;
+  }
+
+  ion-buttons {
+    position: absolute;
+    top: 7px;
+    right: 3px;
+
+    ion-button {
+      ion-icon {
+        font-size: 18px;
+      }
+    }
+  }
 }
 
-.title {
-  font-size: 15px;
+ion-card-content {
+  padding: 14px 10px !important;
+  text-align: center;
+
+  .title {
+    font-size: 16px;
+    margin-bottom: 6px;
+    font-family: poppinssemibold;
+    font-weight: normal;
+  }
 }
+
 
 .content {
   font-size: 11px;

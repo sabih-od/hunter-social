@@ -1,8 +1,42 @@
 .cover-photo {
+  position: relative;
   img {
-      height: 145px;
-      object-fit: cover;
-      width: 100%;
-      border-radius: 25px 25px 0px 0px;
+    height: 215px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 25px 25px 0px 0px;
   }
+}
+
+.marksold {
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+}
+
+ion-card-title {
+  font-family: 'PoppinsSemiBold';
+  font-weight: normal;
+}
+
+ion-avatar {
+  width: 60px;
+  height: 60px;
+  margin-right: 13px;
+}
+
+.owninfo {
+  p {
+    display: flex;
+    align-items: center;
+    color: #666;
+
+    ion-icon {
+      margin-right: 8px;
+    }
+
+    span {}
+  }
+
+
 }

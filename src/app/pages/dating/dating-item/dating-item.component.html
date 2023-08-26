@@ -1,18 +1,15 @@
 <ion-card class="ion-no-margin">
-  <ion-img [src]="item.profile_image" style="height: 120px"  (click)="goToProfile()"></ion-img>
-
-  <ion-card-content>
-    <ion-buttons slot="end" >
-      <ion-button style="margin-top: -230px;" (click)="openPopup($event)">
-        <ion-icon
-          id="click-trigger"
-          name="ellipsis-vertical-outline"
-          style="font-size: 14px; margin-left: 100px;"
-        ></ion-icon>
+  <figure>
+    <ion-img [src]="item.profile_image" (click)="goToProfile()"></ion-img>
+    <ion-buttons class="dotsicon" slot="end">
+      <ion-button (click)="openPopup($event)">
+        <ion-icon id="click-trigger" name="ellipsis-vertical-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+  </figure>
+  <ion-card-content>
     <ion-card-title class="f-pop-smb title"> {{ item.name }} </ion-card-title>
-   
+
     <!-- <ion-card-subtitle class="f-pop-m content"
       >Age {{ item.age }} Years</ion-card-subtitle
     > -->
@@ -25,25 +22,13 @@
       <p class="red-txt">Blocked</p>
     </ion-text>
 
-    <ion-button
-      shape="round"
-      color="primary"
-      class="ion-no-margin"
-      size="small"
-      (click)="unblockFriend()"
-      *ngIf="item.is_friend_blocked"
-    >
+    <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="unblockFriend()"
+      *ngIf="item.is_friend_blocked">
       Unblock
     </ion-button>
 
-    <ion-button
-      shape="round"
-      color="primary"
-      class="ion-no-margin"
-      size="small"
-      (click)="addFriend()"
-      *ngIf="item.canRequest"
-    >
+    <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="addFriend()"
+      *ngIf="item.canRequest">
       ADD FRIEND
     </ion-button>
   </ion-card-content>

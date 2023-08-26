@@ -40,6 +40,9 @@ ion-card {
   transform: translate(50px, -28px);
 }
 
+.inputchat {
+  font-family: 'poppins';
+}
 
 .tempimage {
   width: 150px;
@@ -66,7 +69,8 @@ ion-card {
     padding: 6px;
     font-size: 18px;
     border-radius: 10px;
-    ion-icon{
+
+    ion-icon {
       color: #000;
     }
   }

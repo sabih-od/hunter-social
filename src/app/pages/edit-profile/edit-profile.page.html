@@ -2,26 +2,17 @@
 
 <ion-content>
   <app-edit-banner></app-edit-banner>
-  <ion-grid class="header-jumbotron" style="margin-bottom: 20px">
+  <ion-grid class="header-jumbotron">
     <ion-card style="border-radius: 10px; margin-top: 0px" class="ion-text-center light-bg ion-padding-top top-item"
       lines="none">
-      <ion-card-header style="border-bottom: 2px solid lightgray">
-        <ion-card-title style="margin-top: -5%">Profile Picture</ion-card-title>
-      </ion-card-header>
-      <ion-avatar style="
-          margin-left: auto;
-          margin-right: auto;
-          margin-top: 15px;
-          height: 150px;
-          width: 150px;
-          border: 1px solid lightgray;
-        ">
+      <!-- <ion-card-header style="border-bottom: 2px solid lightgray">
+        <ion-card-title>Profile Picture</ion-card-title>
+      </ion-card-header> -->
+      <ion-avatar class="avatarimage">
         <img style="border: 2px solid black" [src]="user_image"
-          onerror="this.onerror=null;this.src='../../../assets/Images/avatar.png';" />
+          onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
       </ion-avatar>
-      <ion-button (click)="doGetPicture()" style="margin-top: 10px; margin-bottom: 30px" color="secondary">Upload New
-        Image
-      </ion-button>
+      <ion-button (click)="doGetPicture()" class="uploadimagebtn">Upload New Image </ion-button>
     </ion-card>
   </ion-grid>
   <ion-segment value="profile" (ionChange)="segmentChanged($event)">
@@ -45,27 +36,35 @@
       <!-- <ion-img class="icon-bg" src="assets/images/edit-ic.png"></ion-img> -->
     </ion-item>
 
-    <ion-label style="font-size: 15px; margin-left: 18px">Name</ion-label>
+    <ion-label>Name</ion-label>
     <ion-item class="margin-ver" lines="none">
-      <ion-input [(ngModel)]="user.name" class="ion-margin-start f-pop-m">
+      <ion-input [(ngModel)]="user.name" class="ion-margin-start">
       </ion-input>
     </ion-item>
 
-    <ion-label style="font-size: 15px; margin-left: 18px">Phone Number</ion-label>
+    <ion-label>Phone Number</ion-label>
     <ion-item class="margin-ver" lines="none">
-      <ion-input [(ngModel)]="user.phone" class="ion-margin-start f-pop-m" placeholder="Phone Number">
+      <ion-input [(ngModel)]="user.phone" class="ion-margin-start" placeholder="Phone Number">
       </ion-input>
     </ion-item>
 
-    <ion-label style="font-size: 15px; margin-left: 18px">Email Address</ion-label>
+    <ion-label>Email Address</ion-label>
     <ion-item class="margin-ver" lines="none">
-      <ion-input [(ngModel)]="user.email" class="ion-margin-start f-pop-m">
+      <ion-input [(ngModel)]="user.email" class="ion-margin-start">
       </ion-input>
+    </ion-item>
+
+    <ion-item class="margin-ver ion-no-padding">
+      <ion-icon name="calendar"></ion-icon>
+      <!-- <ion-img class="ion-margin-start" src="assets/images/calendar-outline.png"></ion-img> -->
+      <ion-datetime [value]="this.dob" (ionChange)="dateTimeUpdated($event)" [displayFormat]="'YYYY-MM-DD'"
+        class="ion-margin-start f-pop-m" placeholder="Date of Birth">
+      </ion-datetime>
     </ion-item>
 
     <div *ngIf="user?.profile_detail?.is_dating_profile">
-      <ion-label style="font-size: 15px; margin-left: 18px">Interests</ion-label>
-      <ion-item *ngIf="user?.profile_detail?.is_dating_profile" class="" lines="none">
+      <ion-label>Interests</ion-label>
+      <ion-item *ngIf="user?.profile_detail?.is_dating_profile" class="margin-ver" lines="none">
         <!-- <ion-select placeholder="Slect Interests">
         
         <ion-select-option [value]="item" *ngFor="let item of interests">{{item}}</ion-select-option>
@@ -99,7 +98,7 @@
 
 
 
-      <ion-row>
+      <ion-row *ngIf="user.interests.length > 0">
         <ion-col>
           <ion-chip *ngFor="let item of user.interests">
             <ion-label (click)="editTag(item)">{{ item }}</ion-label>
@@ -108,7 +107,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-label style="font-size: 15px; margin-left: 18px">State</ion-label>
+      <ion-label>State</ion-label>
       <ion-item lines="none" class="margin-ver ion-no-padding">
         <ion-select cancelText="Cancel" okText="Ok" title="Select State" placeholder="Select State"
           class="a1 ion-margin-start" multiple="false" (ionChange)="stateChanged($event)" [(ngModel)]="state">
@@ -118,7 +117,7 @@
         </ion-select>
       </ion-item>
 
-      <ion-label style="font-size: 15px; margin-left: 18px" *ngIf="cities && cities.length > 0">City</ion-label>
+      <ion-label *ngIf="cities && cities.length > 0">City</ion-label>
       <ion-item lines="none" class="margin-ver ion-no-padding" *ngIf="cities && cities.length > 0">
         <ion-select style="width: 100%; border-radius: 5px; border: 1px solid lightgray" cancelText="Cancel" okText="Ok"
           placeholder="Select City" class="a1 ion-margin-start" multiple="false" [(ngModel)]="city"
@@ -145,13 +144,6 @@
       </ion-select>
     </ion-item> -->
 
-    <!-- <ion-item class="margin-ver ion-no-padding">
-      <ion-img class="ion-margin-start" src="assets/images/calendar-outline.png"></ion-img>
-
-      <ion-datetime [displayFormat]="'MM/DD/YYYY'" [(ngModel)]="user.dob" class="ion-margin-start f-pop-m"
-        placeholder="Date of Birth">
-      </ion-datetime>
-    </ion-item> -->
 
     <!-- <ion-item class="margin-ver ion-no-padding ion-margin-bottom" lines="none">
       <ion-img class="ion-margin-start" src="assets/images/location-outline.png"></ion-img>
@@ -232,7 +224,7 @@
     </ion-item>
 
     <ion-item class="margin-ver ion-no-padding">
-      <ion-img class="ion-margin-start" src="assets/images/lock-outline.png"></ion-img>
+      <ion-icon name="lock-closed-outline"></ion-icon>
 
       <ion-input [(ngModel)]="passwords.current_password" type="password" class="ion-margin-start f-pop-m"
         placeholder="Current Password">
@@ -240,7 +232,7 @@
     </ion-item>
 
     <ion-item class="margin-ver ion-no-padding">
-      <ion-img class="ion-margin-start" src="assets/images/lock-outline.png"></ion-img>
+      <ion-icon name="lock-closed-outline"></ion-icon>
 
       <ion-input [(ngModel)]="passwords.password" type="password" class="ion-margin-start f-pop-m"
         placeholder="New Password">
@@ -248,7 +240,7 @@
     </ion-item>
 
     <ion-item class="margin-ver ion-no-padding" lines="none">
-      <ion-img class="ion-margin-start" src="assets/images/lock-outline.png"></ion-img>
+      <ion-icon name="lock-closed-outline"></ion-icon>
 
       <ion-input [(ngModel)]="passwords.password_confirmation" type="password" class="ion-margin-start f-pop-m"
         placeholder="Confirm Password">

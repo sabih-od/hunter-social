@@ -1,0 +1,35 @@
+ion-card {
+
+    padding: 13px;
+    margin: 6px 0;
+    box-shadow: none;
+
+    p {
+        font-size: 15px;
+        margin: 0;
+        color: #000;
+        margin-bottom: 7px;
+    }
+
+    ion-item {
+        --border-color: transparent;
+    }
+
+    ion-input {
+        font-family: poppins !important;
+        --padding-start: 15px !important;
+        border: 1px solid #ddd;
+        margin-bottom: 7px;
+    }
+
+    ion-button {
+        font-size: 14px;
+        line-height: 1;
+
+        ion-icon {
+            margin-right: 10px;
+            display: none;
+        }
+    }
+
+}

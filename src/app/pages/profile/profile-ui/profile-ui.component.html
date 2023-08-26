@@ -1,26 +1,21 @@
 <div class="bg-dark" lines="none">
   <app-profile-banner [isSelf]="isOwnProfile"></app-profile-banner>
   <ion-row class="top-row">
-    <ion-col size="2">
-      <ion-badge
-        class="online"
-        [color]="
+    <ion-col size="3" class="pcolleft">
+      <ion-badge class="online" [color]="
           user_profile?.is_user_logged_in === 1 || isOwnProfile
             ? 'success'
             : 'danger'
-        "
-        >1
+        ">1
       </ion-badge>
       <ion-avatar>
-        <img
-          [src]="user_image ? user_image : '../../../assets/Images/avatar.png'"
-        />
+        <img [src]="user_image ? user_image : '../../../assets/Images/dummy-avatar.png'" />
       </ion-avatar>
     </ion-col>
-    <ion-col>
+    <ion-col class="pcolright">
       <ion-label class="ion-margin-start">
-        <div style="margin-top: -7%; display: flex; flex-direction: row">
-          <h2 style="margin-left: 3%; text-transform: capitalize;">
+        <div>
+          <h2 style="text-transform: capitalize;">
             {{ user_profile?.name }}
           </h2>
         </div>
@@ -31,16 +26,11 @@
 
 <div class="bg-light">
   <ion-row class="ion-no-padding">
-    <ion-col style="margin: 25px 0" size="5">
-      <ion-button
-        *ngIf="isOwnProfile"
-        (click)="itemClicked({ url: 'pages/edit-profile' })"
-      >
+    <ion-col class="actionbtns" size="12">
+      <ion-button *ngIf="isOwnProfile" (click)="itemClicked({ url: 'pages/edit-profile' })">
         Edit Profile
       </ion-button>
-      <ion-button *ngIf="!isOwnProfile" color="danger" 
-      (click)="blockUser()"
-      >
+      <ion-button *ngIf="!isOwnProfile" color="danger" (click)="blockUser()">
         Block User
       </ion-button>
       <ion-button *ngIf="!isOwnProfile" (click)="openreport()">
@@ -49,10 +39,7 @@
       <ion-button *ngIf="isOwnProfile" color="danger" (click)="deleteAccount(item)">
         Delete Account
       </ion-button>
-      <ion-button
-        *ngIf="isOwnProfile"
-        (click)="itemClicked({ url: 'pages/blocked-users' })"
-      >
+      <ion-button *ngIf="isOwnProfile" (click)="itemClicked({ url: 'pages/blocked-users' })">
         Blocked Users
       </ion-button>
 
@@ -63,7 +50,7 @@
         My Orders
       </ion-button> -->
     </ion-col>
-    <ion-col size="7">
+    <ion-col size="12">
       <ion-row class="ion-no-padding">
         <ion-col size="6">
           <p class="count">
@@ -85,19 +72,18 @@
         </ion-col>
       </ion-row>
     </ion-col>
+
   </ion-row>
 </div>
 
-<div >
+<div class="profileinfo">
   <ion-row class="ion-margin-start">
-    <ion-col size="6" *ngIf="isOwnProfile">
+    <ion-col size="12" *ngIf="isOwnProfile">
       <h2>About Me</h2>
-      <p class="about-me">
-        {{ user_profile?.profile_detail.brief_yourself }}
-      </p>
+      <p class="about-me"> {{ user_profile?.profile_detail.brief_yourself }} </p>
     </ion-col>
 
-    <ion-col size="6">
+    <ion-col size="12">
       <h2>Interests</h2>
       <p class="interests">
         <span *ngFor="let item of user_profile?.user_interests">
@@ -118,9 +104,7 @@
     <ion-col size="6">
       <h2>City</h2>
       <p class="interests">
-        <span>
-          {{ city }}
-        </span>
+        {{ city }}
       </p>
     </ion-col>
   </ion-row>

@@ -67,6 +67,7 @@ export class HeaderComponent extends BasePage implements OnInit {
   async getUser() {
 
     let user = JSON.parse(localStorage.getItem('user'));
+    console.log('header user => ', user)
     this.user_image = this.image.getImageUrl(user?.profile_image);
 
     if (!this.shouldCallApi == !this.shouldCallApii) {

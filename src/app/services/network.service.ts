@@ -430,8 +430,8 @@ export class NetworkService {
     return this.httpPostResponse(`checkout`, data, null, true);
   }
 
-  howToVideos() {
-    return this.httpGetResponse(`how-to-videos`);
+  howToVideos(pageno) {
+    return this.httpGetResponse(`how-to-videos?page=${pageno}`);
   }
 
   postHowToVideo(data, id) {

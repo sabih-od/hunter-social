@@ -15,6 +15,11 @@ ion-card {
   padding: 5px;
 }
 
+ion-card-title{
+  font-family: 'PoppinsSemiBold';
+  font-weight: normal;
+}
+
 .detail {
   font-size: 9px;
   color: black;
@@ -26,7 +31,8 @@ ion-card {
 }
 h1{
   margin:20px;
-  font-weight:700;
+  margin-bottom: 10px;
+  // font-weight:700;
 }
 .market-place-content{
   // border:1px solid red;
@@ -57,7 +63,7 @@ ion-image{
   position: relative;
   overflow: hidden;
   img {
-      height: 145px;
+      height: 190px;
       object-fit: cover;
       width: 100%;
       border-radius: 25px 25px 0px 0px;
@@ -69,7 +75,7 @@ ion-image{
   width: 60px;
   height: 33px;
   position: absolute;
-  bottom: 3px;
+  bottom: 6px;
   right: 1px;
   background: #000;
   display: flex;
@@ -77,3 +83,5 @@ ion-image{
   justify-content: center;
   color: #fff;
 }
+
+

@@ -1,5 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { BasePage } from '../base-page/base-page';
+import { IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-how-to',
@@ -9,7 +10,7 @@ import { BasePage } from '../base-page/base-page';
 export class HowToPage extends BasePage implements OnInit {
   list = [];
   search_text: string;
-  
+
   onSearchTextChange(searchText: string) {
     this.search_text = searchText;
   }
@@ -32,23 +33,39 @@ export class HowToPage extends BasePage implements OnInit {
       event.target.complete();
     }, 2000);
   }
-
+  pageno = 1;
   async getData() {
-    let res = await this.network.howToVideos();
-    console.log('howToVideos', res);
-    let user = await this.users.getUser();
-    if (res && res.data) {
-      this.list = res.data.data.map((item) => ({
-        ...item,
-        user: {
-          ...item.user,
-          profile_image: this.users.getProfileImage(item.user?.profile_image),
-        },
-        selfPost: item.user_id === user.id,
-      }));
+    let res = await this.network.howToVideos(this.pageno);
+    if (res.data.data.length > 0) {
+      console.log('howToVideos', res);
+      let user = await this.users.getUser();
+      if (res && res.data) {
+        let listdata = res.data.data.map((item) => ({
+          ...item,
+          user: {
+            ...item.user,
+            profile_image: this.users.getProfileImage(item.user?.profile_image),
+          },
+          selfPost: item.user_id === user.id,
+        }));
+        console.log('listdata => ', listdata)
+        this.list = [...this.list, ...listdata]
+        console.log('this.list => ', this.list)
+      } else {
+        this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+      }
     } else {
-      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+
     }
   }
-  
+
+  onIonInfinite(ev) {
+    this.pageno = this.pageno + 1;
+    this.getData();
+    setTimeout(() => {
+      ev.target.complete();
+      // (ev as IonInfiniteScrollContent).target.complete();
+    }, 500);
+  }
+
 }

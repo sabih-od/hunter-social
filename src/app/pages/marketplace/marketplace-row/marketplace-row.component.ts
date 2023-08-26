@@ -1,6 +1,7 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { BasePage } from '../../base-page/base-page';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
+import { CreateListingPage } from '../create-listing/create-listing.page';
 
 @Component({
   selector: 'app-marketplace-row',
@@ -38,7 +39,14 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     this.onFilter();
   }
   createListing() {
-    this.nav.navigateTo('pages/create-listing');
+    this.modals.present(CreateListingPage).then(res => {
+      console.log('CreateListingPage res => ', res)
+      if (res?.data?.refresh) {
+        this.products();
+        this.onFilter();
+      }
+    })
+    // this.nav.navigateTo('pages/create-listing');
     console.log('jshdlkjsh');
   }
   async user() {
@@ -70,8 +78,9 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     // let data = await this.network.getProductss({query:null,category_id:item.id})
     let data = await this.network.getProductss();
     console.log('filter', data);
-    this.filterProducts = data;
+    this.filterProducts = data.data;
     this.productList = this.filterProducts;
+    console.log('this.productList => ', this.productList);
   }
 
   async onFilter() {
@@ -85,18 +94,24 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
   }
   async onTopInput(event: any) {
     this.topSearch = event.target.value;
-    console.log('top value', this.searchTerm);
+    // console.log('top value', this.searchTerm);
     // let data = await this.network.getProductss({
     //   query: this.topSearch,
     //   category_id: null,
     // });
+    if(this.topSearch.length == 0){
+      this.products();
+      this.onFilter();
+    }
+    if (this.topSearch.length > 3) {
+      let data = await this.network.getSearch({
+        category_id: this.selectedCategoryId,
+        query: this.topSearch,
+      });
+      this.productList = data.data;
+      console.log('filter', data);
+    }
 
-    let data = await this.network.getSearch({
-      category_id: this.selectedCategoryId,
-      query: this.topSearch,
-    });
-    this.productList = data;
-    console.log('filter', data);
   }
 
   details(item: any) {
@@ -104,6 +119,11 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     let data = item;
     this.modals.present(ProductDetailsComponent, {
       data,
+    }).then(res => {
+      if (res?.data?.refresh) {
+        this.products();
+        this.onFilter();
+      }
     });
   }
 }

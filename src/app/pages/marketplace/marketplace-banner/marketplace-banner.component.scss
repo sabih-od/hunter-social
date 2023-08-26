@@ -1,21 +1,45 @@
 .image {
-    background: url('https://hunterssocial.com/assets/images/marketBanner.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+  // background: url('https://hunterssocial.com/assets/images/marketBanner.jpg');
+  background: url(/assets/Banners/marketBanner.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  // width: 100%;
+  // height: 350px;
+  // margin-top: -20px;
+  width: 100%;
+  height: 350px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  &:after {
+    content: '';
     width: 100%;
-    height: 350px;
-    margin-top: -20px;
+    height: 100%;
+    position: absolute;
+    background: rgb(0 0 0 / 40%);
+    z-index: 0;
+    left: 0;
+    top: 0;
   }
-  .heading1 {
-    color: #fff;
-    font-family: Anton;
-    font-size: 48px;
-    padding-top: 125px;
-    padding-left: 15px;
-  }
-  .text1{
-      color: #fff;
-      font-size: 0.85rem;
-      padding-left: 15px;
-  }
-  
+}
+
+.heading1 {
+  color: #fff;
+  font-family: Anton;
+  font-size: 50px;
+  margin: 0;
+  line-height: 1;
+}
+
+.content {
+  z-index: 1;
+  position: relative;
+}
+
+.text1 {
+  color: #fff;
+  font-size: 0.85rem;
+  padding-left: 15px;
+}

@@ -158,7 +158,8 @@ export class CreateListingPage extends BasePage implements OnInit {
     let data = await this.network.createListing(datas);
     if(data){
       console.log('this is data', data);
-      this.nav.pop();
+      // this.nav.pop();
+      this.modals.dismiss({ refresh: true })
     }
   }
 }

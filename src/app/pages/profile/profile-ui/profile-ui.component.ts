@@ -66,10 +66,10 @@ export class ProfileUIComponent extends BasePage implements OnInit {
       if (this.user['profile_image'] && this.user['profile_image'] !== '')
         console.log('hello');
       if (this.isOwnProfile){
-        this.user_image =  this.user['profile_image'] == null ? '../../../assets/Images/avatar.png' : this.image.getImageUrl(this.user['profile_image']);
+        this.user_image =  this.user['profile_image'] == null ? '../../../assets/Images/dummy-avatar.png' : this.image.getImageUrl(this.user['profile_image']);
         console.log('user_image', this.user_image);
       }else{
-        this.user_image = this.user_profile?.profile_image == null ? '../../../assets/Images/avatar.png' : this.image.getImageUrl(this.user_profile?.profile_image);
+        this.user_image = this.user_profile?.profile_image == null ? '../../../assets/Images/dummy-avatar.png' : this.image.getImageUrl(this.user_profile?.profile_image);
         // console.log('this.user_profile => ', this.user_profile.profile_image);
       }
       
