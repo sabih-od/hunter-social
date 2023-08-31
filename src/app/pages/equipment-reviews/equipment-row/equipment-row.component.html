@@ -2,7 +2,7 @@
   <ion-grid class="ion-no-margin ion-no-padding">
     <ion-row class="ion-no-margin">
       <ion-col size="4">
-        <img [src]="item.media_upload?.url" />
+        <img [src]="item.media_upload?.url" class="revimage" />
       </ion-col>
       <ion-col size="8">
         <ion-item lines="none">
@@ -11,10 +11,9 @@
             <p class="f-pop-r content">{{ item.content }}</p>
           </ion-label>
         </ion-item>
-        <h2 class="f-pop-smb title" style="text-align: end; margin-right: 10px; font-weight: bold; color: black;"
-          (click)="addNew()">
-          Add a review
-        </h2>
+        <h2 class="f-pop-smb title"
+          style="text-align: end; margin-right: 10px; font-weight: bold; color: black; float: right;"
+          (click)="addNew()"> Add a review </h2>
       </ion-col>
     </ion-row>
   </ion-grid>

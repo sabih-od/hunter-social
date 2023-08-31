@@ -1,20 +1,12 @@
 <ion-item>
   <ion-avatar>
-    <img
-      [src]="url + 'public/storage/uploads/' + item?.user?.profile_image"
-      onerror="this.onerror=null;this.src='assets/images/avatar.png';"
-      (click)="viewProfile(item)"
-    />
+    <img [src]="url + 'public/storage/uploads/' + item?.user?.profile_image"
+      onerror="this.onerror=null;this.src='https://hunterssocial.com/storage/uploads/64e94bf2a76e6.jpeg';" (click)="viewProfile(item)" />
   </ion-avatar>
   <ion-label class="ion-margin-start ion-text-wrap">
     <b (click)="viewProfile(item)">{{ item?.user?.name ?? "" }} </b> -
-    <ion-icon
-      style="font-size: 15px"
-      *ngFor="let n of [1, 2, 3, 4, 5]"
-      slot="end"
-      [name]="item?.rating + 1 <= n ? 'star-outline' : 'star'"
-      [color]="item?.rating + 1 <= n ? 'tertiary' : 'dark'"
-    >
+    <ion-icon style="font-size: 15px" *ngFor="let n of [1, 2, 3, 4, 5]" slot="end"
+      [name]="item?.rating + 1 <= n ? 'star-outline' : 'star'" [color]="item?.rating + 1 <= n ? 'tertiary' : 'dark'">
     </ion-icon>
 
     <br />
@@ -30,11 +22,6 @@
   </div>
 
   <div (click)="deleteReview()">
-    <ion-icon
-      slot="end"
-      name="trash-outline"
-      color="danger"
-      *ngIf="item.canDelete"
-    ></ion-icon>
+    <ion-icon slot="end" name="trash-outline" color="danger" *ngIf="item.canDelete"></ion-icon>
   </div>
 </ion-item>

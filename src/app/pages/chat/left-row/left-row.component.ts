@@ -18,9 +18,11 @@ export class LeftRowComponent implements OnInit {
     this.utility.downloadImage(url).subscribe(
       (success) => {
         console.log('sucess image downloaded')
+        this.utility.presentSuccessToast('image downloaded successfully');
       },
       (error) => {
         console.error('Image download error:', error);
+        this.utility.presentFailureToast(error.message);
       }
     );
   }

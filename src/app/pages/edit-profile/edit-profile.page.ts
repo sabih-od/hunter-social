@@ -102,7 +102,7 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     const month = String(dateObject.getMonth() + 1).padStart(2, '0');
     const day = String(dateObject.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
-    // this.dob = formattedDate;
+    this.dob = formattedDate;
     this.user['dob'] = formattedDate;
   }
 
@@ -115,7 +115,9 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
       this.selected_package = this.user.profile_detail.package_id;
       this.new_package = this.user.profile_detail.package_id;
       this.state = parseInt(this.user.profile_detail.state);
-      this.dob = this.user.profile_detail.dob
+      console.log('this.user.profile_detail.dob => ', this.user.profile_detail.dob)
+      this.dob = this.user.profile_detail.dob;
+      this.user.dob = this.user.profile_detail.dob
       this.getCities(this.user.profile_detail.state);
       this.user.interests =
         this.dataService.user_data?.user_interests?.map((x) => x.title) ?? [];

@@ -9,11 +9,8 @@
         [routerLink]="[item.url]"
         detail="false"
         routerLinkActive="selected" -->
-          <ion-item
-            (click)="menuClicked(item)"
-            class="bg-light ion-no-padding"
-            detail="item.submenus && item.submenus.length"
-          >
+          <ion-item (click)="menuClicked(item)" class="bg-light ion-no-padding"
+            detail="item.submenus && item.submenus.length">
             <ion-label class="ion-margin-start">
               <h2 class="f-pop-r ion-padding-start">
                 {{ item.title }}
@@ -22,33 +19,17 @@
           </ion-item>
         </ion-menu-toggle>
 
-        <div
-          *ngIf="item.submenus && item.submenus.length > 0"
-          (click)="item.isOpened = !item.isOpened"
-        >
-          <ion-item
-            class="bg-light ion-no-padding"
-            detail="item.submenus && item.submenus.length"
-          >
+        <div *ngIf="item.submenus && item.submenus.length > 0" (click)="item.isOpened = !item.isOpened">
+          <ion-item class="bg-light ion-no-padding" detail="item.submenus && item.submenus.length">
             <ion-label class="ion-margin-start">
               <h2 class="f-pop-r ion-padding-start">{{ item.title }}</h2>
             </ion-label>
           </ion-item>
 
-          <ion-item
-            *ngFor="let submenu of item.submenus"
-            [hidden]="!item.isOpened"
-            (click)="menuClicked(submenu)"
-          >
-            <div
-              style="
-                border: 5px solid white;
-                border-radius: 50%;
-                margin-left: 15px;
-              "
-            ></div>
+          <ion-item *ngFor="let submenu of item.submenus" [hidden]="!item.isOpened" (click)="menuClicked(submenu)">
+            <div class="criclebefore"></div>
             <ion-label class="ion-margin-start bg-light">
-              <h2 class="f-pop-r" style="margin-left: 5%">
+              <h2 class="f-pop-r">
                 {{ submenu.title }}
               </h2>
             </ion-label>

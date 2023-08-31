@@ -132,23 +132,31 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   async sendMessage() {
     this.isMsgLoading = true;
     console.log(this.text);
-    if (this.text && this.text !== '') {
+
+    // if(this._img != '' || (this._img == '' && this.text != '') || (this._img != '' && this.text != '')){
+    // }
+    console.log('this._img => ', this._img)
+    if ((this._img && this._img != '') || (this.text && this.text != '')) {
+      // if (this.text && this.text !== '') {
       // let blob = (await this.image.base64ToBlob(this._img)) as string;
 
-      const base64Data = this._img.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
-      const binaryData = new Uint8Array(atob(base64Data).split('').map((char) => char.charCodeAt(0)));
-      const blob = new Blob([binaryData], { type: 'image/jpeg' }); // Update the MIME type if needed
-      // const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
-      // const binaryData = atob(this._img);
-      // // Create a Blob from binary data
-      // const blob = new Blob([new Uint8Array(binaryData.length).map((_, i) => binaryData.charCodeAt(i))], {
-      //   type: 'image/jpeg', // Specify the MIME type of the image
-      // });
-
-      console.log('blob => ', blob)
       let formData = new FormData();
-      formData.append('content', this.text);
-      formData.append('file', blob);
+      formData.append('content', this.text ? this.text : '');
+
+      if (this._img && this._img != '') {
+        const base64Data = this._img.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+        const binaryData = new Uint8Array(atob(base64Data).split('').map((char) => char.charCodeAt(0)));
+        const blob = new Blob([binaryData], { type: 'image/jpeg' }); // Update the MIME type if needed
+        // const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+        // const binaryData = atob(this._img);
+        // // Create a Blob from binary data
+        // const blob = new Blob([new Uint8Array(binaryData.length).map((_, i) => binaryData.charCodeAt(i))], {
+        //   type: 'image/jpeg', // Specify the MIME type of the image
+        // });
+
+        console.log('blob => ', blob)
+        formData.append('file', blob);
+      }
       let res = await this.network.sendChatMessages(
         formData
         // { content: this.text, file: blob }

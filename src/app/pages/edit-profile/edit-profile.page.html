@@ -119,20 +119,19 @@
 
       <ion-label *ngIf="cities && cities.length > 0">City</ion-label>
       <ion-item lines="none" class="margin-ver ion-no-padding" *ngIf="cities && cities.length > 0">
-        <ion-select style="width: 100%; border-radius: 5px; border: 1px solid lightgray" cancelText="Cancel" okText="Ok"
-          placeholder="Select City" class="a1 ion-margin-start" multiple="false" [(ngModel)]="city"
-          (ionChange)="cityChanged($event)">
+        <ion-select style="width: 100%;" cancelText="Cancel" okText="Ok" placeholder="Select City"
+          class="a1 ion-margin-start" multiple="false" [(ngModel)]="city" (ionChange)="cityChanged($event)">
           <ion-select-option [value]="item.id" *ngFor="let item of cities">{{item.name}}</ion-select-option>
         </ion-select>
       </ion-item>
 
       <ion-item lines="none">
         <ion-textarea class="a1" [(ngModel)]="user.profile_detail.brief_yourself" style="
-          margin-bottom: 20px;
           width: 100%;
           border-radius: 5px;
           border: 1px solid lightgray;
-        " placeholder="Brief description of yourself"></ion-textarea>
+    font-size: 14px;
+        " autoGrow="true"  placeholder="Brief description of yourself"></ion-textarea>
       </ion-item>
     </div>
     <!-- <ion-item class="margin-ver ion-no-padding">
@@ -159,7 +158,7 @@
         <h2 class="f-pop-smb header">Membership</h2>
       </ion-label>
 
-      <ion-img class="icon-bg" src="assets/images/edit-ic.png"></ion-img>
+      <!-- <ion-img class="icon-bg" src="assets/images/edit-ic.png"></ion-img> -->
     </ion-item>
 
     <ion-row>
@@ -220,7 +219,7 @@
         <h2 class="f-pop-smb header">Password</h2>
       </ion-label>
 
-      <ion-img class="icon-bg" src="assets/images/edit-ic.png"></ion-img>
+      <!-- <ion-img class="icon-bg" src="assets/images/edit-ic.png"></ion-img> -->
     </ion-item>
 
     <ion-item class="margin-ver ion-no-padding">
@@ -248,7 +247,7 @@
     </ion-item>
   </ion-card>
 
-  <ion-button class="f-pop-r btn" expand="block" color="primary" (click)="saveChanges()">
+  <ion-button class="f-pop-r btn savebtn" expand="block" color="primary" (click)="saveChanges()">
     SAVE CHANGES
   </ion-button>
 </ion-content>

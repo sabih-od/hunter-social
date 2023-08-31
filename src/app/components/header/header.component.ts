@@ -80,6 +80,7 @@ export class HeaderComponent extends BasePage implements OnInit {
     console.log('getUser', res);
     if (res && res.data && res.data.user) {
       let user = res.data.user;
+      console.log("user['profile_image'] => ", user['profile_image'])
       if (user['profile_image'] && user['profile_image'] !== '') {
         HeaderComponent.instances.forEach((instance) => {
           instance.user_image = this.image.getImageUrl(user['profile_image']);
@@ -149,8 +150,8 @@ export class HeaderComponent extends BasePage implements OnInit {
 
     this.searchTextChange.emit(this.search_text);
     const currentRoute = this.nav.router.url;
-    // console.log('Current Active Route:', currentRoute);
-
+    console.log('Current Active Route:', currentRoute);
+    // if (currentRoute != '/pages/how-to') {
     this.first_selected = false;
     this.removeHighlight();
     if (this.search_text.trim() === '') return;
@@ -163,6 +164,7 @@ export class HeaderComponent extends BasePage implements OnInit {
       ) {
       } else this.searchAndHighlightTag(tag);
     });
+    // }
 
     // if (currentRoute == '/pages/how-to' || currentRoute == '/pages/equipment-reviews-list') {
     //   const allCards = document.querySelectorAll('.searchcard');
@@ -195,8 +197,12 @@ export class HeaderComponent extends BasePage implements OnInit {
       if (matches.length > 0) {
         tag.setAttribute('data-hl-text', encodeURI(tag.innerHTML));
         // if (!this.first_selected) {
-        console.log('Scrolling');
-        tag.scrollIntoView({ behavior: 'smooth' });
+
+        const currentRoute = this.nav.router.url;
+        if (currentRoute != '/pages/how-to' && currentRoute != '/pages/equipment-reviews-list') {
+          console.log('Scrolling');
+          tag.scrollIntoView({ behavior: 'smooth' });
+        }
         this.first_selected = true;
         //  }
         for (const match of matches) {
