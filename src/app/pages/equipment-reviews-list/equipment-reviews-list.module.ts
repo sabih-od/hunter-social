@@ -11,6 +11,7 @@ import { HeaderModule } from 'src/app/components/header/header.module';
 import { ReviewComponent } from './review/review.component';
 import { AddReviewComponent } from './add-review/add-review.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CustomFilterPipe } from 'src/app/pipes/custom-filter.pipe';
 
 @NgModule({
   imports: [
@@ -21,6 +22,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     HeaderModule,
     Ng2SearchPipeModule,
   ],
-  declarations: [EquipmentReviewsListPage, ReviewComponent, AddReviewComponent],
+  declarations: [EquipmentReviewsListPage, ReviewComponent, AddReviewComponent, CustomFilterPipe],
 })
 export class EquipmentReviewsListPageModule {}

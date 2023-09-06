@@ -203,6 +203,18 @@ export class HeaderComponent extends BasePage implements OnInit {
           console.log('Scrolling');
           tag.scrollIntoView({ behavior: 'smooth' });
         }
+        if (currentRoute == '/pages/how-to' || currentRoute == '/pages/equipment-reviews-list') {
+          if (currentRoute == '/pages/equipment-reviews-list') {
+            const allTags = document.querySelectorAll('.searchcardeq');
+            this.total_found = allTags.length;
+          }else if(currentRoute == '/pages/how-to'){
+            const allTags = document.querySelectorAll('.searchcard');
+            this.total_found = allTags.length;
+          }
+          return;
+        }
+
+
         this.first_selected = true;
         //  }
         for (const match of matches) {

@@ -13,6 +13,7 @@ import { Config } from '../config/main.config';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { File } from '@ionic-native/file/ngx';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,8 @@ export class UtilityService {
     public geolocations: GeolocationsService,
     private launchNavigator: LaunchNavigator,
     private iab: InAppBrowser,
-    private http: HttpClient
+    private http: HttpClient,
+    private file: File
   ) { }
 
   showLoader(msg = 'Please wait...') {
@@ -116,7 +118,9 @@ export class UtilityService {
   }
 
   downloadImage(url: string): Observable<boolean> {
-    return this.http.get(url, { responseType: 'blob' }).pipe(
+    return this.http.get(url, {
+      responseType: 'blob',
+    }).pipe(
       map((blob: Blob) => {
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
@@ -144,4 +148,34 @@ export class UtilityService {
     else if (hrs < 24) return hrs + ' hours ago';
     else return Math.floor(hrs / 24) + ' days ago';
   }
+
+
+
+
+  downloadAndSaveImage(imageUrl: string, targetFileName: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', imageUrl, true);
+      xhr.responseType = 'blob';
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const blob = xhr.response;
+          console.log('this.file.dataDirectory => ', this.file.dataDirectory)
+          this.file.writeFile(this.file.dataDirectory, targetFileName, blob, { replace: true })
+            .then(_ => resolve())
+            .catch(error => reject(error));
+        } else {
+          reject(new Error('Image download failed. Status: ' + xhr.status));
+        }
+      };
+
+      xhr.onerror = () => {
+        reject(new Error('Network error occurred during image download.'));
+      };
+
+      xhr.send();
+    });
+  }
+
 }

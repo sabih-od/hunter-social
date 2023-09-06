@@ -13,7 +13,8 @@ import { HeaderModule } from 'src/app/components/header/header.module';
 import { HowToCardsComponent } from './how-to-cards/how-to-cards.component';
 import { CardSubmissionComponent } from './card-submission/card-submission.component';
 import { ChatFloatingButtonModule } from 'src/app/components/chat-floating-button/chat-floating-button.module';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
+// import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CustomFilterPipe } from 'src/app/pipes/custom-filter.pipe';
 
 @NgModule({
   imports: [
@@ -24,13 +25,14 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FooterModule,
     HeaderModule,
     ChatFloatingButtonModule,
-    Ng2SearchPipeModule
+    // Ng2SearchPipeModule,
   ],
   declarations: [
     HowToPage,
     HowToBannerComponent,
     HowToCardsComponent,
     CardSubmissionComponent,
+    CustomFilterPipe
   ],
 })
 export class HowToPageModule {}

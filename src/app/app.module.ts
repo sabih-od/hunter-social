@@ -26,6 +26,7 @@ import { MediaCapture } from '@awesome-cordova-plugins/media-capture/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Camera } from '@awesome-cordova-plugins/camera/ngx';
 import { FilePath } from '@awesome-cordova-plugins/file-path/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { QuillModule } from 'ngx-quill';
 import { Stripe } from '@awesome-cordova-plugins/stripe/ngx';
@@ -66,6 +67,8 @@ import { RequestAGroupModule } from './components/request-a-group/request-a-grou
     File,
     Camera,
     FilePath,
+    FileTransfer,
+    // FileTransferObject,
     AndroidPermissions,
     Stripe,
     InAppPurchase2,
@@ -74,4 +77,4 @@ import { RequestAGroupModule } from './components/request-a-group/request-a-grou
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
