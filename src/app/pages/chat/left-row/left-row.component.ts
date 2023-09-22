@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { UtilityService } from 'src/app/services/utility.service';
+// import { PhotoLibrary, LibraryItem } from '@ionic-native/photo-library/ngx';
 
 declare var cordova: any;
 declare var window: any;
@@ -14,8 +15,14 @@ export class LeftRowComponent implements OnInit {
   @Input() item;
   constructor(
     public utility: UtilityService,
+    // private photoLibrary: PhotoLibrary
   ) { }
-  ngOnInit() { }
+
+  showdownloadicon = true;
+  ngOnInit() {
+    this.showdownloadicon = Capacitor.getPlatform() == 'ios' ? false : true;
+  }
+
 
   // imageSrc
   // imageLoaded = false;
@@ -151,8 +158,20 @@ export class LeftRowComponent implements OnInit {
   }
 
   async downloadimage(url) {
+
+    // this.photoLibrary.requestAuthorization().then((res) => {
+    //   console.log('photoLibrary => ', res)
+    //   // this.photoLibrary.savePhoto(imageData, 'My Image').then((libraryItem: LibraryItem) => {
+    //   //   console.log('Image saved to library:', libraryItem);
+    //   // }).catch((err) => {
+    //   //   console.error('Error saving image:', err);
+    //   // });
+    // }).catch((err) => {
+    //   console.error('Permission denied:', err);
+    // });
+
     try {
-      url = 'https://music-app-nodejs-mongodb.vercel.app/public/uploads/avatars-000664164452-c6z91r-t500x500-1693785253207-651497345.jpg';
+      // url = 'https://music-app-nodejs-mongodb.vercel.app/public/uploads/avatars-000664164452-c6z91r-t500x500-1693785253207-651497345.jpg';
       // url = 'https://hunterssocial.com/assets/images/img1.jpg';
       // const fileName = 'Download/' + Math.round(Math.random() * 109283) + '.jpg';
       const date = new Date();
@@ -179,6 +198,8 @@ export class LeftRowComponent implements OnInit {
       //   //console.error("Unable to make directory", e);
       // }
 
+
+
       const savedFile = await Filesystem.writeFile({
         path: fileName,
         data: base64Data,
@@ -186,9 +207,19 @@ export class LeftRowComponent implements OnInit {
       });
 
       if (savedFile) {
-        console.log('savedFile => ', savedFile)
+        console.log('savedFile => ', savedFile.uri)
+
+        // if (Capacitor.getPlatform() == 'ios') {
+        //   const targetpath = `file:///var/mobile/Media/DCIM/100APPLE/${fileName}`;
+        //   console.log('targetpath => ', targetpath)
+        //   const copiedFile = await Filesystem.copy({
+        //     from: savedFile.uri,
+        //     to: targetpath,
+        //   });
+        //   console.log('copied file => ', copiedFile)
+        // }
+
         this.utility.presentSuccessToast('image downloaded successfully');
-        // imagesrc = savedFile?.uri
       }
 
       // Use webPath to display the new image instead of base64 since it's

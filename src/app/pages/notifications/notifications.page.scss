@@ -1,0 +1,52 @@
+.image {
+    background: url('/assets/Banners/contact-bann.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 150px;
+}
+
+.spinner {
+    flex-direction: column;
+    height: auto;
+    p {
+        margin-bottom: 0;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+}
+
+.notifcontent {
+    padding: 15px;
+}
+
+.notifications {
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+
+    .notificationitem {
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 60px;
+            margin-right: 10px;
+        }
+
+        h5 {
+            margin: 0;
+            text-transform: capitalize;
+        }
+
+        p {
+            margin: 0;
+            font-size: 14px;
+        }
+    }
+
+    span {
+        font-size: 11px;
+        color: #666;
+        margin-top: 0px;
+        display: block;
+    }
+}

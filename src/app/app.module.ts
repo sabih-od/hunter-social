@@ -34,6 +34,7 @@ import { InAppPurchase2 } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
 import { SqliteService } from './services/sqlite.service';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 import { RequestAGroupModule } from './components/request-a-group/request-a-group.module';
+// import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -68,6 +69,7 @@ import { RequestAGroupModule } from './components/request-a-group/request-a-grou
     Camera,
     FilePath,
     FileTransfer,
+    // PhotoLibrary,
     // FileTransferObject,
     AndroidPermissions,
     Stripe,

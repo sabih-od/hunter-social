@@ -1,0 +1,36 @@
+<app-header [title]="'Notifications'" [showcurve]="false" [back]="true" [showMenu]="false"></app-header>
+
+<ion-content>
+  <div class="banner image">
+    <div class="content">
+      <h1 class="heading1">Notifications</h1>
+    </div>
+  </div>
+
+  <div class="notifcontent">
+    <div class="notifications" *ngFor="let item of notifications">
+      <div class="notificationitem">
+        <img [src]="item?.notificationable?.addressee?.profile_image"
+          onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
+        <div>
+          <h5>{{item?.notificationable?.addressee?.name || item?.notificationable?.requester?.name}}</h5>
+          <p>{{item.content}}</p>
+          <span>{{item.updated_at | date:"MMM dd, yyyy 'at' hh:mm a"}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="spinner" *ngIf="loading">
+      <ion-spinner name="lines" color="primary"></ion-spinner>
+      <p>Notifications Loading...</p>
+    </div>
+    <div *ngIf="!loading && notifications.length == 0" class="notifcontent">
+      <p>Notification not found</p>
+    </div>
+  </div>
+
+
+
+
+
+  <footer></footer>
+</ion-content>

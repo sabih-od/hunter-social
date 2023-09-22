@@ -104,6 +104,14 @@ export class HeaderComponent extends BasePage implements OnInit {
     });
   }
 
+  gotoDashboard() {
+    this.users.getUser().then((user) => {
+      this.nav.navigateTo('pages/dashboard', {
+        queryParams: { user_id: user.id },
+      });
+    });
+  }
+
   gotoNotifications() {
     this.nav.push('pages/notifications');
   }

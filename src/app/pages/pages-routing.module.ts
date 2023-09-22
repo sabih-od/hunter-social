@@ -250,6 +250,14 @@ const routes: Routes = [
     path: 'hiking',
     loadChildren: () => import('./hiking/hiking.module').then( m => m.HikingPageModule)
   },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
+  {
+    path: 'notifications',
+    loadChildren: () => import('./notifications/notifications.module').then( m => m.NotificationsPageModule)
+  },
 
   
 

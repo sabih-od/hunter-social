@@ -1,0 +1,112 @@
+<app-header [title]="'Dashboard'" [showcurve]="false" [back]="true" [showMenu]="false"></app-header>
+
+<ion-content>
+  <div class="banner image">
+    <div class="content">
+      <h1 class="heading1">Dashboard</h1>
+    </div>
+  </div>
+
+  <!-- <app-profile-ui [user_id]="user_id"></app-profile-ui> -->
+
+
+  <div class="innercontent">
+    <ion-toolbar>
+      <ion-segment (ionChange)="segmentChanged($event)" [value]="tab">
+        <ion-segment-button value="friends">
+          <ion-label>Friends</ion-label>
+          <ion-icon name="people-outline"></ion-icon>
+        </ion-segment-button>
+
+        <ion-segment-button value="alert">
+          <ion-label>Alerts</ion-label>
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </ion-segment-button>
+
+        <ion-segment-button value="settings">
+          <ion-label>Settings</ion-label>
+          <ion-icon name="settings-outline"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+
+
+
+    <div *ngIf="tab === 'friends'">
+      <!-- <h3 class="tabtitle">Current Friends</h3> -->
+      <ion-grid class="no-padding" *ngIf="!loading">
+        <ion-row *ngFor="let item of friends"> <!--  | filter:search -->
+          <ion-col class="no-padding" size="12">
+            <chat-row [item]="item"></chat-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div *ngIf="tab === 'alert'">
+      <ion-toolbar>
+        <ion-segment (ionChange)="innerSegmentChanged($event)" [value]="innertab">
+          <ion-segment-button value="recipe">
+            <ion-label>Recipe Alerts</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="post">
+            <ion-label>Post Alerts</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <div *ngIf="innertab === 'recipe'">
+        <!-- <h3 class="tabtitle">Recipe Alerts</h3> -->
+        <div class="currentfriends" *ngIf="!loading">
+          <div class="frienditem" *ngFor="let item of recipesAlerts" [routerLink]="['/pages/recipes']">
+            <img [src]="item.alertable.media_upload?.url" onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
+            <p>{{item?.alertable?.content}}</p>
+          </div>
+        </div>
+
+        <div *ngIf="!loading && recipesAlerts.length == 0" class="notifcontent">
+          <p>No data found</p>
+        </div>
+      </div>
+
+      <div *ngIf="innertab === 'post'">
+        <!-- <h3 class="tabtitle">Post Alerts</h3> -->
+        <div class="currentfriends" *ngIf="!loading">
+          <div class="frienditem" *ngFor="let item of postAlerts" [routerLink]="['/pages/post-adventure']">
+            <img [src]="item.alertable.media_upload?.url" onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
+            <p>{{item?.alertable?.content}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="spinner" *ngIf="loading">
+      <ion-spinner name="lines" color="primary"></ion-spinner>
+      <p>Loading...</p>
+    </div>
+
+    <!-- <div class="currentfriends">
+      <div class="frienditem" *ngFor="let item of currentFriends">
+        <img [src]="item.profile_image" onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
+        <p>{{item.name}}</p>
+      </div>
+    </div> -->
+
+
+
+  </div>
+
+  <footer></footer>
+</ion-content>
+
+<chat-floating-button></chat-floating-button>
+
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content> -->

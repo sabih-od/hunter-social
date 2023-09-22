@@ -558,6 +558,24 @@ export class NetworkService {
     return this.httpGetResponse(`get-stripe-key`, null);
   }
 
+
+  getDashboardFriends(page, limit) {
+    return this.httpGetResponse(`users/dashboard-friends?search=&page=${page}&limit=${limit}`, null);
+  }
+  getNotifications(page, limit) {
+    return this.httpGetResponse(`users/notifications?page=${page}&limit=${limit}`, null);
+  }
+  getRecipeAlerts(page, limit) {
+    return this.httpGetResponse(`users/fetch-recipe-alerts?page=${page}&limit=${limit}`, null);
+  }
+  getPostAlerts(page, limit) {
+    return this.httpGetResponse(`users/fetch-post-alerts?page=${page}&limit=${limit}`, null);
+  }
+
+
+
+
+
   httpPostResponse(
     key,
     data,
