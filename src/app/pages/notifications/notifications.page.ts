@@ -21,6 +21,11 @@ export class NotificationsPage extends BasePage implements OnInit {
   }
 
   async getNotifications() {
+
+    localStorage.setItem('notifications_count', '0');
+    var event = new Event('storageChange');
+    window.dispatchEvent(event);
+    
     let response = await this.network.getNotifications(1, 10);
     this.loading = false;
     console.log('getNotifications response => ', response)

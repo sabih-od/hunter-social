@@ -34,6 +34,17 @@ export class DatingItemComponent extends BasePage implements OnInit {
     });
   }
 
+  async unfriend() {
+    let res = await this.network.unfriend(this.item.id);
+    console.log('unfriend', res);
+    if (res && res.data) {
+      this.utility.presentSuccessToast(res.message);
+      this.update.emit({ update: true });
+      this.events.publish('UPDATE_CHATS');
+    } else
+      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+  }
+  
   async addFriend() {
     if (this.item.is_sent_friend_request) {
       return this.utility.presentToast('Friend Request Already Sent');

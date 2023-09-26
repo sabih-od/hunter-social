@@ -30,7 +30,26 @@
       </ion-segment>
     </ion-toolbar>
 
-
+    <div *ngIf="tab === 'settings'" class="settings">
+      <ion-list>
+        <ion-item (click)="goToProfile()">
+          <ion-icon aria-hidden="true" name="person-outline" slot="start"></ion-icon>
+          <ion-label>Profile</ion-label>
+        </ion-item>
+        <ion-item [routerLink]="['/pages/edit-profile']">
+          <ion-icon aria-hidden="true" name="create-outline" slot="start"></ion-icon>
+          <ion-label>Edit Profile</ion-label>
+        </ion-item>
+        <ion-item [routerLink]="['/pages/blocked-users']">
+          <ion-icon aria-hidden="true" name="people-outline" slot="start"></ion-icon>
+          <ion-label>BLocked Users</ion-label>
+        </ion-item>
+        <ion-item (click)="showAlert()">
+          <ion-icon aria-hidden="true" name="trash-outline" slot="start"></ion-icon>
+          <ion-label>Delete Account</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
 
     <div *ngIf="tab === 'friends'">
       <!-- <h3 class="tabtitle">Current Friends</h3> -->
@@ -41,7 +60,11 @@
           </ion-col>
         </ion-row>
       </ion-grid>
+      <div *ngIf="!loading && friends.length == 0" class="notifcontent">
+        <p class="nodatafound">No data found</p>
+      </div>
     </div>
+
     <div *ngIf="tab === 'alert'">
       <ion-toolbar>
         <ion-segment (ionChange)="innerSegmentChanged($event)" [value]="innertab">
@@ -56,15 +79,17 @@
 
       <div *ngIf="innertab === 'recipe'">
         <!-- <h3 class="tabtitle">Recipe Alerts</h3> -->
-        <div class="currentfriends" *ngIf="!loading">
+        <div class="currentfriends" *ngIf="!loading && recipesAlerts.length != 0">
           <div class="frienditem" *ngFor="let item of recipesAlerts" [routerLink]="['/pages/recipes']">
-            <img [src]="item.alertable.media_upload?.url" onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
+            <img [src]="item.alertable.media_upload?.url"
+              onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
             <p>{{item?.alertable?.content}}</p>
+            <span>{{item?.updated_at}}</span>
           </div>
         </div>
 
         <div *ngIf="!loading && recipesAlerts.length == 0" class="notifcontent">
-          <p>No data found</p>
+          <p class="nodatafound">No data found</p>
         </div>
       </div>
 
@@ -72,8 +97,12 @@
         <!-- <h3 class="tabtitle">Post Alerts</h3> -->
         <div class="currentfriends" *ngIf="!loading">
           <div class="frienditem" *ngFor="let item of postAlerts" [routerLink]="['/pages/post-adventure']">
-            <img [src]="item.alertable.media_upload?.url" onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
-            <p>{{item?.alertable?.content}}</p>
+            <img [src]="item.alertable.media_upload?.url"
+              onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
+            <div>
+              <p>{{item?.alertable?.content}}</p>
+              <span>{{item?.updated_at | date:"MMM dd, yyyy 'at' hh:mm a"}}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -99,7 +128,7 @@
   <footer></footer>
 </ion-content>
 
-<chat-floating-button></chat-floating-button>
+<!-- <chat-floating-button></chat-floating-button> -->
 
 <!-- <ion-header>
   <ion-toolbar>

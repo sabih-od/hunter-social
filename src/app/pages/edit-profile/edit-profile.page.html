@@ -19,7 +19,7 @@
     <ion-segment-button value="profile">
       <ion-label>Profile</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="membership">
+    <ion-segment-button value="membership" *ngIf="user?.is_lifetime_access && !is_lifetime_access">
       <ion-label>Membership</ion-label>
     </ion-segment-button>
     <ion-segment-button value="password">
@@ -54,15 +54,18 @@
       </ion-input>
     </ion-item>
 
-    <ion-item class="margin-ver ion-no-padding">
-      <ion-icon name="calendar"></ion-icon>
-      <!-- <ion-img class="ion-margin-start" src="assets/images/calendar-outline.png"></ion-img> -->
-      <ion-datetime [value]="this.dob" (ionChange)="dateTimeUpdated($event)" [displayFormat]="'YYYY-MM-DD'"
-        class="ion-margin-start f-pop-m" placeholder="Date of Birth">
-      </ion-datetime>
-    </ion-item>
 
     <div *ngIf="user?.profile_detail?.is_dating_profile">
+
+
+      <ion-item class="margin-ver ion-no-padding">
+        <ion-icon name="calendar"></ion-icon>
+        <!-- <ion-img class="ion-margin-start" src="assets/images/calendar-outline.png"></ion-img> -->
+        <ion-datetime [value]="this.dob" (ionChange)="dateTimeUpdated($event)" [displayFormat]="'YYYY-MM-DD'"
+          class="ion-margin-start f-pop-m" placeholder="Date of Birth">
+        </ion-datetime>
+      </ion-item>
+
       <ion-label>Interests</ion-label>
       <ion-item *ngIf="user?.profile_detail?.is_dating_profile" class="margin-ver" lines="none">
         <!-- <ion-select placeholder="Slect Interests">
@@ -131,7 +134,7 @@
           border-radius: 5px;
           border: 1px solid lightgray;
     font-size: 14px;
-        " autoGrow="true"  placeholder="Brief description of yourself"></ion-textarea>
+        " autoGrow="true" placeholder="Brief description of yourself"></ion-textarea>
       </ion-item>
     </div>
     <!-- <ion-item class="margin-ver ion-no-padding">

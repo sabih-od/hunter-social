@@ -143,12 +143,12 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
   // }
   deleteAccount(item) {
-    let data = this.network.deleteAccount(item);
-    // this.nav.push('pages/login');
-    // let res = await this.network.logout();
-    this.users.removeToken();
-    this.users.removeUser();
-    this.nav.navigateTo('pages/login');
+    // let data = this.network.deleteAccount(item);
+    // // this.nav.push('pages/login');
+    // // let res = await this.network.logout();
+    // this.users.removeToken();
+    // this.users.removeUser();
+    // this.nav.navigateTo('pages/login');
   }
 
   imageUrl() {

@@ -59,6 +59,17 @@ ion-grid {
         padding: 10px 0;
         border-bottom: 1px solid #ddd;
 
+        .currentfriends .frienditem span {
+            font-size: 11px;
+            color: #666;
+            display: block;
+            text-align: right;
+        }
+        
+        .currentfriends .frienditem div {
+            width: 100%;
+        }
+        
         img {
             width: 45px;
             height: 45px;
@@ -70,6 +81,22 @@ ion-grid {
             margin: 0;
             text-transform: capitalize;
             font-family: 'PoppinsSemiBold';
+            font-size: 14px;
         }
     }
+}
+
+.settings {
+    ion-label{
+        font-family: 'poppins';
+        font-size: 15px;
+    }
+    ion-icon{
+        font-size: 22px;
+    }
+}
+
+.nodatafound {
+    font-size: 14px;
+    text-align: center;
 }

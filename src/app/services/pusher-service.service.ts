@@ -19,7 +19,7 @@ export class PusherService {
     public dataService: DataService,
     public nav: NavService,
     public eventService: EventsService
-  ) {}
+  ) { }
 
   public init(channel_id, token) {
     var pusher = new Pusher('b17eef1edf2329b7f6e5', {
@@ -82,9 +82,18 @@ export class PusherService {
         // this is used for user friend request notification
 
         console.log('USER NOTIFICATION', e);
+        let notifications_count = JSON.parse(localStorage.getItem('notifications_count'))
+        notifications_count = parseInt(notifications_count);
+        localStorage.setItem('notifications_count', notifications_count + 1)
+        var event = new Event('storageChange');
+        window.dispatchEvent(event);
+
         this.utility.presentSuccessToast(
           e.message ?? 'You have received a new notification'
         );
+
+
+
       });
 
       resolve(true);

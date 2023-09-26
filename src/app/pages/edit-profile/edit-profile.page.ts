@@ -24,6 +24,7 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     profile_detail: {},
   };
   user_image;
+  is_lifetime_access: 1
   _img;
   isProfile = true;
   passwords = {
@@ -90,20 +91,21 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
   async getStates() {
     let res = await this.network.getStates();
     console.log('States', res);
-
     this.states = res && res.data ? res.data : [];
     this.getUser();
   }
 
   dateTimeUpdated(ev) {
-    console.log('ev.detail.value => ', ev.detail.value)
-    const dateObject = new Date(ev.detail.value);
-    const year = dateObject.getFullYear();
-    const month = String(dateObject.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObject.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    this.dob = formattedDate;
-    this.user['dob'] = formattedDate;
+    console.log('ev.detail.value => ', ev?.detail?.value)
+    if (ev?.detail?.value) {
+      const dateObject = new Date(ev.detail.value);
+      const year = dateObject.getFullYear();
+      const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObject.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      this.dob = formattedDate;
+      this.user['dob'] = formattedDate;
+    }
   }
 
   async getUser() {
@@ -112,13 +114,18 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     if (res && res.data && res.data.user) {
       this.user = res.data.user;
       console.log('this.user => ', this.user);
+      this.is_lifetime_access = this.user.is_lifetime_access;
       this.selected_package = this.user.profile_detail.package_id;
       this.new_package = this.user.profile_detail.package_id;
       this.state = parseInt(this.user.profile_detail.state);
-      console.log('this.user.profile_detail.dob => ', this.user.profile_detail.dob)
-      this.dob = this.user.profile_detail.dob;
-      this.user.dob = this.user.profile_detail.dob
-      this.getCities(this.user.profile_detail.state);
+      if (this.user.profile_detail.dob) {
+        console.log('this.user.profile_detail.dob => ', this.user.profile_detail.dob)
+        this.dob = this.user.profile_detail.dob;
+        this.user.dob = this.user.profile_detail.dob;
+      }
+      if (this.user.profile_detail.state) {
+        this.getCities(this.user.profile_detail.state);
+      }
       this.user.interests =
         this.dataService.user_data?.user_interests?.map((x) => x.title) ?? [];
       // if (!this.user['interests']) this.user['interests'] = [];
@@ -216,6 +223,10 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     let res = await this.network.updateProfilePicture(this._img);
     console.log('update profile pic', res);
     if (res && Object.keys(res.data).length > 0) {
+
+      var event = new Event('profilePicUpdated');
+      window.dispatchEvent(event);
+
       let user = JSON.parse(localStorage.getItem('user'));
       user['profile_image'] = res.data.profile_image
       localStorage.setItem('user', JSON.stringify(user));

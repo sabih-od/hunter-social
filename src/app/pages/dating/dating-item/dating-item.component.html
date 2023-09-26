@@ -1,6 +1,8 @@
 <ion-card class="ion-no-margin">
   <figure>
-    <ion-img [src]="item.profile_image" (click)="goToProfile()"></ion-img>
+    <!-- <ion-img [src]="item.profile_image" (click)="goToProfile()"></ion-img> -->
+    <img [src]="item.profile_image" (click)="goToProfile()"
+          onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
     <ion-buttons class="dotsicon" slot="end">
       <ion-button (click)="openPopup($event)">
         <ion-icon id="click-trigger" name="ellipsis-vertical-outline"></ion-icon>
@@ -13,6 +15,11 @@
     <!-- <ion-card-subtitle class="f-pop-m content"
       >Age {{ item.age }} Years</ion-card-subtitle
     > -->
+
+    <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="unfriend()"
+      *ngIf="item.is_friend">
+      Unfriend
+    </ion-button>
 
     <ion-text *ngIf="item.is_sent_friend_request">
       <p class="green-txt">Friend Request Sent</p>
@@ -29,7 +36,7 @@
 
     <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="addFriend()"
       *ngIf="item.canRequest">
-      ADD FRIEND
+      Add Friend
     </ion-button>
   </ion-card-content>
 </ion-card>

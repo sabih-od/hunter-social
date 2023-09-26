@@ -2,6 +2,7 @@ import { Component, Injector, Input, OnInit, Output, EventEmitter } from '@angul
 import { ViewWillEnter } from '@ionic/angular';
 import { BasePage } from 'src/app/pages/base-page/base-page';
 import { NavService } from 'src/app/services/basic/nav.service';
+import { PusherService } from 'src/app/services/pusher-service.service';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,7 @@ export class HeaderComponent extends BasePage implements OnInit {
   @Input() shouldCallApii = true;
 
   cart_count;
+  notifications_count: 0;
   // search_text;
   isSearchVisible = false;
   user_image;
@@ -35,7 +37,7 @@ export class HeaderComponent extends BasePage implements OnInit {
 
   skip_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'A'];
 
-  constructor(public nav: NavService, injector: Injector) {
+  constructor(public nav: NavService, injector: Injector, pusher: PusherService) {
     super(injector);
   }
 
@@ -61,14 +63,49 @@ export class HeaderComponent extends BasePage implements OnInit {
       HeaderComponent.instances.forEach((instance) => {
         instance.cart_count = res.data?.data[0]?.qty?.substring(0, 1) ?? 0;
       });
+
+
+
+
+      const localnotification = JSON.parse(localStorage.getItem('notifications_count'));
+      if (localnotification == null) localStorage.setItem('notifications_count', '0');
+      this.notifications_count = localnotification == null ? 0 : JSON.parse(localStorage.getItem('notifications_count'));
+      console.log('this.notifications_count => ', this.notifications_count);
+      window.addEventListener('storageChange', function (e) {
+        console.log('e => ', e)
+        this.notifications_count = JSON.parse(localStorage.getItem('notifications_count'));
+        console.log('this.notifications_count event => ', this.notifications_count);
+        HeaderComponent.instances.forEach((instance) => {
+          instance.notifications_count = JSON.parse(localStorage.getItem('notifications_count'));
+        });
+        // Handle the storage change event here 
+      });
+
+      window.addEventListener('profilePicUpdated', function (e) {
+        this.getUser();
+      })
+
+      // this.storage.get('notifications_count').then(data => {
+      //   if (!data) {
+      //     this.storage.set('notifications_count', 0)
+      //   } else {
+      //     console.log('async notification => ', data)
+      //     this.notifications_count = data;
+      //   }
+      // })
+
     }
   }
+
 
   async getUser() {
 
     let user = JSON.parse(localStorage.getItem('user'));
     console.log('header user => ', user)
     this.user_image = this.image.getImageUrl(user?.profile_image);
+    HeaderComponent.instances.forEach((instance) => {
+      instance.user_image = this.user_image;
+    });
 
     if (!this.shouldCallApi == !this.shouldCallApii) {
       return;
@@ -215,7 +252,7 @@ export class HeaderComponent extends BasePage implements OnInit {
           if (currentRoute == '/pages/equipment-reviews-list') {
             const allTags = document.querySelectorAll('.searchcardeq');
             this.total_found = allTags.length;
-          }else if(currentRoute == '/pages/how-to'){
+          } else if (currentRoute == '/pages/how-to') {
             const allTags = document.querySelectorAll('.searchcard');
             this.total_found = allTags.length;
           }

@@ -27,21 +27,21 @@
 <div class="bg-light">
   <ion-row class="ion-no-padding">
     <ion-col class="actionbtns" size="12">
-      <ion-button *ngIf="isOwnProfile" (click)="itemClicked({ url: 'pages/edit-profile' })">
+      <!-- <ion-button *ngIf="isOwnProfile" (click)="itemClicked({ url: 'pages/edit-profile' })">
         Edit Profile
-      </ion-button>
-      <ion-button *ngIf="!isOwnProfile" color="danger" (click)="blockUser()">
+      </ion-button> -->
+      <!-- <ion-button *ngIf="!isOwnProfile" color="danger" (click)="blockUser()">
         Block User
-      </ion-button>
+      </ion-button> -->
       <ion-button *ngIf="!isOwnProfile" (click)="openreport()">
         Report User
       </ion-button>
-      <ion-button *ngIf="isOwnProfile" color="danger" (click)="deleteAccount(item)">
+      <!-- <ion-button *ngIf="isOwnProfile" color="danger" (click)="deleteAccount(item)">
         Delete Account
-      </ion-button>
-      <ion-button *ngIf="isOwnProfile" (click)="itemClicked({ url: 'pages/blocked-users' })">
+      </ion-button> -->
+      <!-- <ion-button *ngIf="isOwnProfile" (click)="itemClicked({ url: 'pages/blocked-users' })">
         Blocked Users
-      </ion-button>
+      </ion-button> -->
 
       <!-- <ion-button
         *ngIf="isOwnProfile"
