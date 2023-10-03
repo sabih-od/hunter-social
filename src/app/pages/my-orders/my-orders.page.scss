@@ -1,0 +1,19 @@
+.spinners {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.card-content-ios p strong {
+    width: 140px;
+    display: block;
+    color: #000;
+}
+
+.card-content-ios p {
+    margin-bottom: 10px;
+    color: #666;
+}

@@ -246,8 +246,7 @@ export class NetworkService {
   getrecipes(page) {
     return this.httpGetResponse(
       `recipes${page ? `?page=${page}` : ''}`,
-      null,
-      false
+      null,true
     );
   }
   getMyProducts() {
@@ -566,13 +565,15 @@ export class NetworkService {
     return this.httpGetResponse(`users/notifications?page=${page}&limit=${limit}`, null);
   }
   getRecipeAlerts(page, limit) {
-    return this.httpGetResponse(`users/fetch-recipe-alerts?page=${page}&limit=${limit}`, null);
+    return this.httpGetResponse(`users/fetch-recipe-alerts?page=${page}&limit=${limit}`, '');
   }
   getPostAlerts(page, limit) {
-    return this.httpGetResponse(`users/fetch-post-alerts?page=${page}&limit=${limit}`, null);
+    return this.httpGetResponse(`users/fetch-post-alerts?page=${page}&limit=${limit}`, '');
   }
 
-
+  getUserOrders() {
+    return this.httpGetResponse(`orders`);
+  }
 
 
 

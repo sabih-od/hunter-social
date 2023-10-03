@@ -50,12 +50,13 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     console.log(this.item);
     if (this.item.isGroup) await this.getGruoupChatData();
     else this.getChatData();
-    this.isLoading = false;
+    
   }
 
   async getChatData() {
     let res = await this.network.getChatMessages(this.item.id);
     console.log('getChatData', res);
+    this.isLoading = false;
     if (res && res.data) {
       this.channel_id = res.data.channel_id;
       this.listenMessages();

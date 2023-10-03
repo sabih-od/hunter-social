@@ -1,10 +1,28 @@
-.heading1{
-  font-family: poppins;
+.heading1 {
+  font-family: poppinssemibold;
   margin-top: 80px;
   text-align: center;
   font-size: 30px;
 }
-.text1{
+.top-heading {
+  padding: 0 15px;
+}
+
+.text1 {
   font-family: poppins;
   text-align: center;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+ion-label {
+  margin: 0;
+}
+
+ion-card-title {
+  margin-bottom: 4px;
+  font-size: 22px;
 }

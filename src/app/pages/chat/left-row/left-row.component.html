@@ -6,7 +6,13 @@
       <ion-card class="ion-padding ion-no-margin f-pop-m"
         style="border-bottom-left-radius: 0px; border: 1px solid #e1e1e1;">
         <img *ngIf="item?.media_upload?.url" src="{{item?.media_upload?.url}}" class="chatimage" />
-        <div *ngIf="item?.media_upload?.url && showdownloadicon" class="downloadimg" (click)="downloadimage(item?.media_upload?.url)"><ion-icon name="download-outline"></ion-icon></div>
+        <div *ngIf="item?.media_upload?.url && showdownloadicon && !downloading" class="downloadimg"
+          (click)="downloadimage(item?.media_upload?.url)">
+          <ion-icon name="download-outline"></ion-icon>
+        </div>
+        <div *ngIf="downloading" class="downloadimg">
+          <ion-spinner color="primary"></ion-spinner>
+        </div>
         <ion-card-content *ngIf="item.content">
           {{ item.content }}
         </ion-card-content>

@@ -40,6 +40,10 @@
           <ion-icon aria-hidden="true" name="create-outline" slot="start"></ion-icon>
           <ion-label>Edit Profile</ion-label>
         </ion-item>
+        <ion-item *ngIf="orderslength != 0" [routerLink]="['/pages/my-orders']">
+          <ion-icon aria-hidden="true" name="receipt-outline" slot="start"></ion-icon>
+          <ion-label>Orders</ion-label>
+        </ion-item>
         <ion-item [routerLink]="['/pages/blocked-users']">
           <ion-icon aria-hidden="true" name="people-outline" slot="start"></ion-icon>
           <ion-label>BLocked Users</ion-label>
@@ -104,6 +108,9 @@
               <span>{{item?.updated_at | date:"MMM dd, yyyy 'at' hh:mm a"}}</span>
             </div>
           </div>
+        </div>
+        <div *ngIf="!loading && postAlerts.length == 0" class="notifcontent">
+          <p class="nodatafound">No data found</p>
         </div>
       </div>
 

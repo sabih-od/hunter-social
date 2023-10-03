@@ -1,12 +1,13 @@
-<app-header [title]="'Ranches & PROFESSIONAL HUNTING & FISHING GUIDES'" [showcurve]="false" [back]="false"
-  [showMenu]="true"></app-header>
+<!-- <app-header [title]="'Ranches & PROFESSIONAL HUNTING & FISHING GUIDES'" [showcurve]="false" [back]="false"
+  [showMenu]="true"></app-header> -->
+<app-header [title]="" [showcurve]="false" [back]="false" [showMenu]="true"></app-header>
 
 <ion-content #content>
   <!--MAP WORK-->
   <app-ranch-banner></app-ranch-banner>
 
-  <div>
-    <h2 class="heading1"><b>YOUR ADVENTURE AWAITS</b></h2>
+  <div class="top-heading">
+    <h2 class="heading1">YOUR ADVENTURE AWAITS</h2>
     <p class="text1">
       <b>Point and click on any state for a directory of that state</b>
     </p>
@@ -1237,12 +1238,13 @@
 
   <ion-item lines="none">
     <ion-button *ngIf="huntingPage > 1" (click)="next('hunting_guides', false)">Previous</ion-button>
-    <ion-button [hidden]="(huntingPage) == huntingLastPage" (click)="next('hunting_guides', true)" slot="end">Next</ion-button>
+    <ion-button [hidden]="(huntingPage) == huntingLastPage" (click)="next('hunting_guides', true)"
+      slot="end">Next</ion-button>
   </ion-item>
 
   <div style="text-align: center; font-family: poppins">
-    <h1><b>BOOK A HUNT</b></h1>
-    <p>
+    <h1>BOOK A HUNT</h1>
+    <p style="padding: 0 10px;">
       Wether you're interested in hunting deer, Elk, wild Hog, or exotic
       species, Hunters Soxial can help direct to you premier hunting ranches all
       over the US.

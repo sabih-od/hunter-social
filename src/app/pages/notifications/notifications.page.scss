@@ -8,6 +8,7 @@
 .spinner {
     flex-direction: column;
     height: auto;
+
     p {
         margin-bottom: 0;
         font-size: 14px;
@@ -30,6 +31,8 @@
         img {
             width: 60px;
             margin-right: 10px;
+            border-radius: 40px;
+            height: 60px;
         }
 
         h5 {
@@ -41,6 +44,11 @@
             margin: 0;
             font-size: 14px;
         }
+
+    }
+
+    &:last-child {
+        border-bottom: 0;
     }
 
     span {

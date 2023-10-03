@@ -11,7 +11,7 @@ import { BasePage } from '../base-page/base-page';
 export class BillingAddressPage extends BasePage implements OnInit {
   aForm: FormGroup;
   cart;
-
+  user;
   constructor(injector: Injector) {
     super(injector);
     this.setupForm();
@@ -22,6 +22,12 @@ export class BillingAddressPage extends BasePage implements OnInit {
   }
 
   setupForm() {
+
+    // this.users.getUser().then((user) => {
+    //   this.user = user;
+    //   console.log('this.user => ', this.user)
+    // });
+
     this.aForm = this.formBuilder.group({
       first_name: [
         '',
@@ -38,7 +44,7 @@ export class BillingAddressPage extends BasePage implements OnInit {
         ]),
       ],
       is_shipping_address: [true, Validators.compose([Validators.required])],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: [this.user?.email, Validators.compose([Validators.required, Validators.email])],
       phone: ['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])],
       city: ['', Validators.compose([Validators.required])],

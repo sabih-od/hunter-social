@@ -2,9 +2,10 @@
   background-image: url('https://hunterssocial.com/public/assets/images/game-ban.png');
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100%;
-  height: 350px;
-  margin-top: -20px;
+  background-position: center;
+  // width: 100%;
+  // height: 350px;
+  // margin-top: -20px;
 }
 // .content{
 //   color: white;
@@ -15,15 +16,16 @@
 //   padding-bottom: 100px;
 // }
 .heading1{
-  color: #fff;
-  font-family: Anton;
-  font-size: 48px;
-  padding-top: 100px;
-  padding-left: 15px;
+  // color: #fff;
+  // font-family: Anton;
+  // font-size: 48px;
+  // padding-top: 100px;
+  // padding-left: 15px;
 }
 .text{
   color: #fff;
-  margin-bottom: -10px;
-  font-size: 0.85rem;
-  padding-left: 15px;
+  font-size: 1rem;
+  margin-bottom: 0;
+  margin-top: 6px;
+  line-height: 1.5rem;
 }

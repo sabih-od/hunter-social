@@ -1,7 +1,9 @@
 figure {
   width: 100%;
+  height: 150px;
   margin: 0;
   position: relative;
+  overflow: hidden;
 
   ion-img {
     // height: 120px;

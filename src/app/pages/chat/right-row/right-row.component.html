@@ -3,6 +3,13 @@
     <ion-col class="ion-no-padding" size="12">
       <ion-card class="ion-padding ion-no-margin f-pop-m" style="border-bottom-right-radius: 0px;">
         <img *ngIf="item?.media_upload?.url" src="{{item?.media_upload?.url}}" class="chatimage" />
+        <div *ngIf="item?.media_upload?.url && showdownloadicon && !downloading" class="downloadimg"
+          (click)="downloadimage(item?.media_upload?.url)">
+          <ion-icon name="download-outline"></ion-icon>
+        </div>
+        <div *ngIf="downloading" class="downloadimg">
+          <ion-spinner color="primary"></ion-spinner>
+        </div>
         <ion-card-content *ngIf="item.content">
           {{ item.content }}
         </ion-card-content>

@@ -150,7 +150,9 @@ export class UtilityService {
   }
 
 
-
+  downloadImageFromChat(){
+    
+  }
 
   downloadAndSaveImage(imageUrl: string, targetFileName: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {

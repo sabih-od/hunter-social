@@ -23,21 +23,24 @@
     </div>
   </div> -->
   <ion-grid>
-    <!-- <ion-row>
-      <ion-col size="6" *ngFor="let item of datings">
+    <ion-row>
+      <ion-col size="12" *ngFor="let item of orders">
         <ion-card class="ion-no-margin">
-          <ion-img [src]="item.profile_image" style="height: 120px" (click)="goToProfile()"></ion-img>
           <ion-card-content>
-            <ion-card-title class="f-pop-smb title"> {{ item.name }} </ion-card-title>
-            <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="unblockUser(item.id)">
-              Unblock
-            </ion-button>
+            <p><strong>Order ID</strong>{{item?.order_status?.id}}</p>
+            <p><strong>Payment Option</strong>{{item?.payment_option}}</p>
+            <p><strong>Customer</strong>{{item?.customer?.first_name}}</p>
+            <p><strong>Order Status</strong>{{item?.order_status?.name}}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <div *ngIf="datings?.length == 0" style="text-align: center; text-transform: uppercase">
+      <div *ngIf="orders?.length == 0 && !loading" style="text-align: center; display: flex; align-items: center; justify-content: center; width: 100%; text-transform: uppercase">
         <p>No Item Found</p>
       </div>
-    </ion-row> -->
+    </ion-row>
   </ion-grid>
+  <div class="spinners" *ngIf="loading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+    <p>Loading...</p>
+  </div>
 </ion-content>

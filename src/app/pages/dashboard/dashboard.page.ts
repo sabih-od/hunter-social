@@ -27,6 +27,7 @@ export class DashboardPage extends BasePage implements OnInit {
   innertab = 'recipe';
   loading = false;
   current_user: any;
+  orderslength = 0;
 
   async ngOnInit() {
     this.loading = true;
@@ -74,6 +75,13 @@ export class DashboardPage extends BasePage implements OnInit {
     // }));
     console.log('this.friends => ', this.friends)
     // this.friends = response?.data?.data
+
+    const resp = await this.network.getUserOrders();
+    console.log('orders resp => ', resp)
+    if (resp && resp?.data) {
+      this.orderslength = resp?.data.length || 0;
+    }
+
   }
 
   // async getNotifications() {
@@ -91,27 +99,29 @@ export class DashboardPage extends BasePage implements OnInit {
   async getRecipeAlerts() {
     let response = await this.network.getRecipeAlerts(1, 10);
     this.loading = false;
-    console.log('recipesAlerts response => ', response?.data?.data?.data)
+    console.log('recipesAlerts response => ', response?.data?.data)
+    response.message != '' && this.utility.presentSuccessToast(response.message);
     // this.recipesAlerts = response?.data?.data.map((item) => ({
     //   ...item,
     //   // hasUnread: self.sender_id === user.id,
     //   // profile_image: this.image.getImageUrl(user.profile_image),
     // }));
     // console.log('this.recipesAlerts => ', this.recipesAlerts)
-    if (response?.data?.data?.data) { this.recipesAlerts = response?.data?.data.data }
+    if (response?.data?.data) { this.recipesAlerts = response?.data?.data ? response?.data?.data : [] }
   }
 
   async getPostAlerts() {
     let response = await this.network.getPostAlerts(1, 10);
     this.loading = false;
     console.log('postAlerts response => ', response?.data?.data)
+    response.message != '' && this.utility.presentSuccessToast(response.message);
     // this.postAlerts = response?.data?.data.map((item) => ({
     //   ...item,
     //   // hasUnread: self.sender_id === item.id,
     //   profile_image: this.image.getImageUrl(item.media_upload?.url),
     // }));
     // console.log('this.postAlerts => ', this.postAlerts)
-    if (response?.data?.data) { this.postAlerts = response?.data?.data }
+    if (response?.data?.data) { this.postAlerts = response?.data?.data ? response?.data?.data : [] }
   }
 
   goToProfile() {

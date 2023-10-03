@@ -19,6 +19,7 @@ export class LeftRowComponent implements OnInit {
   ) { }
 
   showdownloadicon = true;
+  downloading = false;
   ngOnInit() {
     this.showdownloadicon = Capacitor.getPlatform() == 'ios' ? false : true;
   }
@@ -154,11 +155,13 @@ export class LeftRowComponent implements OnInit {
     } catch (error) {
       console.error('Errorb:', error);
       throw error;
+    } finally {
+      this.downloading = false;
     }
   }
 
   async downloadimage(url) {
-
+    this.downloading = true;
     // this.photoLibrary.requestAuthorization().then((res) => {
     //   console.log('photoLibrary => ', res)
     //   // this.photoLibrary.savePhoto(imageData, 'My Image').then((libraryItem: LibraryItem) => {
@@ -232,6 +235,8 @@ export class LeftRowComponent implements OnInit {
     } catch (error) {
       console.error('Errora:', error);
       this.utility.presentFailureToast(error.message);
+    } finally {
+      this.downloading = false;
     }
 
     // const targetPath = cordova.file.dataDirectory + 'image.jpg';

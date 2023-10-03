@@ -27,7 +27,6 @@ export class NotificationsPage extends BasePage implements OnInit {
     window.dispatchEvent(event);
     
     let response = await this.network.getNotifications(1, 10);
-    this.loading = false;
     console.log('getNotifications response => ', response)
     this.notifications = response?.data?.data.map((user) => ({
       ...user,
@@ -35,7 +34,9 @@ export class NotificationsPage extends BasePage implements OnInit {
       profile_image: this.image.getImageUrl(user?.notificationable?.addressee?.profile_image || user?.notificationable?.requester?.profile_image),
     }));
     console.log('this.currentFriends => ', this.notifications)
-    this.notifications = response?.data?.data
+    console.log('this.currentFriends[1].profile_image => ', this.notifications[1].profile_image)
+    // this.notifications = response?.data?.data
+    this.loading = false;
   }
 
 }

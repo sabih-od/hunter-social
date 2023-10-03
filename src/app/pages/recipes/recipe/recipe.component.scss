@@ -1,9 +1,89 @@
 .title {
-  font-size: 18px;
+  font-size: 20px;
+  color: #000;
+  margin: 10px 0 5px 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .link {
   color: #179bff;
   font-size: 14px;
   margin-top: 10px;
+}
+
+ion-card-header {
+  ion-item {
+    --padding-start: 12px;
+    --padding-top: 6px;
+    /* --background: #f7f7f7; */
+    --padding-bottom: 6px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  ion-label {
+    font-family: poppinsMedium !important;
+  }
+}
+
+
+.cardcontentandrate {
+  --padding-start: 12px;
+  padding-top: 7px;
+}
+
+ion-card-title {
+  font-size: 1.4em;
+}
+
+ion-row.cardrating ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --min-height: 30px;
+
+  ion-icon {
+    font-size: 2vh;
+    margin-right: 2px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+  }
+}
+
+.raterecipies {
+  border-top: 1px solid #ddd;
+  margin-top: 15px;
+
+  ion-col {
+    padding: 0;
+  }
+
+  ion-label {
+    font-family: poppinsmedium !important;
+    margin-bottom: 3px;
+  }
+}
+
+
+.raterecipiesrating {
+  ion-col {
+    padding: 0;
+
+    ion-icon {
+      margin-right: 1px;
+    }
+  }
+}
+
+.card-content-ios {
+  padding-bottom: 10px;
+}
+
+ul {
+  padding-left: 20px;
+  margin-bottom: 0;
 }
