@@ -1,5 +1,5 @@
 ion-avatar {
-  width: 100%;
+  width: 90px;
   height: auto;
 
   img {
@@ -14,13 +14,14 @@ ion-avatar {
   height: 15px;
   width: 15px;
   color: transparent;
-  right: 10px;
+  right: 3px;
   top: 10px;
 }
 
 .pcolleft {
   margin-top: -40px;
-
+  position: relative;
+  margin-right: 11px;
 }
 
 .pcolright {
@@ -41,6 +42,9 @@ ion-avatar {
 .top-row {
   transform: translateY(3px);
   color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px;
 }
 
 .bg-light {

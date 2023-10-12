@@ -10,7 +10,7 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title *ngIf="!isSearchVisible">
+    <ion-title [class.titlepadding]="isIOS" *ngIf="!isSearchVisible">
       <ion-label class="title f-anton">{{ title }} </ion-label>
     </ion-title>
     <!-- <ion-searchbar
@@ -21,6 +21,7 @@
     >
     </ion-searchbar> -->
 
+    
     <ion-input placeholder="Find Your Text" *ngIf="isSearchVisible" style="border-bottom: 2px solid lightgray"
       [(ngModel)]="search_text" (ionChange)="searchNow()"></ion-input>
 

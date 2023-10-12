@@ -22,9 +22,21 @@
       </ion-item>
     </ion-col>
   </ion-row> -->
-  <ion-row class="ion-margin-top">
+  <div style="width: 100%; align-items: center; display: flex; padding: 0 20px 0 10px;">
     <ion-searchbar placeholder="Search" [(ngModel)]="search" (ngModelChange)="getData()"></ion-searchbar>
-  </ion-row>
+    <div *ngIf="!isLoading">
+
+      <!-- <ion-select placeholder="Select One" [(ngModel)]="dating_users" (ngModelChange)="getData()">
+        <ion-select-option [value]="0">HUNTING</ion-select-option>
+        <ion-select-option [value]="1">DATING</ion-select-option>
+      </ion-select> -->
+
+      <ion-button slot="end" (click)="filter()">
+        <ion-icon name="filter-outline"></ion-icon>
+        Filter
+      </ion-button>
+    </div>
+  </div>
 
   <div *ngIf="showmodal" class="disclaimer-modal"> <!--  -->
     <div class="overlay"></div>
@@ -42,23 +54,11 @@
     <ion-spinner name="lines" color="primary"></ion-spinner>
   </div>
 
-  <div *ngIf="!isLoading">
-    <ion-item>
-      <!-- <ion-select placeholder="Select One" [(ngModel)]="dating_users" (ngModelChange)="getData()">
-        <ion-select-option [value]="0">HUNTING</ion-select-option>
-        <ion-select-option [value]="1">DATING</ion-select-option>
-      </ion-select> -->
 
-      <ion-button slot="end" (click)="filter()">
-        <ion-icon name="filter-outline"></ion-icon>
-        Filter
-      </ion-button>
-    </ion-item>
-  </div>
 
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let item of datings | filter:search">
+      <ion-col size="6" sizeMd="4" *ngFor="let item of datings | filter:search">
         <dating-item [item]="item" (update)="getData()"></dating-item>
       </ion-col>
     </ion-row>

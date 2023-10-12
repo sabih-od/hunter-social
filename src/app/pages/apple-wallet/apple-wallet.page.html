@@ -1,62 +1,37 @@
-<app-header
-  [title]="'Packeges'"
-  [showcurve]="false"
-  [showMenu]="false"
-  [showSearch]="false"
-  [showCart]="false"
-  [profileVisible]="false"
-  [back]="shouldRedirect"
-></app-header>
+<app-header [title]="'Packages'" [showcurve]="false" [showMenu]="false" [showSearch]="false" [showCart]="false"
+  [profileVisible]="false" [back]="shouldRedirect"></app-header>
 
 <ion-content>
   <!-- [ngStyle]="{'color': style.colorVal ? style.colorVal : '#ffd700',}" -->
-  <h3 style="padding-left: 20px">Your Selected Package</h3>
-  <ion-card
-    *ngFor="let p of products"
-    detail="false"
-    [class.abc-6786]="package_id == 2"
-    [class.abc-6756]="package_id == 3"
-    style="
-      /* background-color: #d6d4cb; */
-      height: 500px;
+  <h3>Your Selected Package</h3>
+  <ion-card *ngFor="let p of products" detail="false" [class.abc-6786]="package_id == 2"
+    [class.abc-6756]="package_id == 3" style="
       overflow: scroll;
       flex-direction: column-reverse;
-    "
-  >
+    ">
     <ion-card-header>
-      <ion-card-title> {{ p?.title }} </ion-card-title>
-      <div style="display: flex">
+      <div>
+        <ion-card-title> {{ p?.title }} </ion-card-title>
         <p>{{ p?.description }}</p>
-        <ion-img src="./../../../assets/Images/1024x1024bb.png"></ion-img>
       </div>
+      <ion-img src="./../../../assets/Images/ov-logo.png"></ion-img>
     </ion-card-header>
-    <ion-card-content style="font-size: 12px">
-      Subscription will not charge for 6 months after which you have to pay
-      <ion-button
-        slot="end"
-        style="width: 100%; margin-top: 20px"
-        (click)="purchase(p)"
-      >
+    <ion-card-content>
+      <p>Subscription will not charge for 6 months after which you have to pay</p>
+      <ion-button slot="end" (click)="purchase(p)">
         {{ p?.price }} {{ p?.currency }}
       </ion-button>
-      <div
-        style="
-          height: 300px;
-          overflow: scroll;
-          flex-direction: column-reverse;
-          margin-top: 30px;
-        "
-      >
-        <!-- <h2 style="margin-top: 15px">Free Mambership Plan</h2>
-        <ion-text style="margin-top: 15px; font-size: 12px">
+      <div>
+        <!-- <h2>Free Mambership Plan</h2>
+        <ion-text>
           <ion-icon name="checkmark-circle"></ion-icon>
           The users will be able to get the Free membership plan without any
           payments and will have limited access. The pages that a user will be
           able to access through the Free membership are Home, Chatroom, Store &
           Profile</ion-text
         > -->
-        <h2 style="margin-top: 15px">Access for all pages</h2>
-        <ion-text style="margin-top: 15px; font-size: 12px">
+        <h2>Access for all pages</h2>
+        <ion-text>
           <ion-icon name="checkmark-circle"></ion-icon>
           For the members with Gold membership they need to pay the membership
           fee of $9.95/monthly and will be able to access all the pages of the
@@ -69,8 +44,8 @@
           membership fee of $31.95/monthly and will be able to access all the
           features and pages of the website.
         </ion-text> -->
-        <h2 style="margin-top: 15px">Membership Lavel</h2>
-        <ion-text style="margin-top: 15px; font-size: 12px">
+        <h2>Membership Lavel</h2>
+        <ion-text>
           <ion-icon name="checkmark-circle"></ion-icon>
           The users will be able to view their membership level within their
           profile and be able to cancel their membership as well.
@@ -79,7 +54,7 @@
       <br />
     </ion-card-content>
   </ion-card>
-<!-- 
+  <!-- 
   <div
     style="
       display: flex;

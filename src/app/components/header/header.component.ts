@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { ViewWillEnter } from '@ionic/angular';
+import { Platform, ViewWillEnter } from '@ionic/angular';
 import { BasePage } from 'src/app/pages/base-page/base-page';
 import { NavService } from 'src/app/services/basic/nav.service';
 import { PusherService } from 'src/app/services/pusher-service.service';
@@ -9,6 +9,7 @@ import { PusherService } from 'src/app/services/pusher-service.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
+
 export class HeaderComponent extends BasePage implements OnInit {
   @Input() title = '';
   @Input() searchVisible = false;
@@ -34,10 +35,10 @@ export class HeaderComponent extends BasePage implements OnInit {
   total_found = 0;
   first_selected = false;
   static instances = [];
-
+  isIOS = false;
   skip_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'A'];
 
-  constructor(public nav: NavService, injector: Injector, pusher: PusherService) {
+  constructor(public nav: NavService, injector: Injector, pusher: PusherService, platform: Platform) {
     super(injector);
   }
 
@@ -52,6 +53,8 @@ export class HeaderComponent extends BasePage implements OnInit {
       this.init();
     });
     this.init();
+    this.isIOS = this.platform.is('ios');
+    console.log('platform => ', this.isIOS)
   }
 
   async init() {
@@ -100,16 +103,17 @@ export class HeaderComponent extends BasePage implements OnInit {
 
   async getUser() {
 
-    let user = JSON.parse(localStorage.getItem('user'));
-    console.log('header user => ', user)
-    this.user_image = this.image.getImageUrl(user?.profile_image);
-    HeaderComponent.instances.forEach((instance) => {
-      instance.user_image = this.user_image;
-    });
+    // let user = JSON.parse(localStorage.getItem('user'));
+    // console.log('header user => ', user)
+    // if (user?.profile_image) this.user_image = this.image.getImageUrl(user?.profile_image);
+    // HeaderComponent.instances.forEach((instance) => {
+    //   instance.user_image = this.user_image;
+    // });
 
-    if (!this.shouldCallApi == !this.shouldCallApii) {
-      return;
-    };
+    // if (!this.shouldCallApi == !this.shouldCallApii) {
+    //   return;
+    // };
+    
 
 
 
@@ -117,6 +121,7 @@ export class HeaderComponent extends BasePage implements OnInit {
     console.log('getUser', res);
     if (res && res.data && res.data.user) {
       let user = res.data.user;
+      console.log('header this.network.getUser user => ', user) 
       console.log("user['profile_image'] => ", user['profile_image'])
       if (user['profile_image'] && user['profile_image'] !== '') {
         HeaderComponent.instances.forEach((instance) => {

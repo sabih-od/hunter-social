@@ -19,7 +19,7 @@
     <ion-segment-button value="profile">
       <ion-label>Profile</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="membership" *ngIf="user?.is_lifetime_access && !is_lifetime_access">
+    <ion-segment-button value="membership" *ngIf="is_lifetime_access == 0">
       <ion-label>Membership</ion-label>
     </ion-segment-button>
     <ion-segment-button value="password">
@@ -253,6 +253,7 @@
   <ion-button class="f-pop-r btn savebtn" expand="block" color="primary" (click)="saveChanges()">
     SAVE CHANGES
   </ion-button>
+  <br />
 </ion-content>
 
 <!-- <div *ngIf="list.length > 0" style="

@@ -110,7 +110,7 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
 
   async getUser() {
     let res = await this.network.getUser();
-    console.log(res);
+    console.log('Edit Profile User', res);
     if (res && res.data && res.data.user) {
       this.user = res.data.user;
       console.log('this.user => ', this.user);
@@ -126,8 +126,7 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
       if (this.user.profile_detail.state) {
         this.getCities(this.user.profile_detail.state);
       }
-      this.user.interests =
-        this.dataService.user_data?.user_interests?.map((x) => x.title) ?? [];
+      this.user.interests = this.dataService.user_data?.user_interests?.map((x) => x.title) ?? [];
       // if (!this.user['interests']) this.user['interests'] = [];
       if (this.user['profile_image'] && this.user['profile_image'] !== '')
         this.user_image = this.image.getImageUrl(this.user['profile_image']);
@@ -135,6 +134,13 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
 
     // this.user = this.dataService.getUser();
+
+    let newres = this.network.getUserProfile(this.user.id)
+    newres.then(value => {
+      // this.dataService.user_data = value.data;
+      this.user.interests = value.data?.user_interests?.map((x) => x.title) ?? [];
+    });
+    console.log('new res => ', newres)
   }
 
   async getCities(id) {

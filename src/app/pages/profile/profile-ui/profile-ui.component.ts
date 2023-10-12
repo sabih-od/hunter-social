@@ -65,14 +65,14 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
       if (this.user['profile_image'] && this.user['profile_image'] !== '')
         console.log('hello');
-      if (this.isOwnProfile){
-        this.user_image =  this.user['profile_image'] == null ? '../../../assets/Images/dummy-avatar.png' : this.image.getImageUrl(this.user['profile_image']);
+      if (this.isOwnProfile) {
+        this.user_image = this.user['profile_image'] == null ? '../../../assets/Images/dummy-avatar.png' : this.image.getImageUrl(this.user['profile_image']);
         console.log('user_image', this.user_image);
-      }else{
+      } else {
         this.user_image = this.user_profile?.profile_image == null ? '../../../assets/Images/dummy-avatar.png' : this.image.getImageUrl(this.user_profile?.profile_image);
         // console.log('this.user_profile => ', this.user_profile.profile_image);
       }
-      
+
 
       console.log('hello1');
     } else
@@ -106,9 +106,9 @@ export class ProfileUIComponent extends BasePage implements OnInit {
     let states =
       res && res.data
         ? res.data.filter(
-            (x) =>
-              x.id == parseInt(this.user_profile.profile_detail.state ?? '0')
-          )
+          (x) =>
+            x.id == parseInt(this.user_profile.profile_detail.state ?? '0')
+        )
         : [];
 
     this.state = states && states.length > 0 ? states[0].name : 'N/A';
@@ -123,13 +123,13 @@ export class ProfileUIComponent extends BasePage implements OnInit {
       let cities =
         res && res.data
           ? res.data.filter(
-              (x) =>
-                x.id == parseInt(this.user_profile.profile_detail.city ?? '0')
-            )
+            (x) =>
+              x.id == parseInt(this.user_profile.profile_detail.city ?? '0')
+          )
           : [];
 
       this.city = cities && cities.length > 0 ? cities[0].name : 'N/A';
-    } 
+    }
     // else
     //   this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
@@ -172,7 +172,7 @@ export class ProfileUIComponent extends BasePage implements OnInit {
     // alert(JSON.stringify(formData))
     // alert(JSON.stringify(this.user_id))
     var res = await this.network.blockUser(formData);
-    if(res){
+    if (res) {
       this.utility.presentSuccessToast(res.message);
       this.modals.present(ChatBatsComponent);
       // this.nav.navigateTo('pages/chat-room');

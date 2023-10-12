@@ -10,7 +10,7 @@
 
   <app-card-submission></app-card-submission>
 
-  <app-how-to-cards *ngFor="let item of list | customFilter: search_text" [item]="item"></app-how-to-cards>
+  <app-how-to-cards *ngFor="let item of list | customFilter: search_text" [item]="item"></app-how-to-cards> 
   <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>

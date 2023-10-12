@@ -34,10 +34,12 @@ ion-card-content {
 }
 
 .title {
-  font-size: 15px;
+  font-size: 18px;
   text-align: center;
   text-transform: capitalize;
   margin-bottom: 5px;
+  font-family: poppinssemibold;
+  font-weight: normal;
 }
 
 .content {
@@ -53,4 +55,18 @@ ion-card-content {
 .red-txt {
   color: tomato !important;
   margin: 5px 0px;
+}
+
+ion-button {
+  text-transform: uppercase;
+  font-size: 17px;
+}
+
+@media screen and (max-width: 600px) {
+  .title {
+    font-size: 15px;
+  }
+  ion-button {
+    font-size: 14px;
+  }
 }

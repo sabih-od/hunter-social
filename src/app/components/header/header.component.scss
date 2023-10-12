@@ -10,6 +10,10 @@ ion-title {
   padding-inline: 0px;
 }
 
+.titlepadding {
+  padding-inline: 50px;
+}
+
 ion-searchbar {
   --border-radius: 20px;
   --background: #808080;
@@ -87,4 +91,4 @@ ion-icon {
   justify-content: center;
   align-items: center;
   border: 1px solid gray;
-}
+} 

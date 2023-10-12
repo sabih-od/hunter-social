@@ -1,5 +1,6 @@
 ion-menu {
   --background: var(--ion-color-primary);
+  --width: 370px;
 }
 
 ion-content {
@@ -27,4 +28,10 @@ ion-item {
 
 .text-white {
   color: white;
+}
+
+@media screen and (max-width: 600px) {
+  ion-menu {
+    --width: 304px; 
+  }
 }
