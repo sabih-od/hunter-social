@@ -31,19 +31,19 @@
           Profile</ion-text
         > -->
         <h2>Access for all pages</h2>
-        <ion-text>
+        <ion-text *ngIf="package_id == 2">
           <ion-icon name="checkmark-circle"></ion-icon>
           For the members with Gold membership they need to pay the membership
-          fee of $9.95/monthly and will be able to access all the pages of the
-          website except the Dating Feature.
+          fee of {{ p?.price }} {{ p?.currency }}/monthly and will be able to access all the features of the
+          app except the Dating Feature.
         </ion-text>
-        <!-- <h2 style=" margin-top: 15px;">Free Mambership Plan</h2>
-        <ion-text style="margin-top: 15px; font-size: 12px;">
+        <!-- <h2 style=" margin-top: 15px;">Free Mambership Plan</h2> -->
+        <ion-text *ngIf="package_id == 3">
           <ion-icon name="checkmark-circle"></ion-icon>
           For the members with Platinum membership they need to pay the
-          membership fee of $31.95/monthly and will be able to access all the
-          features and pages of the website.
-        </ion-text> -->
+          membership fee of {{ p?.price }} {{ p?.currency }}/monthly and will be able to access all the
+          features and pages of the app.
+        </ion-text> 
         <h2>Membership Lavel</h2>
         <ion-text>
           <ion-icon name="checkmark-circle"></ion-icon>

@@ -7,13 +7,32 @@
     justify-content: center;
 }
 
-.card-content-ios p strong {
-    width: 140px;
-    display: block;
-    color: #000;
-}
-
-.card-content-ios p {
+ion-card-content div {
     margin-bottom: 10px;
     color: #666;
+    font-size: 14px;
+
+    strong {
+        width: 140px;
+        display: block;
+        color: #000;
+        font-weight: normal;
+        font-family: poppinsSemiBold;
+    }
+}
+
+.products {
+    padding: 5px 0px 5px 0px;
+    font-size: 13px;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+        border-bottom: 0px;
+    }
+
+    span {
+        color: #000;
+        width: 130px;
+        display: inline-block;
+    }
 }

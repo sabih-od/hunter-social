@@ -23,26 +23,11 @@ export class BillingAddressPage extends BasePage implements OnInit {
 
   setupForm() {
 
-    // this.users.getUser().then((user) => {
-    //   this.user = user;
-    //   console.log('this.user => ', this.user)
-    // });
+
 
     this.aForm = this.formBuilder.group({
-      first_name: [
-        '',
-        Validators.compose([
-          Validators.pattern('[a-zA-Z ]*'),
-          Validators.required,
-        ]),
-      ],
-      last_name: [
-        '',
-        Validators.compose([
-          Validators.pattern('[a-zA-Z ]*'),
-          Validators.required,
-        ]),
-      ],
+      first_name: ['', Validators.compose([Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      last_name: ['', Validators.compose([Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       is_shipping_address: [true, Validators.compose([Validators.required])],
       email: [this.user?.email, Validators.compose([Validators.required, Validators.email])],
       phone: ['', Validators.compose([Validators.required])],
@@ -58,10 +43,30 @@ export class BillingAddressPage extends BasePage implements OnInit {
       shipping_zip: ['', Validators.compose([])],
     });
     console.log('setupForm,');
+
+    // this.aForm.controls['first_name'].setValue('asdasd')
+    // this.aForm.controls['last_name'].setValue('asdasd')
   }
   ngOnInit() {
     this.cart = this.dataService.cart;
     console.log(this.cart);
+    // console.log('this.dataService.user_data => ', this.dataService.user_data)
+    this.users.getUser().then((user) => {
+      this.user = user;
+      console.log('this.user => ', this.user)
+
+      user?.customer?.first_name && this.aForm.controls['first_name'].setValue(user?.customer?.first_name)
+      user?.customer?.last_name && this.aForm.controls['last_name'].setValue(user?.customer?.last_name)
+      user?.email && this.aForm.controls['email'].setValue(user?.email)
+      user?.phone && this.aForm.controls['phone'].setValue(user?.phone)
+      user?.addresses?.BILLING?.address1 && this.aForm.controls['address'].setValue(user?.addresses?.BILLING?.address1)
+      user?.addresses?.BILLING?.state && this.aForm.controls['state'].setValue(user?.addresses?.BILLING?.state)
+      user?.addresses?.BILLING?.city && this.aForm.controls['city'].setValue(user?.addresses?.BILLING?.city)
+      user?.addresses?.BILLING?.country && this.aForm.controls['country'].setValue(user?.addresses?.BILLING?.country)
+      user?.addresses?.BILLING?.postcode && this.aForm.controls['zip'].setValue(user?.addresses?.BILLING?.postcode)
+
+
+    });
   }
 
   async proceed() {

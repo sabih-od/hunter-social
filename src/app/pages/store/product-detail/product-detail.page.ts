@@ -12,6 +12,7 @@ export class ProductDetailPage extends BasePage implements OnInit {
   product_detail: any;
   quantity = 1;
   reviews: any[];
+  user;
 
   constructor(injector: Injector) {
     super(injector);
@@ -25,10 +26,13 @@ export class ProductDetailPage extends BasePage implements OnInit {
     this.id = await this.nav.getQueryParams().product_id;
     const res = await this.network.getProductDetail(this.id);
     const review_res = await this.network.getProductReviews(this.id);
-    console.log(review_res);
+    console.log('review_res => ',review_res);
     this.reviews = review_res.data;
     this.product_detail = res.data;
     console.log(this.product_detail);
+
+    this.user = await this.users.getUser();
+    console.log('this.user => ', this.user)
   }
 
   async openAddReview() {
@@ -63,6 +67,7 @@ export class ProductDetailPage extends BasePage implements OnInit {
   }
 
   async deleteProductReview(reviewid) {
+    this.utility.showLoader()
     const res = await this.network.deleteProductReview(reviewid);
     console.log(res);
     if (res) {

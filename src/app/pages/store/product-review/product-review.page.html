@@ -45,8 +45,8 @@
         <ion-col style="margin-left: 10px">
           <div>
             <ion-icon
-              [name]="rating <= n ? 'star-outline' : 'star'"
-              [color]="rating <= n ? 'white' : ''"
+              [name]="rating < n ? 'star-outline' : 'star'"
+              [color]="rating < n ? 'white' : ''"
               *ngFor="let n of [1,2,3,4,5]"
               style="margin-left: 5px"
               (click)="changeRating(n)"

@@ -68,6 +68,7 @@ export class ProductReviewPage extends BasePage implements OnInit {
   }
 
   changeRating(_rating) {
+    console.log('_rating => ', _rating) 
     this.rating = _rating;
   }
 }

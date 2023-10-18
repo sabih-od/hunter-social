@@ -28,4 +28,8 @@ export class MyOrdersPage extends BasePage implements OnInit {
     }
   }
 
+  parseIntValue(value) {
+    return parseInt(value, 10);
+  }
+
 }
