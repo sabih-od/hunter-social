@@ -246,11 +246,11 @@ export class NetworkService {
   getrecipes(page) {
     return this.httpGetResponse(
       `recipes${page ? `?page=${page}` : ''}`,
-      null,true
+      null, true
     );
   }
   getMyProducts() {
-    return this.httpPostResponse(`my-products`, null, false, true);
+    return this.httpPostResponse(`products`, null, false, true);
   }
 
   getMyListing(data) {
@@ -340,7 +340,7 @@ export class NetworkService {
   }
 
   requestGroup(data) {
-    return this.httpPostResponse(`request-group`, data, null, false);
+    return this.httpPostResponse(`request-group`, data, null, true);
   }
 
   getGroups() {
@@ -430,7 +430,7 @@ export class NetworkService {
   }
 
   howToVideos(pageno) {
-    return this.httpGetResponse(`how-to-videos?page=${pageno}`);
+    return this.httpGetResponse(`how-to-videos?page=${pageno}`, null, true);
   }
 
   postHowToVideo(data, id) {
@@ -458,8 +458,7 @@ export class NetworkService {
     return this.httpPostResponse(
       'how-to-videos/' + id + '/comments',
       { comment },
-      null,
-      true
+      null
     );
   }
 

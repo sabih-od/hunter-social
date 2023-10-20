@@ -62,7 +62,7 @@
         <ion-item style="margin-left: -20px; font-size: 20px" lines="none">
           <ion-label>{{
             item.auth_review ? "Rated Recipe" : "Rate Recipe"
-            }}</ion-label>
+            }}</ion-label> 
         </ion-item>
       </ion-col>
     </ion-row>
@@ -76,7 +76,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row style="margin-left: -10px" *ngIf="!item.auth_review">
+    <ion-row style="margin-left: -10px" *ngIf="!item.auth_review"> 
       <ion-col>
         <ion-button (click)="rateRecipe()" style="width: 100%">
           Submit

@@ -33,8 +33,8 @@ export class NotificationsPage extends BasePage implements OnInit {
       // hasUnread: self.sender_id === user.id,
       profile_image: this.image.getImageUrl(user?.notificationable?.addressee?.profile_image || user?.notificationable?.requester?.profile_image),
     }));
-    console.log('this.currentFriends => ', this.notifications)
-    console.log('this.currentFriends[1].profile_image => ', this.notifications[1].profile_image)
+    // console.log('this.currentFriends => ', this.notifications)
+    // console.log('this.currentFriends[1].profile_image => ', this.notifications[1].profile_image)
     // this.notifications = response?.data?.data
     this.loading = false;
   }

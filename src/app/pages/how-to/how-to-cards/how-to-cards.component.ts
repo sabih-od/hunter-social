@@ -13,6 +13,7 @@ export class HowToCardsComponent extends BasePage implements OnInit {
   comment;
   profile_image;
   comments = [];
+  addcommentloader = false;
   constructor(injector: Injector, public popoverController: PopoverController) {
     super(injector);
   }
@@ -65,17 +66,32 @@ export class HowToCardsComponent extends BasePage implements OnInit {
   }
 
   async addComment() {
+    if (this.addcommentloader && this.comment != '') return;
     if (!this.utility.isNullOrEmpty(this.comment)) {
+      this.addcommentloader = true;
       let res = await this.network.commentHowToVideo(
         this.item.id,
         this.comment
       );
       if (res && res.data) {
-        this.events.publish('HOW_TO_POST_UPDATED');
+        this.addcommentloader = false;
+        const curruser = await this.users.getUser();
+        this.comments.push({
+          id: res.data.id,
+          comment: this.comment,
+          user_id: curruser.id,
+          selfComment: true,
+          user: {
+            ...curruser,
+            profile_image: this.users.getProfileImage(curruser.profile_image),
+          }
+        });
+        this.comment = '';
       } else
-        this.utility.presentFailureToast(
-          res?.message ?? 'Something Went Wrong'
-        );
+        this.addcommentloader = false;
+      this.utility.presentFailureToast(
+        res?.message ?? 'Something Went Wrong'
+      );
     }
   }
 
@@ -98,7 +114,10 @@ export class HowToCardsComponent extends BasePage implements OnInit {
 
   async deleteComment(item) {
     let res = await this.network.deleteHowToComment(item.id);
-    if (res && res.data) this.events.publish('HOW_TO_POST_UPDATED');
+    if (res && res.data) {
+      this.comments = this.comments.filter(x => x.id != item.id);
+      // this.events.publish('HOW_TO_POST_UPDATED');
+    }
     else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }

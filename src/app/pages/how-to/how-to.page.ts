@@ -21,7 +21,7 @@ export class HowToPage extends BasePage implements OnInit {
 
   ngOnInit() {
     this.events.subscribe('HOW_TO_POST_UPDATED', () => {
-      this.getData();
+      // this.getData();
     });
     this.getData();
   }

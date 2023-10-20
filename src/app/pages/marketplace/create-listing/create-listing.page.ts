@@ -23,6 +23,7 @@ export class CreateListingPage extends BasePage implements OnInit {
   image_url: any;
   selected: any;
   data: any;
+  states: [];
   _img: any;
   user_image;
   user: any = {
@@ -97,7 +98,18 @@ export class CreateListingPage extends BasePage implements OnInit {
     console.log('this.network.getUser', user.data.user.id);
     this.userId = user.data.user.id;
     console.log('dsss', this.userId);
+
+
+    this.getStates();
+
   }
+
+  async getStates() {
+    let res = await this.network.getStates();
+    console.log('getStates', res);
+    this.states = res.data;
+  }
+
   async getCategoriess() {
     let res = await this.network.getCategoriess(this.data);
     console.log('all categories', res.id);
@@ -116,12 +128,10 @@ export class CreateListingPage extends BasePage implements OnInit {
     this.aForm = this.formBuilder.group({
       title: ['', Validators.compose([Validators.required])],
       price: ['', Validators.compose([Validators.required])],
-      description: [
-        '',
-        Validators.compose([Validators.required]),
-      ],
+      description: [ '', Validators.compose([Validators.required]), ],
       condition: ['', Validators.compose([Validators.required])],
       category: ['', Validators.compose([Validators.required])],
+      state_id: ['', Validators.compose([Validators.required])],
       image: ['', Validators.compose([Validators.required])],
       user_id: ['', Validators.compose([Validators.required])],
       category_id: ['', Validators.compose([Validators.required])],
@@ -132,7 +142,11 @@ export class CreateListingPage extends BasePage implements OnInit {
   }
 
   async post() {
-    let blob = (await this.image.base64ToBlob(this.picture)) as string;
+    const newblog = await this.image.base64ToBlob(this.picture)
+    console.log('newblog => ', newblog)
+    let blob = (newblog) as string;
+
+    console.log('blob => ', blob)
 
     console.log('setupForm,', this.aForm.value);
     let datas = new FormData();
@@ -142,10 +156,13 @@ export class CreateListingPage extends BasePage implements OnInit {
     datas.append('description', this.aForm.value.description);
     datas.append('condition', this.aForm.value.condition);
     datas.append('category', this.selected);
+    datas.append('state_id', this.aForm.value.state_id);
     datas.append('images[]', blob);
     datas.append('user_id', this.userId);
     datas.append('category_id', this.category_id);
     datas.append('picture', this.picture);
+    console.log('datas.append("images" => ', datas.get('images[]'));
+    console.log('datas => ', datas) 
     // https://testv23.demowebsitelinks.com/hunter_social.com/public/api/marketplace/product/create
     // https://testv23.demowebsitelinks.com/hunter_social.com/public/api/marketplace/product/create
 
@@ -156,7 +173,7 @@ export class CreateListingPage extends BasePage implements OnInit {
     // this.aForm.value.picture = this.picture
 
     let data = await this.network.createListing(datas);
-    if(data){
+    if (data) {
       console.log('this is data', data);
       // this.nav.pop();
       this.modals.dismiss({ refresh: true })

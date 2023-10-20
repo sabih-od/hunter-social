@@ -16,58 +16,40 @@
           for="file-input">
 
         </div> -->
-        <label
-          for="file-input"
-          style="
-            height: 200px;
-            width: 100%;
-            background-repeat: no-repeat;
-            background-size: cover;
-            border: 1px solid black;
-          "
-          class="file-label"
-          [style.background-image]="'url(' +
-          picture + ')'"
-        >
+        <label for="file-input"
+          style=" height: 200px; width: 100%; background-repeat: no-repeat; background-size: cover; border: 1px solid black; "
+          class="file-label" [style.background-image]="'url(' + picture + ')'">
           <i class="fa fa-upload"></i>
           <p [hidden]="image_url">Your Image Here</p>
-          <!-- <img [src]="picture"   /> -->
         </label>
-        <ion-button
-          (click)="doGetPicture()"
-          style="margin-top: 10px; margin-bottom: 30px"
-          color="secondary"
-          >Upload Picture
+        <ion-button (click)="doGetPicture()" style="margin-top: 10px; margin-bottom: 30px" color="secondary">Upload
+          Picture
         </ion-button>
       </div>
       <div class="title">
         <input type="text" id="" placeholder="Title" formControlName="title" />
       </div>
       <div class="price">
-        <input
-          type="number"
-          id=""
-          placeholder="Price"
-          formControlName="price"
-        />
+        <input type="number" id="" placeholder="Price" formControlName="price" />
       </div>
+      <select formControlName="state_id" class="category">
+        <option value="">Select State</option>
+        <option *ngFor="let item of states" value="{{item.id}}">{{ item.name }}</option>
+      </select>
       <select formControlName="category" class="category">
+        <option value="">Select Category</option>
         <option *ngFor="let item of category">{{ item.name }}</option>
       </select>
 
       <div class="condition">
         <select name="Condition" formControlName="condition">
+          <option value="">Select Condition</option>
           <option value="New">New</option>
           <option value="Used">Used</option>
         </select>
       </div>
       <div class="description">
-        <input
-          type="text"
-          id=""
-          placeholder="Description"
-          formControlName="description"
-        />
+        <input type="text" id="" placeholder="Description" formControlName="description" />
       </div>
       <div class="post" (click)="post()">
         <ion-button>Post Listing</ion-button>

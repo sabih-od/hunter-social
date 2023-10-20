@@ -36,7 +36,7 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
 
   ngOnInit() {
     this.products();
-    this.onFilter();
+    this.onFilter(); 
   }
   createListing() {
     this.modals.present(CreateListingPage).then(res => {
@@ -61,7 +61,7 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     // let data = await this.network.getMyProducts({id:this.userId})
     let data = await this.network.getMyProducts();
     console.log('this is', data);
-    this.productList = data;
+    this.productList = data.data; 
   }
 
   async myListing() {

@@ -13,17 +13,19 @@ export class RecipesPage extends BasePage implements OnInit {
   last_page;
 
   search_text: string;
-  
+
   onSearchTextChange(searchText: string) {
     this.search_text = searchText;
   }
-  
+
   constructor(injector: Injector) {
     super(injector);
   }
 
   handleRefresh(event) {
     setTimeout(() => {
+      this.recipies = [];
+      this.page_num = 1;
       // Any calls to load data go here
       this.getData();
       event.target.complete();
@@ -33,19 +35,21 @@ export class RecipesPage extends BasePage implements OnInit {
   ngOnInit() {
     this.events.subscribe('RECEIPE_UPDATED', (data) => {
       console.log('recipe_updated');
-      this.getData();
-      // this.recipies = this.recipies.map((x) =>
-      //   x.id !== data.id
-      //     ? x
-      //     : {
-      //         ...x,
-      //         auth_review: {
-      //           rating: data.rating,
-      //         },
-      //         reviews_count: (x.reviews_count += 1),
-      //         rating: Math.round(x.total_reviews / (x.reviews_count + 1)),
-      //       }
-      // );
+      // this.recipies = [];
+      // this.page_num = 1;
+      // this.getData(); 
+      this.recipies = this.recipies.map((x) =>
+        x.id !== data.id
+          ? x
+          : {
+            ...x,
+            auth_review: {
+              rating: data.rating,
+            },
+            reviews_count: (x.reviews_count += 1),
+            rating: Math.round((x.total_reviews + data.rating) / (x.reviews_count)),
+          } 
+      );
       // this.getData();
     });
     // this.addNew();
