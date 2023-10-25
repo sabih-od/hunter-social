@@ -15,6 +15,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FooterModule } from 'src/app/components/footer/footer.module';
 import { DatingBannerComponent } from './dating-banner/dating-banner.component';
 import { DatingFilterComponent } from './dating-filter/dating-filter.component';
+import { DisclaimerComponent } from 'src/app/components/disclaimer/disclaimer.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { DatingFilterComponent } from './dating-filter/dating-filter.component';
     UserDetailComponentComponent,
     DatingBannerComponent,
     DatingFilterComponent,
+    DisclaimerComponent
   ],
 })
 export class DatingPageModule {}

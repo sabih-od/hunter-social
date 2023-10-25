@@ -26,6 +26,7 @@ import { NewsLetterComponent } from './news-letter/news-letter.component';
 import { FooterModule } from 'src/app/components/footer/footer.module';
 import { AppSearchModule } from 'src/app/components/app-search/app-search.module';
 import { ChatFloatingButtonComponent } from 'src/app/components/chat-floating-button/chat-floating-button.component';
+import { DisclaimerComponent } from 'src/app/components/disclaimer/disclaimer.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -51,7 +52,8 @@ import { ChatFloatingButtonComponent } from 'src/app/components/chat-floating-bu
     HomeBannerComponent,
     ReviewsComponent,
     NewsLetterComponent,
-    ChatFloatingButtonComponent
+    ChatFloatingButtonComponent,
+    DisclaimerComponent
   ],
 })
 export class HomePageModule {}

@@ -8,9 +8,7 @@
 
   <div class="top-heading">
     <h2 class="heading1">YOUR ADVENTURE AWAITS</h2>
-    <p class="text1">
-      <b>Point and click on any state for a directory of that state</b>
-    </p>
+    <p class="text1"> Point and click on any state for a directory of that state </p>
   </div>
 
   <div class="map_svg_container" data-v-46eb5eb4="" style="
@@ -1194,22 +1192,33 @@
   </div>
 
   <div style="text-align: center; font-family: poppins">
-    <h1><b>RANCHES</b></h1>
+    <h2 class="heading1">RANCHES</h2>
   </div>
-  <ion-card *ngFor="let item of ranches  |filter:search">
-    <ion-card-content>
-      <ion-item lines="none">
-        <ion-label class="ion-text-wrap">
-          <ion-card-title>{{item.name}}</ion-card-title>
-          <ion-card-subtitle *ngIf="item.address && item.address !== ''">{{item.address}}</ion-card-subtitle>
-          <ion-card-subtitle *ngIf="item.phone && item.phone !== ''">Phone : {{item.phone}}</ion-card-subtitle>
-          <ion-card-subtitle *ngIf="item.rating && item.rating !== ''">Rating : {{item.rating}}</ion-card-subtitle>
-          <ion-card-subtitle (click)="showWebsite(item)" *ngIf="item.website && item.website !== ''">Visit Website
-          </ion-card-subtitle>
-        </ion-label>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col sizeMd="6" size="12" *ngFor="let item of ranches  |filter:search">
+        <ion-card>
+          <ion-card-content>
+            <ion-item lines="none">
+              <ion-label class="ion-text-wrap">
+                <ion-card-title>{{item.name}}</ion-card-title>
+                <ion-card-subtitle class="address"
+                  *ngIf="item.address && item.address !== ''">{{item.address}}</ion-card-subtitle>
+                <ion-card-subtitle *ngIf="item.phone && item.phone !== ''">Phone : {{item.phone}}</ion-card-subtitle>
+                <ion-card-subtitle *ngIf="item.rating && item.rating !== ''">Rating :
+                  {{item.rating}}</ion-card-subtitle>
+                <ion-card-subtitle class="website" (click)="showWebsite(item)" *ngIf="item.website && item.website !== ''">Visit Website
+                </ion-card-subtitle>
+              </ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
 
   <ion-item lines="none">
     <ion-button *ngIf="ranchPage > 1" (click)="next('ranch', false)">Previous</ion-button>

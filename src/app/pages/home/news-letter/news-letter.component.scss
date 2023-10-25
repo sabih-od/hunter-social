@@ -6,17 +6,19 @@
 
     h2 {
         color: #fff;
-        font-size: 28px;
+        font-size: 30px;
     }
 
     p {
         color: #fff;
+        font-size: 17px
     }
 
     .newletterinput {
         display: flex;
         align-items: center;
         margin-top: 15px;
+
         ion-input {
             /* border-bottom: 1px solid gray; */
             color: #fff;
@@ -27,7 +29,7 @@
             --padding-start: 12px;
             height: 44px;
         }
-    
+
         ion-button {
             /* color: #000; */
             /* --background: #fff; */
@@ -37,7 +39,7 @@
             height: 44px;
         }
     }
-    
+
 }
 
 .btn2 {
@@ -48,4 +50,14 @@
     margin-bottom: 25px;
     height: 45px;
     font-size: 15px;
+}
+
+@media screen and (max-width: 500px) {
+    p {
+        font-size: 13px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
 }

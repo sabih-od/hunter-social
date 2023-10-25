@@ -19,20 +19,9 @@
   </div> -->
   <app-home-banner> </app-home-banner>
 
+  <app-disclaimer></app-disclaimer>
 
-  <div *ngIf="showmodal" class="disclaimer-modal"> <!--  -->
-    <div class="overlay"></div>
-    <div class="contentmodal">
-      <h3>Disclaimer</h3>
-      <strong>Dont use Abusive words on chat and post</strong>
-      <p>Violating the abusive language policy may result in temporary or permanent suspension of your Account. Our team
-        reserves the right to determine the appropriate course of action based on the severity and frequency of the
-        offense.</p> 
-      <button (click)="hideModal()">Ok</button>
-    </div>
-  </div>
-
-  <about-us></about-us>
+  <about-us></about-us> 
   <app-hunters></app-hunters>
   <app-images></app-images>
   <!-- <app-reviews></app-reviews> -->

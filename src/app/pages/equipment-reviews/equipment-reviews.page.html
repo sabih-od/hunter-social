@@ -26,13 +26,12 @@
     </ion-card-content>
   </ion-card> -->
 
-  <p style="margin-left: 10px; margin-right: 10px; font-size: 14px; text-align: center; "> This page is for members to
-    post their reviews of equipment & view other member's reviews as well. Click on an equipment category, to post a
-    review.</p>
+  <p class="topline"> This page is for members to post their reviews of equipment & view other member's reviews as well.
+    Click on an equipment category, to post a review.</p>
   <ion-grid>
     <ion-row class="ion-no-margin">
-      <ion-col size="12" *ngFor="let item of reviews | filter:search" (click)="showReviews($event, item)">
-        <equipment-row [item]="item" (review)="addReview(item)"></equipment-row>
+      <ion-col size="12" sizeMd="6" *ngFor="let item of reviews | filter:search" (click)="showReviews($event, item)">
+        <equipment-row [item]="item" (review)="addReview(item)"></equipment-row> 
       </ion-col>
     </ion-row>
   </ion-grid>

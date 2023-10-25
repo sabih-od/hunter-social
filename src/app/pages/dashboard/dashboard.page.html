@@ -18,10 +18,15 @@
           <ion-icon name="people-outline"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button value="alert">
+        <ion-segment-button (click)="goToNotifications()">
+          <ion-label>Notifications</ion-label>
+          <ion-icon name="notifications-outline"></ion-icon>
+        </ion-segment-button>
+
+        <!-- <ion-segment-button value="alert">
           <ion-label>Alerts</ion-label>
           <ion-icon name="information-circle-outline"></ion-icon>
-        </ion-segment-button>
+        </ion-segment-button> -->
 
         <ion-segment-button value="settings">
           <ion-label>Settings</ion-label>
@@ -82,7 +87,6 @@
       </ion-toolbar>
 
       <div *ngIf="innertab === 'recipe'">
-        <!-- <h3 class="tabtitle">Recipe Alerts</h3> -->
         <div class="currentfriends" *ngIf="!loading && recipesAlerts.length != 0">
           <div class="frienditem" *ngFor="let item of recipesAlerts" [routerLink]="['/pages/recipes']">
             <img [src]="item.alertable.media_upload?.url"
@@ -98,7 +102,6 @@
       </div>
 
       <div *ngIf="innertab === 'post'">
-        <!-- <h3 class="tabtitle">Post Alerts</h3> -->
         <div class="currentfriends" *ngIf="!loading">
           <div class="frienditem" *ngFor="let item of postAlerts" [routerLink]="['/pages/post-adventure']">
             <img [src]="item.alertable.media_upload?.url"

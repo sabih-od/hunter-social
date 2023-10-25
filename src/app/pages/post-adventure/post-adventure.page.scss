@@ -14,3 +14,21 @@
   padding: 5px;
   background: #f8f8ff;
 }
+
+.topline {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+  text-align: center; 
+}
+
+.maincontent {
+  width: 80%;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 500px) {
+  .maincontent {
+    width: 96%;
+  }
+}

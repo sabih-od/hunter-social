@@ -35,22 +35,22 @@
 .heading1 {
   color: #fff;
   font-family: Anton;
-  font-size: 50px;
+  font-size: 55px;
   margin: 0;
   line-height: 1;
 }
 
-.heading2 {
+.heading2 { 
   color: #fff;
   font-family: Anton;
-  font-size: 56px;
+  font-size: 62px;
   margin: 0;
   line-height: 1;
   margin-bottom: 10px;
 }
 
 ion-button {
-  font-size: 14px;
+  font-size: 17px;
   margin-right: 8px;
 
   b {
@@ -127,3 +127,18 @@ ion-button {
 // .content {
 //   padding-top: 16px !important;
 // }
+
+@media screen and (max-width: 500px) {
+  ion-button {
+    font-size: 14px;
+  }
+
+  .heading1 {
+    font-size: 50px;
+  }
+
+  .heading2 {
+    font-size: 56px;
+  }
+
+}

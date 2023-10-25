@@ -132,6 +132,10 @@ export class DashboardPage extends BasePage implements OnInit {
     });
   }
 
+  goToNotifications() {
+    this.nav.navigateTo('pages/notifications'); 
+  }
+
   segmentChanged($event) {
     console.log('event.target.value => ', $event.target.value)
     if ($event.target.value == 'settings') {

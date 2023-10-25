@@ -1,9 +1,11 @@
 .heading1 {
-  font-family: poppinssemibold;
+  font-family: poppinsbold;
   margin-top: 80px;
   text-align: center;
-  font-size: 30px;
+  font-size: 32px;
+  margin-bottom: 0px;
 }
+
 .top-heading {
   padding: 0 15px;
 }
@@ -11,6 +13,7 @@
 .text1 {
   font-family: poppins;
   text-align: center;
+  margin-top: 0px;
 }
 
 ion-item {
@@ -23,6 +26,52 @@ ion-label {
 }
 
 ion-card-title {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   font-size: 22px;
+  font-weight: normal;
+  font-family: 'PoppinsSemiBold';
+}
+
+ion-card-subtitle {
+  font-weight: normal;
+  font-size: 15px;
+}
+
+ion-card-content {
+  min-height: 200px;
+}
+
+.address {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+ion-col {
+  padding: 0;
+}
+
+ion-card {
+  margin-bottom: 0;
+}
+
+.website {
+  color: #000;
+}
+
+@media screen and (max-width: 500px) {
+  .heading1 {
+    font-size: 26px;
+  }
+
+  .address {
+    font-size: 14px;
+  }
+
+  ion-card-subtitle {
+    font-size: 13px;
+  }
+
+  ion-card-content {
+    min-height: auto;
+  }
 }

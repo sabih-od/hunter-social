@@ -73,7 +73,7 @@
 .logotext h2 {
   font-family: 'Poppins';
   margin: 0 15px;
-  font-size: 13px;
+  font-size: 18px;
 }
 
 .contactlabel {
@@ -84,4 +84,10 @@
 ion-grid {
   padding: 0;
   padding-top: 15px;
+}
+
+@media screen and (max-width: 500px) {
+  .logotext h2 {
+    font-size: 13px; 
+  }
 }
