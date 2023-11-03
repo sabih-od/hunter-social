@@ -13,14 +13,14 @@ import { UserDetailComponentComponent } from './user-detail-component/user-detai
 })
 export class DatingPage
   extends BasePage
-  implements OnInit, ViewWillEnter, ViewWillLeave
-{
+  implements OnInit, ViewWillEnter, ViewWillLeave {
   datings;
   all_datings = [];
   isLoading = false;
   search = '';
   dating_users = 1;
   showmodal = true;
+  page = 1;
 
   constructor(injector: Injector, private iab: InAppBrowser) {
     super(injector);
@@ -73,10 +73,10 @@ export class DatingPage
   }
 
   async getData() {
-    let res = await this.network.getDatings(this.dating_users, this.search);
+    let res = await this.network.getDatings(this.dating_users, this.search, this.page);
     console.log('network.getDatings res => ', res);
     if (res && res.data) {
-      this.datings = res?.data?.data?.map((obj) => ({
+      const newDatingData = res?.data?.data?.map((obj) => ({
         ...obj,
         profile_image: obj.profile_image
           ? this.image.getImageUrl(obj.profile_image)
@@ -88,6 +88,7 @@ export class DatingPage
           !obj.is_blocked_by_friend &&
           !obj.is_friend_blocked,
       }));
+      this.datings = [...this.datings, ...newDatingData];
     }
 
     this.all_datings = [...this.datings];
@@ -134,7 +135,7 @@ export class DatingPage
   }
 
 
-  hideModal(){
+  hideModal() {
     this.showmodal = false;
   }
 
@@ -144,15 +145,46 @@ export class DatingPage
     if (data.data?.success) this.getData();
   }
 
+  onIonInfinite(ev) {
+    this.page = this.page + 1;
+    this.getData();
+    setTimeout(() => {
+      ev.target.complete();
+      // (ev as IonInfiniteScrollContent).target.complete();
+    }, 500);
+  }
+
+  ages;
+  genders;
+  interests;
+  state;
+  city;
+  cityname;
+  statename;
+  filters = {}
+
   async filter() {
     let data = await this.modals.present(
       DatingFilterComponent,
-      {},
+      { filteredages: this.ages, filteredgenders: this.genders, filteredinterests: this.interests, filteredstate: this.state, filteredcity: this.city },
+      // {},
+      // this.filters,
       'halfmodal'
     );
     console.log('Filter_Data', data);
 
     const d = data.data;
+    this.filters = d.data;
+
+    if (d.data.ages) { this.ages = d.data.ages.split('|') }
+    if (d.data.genders) { this.genders = d.data.genders.split('|') }
+    if (d.data.interests) { this.interests = d.data.interests.split('|') }
+    if (d.data.state) { this.state = d.data.state }
+    if (d.data.city) { this.city = d.data.city }
+    if (d.data.cityname) { this.cityname = d.data.cityname.name }
+    if (d.data.statename) { this.statename = d.data.statename.name }
+
+
 
     console.log('d', d);
     if (d.data != 'A') {

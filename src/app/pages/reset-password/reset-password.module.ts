@@ -4,27 +4,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginPageRoutingModule } from './login-routing.module';
+import { ResetPasswordPageRoutingModule } from './reset-password-routing.module';
 
-import { LoginPage } from './login.page';
+import { ResetPasswordPage } from './reset-password.page';
 import { FooterModule } from 'src/app/components/footer/footer.module';
-// import { FeebackComponent } from './../../components/feeback/feeback.component';
+import { FeebackComponent } from 'src/app/components/feeback/feeback.component';
 import { FeebackModule } from 'src/app/components/feeback/feeback.module';
-// import { GooglePlus } from '@awesome-cordova-plugins/google-plus/ngx';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule,
-    FormsModule,
+    ResetPasswordPageRoutingModule,
     ReactiveFormsModule,
     FooterModule,
-    FeebackModule,
+    FeebackModule
   ],
-  declarations: [
-    // FeebackComponent, 
-    LoginPage],
+  declarations: [ResetPasswordPage]
 })
-export class LoginPageModule {}
+export class ResetPasswordPageModule {}

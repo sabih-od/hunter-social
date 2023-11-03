@@ -16,8 +16,8 @@ export class FeebackComponent implements OnInit {
     public formBuilder: FormBuilder,
     public network: NetworkService,
     public utility: UtilityService) {
-      
-     }
+
+  }
 
   ngOnInit() {
     this.feedbackForm = this.formBuilder.group({
@@ -26,12 +26,21 @@ export class FeebackComponent implements OnInit {
   }
 
   async submitFeedback() {
+    const formdata = this.feedbackForm.value;
+    console.log('formdata res => ', this.feedbackForm.controls.comment?.errors?.minlength);
+    if (this.feedbackForm.controls.comment?.errors?.required) {
+      this.utility.presentFailureToast('Please privde a valid feedback');
+      return;
+    } 
+    if (this.feedbackForm.controls.comment?.errors?.minlength?.actualLength < this.feedbackForm.controls.comment?.errors?.minlength?.requiredLength) {
+      this.utility.presentFailureToast('Feedback should contain more than 10 characters');
+      return;
+    }
     if (!this.feedbackForm.valid) {
       this.utility.presentFailureToast('Pleae fill all fields properly');
       return;
     }
 
-    const formdata = this.feedbackForm.value;
     this.loading = true;
     let res = await this.network.feedback(this.feedbackForm.value);
     console.log('feedback res => ', res);

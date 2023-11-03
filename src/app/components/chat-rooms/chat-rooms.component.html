@@ -19,8 +19,8 @@
     <ion-row class="ion-margin-top">
       <ion-col size="12">
         <ion-item class="searchitem">
-          <ion-searchbar [(ngModel)]="_search" class="ion-margin-bottom" placeholder="Search"
-            (ionClear)="onSearch(true)"></ion-searchbar>
+          <ion-searchbar [(ngModel)]="_search" (ngModelChange)="onSearch()" class="ion-margin-bottom"
+            placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar> 
           <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search">
             </ion-icon> </ion-button>
         </ion-item>

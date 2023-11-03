@@ -69,6 +69,7 @@
 
     <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="cities && cities.length > 0">
       <ion-col size="12">
+        <ion-label position="stacked" class="p-holder">Cities</ion-label>
         <ion-select placeholder="Select Cities" multiple="false" class="select" [(ngModel)]="obj.city">
           <ion-select-option [value]="item.id" *ngFor="let item of cities">{{
             item.name

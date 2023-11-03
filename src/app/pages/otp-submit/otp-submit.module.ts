@@ -4,27 +4,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginPageRoutingModule } from './login-routing.module';
+import { OtpSubmitPageRoutingModule } from './otp-submit-routing.module';
 
-import { LoginPage } from './login.page';
+import { OtpSubmitPage } from './otp-submit.page';
 import { FooterModule } from 'src/app/components/footer/footer.module';
-// import { FeebackComponent } from './../../components/feeback/feeback.component';
 import { FeebackModule } from 'src/app/components/feeback/feeback.module';
-// import { GooglePlus } from '@awesome-cordova-plugins/google-plus/ngx';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule,
-    FormsModule,
+    OtpSubmitPageRoutingModule,
     ReactiveFormsModule,
     FooterModule,
-    FeebackModule,
+    FeebackModule
   ],
-  declarations: [
-    // FeebackComponent, 
-    LoginPage],
+  declarations: [OtpSubmitPage]
 })
-export class LoginPageModule {}
+export class OtpSubmitPageModule {}

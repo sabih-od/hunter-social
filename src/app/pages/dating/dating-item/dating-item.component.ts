@@ -22,7 +22,7 @@ export class DatingItemComponent extends BasePage implements OnInit {
     super(injector);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 
   openPopup($event) {
@@ -44,7 +44,18 @@ export class DatingItemComponent extends BasePage implements OnInit {
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
-  
+
+  async cancelRequest() {
+    let res = await this.network.cancelRequest(this.item.id);
+    console.log('cancelRequest', res);
+    if (res && res.data) {
+      this.utility.presentSuccessToast(res.message);
+      this.update.emit({ update: true });
+      this.events.publish('UPDATE_CHATS');
+    } else
+      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+  }
+
   async addFriend() {
     if (this.item.is_sent_friend_request) {
       return this.utility.presentToast('Friend Request Already Sent');

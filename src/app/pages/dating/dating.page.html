@@ -38,11 +38,23 @@
     </div>
   </div>
 
+  <div class="filters">
+    <p *ngIf="ages"><strong>Ages</strong><span *ngFor="let x of ages">{{x}}</span></p>
+    <p *ngIf="genders"><strong>Genders</strong><span *ngFor="let x of genders">{{x}}</span></p>
+    <p *ngIf="interests"><strong>Interests</strong><span *ngFor="let x of interests">{{x}}</span></p>
+    <p *ngIf="state"><strong>States</strong><span>{{statename}}</span></p>
+    <p *ngIf="city"><strong>City</strong><span>{{cityname}}</span></p>
+  </div>
+  <!-- <p *ngIf="filters?.ages">Ages: {{filters?.ages}}</p>
+  <p *ngIf="filters?.genders">Gender: {{filters?.genders}}</p>
+  <p *ngIf="filters?.interests">Interests: {{filters?.interests}}</p>
+  <p *ngIf="filters?.state">States: {{filters?.state}}</p>  -->
+
   <app-disclaimer></app-disclaimer>
 
   <div class="spinner" *ngIf="isLoading">
     <ion-spinner name="lines" color="primary"></ion-spinner>
-  </div> 
+  </div>
 
 
 
@@ -51,6 +63,9 @@
       <ion-col size="6" sizeMd="4" *ngFor="let item of datings | filter:search">
         <dating-item [item]="item" (update)="getData()"></dating-item>
       </ion-col>
+      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </ion-row>
     <ion-row *ngIf="datings?.length == 0">
       <ion-col>

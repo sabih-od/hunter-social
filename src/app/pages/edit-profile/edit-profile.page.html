@@ -110,6 +110,12 @@
         </ion-col>
       </ion-row>
 
+      <ion-label>Hobbies</ion-label>
+      <ion-item class="margin-ver" lines="none">
+        <ion-input [(ngModel)]="user.profile_detail.hobbies" class="ion-margin-start">
+        </ion-input>
+      </ion-item>
+
       <ion-label>State</ion-label>
       <ion-item lines="none" class="margin-ver ion-no-padding">
         <ion-select cancelText="Cancel" okText="Ok" title="Select State" placeholder="Select State"
@@ -126,6 +132,13 @@
           class="a1 ion-margin-start" multiple="false" [(ngModel)]="city" (ionChange)="cityChanged($event)">
           <ion-select-option [value]="item.id" *ngFor="let item of cities">{{item.name}}</ion-select-option>
         </ion-select>
+      </ion-item>
+
+
+      <ion-label>Location</ion-label>
+      <ion-item class="margin-ver" lines="none">
+        <ion-input [(ngModel)]="user.profile_detail.location" class="ion-margin-start">
+        </ion-input>
       </ion-item>
 
       <ion-item lines="none">

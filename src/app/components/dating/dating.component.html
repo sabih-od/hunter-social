@@ -6,9 +6,11 @@
   <ion-row class="ion-margin-top">
     <ion-col size="12">
       <ion-item lines="none" class="searchitem">
-        <ion-searchbar [(ngModel)]="_search" class="ion-margin-bottom" placeholder="Find a friend..." (ionClear)="onSearch(true)">
+        <ion-searchbar [(ngModel)]="_search" (ngModelChange)="updateSearchResults()" class="ion-margin-bottom"
+          placeholder="Find a friend..." (ionClear)="onSearch(true)">
         </ion-searchbar>
-        <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search"> </ion-icon> </ion-button>
+        <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search"> </ion-icon>
+        </ion-button>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -28,11 +30,23 @@
     </ion-item>
   </div>
 
+  <ion-grid *ngIf="!isLoading && datings.length == 0">
+    <ion-row>
+      <ion-col size="12">
+        <p style=" text-align: center; font-size: 14px; color: #666; ">No Data Found</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let item of datings | filter:search">
         <dating-item [item]="item" (update)="getData()"></dating-item>
       </ion-col>
+      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </ion-row>
   </ion-grid>
 

@@ -47,6 +47,10 @@ export class NetworkService {
   forgotPassword(data) {
     return this.httpPostResponse('auth/forgot-password', data);
   }
+
+  submitOTP(data){
+    return this.httpPostResponse('auth/verify-reset-password-otp', data);}
+
   getUser() {
     return this.httpGetResponse('user', null, false, false);
   }
@@ -125,6 +129,9 @@ export class NetworkService {
   unfriend(id) {
     return this.httpDeleteResponse(`users/unfriend-request/${id}`);
   }
+  cancelRequest(id) {
+    return this.httpDeleteResponse(`users/cancel-friend-request/${id}`);
+  }
 
   acceptRequest(id) {
     return this.httpPatchResponse(
@@ -182,7 +189,7 @@ export class NetworkService {
     return this.httpPostResponse(`users/dating`, data, null, false);
   }
 
-  getDatings(dating_users, search) {
+  getDatings(dating_users, search, page) {
     var str = `users?orderBy=created_at&sortedBy=desc`;
 
     if (dating_users && dating_users != '') {
@@ -191,8 +198,9 @@ export class NetworkService {
     if (search && search != '') {
       str += `&search=name:${search};email:${search}`;
     }
+    str += page ? `&page=${page}` : `&page=1`; 
 
-    return this.httpGetResponse(str, null, true);
+    return this.httpGetResponse(str, null, false);
   }
 
   searchDatingUsers(data) {
@@ -257,8 +265,8 @@ export class NetworkService {
     return this.httpPostResponse(`my-products`, data, false, true);
   }
 
-  getProductss() {
-    return this.httpPostResponse(`products`, null, false);
+  getProductss(data, page) {
+    return this.httpPostResponse(`products?page=${page}`, data, false);
   }
 
   getSearch(data) {
@@ -537,6 +545,10 @@ export class NetworkService {
 
   feedback(data) {
     return this.httpPostResponse(`feedback`, data, null, true);
+  }
+  
+  resetPassword(data) {
+    return this.httpPostResponse(`auth/reset-password`, data, null, true);
   }
 
   updateMemershipPayment(email, package_id, userid) {

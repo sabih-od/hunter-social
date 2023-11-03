@@ -9,6 +9,8 @@ import { BasePage } from '../base-page/base-page';
 export class NotificationsPage extends BasePage implements OnInit {
   notifications = [];
   loading = false;
+  page = 1;
+  limit = 50;
   constructor(
     injector: Injector,
   ) {
@@ -26,7 +28,7 @@ export class NotificationsPage extends BasePage implements OnInit {
     var event = new Event('storageChange');
     window.dispatchEvent(event);
     
-    let response = await this.network.getNotifications(1, 10);
+    let response = await this.network.getNotifications(this.page, this.limit);
     console.log('getNotifications response => ', response)
     this.notifications = response?.data?.data.map((user) => ({
       ...user,

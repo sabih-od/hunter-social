@@ -172,6 +172,8 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     data.append('dob', user['dob']);
     data.append('state', this.state);
     data.append('city', this.city);
+    data.append('location', user['profile_detail']['location']);
+    data.append('hobbies', user['profile_detail']['hobbies']);
     for (var i = 0; i < user.interests?.length; i++) {
       data.append(`interests[${i}]`, user.interests[i]);
     }

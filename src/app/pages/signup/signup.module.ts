@@ -11,6 +11,7 @@ import { FooterModule } from 'src/app/components/footer/footer.module';
 import { HeaderModule } from 'src/app/components/header/header.module';
 import { PrivacyPage } from '../privacy/privacy.page';
 // import { FeebackComponent } from 'src/app/components/feeback/feeback.component';
+import { FeebackModule } from 'src/app/components/feeback/feeback.module';
 
 @NgModule({
   imports: [
@@ -22,10 +23,13 @@ import { PrivacyPage } from '../privacy/privacy.page';
     ReactiveFormsModule,
     FooterModule,
     HeaderModule,
+    FeebackModule
 
   ],
-  declarations: [SignupPage, PrivacyPage, 
-    // FeebackComponent
+  declarations: [
+    SignupPage,
+    // FeebackComponent,
+    PrivacyPage,
   ],
   providers: [],
 

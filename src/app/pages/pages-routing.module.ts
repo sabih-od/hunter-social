@@ -24,6 +24,10 @@ const routes: Routes = [
       import('./login/login.module').then((m) => m.LoginPageModule),
   },
   {
+    path: 'reset-password',
+    loadChildren: () => import('./reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+  },
+  {
     path: 'home',
     loadChildren: () =>
       import('./home/home.module').then((m) => m.HomePageModule),
@@ -238,7 +242,8 @@ const routes: Routes = [
   {
     path: 'create-listing',
     loadChildren: () => import('./marketplace/create-listing/create-listing.module').then( m => m.CreateListingPageModule)
-  },  {
+  },
+  {
     path: 'blocked-users',
     loadChildren: () => import('./blocked-users/blocked-users.module').then( m => m.BlockedUsersPageModule)
   },
@@ -257,7 +262,11 @@ const routes: Routes = [
   {
     path: 'notifications',
     loadChildren: () => import('./notifications/notifications.module').then( m => m.NotificationsPageModule)
+  },  {
+    path: 'otp-submit',
+    loadChildren: () => import('./otp-submit/otp-submit.module').then( m => m.OtpSubmitPageModule)
   },
+
 
   
 

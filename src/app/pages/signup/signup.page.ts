@@ -36,7 +36,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
   loading = false;
 
   aForm: FormGroup;
-  feedbackForm: FormGroup;
+  // feedbackForm: FormGroup;
 
   packages: any;
 
@@ -119,28 +119,28 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
       // pay_apple: [false],
     });
 
-    this.feedbackForm = this.formBuilder.group({
-      comment: ['', Validators.compose([Validators.required, Validators.minLength(10)]),],
-    });
+    // this.feedbackForm = this.formBuilder.group({
+    //   comment: ['', Validators.compose([Validators.required, Validators.minLength(10)]),],
+    // });
 
   }
 
-  async submitFeedback() {
-    if (!this.feedbackForm.valid) {
-      this.utility.presentFailureToast('Pleae fill all fields properly');
-      return;
-    }
+  // async submitFeedback() {
+  //   if (!this.feedbackForm.valid) {
+  //     this.utility.presentFailureToast('Pleae fill all fields properly');
+  //     return;
+  //   }
 
-    const formdata = this.feedbackForm.value;
-    this.loading = true;
-    let res = await this.network.feedback(this.feedbackForm.value);
-    console.log('feedback res => ', res);
-    if (res && res.data) { 
-      this.utility.presentSuccessToast('Feedback sent successfully');
-      this.feedbackForm.setValue({ comment: '' })
-    }
+  //   const formdata = this.feedbackForm.value;
+  //   this.loading = true;
+  //   let res = await this.network.feedback(this.feedbackForm.value);
+  //   console.log('feedback res => ', res);
+  //   if (res && res.data) { 
+  //     this.utility.presentSuccessToast('Feedback sent successfully');
+  //     this.feedbackForm.setValue({ comment: '' })
+  //   }
 
-  }
+  // }
 
   ngOnInit() {
 

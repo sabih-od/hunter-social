@@ -1,16 +1,23 @@
 <ion-grid>
-  <form [formGroup]="feedbackForm">
+  <form [formGroup]="feedbackForm" class="feedbackfrom" >
     <ion-row>
       <ion-col size="12">
         <p>Please be patient, the website is under construction, please leave a feedback for us that would help us
           improve</p>
-        <ion-input formControlName="comment" class="input f-pop-li" placeholder="Comment..."></ion-input>
+        <div style=" display: flex; align-items: center; margin-top: 10px; ">
+          <ion-input formControlName="comment" class="input f-pop-li" placeholder="Write feedback..."
+            style="margin: 0;"></ion-input>
+          <ion-button class="planebtn" expand="block" color="primary" (click)="submitFeedback()" style=" height: 50px;
+              margin: 0;">
+            <ion-icon name="paper-plane-outline"></ion-icon>
+          </ion-button>
+        </div>
       </ion-col>
-      <ion-col size="12">
+      <!-- <ion-col size="12">
         <ion-button class="f-pop-r btn" expand="block" color="primary" (click)="submitFeedback()">
           Submit
         </ion-button>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
   </form>
 </ion-grid>

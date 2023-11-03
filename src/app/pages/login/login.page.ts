@@ -18,7 +18,7 @@ import { Config } from 'src/app/config/main.config';
 })
 export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   aForm: FormGroup;
-  feedbackForm: FormGroup;
+  forgetPasswordForm: FormGroup;
   loading = false;
   showForgotpass = false;
 
@@ -44,7 +44,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
   setupPasswordForm() {
     const re = /\S+@\S+\.\S+/;
-    this.aForm = this.formBuilder.group({
+    this.forgetPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required]],
     });
   }
@@ -60,16 +60,16 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
       password: [
         '', // 12345678
         Validators.compose([
-          Validators.minLength(6),
-          Validators.maxLength(30),
+          // Validators.minLength(6),
+          // Validators.maxLength(30),
           Validators.required,
         ]),
       ],
     });
 
-    this.feedbackForm = this.formBuilder.group({
-      comment: ['', Validators.compose([Validators.required, Validators.minLength(10)]),],
-    });
+    // this.feedbackForm = this.formBuilder.group({
+    //   comment: ['', Validators.compose([Validators.required, Validators.minLength(10)]),],
+    // });
 
   }
 
@@ -79,6 +79,19 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
   async login() {
     // this.nav.push('pages/tabbar');
+    console.log('this.aForm.controls => ', this.aForm.controls)
+    if (this.aForm.controls.email?.errors?.required) {
+      this.utility.presentFailureToast('Email field is required');
+      return;
+    }
+    if (this.aForm.controls.email?.errors?.email) {
+      this.utility.presentFailureToast('Please privde a valid email');
+      return;
+    }
+    if (this.aForm.controls.password?.errors?.required) {
+      this.utility.presentFailureToast('Please privde a valid password');
+      return;
+    }
     if (!this.aForm.valid) {
       this.utility.presentFailureToast('Pleae fill all fields properly');
       return;
@@ -124,13 +137,19 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   }
 
   async forgetPassword() {
-    const formdata = this.aForm.value;
+    if (!this.forgetPasswordForm.valid) {
+      this.utility.presentFailureToast('Pleae fill all fields properly');
+      return;
+    }
+    let formdata = this.forgetPasswordForm.value;
+    formdata = { ...formdata, type: 'app' }
     console.log(formdata);
     try {
       const res = await this.network.forgotPassword(formdata);
       this.showForgotpass = false;
       console.log(res);
-      this.utility.presentSuccessToast('Email sent Successfullty');
+      this.utility.presentSuccessToast('OTP sent on your email');
+      this.nav.navigateTo('pages/otp-submit', { queryParams: { email: formdata.email } });
     } catch (err) {
       console.log(err);
       this.utility.presentFailureToast('Wrong Email');
@@ -153,22 +172,22 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     this.setupForm();
   }
 
-  async submitFeedback() {
-    if (!this.feedbackForm.valid) {
-      this.utility.presentFailureToast('Pleae fill all fields properly');
-      return;
-    }
+  // async submitFeedback() {
+  //   if (!this.feedbackForm.valid) {
+  //     this.utility.presentFailureToast('Pleae fill all fields properly');
+  //     return;
+  //   }
 
-    const formdata = this.feedbackForm.value;
-    this.loading = true;
-    let res = await this.network.feedback(this.feedbackForm.value);
-    console.log('feedback res => ', res);
-    if (res && res.data) { 
-      this.utility.presentSuccessToast('Feedback sent successfully');
-      this.feedbackForm.setValue({ comment: '' })
-    }
+  //   const formdata = this.feedbackForm.value;
+  //   this.loading = true;
+  //   let res = await this.network.feedback(this.feedbackForm.value);
+  //   console.log('feedback res => ', res);
+  //   if (res && res.data) { 
+  //     this.utility.presentSuccessToast('Feedback sent successfully');
+  //     this.feedbackForm.setValue({ comment: '' })
+  //   }
 
-  }
+  // }
 
   // async facebookLogin() {
   //   await FirebaseAuthentication.signInWithFacebook();

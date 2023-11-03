@@ -25,7 +25,7 @@ export class DashboardPage extends BasePage implements OnInit {
   sender_id = undefined;
   tab = 'friends';
   innertab = 'recipe';
-  loading = false;
+  loading = true;
   current_user: any;
   orderslength = 0;
 
@@ -133,7 +133,27 @@ export class DashboardPage extends BasePage implements OnInit {
   }
 
   goToNotifications() {
-    this.nav.navigateTo('pages/notifications'); 
+    this.nav.navigateTo('pages/notifications');
+  }
+
+  async getNotifications() {
+    this.loading = true;
+
+    localStorage.setItem('notifications_count', '0');
+    var event = new Event('storageChange');
+    window.dispatchEvent(event);
+
+    let response = await this.network.getNotifications(1, 10);
+    console.log('getNotifications response => ', response)
+    this.notifications = response?.data?.data.map((user) => ({
+      ...user,
+      // hasUnread: self.sender_id === user.id,
+      profile_image: this.image.getImageUrl(user?.notificationable?.addressee?.profile_image || user?.notificationable?.requester?.profile_image),
+    }));
+    // console.log('this.currentFriends => ', this.notifications)
+    // console.log('this.currentFriends[1].profile_image => ', this.notifications[1].profile_image)
+    // this.notifications = response?.data?.data
+    this.loading = false;
   }
 
   segmentChanged($event) {
@@ -141,6 +161,10 @@ export class DashboardPage extends BasePage implements OnInit {
     if ($event.target.value == 'settings') {
       this.tab = $event.target.value;
       // this.goToProfile()
+    } else if ($event.target.value == 'notifications') {
+      this.tab = $event.target.value;
+      // this.loading = true;
+      this.getNotifications()
     } else if ($event.target.value == 'alert') {
       this.tab = $event.target.value;
       this.loading = true;

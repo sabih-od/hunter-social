@@ -31,38 +31,51 @@
 </p> -->
 <div class="market-place-content">
   <h1>Market Place</h1>
-  <ion-searchbar [(ngModel)]="topSearch" (ionInput)="onTopInput($event)" shape="round"></ion-searchbar>
+
+  <div class="searchtop">
+    <ion-searchbar [(ngModel)]="topSearch" (ionInput)="onTopInput($event)" shape="round"></ion-searchbar>
+    <ion-select [(ngModel)]="state_id" (ngModelChange)="getProducts(null)">
+      <ion-select-option value="">Select State</ion-select-option>
+      <ion-select-option *ngFor="let item of states" [value]="item.id">{{item.name}}</ion-select-option>
+    </ion-select>
+  </div>
+
   <ion-list>
-    <ion-item (click)="products()">
+    <ion-item (click)="getProducts(null)">
       <ion-label>Browse All</ion-label>
+      <ion-icon *ngIf="!selectedCategoryId && !isMyProductListing" slot="end"
+        name="checkmark-circle-outline"></ion-icon>
     </ion-item>
     <ion-item (click)="myListing()">
       <ion-label>My Listing</ion-label>
+      <ion-icon *ngIf="isMyProductListing" slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-item>
   </ion-list>
   <ion-button expand="block" class="" (click)="createListing()"><ion-icon name="add-outline"></ion-icon>Create New
     Listing</ion-button>
   <!-- <ion-button expand="block">Block</ion-button> -->
-  <h1>Filters</h1>
+  <h1 style="margin-bottom: 0; margin-top: 30px;">Filters</h1>
   <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onInput($event)" (ionChange)="onFilter()"
     shape="round"></ion-searchbar>
   <ion-list>
     <ion-item>
-      <ion-label>Categories</ion-label>
+      <ion-label><strong>Categories</strong></ion-label>
     </ion-item>
     <ion-item *ngFor="let item of categories">
       <ion-label (click)="getProducts(item)">{{ item?.name }}</ion-label>
+      <ion-icon *ngIf="selectedCategoryId == item?.id" slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-item>
   </ion-list>
 </div>
 <ion-grid class="ion-no-padding">
   <ion-row>
-    <ion-col  *ngFor="let item of productList"  size-md="6" size-xs="12">
+    <ion-col *ngFor="let item of productList" size-md="6" size-xs="12">
       <ion-card (click)="details(item)">
         <!-- <div class="image" style="background-repeat: no-repeat; background-size: cover;" [style.background-image]="'url(' + item.image_url + ')'"></div> -->
         <div class="cover-photo">
           <div *ngIf="item.is_sold" class="solditem">Sold</div>
-          <img [src]="item.image_url" />
+          <img [src]="item.image_url"
+            onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
         </div>
         <ion-card-header>
           <ion-card-title>{{ item.price | currency }}</ion-card-title>
@@ -70,12 +83,16 @@
         </ion-card-header>
       </ion-card>
     </ion-col>
+    <div *ngIf="productList?.length == 0 && !loading" style="text-align: center;width: 100%;background: #f2f2f2;margin: 0 15px;">
+      <p>No products found</p>
+    </div>
+    <ion-infinite-scroll *ngIf="shouldloadmore" (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-row>
 </ion-grid>
 
-<div *ngIf="productList?.length == 0" style="text-align: center;">
-  <p>No products found</p>
-</div>
+<div style="height: 15px;"></div>
 
 <!-- <ion-card *ngFor="let item of filterProducts">
   <div class="cover-photo">

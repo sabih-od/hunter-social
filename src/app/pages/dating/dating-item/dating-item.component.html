@@ -24,6 +24,10 @@
     <ion-text *ngIf="item.is_sent_friend_request">
       <p class="green-txt">Friend Request Sent</p>
     </ion-text>
+    <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="cancelRequest()"
+      *ngIf="item.is_sent_friend_request">
+      Cancel Request
+    </ion-button>
 
     <ion-text *ngIf="item.is_friend_blocked">
       <p class="red-txt">Blocked</p>

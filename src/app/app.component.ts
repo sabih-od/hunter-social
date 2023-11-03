@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, ModalController, Platform } from '@ionic/angular';
 import { BasePage } from './pages/base-page/base-page';
@@ -7,6 +7,7 @@ import { FirebaseService } from './services/firebase.service';
 import { UserService } from './services/user.service';
 import { UtilityService } from './services/utility.service';
 import { SqliteService } from './services/sqlite.service';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,10 @@ export class AppComponent {
     private modalController: ModalController,
     public platform: Platform,
     public fcm: FirebaseService,
-    private sqlite: SqliteService
+    private sqlite: SqliteService,
+
+    private zone: NgZone
+
   ) {
     platform.ready().then(() => {
       this.initialize();
@@ -52,6 +56,21 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(async () => {
+
+      App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+        this.zone.run(() => {
+          // Example url: https://beerswift.app/tabs/tab2
+          // slug = /tabs/tab2
+          const domain = 'hunterssocial.com'
+          const slug = event.url.split(domain).pop();
+          if (slug) {
+            this.router.navigateByUrl(slug);
+          }
+          // If no match, do nothing - let regular routing
+          // logic take over
+        });
+      });
+
       this.sqlite
         .initialize()
         .then(() => {

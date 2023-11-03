@@ -20,6 +20,7 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   role_id;
   dating_enabled = false;
   _search = '';
+  page = 1;
 
   constructor(injector: Injector, private iab: InAppBrowser) {
     super(injector);
@@ -31,8 +32,16 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   }
 
   onSearch(clear) {
-    if (clear) this.search = '';
-    else this.search = this._search;
+    if (clear) this._search = '';
+    else this._search = this._search;
+    console.log('this._search', this._search)
+    if (this.timeToken) clearTimeout(this.timeToken);
+    this.timeToken = setTimeout(() => {
+      this.isLoading = true;
+      this.page = 1;
+      this.datings = []
+      this.getData();
+    }, 1000);
   }
 
   datingEnable() {
@@ -60,7 +69,7 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
     // this.datings = this.dataService.getDatings();
     this.events.subscribe('DATING_UPDATED', this.getData.bind(this));
     this.checkUser();
-    this.isLoading = false;
+    // this.isLoading = false;
     const res = await this.users.getUser();
     this.role_id = res.role_id;
     console.log('USRE', this.role_id);
@@ -93,15 +102,17 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
     this.isLoading = true;
     await this.getData();
     $event.target.complete();
-    this.isLoading = false;
+    // this.isLoading = false;
   }
 
   async getData() {
-    let res = await this.network.getDatings(this.dating_users, this.search);
+    console.log('this._search => ', this._search)
+    
+    let res = await this.network.getDatings(this.dating_users, this._search, this.page);
     console.log('getDating => ', res.data.data);
     if (res && res.data.data) {
       // var newdata = res.data.splice(0,10)
-      this.datings = res.data.data.map((obj) => ({
+      const newDatingData = res.data.data.map((obj) => ({
         ...obj,
         profile_image: obj.profile_image
           ? this.image.getImageUrl(obj.profile_image)
@@ -113,10 +124,11 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
           !obj.is_blocked_by_friend &&
           !obj.is_friend_blocked,
       }));
+      this.datings = [...this.datings, ...newDatingData];
     }
+    this.all_datings = this.datings; //[...this.datings];
 
-    this.all_datings = [...this.datings];
-
+    this.isLoading = false;
     console.log('Here Datings', this.datings);
   }
 
@@ -143,4 +155,27 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   filter() {
     this.modals.present(DatingFilterComponent, {}, 'halfmodal');
   }
+
+  onIonInfinite(ev) {
+    this.page = this.page + 1;
+    this.getData();
+    setTimeout(() => {
+      ev.target.complete();
+      // (ev as IonInfiniteScrollContent).target.complete();
+    }, 500);
+  }
+
+  timeToken;
+
+  updateSearchResults() {
+    console.log('this._search', this._search)
+    if (this.timeToken) clearTimeout(this.timeToken);
+    this.timeToken = setTimeout(() => {
+      this.isLoading = true;
+      this.page = 1;
+      this.datings = []
+      this.getData();
+    }, 1000);
+  }
+
 }

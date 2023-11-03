@@ -16,7 +16,7 @@ ion-card {
   padding: 5px;
 }
 
-ion-card-title{
+ion-card-title {
   font-family: 'PoppinsSemiBold';
   font-weight: normal;
 }
@@ -30,44 +30,54 @@ ion-card-title{
 .margin-l-5 {
   margin-left: 5px;
 }
-h1{
-  margin:20px;
+
+h1 {
+  margin: 20px 13px;
   margin-bottom: 10px;
+  font-size: 22px;
   // font-weight:700;
 }
-.market-place-content{
+
+.market-place-content {
   // border:1px solid red;
-  padding:5px;
+  padding: 5px;
 }
-ion-searchbar{
-  --border-radius:20px;
+
+ion-searchbar {
+  // --border-radius: 20px;
 }
-ion-button{
-  width:97%;
-  padding-left:10px;
+
+ion-button {
+  width: 97%;
+  padding-left: 10px;
 }
-ion-item{
-  width:97%;
+
+ion-item {
+  width: 97%;
 }
-ion-image{
-  img{
+
+ion-image {
+  img {
     height: 100px;
 
   }
 }
-.image{
+
+.image {
   height: 200px;
-  width:100%;
+  width: 100%;
 
 }
+
 .cover-photo {
   position: relative;
   overflow: hidden;
+
   img {
-      height: 190px;
-      object-fit: cover;
-      width: 100%;
-      border-radius: 25px 25px 0px 0px;
+    height: 190px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 25px 25px 0px 0px;
   }
 }
 
@@ -85,4 +95,34 @@ ion-image{
   color: #fff;
 }
 
+.item ion-label {
+  font-family: poppins !important;
+  font-size: 15px !important;
+}
 
+ion-item:last-child {
+  --border-color: transparent;
+}
+
+ion-card-header {
+  padding: 10px 15px;
+}
+
+.searchtop {
+  display: flex;
+
+  ion-searchbar {
+    width: 52%;
+    padding: 0 10px;
+    height: 37px;
+    padding-inline-end: 0px;
+  }
+
+  ion-select {
+    padding: 0 10px;
+    width: 45%;
+    background: #efefef;
+    height: 37px;
+    border-radius: 8px;
+  }
+}

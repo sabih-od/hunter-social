@@ -28,26 +28,37 @@
         <ion-card class="ion-no-margin">
           <ion-card-content>
             <div><strong>Order ID</strong>{{item?.id}}</div>
-            <div><strong>Order Date</strong>{{item?.created_at | date:"MMM dd, yyyy 'at' HH:mm"}}</div>
-            <div><strong>Payment Option</strong>{{item?.payment_option}}</div>
-            <div><strong>Customer</strong>{{item?.customer?.first_name}}
-              {{item?.customer?.last_name}} 
-              <!-- <br>{{item?.customer?.email}} -->
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div><strong>Date</strong>{{item?.created_at | date:"MMM dd, yyyy"}}</div> <!-- 'at' HH:mm -->
+              <div style="text-align: right;"><strong>Status</strong>{{item?.order_status?.name}}</div>
             </div>
-            <div><strong>Order Status</strong>{{item?.order_status?.name}}</div>
-            <div><strong>Total Amount</strong>${{item?.amount_total | number: '1.2-2'}}</div>
+            <!-- <div><strong>Payment Option</strong>{{item?.payment_option}}</div> -->
+
             <div><strong>Products</strong>
-              <p class="products" *ngFor="let product of item.products">
-                <span>Name</span> {{product?.product?.name}}<br>
-                <span>Price</span> $ {{product?.price | number: '1.2-2'}}<br>
-                <span>Tax Amount</span> $ {{product?.tax_amount | number: '1.2-2'}}<br>
-                <span>Quantity</span> {{product?.qty | number: '1.1-2'}}<br>
-              </p>
+              <div class=" products" *ngFor="let product of item.products">
+                <img [src]="product?.image"
+                  onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
+                <div style=" width: 100%; ">
+                  <span style="font-size: 18px; font-family: 'PoppinsSemiBold';">{{product?.product?.name}}</span>
+                  <span style="text-align: right; font-size: 16px; font-family: poppinsmedium; ">${{product?.price |
+                    number: '1.2-2'}}</span><br>
+                  <span>Tax Amount</span><span style="text-align: right;">$ {{product?.tax_amount | number:
+                    '1.2-2'}}</span><br>
+                  <span>Quantity</span><span style="text-align: right;">{{product?.qty | number: '1.1-2'}}</span>
+                </div>
+              </div>
+            </div>
+            <!-- <div><strong>Customer</strong>{{item?.customer?.first_name}} {{item?.customer?.last_name}} </div> -->
+            <div style="text-align: right;border-top: 1px solid #f1f1f1;padding-top: 10px;margin-bottom: 0;">
+              <strong style="text-align: right;margin-left: auto;display: inline-block;margin-right: 20px;">Total
+                Amount</strong>
+              <span style=" font-size: 23px; font-family: 'PoppinsSemiBold'; color: #000; ">${{item?.amount_total |
+                number: '1.2-2'}}</span>
             </div>
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <div *ngIf="orders?.length == 0 && !loading"
+      <div *ngIf=" orders?.length==0 && !loading"
         style="text-align: center; display: flex; align-items: center; justify-content: center; width: 100%; text-transform: uppercase">
         <p>No Item Found</p>
       </div>
