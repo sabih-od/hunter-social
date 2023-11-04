@@ -39,8 +39,19 @@ export class DatingItemComponent extends BasePage implements OnInit {
     console.log('unfriend', res);
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
-      this.update.emit({ update: true });
-      this.events.publish('UPDATE_CHATS');
+      // this.update.emit({ update: true });
+      // this.events.publish('UPDATE_CHATS', { ...res.data, type: 'unfriend' });
+      this.events.publish('DATING_UPDATED', { addressee_id: this.item.id, type: 'unfriend' });
+    } else
+      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+  }
+
+  async acceptRequest() {
+    let res = await this.network.acceptRequest(this.item.id);
+    console.log('acceptRequest', res);
+    if (res && res.data) {
+      this.utility.presentSuccessToast(res.message);
+      this.events.publish('DATING_UPDATED', { addressee_id: this.item.id, type: 'acceptRequest' });
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
@@ -50,8 +61,9 @@ export class DatingItemComponent extends BasePage implements OnInit {
     console.log('cancelRequest', res);
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
-      this.update.emit({ update: true });
-      this.events.publish('UPDATE_CHATS');
+      // this.update.emit({ update: true });
+      // this.events.publish('UPDATE_CHATS', { ...res.data, type: 'cancelRequest' });
+      this.events.publish('DATING_UPDATED', { addressee_id: this.item.id, type: 'cancelRequest' });
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
@@ -60,13 +72,13 @@ export class DatingItemComponent extends BasePage implements OnInit {
     if (this.item.is_sent_friend_request) {
       return this.utility.presentToast('Friend Request Already Sent');
     }
-
+    console.log('add Friend')
     let res = await this.network.addFriend(this.item.id);
     console.log('addFriend', res);
 
     if (res && res.data) {
       this.utility.presentSuccessToast('Success');
-      this.events.publish('DATING_UPDATED');
+      this.events.publish('DATING_UPDATED', { ...res.data, type: 'addfriend' });
     } else
       this.utility.presentToast(
         res?.error?.errors?.userId ?? 'Something went wrong'
@@ -75,7 +87,7 @@ export class DatingItemComponent extends BasePage implements OnInit {
 
   async unblockFriend() {
     let res = await this.network.unblockFriend(this.item.id);
-    console.log('addFriend', res);
+    console.log('unblockFriend', res);
     this.update.emit({ update: true });
   }
 

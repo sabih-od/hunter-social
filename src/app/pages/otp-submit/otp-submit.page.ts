@@ -84,6 +84,8 @@ export class OtpSubmitPage extends BasePage implements OnInit {
     } catch (err) {
       console.log(err);
       this.utility.presentFailureToast('Something Went Wrong');
+    } finally {
+      this.loading = false;
     }
   }
 }

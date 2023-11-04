@@ -46,7 +46,7 @@
       <ion-icon *ngIf="!selectedCategoryId && !isMyProductListing" slot="end"
         name="checkmark-circle-outline"></ion-icon>
     </ion-item>
-    <ion-item (click)="myListing()">
+    <ion-item (click)="myListing(null)">
       <ion-label>My Listing</ion-label>
       <ion-icon *ngIf="isMyProductListing" slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-item>
@@ -83,7 +83,8 @@
         </ion-card-header>
       </ion-card>
     </ion-col>
-    <div *ngIf="productList?.length == 0 && !loading" style="text-align: center;width: 100%;background: #f2f2f2;margin: 0 15px;">
+    <div *ngIf="productList?.length == 0 && !loading"
+      style="text-align: center;width: 100%;background: #f2f2f2;margin: 0 15px;">
       <p>No products found</p>
     </div>
     <ion-infinite-scroll *ngIf="shouldloadmore" (ionInfinite)="onIonInfinite($event)">

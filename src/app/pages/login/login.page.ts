@@ -118,6 +118,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
           res?.error?.message ?? 'Something went wrong'
         );
       }
+    this.loading = false;
     return;
 
     const user = await this.users.login(formdata);
@@ -128,7 +129,6 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
       // this.openWebview();
     } else {
     }
-    this.loading = false;
   }
 
   showForgotPassword() {
@@ -145,6 +145,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     formdata = { ...formdata, type: 'app' }
     console.log(formdata);
     try {
+      this.loading = true;
       const res = await this.network.forgotPassword(formdata);
       this.showForgotpass = false;
       console.log(res);
@@ -153,6 +154,8 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     } catch (err) {
       console.log(err);
       this.utility.presentFailureToast('Wrong Email');
+    } finally {
+      this.loading = false;
     }
   }
 

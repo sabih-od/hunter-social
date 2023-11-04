@@ -67,12 +67,36 @@ export class DatingPage
 
   async doRefresh($event) {
     this.isLoading = true;
+    this.page = 1;
     await this.getData();
     $event.target.complete();
     this.isLoading = false;
   }
 
-  async getData() {
+  async getData(data = null) {
+    console.log('getData data => ', data)
+    if (data) {
+      // this.datings.find(x => x.id == data.addressee_id)
+      const index = this.datings.findIndex(x => x.id == data.addressee_id)
+      if (data.type == 'addfriend') {
+        this.datings[index].is_sent_friend_request = true
+        this.datings[index].canRequest = false
+        this.all_datings = [...this.datings];
+      } else if (data.type == 'cancelRequest' || data.type == 'unfriend') {
+        this.datings[index].is_sent_friend_request = false
+        this.datings[index].canRequest = true
+        this.datings[index].is_friend = false
+        this.all_datings = [...this.datings];
+      } else if ('acceptRequest') {
+        this.datings[index].is_sent_friend_request = false
+        this.datings[index].canRequest = false
+        this.datings[index].is_friend_requested = false
+        this.datings[index].is_friend = true 
+      }
+      console.log('getData', this.datings);
+      return;
+    }
+
     let res = await this.network.getDatings(this.dating_users, this.search, this.page);
     console.log('network.getDatings res => ', res);
     if (res && res.data) {
@@ -88,12 +112,12 @@ export class DatingPage
           !obj.is_blocked_by_friend &&
           !obj.is_friend_blocked,
       }));
-      this.datings = [...this.datings, ...newDatingData];
+      this.datings = this.page == 1 ? newDatingData : [...this.datings, ...newDatingData];
     }
 
     this.all_datings = [...this.datings];
 
-    console.log('Here Datings', this.datings);
+    console.log('Here Datings getData dating.page.ts => ', this.datings);
   }
 
   async searchData(d) {
@@ -117,7 +141,7 @@ export class DatingPage
 
     this.all_datings = [...this.datings];
 
-    console.log('Here Datings', this.datings);
+    console.log('Here Datings searchData ', this.datings);
   }
 
   getAge(dob: any) {

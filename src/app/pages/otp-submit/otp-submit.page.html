@@ -31,7 +31,8 @@
 
       <ion-row>
         <ion-col>
-          <ion-button class="f-pop-r btn" expand="block" color="primary" (click)="submitOTP()"> Submit
+          <ion-button class="f-pop-r btn" expand="block" [disabled]="loading" color="primary" (click)="submitOTP()">
+            Submit
           </ion-button>
         </ion-col>
       </ion-row>

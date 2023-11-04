@@ -78,12 +78,19 @@ export class ResetPasswordPage extends BasePage implements OnInit {
     if (formdata && formdata.password === formdata.password_confirmation) {
       console.log('formdata => ', formdata)
       this.loading = true;
-      let res = await this.network.resetPassword(formdata);
-      console.log('resetPasswordForm res => ', res);
-      if (res && res.data) {
-        this.utility.presentSuccessToast('Password reset successfully');
-        this.resetPasswordForm.setValue({ password: '', password_confirmation: '' })
-        this.nav.navigateTo('pages/login');
+      try {
+        let res = await this.network.resetPassword(formdata);
+        console.log('resetPasswordForm res => ', res);
+        if (res && res.data) {
+          this.utility.presentSuccessToast('Password reset successfully');
+          this.resetPasswordForm.setValue({ password: '', password_confirmation: '' })
+          this.nav.navigateTo('pages/login');
+        }
+      } catch (err) {
+        console.log(err);
+        this.utility.presentFailureToast('Something Went Wrong');
+      } finally {
+        this.loading = false;
       }
     } else {
       this.utility.presentFailureToast(`Passwords don't match`);

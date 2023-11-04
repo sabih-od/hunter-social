@@ -43,7 +43,7 @@ export class BlockedUsersPage extends BasePage implements OnInit {
 
     this.all_datings = [...this.datings];
 
-    console.log('Here Datings', this.datings);
+    console.log('Here Datings getData blocked', this.datings);
   }
 
   getAge(dob: any) {

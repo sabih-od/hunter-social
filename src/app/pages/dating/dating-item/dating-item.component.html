@@ -29,6 +29,13 @@
       Cancel Request
     </ion-button>
 
+
+    <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="acceptRequest()"
+      *ngIf="item.is_friend_requested"> 
+      Accept Request
+    </ion-button>
+    
+    
     <ion-text *ngIf="item.is_friend_blocked">
       <p class="red-txt">Blocked</p>
     </ion-text>

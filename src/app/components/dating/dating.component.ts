@@ -100,19 +100,43 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
 
   async doRefresh($event) {
     this.isLoading = true;
+    this.page = 1;
     await this.getData();
     $event.target.complete();
     // this.isLoading = false;
   }
 
-  async getData() {
+  async getData(data = null) {
+    console.log('dating component getData data => ', data)
+    if (data) {
+      // this.datings.find(x => x.id == data.addressee_id)
+      const index = this.datings.findIndex(x => x.id == data.addressee_id)
+      if (data.type == 'addfriend') {
+        this.datings[index].is_sent_friend_request = true
+        this.datings[index].canRequest = false
+        this.all_datings = [...this.datings];
+      } else if (data.type == 'cancelRequest' || data.type == 'unfriend') {
+        this.datings[index].is_sent_friend_request = false
+        this.datings[index].canRequest = true
+        this.datings[index].is_friend = false
+        this.all_datings = [...this.datings];
+      } else if ('acceptRequest') {
+        this.datings[index].is_sent_friend_request = false
+        this.datings[index].canRequest = false
+        this.datings[index].is_friend_requested  = false
+        this.datings[index].is_friend = true
+      }
+      console.log('getData', this.datings);
+      return;
+    }
+
     console.log('this._search => ', this._search)
-    
+
     let res = await this.network.getDatings(this.dating_users, this._search, this.page);
-    console.log('getDating => ', res.data.data);
-    if (res && res.data.data) {
+    console.log('getDating => ', res?.data?.data);
+    if (res && res?.data?.data) {
       // var newdata = res.data.splice(0,10)
-      const newDatingData = res.data.data.map((obj) => ({
+      const newDatingData = res?.data?.data.map((obj) => ({
         ...obj,
         profile_image: obj.profile_image
           ? this.image.getImageUrl(obj.profile_image)
@@ -122,14 +146,16 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
           !obj.is_sent_friend_request &&
           !obj.is_friend &&
           !obj.is_blocked_by_friend &&
+          !obj.is_friend_requested &&
           !obj.is_friend_blocked,
       }));
-      this.datings = [...this.datings, ...newDatingData];
+      console.log('newDatingData => ', newDatingData)
+      this.datings = this.page == 1 ? newDatingData : [...this.datings, ...newDatingData];
     }
     this.all_datings = this.datings; //[...this.datings];
 
     this.isLoading = false;
-    console.log('Here Datings', this.datings);
+    console.log('Here Datings getData com', this.datings);
   }
 
   getAge(dob: any) {

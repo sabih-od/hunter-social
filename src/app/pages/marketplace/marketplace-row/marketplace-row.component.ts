@@ -77,11 +77,24 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     console.log('getStates', res);
     this.states = res.data;
   }
-  async myListing() {
+  async myListing(item) {
     console.log('user', this.userId);
     this.selectedCategoryId = null;
     this.loading = true;
-    this.isMyProductListing = true;
+    if (!this.isMyProductListing) {
+      this.isMyProductListing = true;
+      this.productList = [];
+      this.page = 1;
+    }
+
+    if (item?.id) {
+      this.productList = [];
+      this.page = 1;
+    }
+    console.log('category id', item?.id);
+    console.log('selectedCategoryId id', this.selectedCategoryId);
+    if (item?.id) this.selectedCategoryId = item?.id;
+
     // this.user();
     // let data = await this.network.getMyListing({ id: this.userId });
     const params = {
@@ -89,16 +102,25 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
       category_id: this.selectedCategoryId,
       state_id: this.state_id
     }
-    let response = await this.network.getMyListing(params);
+    let response = await this.network.getMyListing(params, this.page);
     if (response?.data?.data?.length == 0) this.shouldloadmore = false; else this.shouldloadmore = true;
     this.loading = false;
     console.log('this is mylisting', response.data.data);
-    this.productList = response.data.data;
+    // this.productList = response.data.data;
+    this.productList = this.page == 1 ? response.data.data : [...this.productList, ...response.data.data];
+    console.log('this is mylisting this.productList => ', this.productList);
   }
 
   async getProducts(item) {
     this.loading = true;
-    this.isMyProductListing = false;
+
+
+    if (this.isMyProductListing) {
+      this.isMyProductListing = false;
+      this.productList = [];
+      this.page = 1;
+    }
+
     if (item?.id) {
       this.productList = [];
       this.page = 1;
@@ -140,14 +162,14 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     //   category_id: null,
     // });
     if (this.topSearch.length == 0) {
-      if (this.isMyProductListing) this.myListing()
+      if (this.isMyProductListing) this.myListing(null)
       else this.getProducts(null)
       // this.onFilter();
     }
     if (this.topSearch.length > 3) {
       if (this.timeToken) clearTimeout(this.timeToken);
       this.timeToken = setTimeout(() => {
-        if (this.isMyProductListing) this.myListing()
+        if (this.isMyProductListing) this.myListing(null)
         else this.getProducts(null)
       }, 1000);
       // let data = await this.network.getProductss({
@@ -176,7 +198,7 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
 
   onIonInfinite(ev) {
     this.page = this.page + 1;
-    if (this.isMyProductListing) this.myListing()
+    if (this.isMyProductListing) this.myListing(null)
     else this.getProducts(null)
     // this.onFilter();
     setTimeout(() => {

@@ -48,8 +48,9 @@ export class NetworkService {
     return this.httpPostResponse('auth/forgot-password', data);
   }
 
-  submitOTP(data){
-    return this.httpPostResponse('auth/verify-reset-password-otp', data);}
+  submitOTP(data) {
+    return this.httpPostResponse('auth/verify-reset-password-otp', data);
+  }
 
   getUser() {
     return this.httpGetResponse('user', null, false, false);
@@ -198,7 +199,7 @@ export class NetworkService {
     if (search && search != '') {
       str += `&search=name:${search};email:${search}`;
     }
-    str += page ? `&page=${page}` : `&page=1`; 
+    str += page ? `&page=${page}` : `&page=1`;
 
     return this.httpGetResponse(str, null, false);
   }
@@ -261,8 +262,8 @@ export class NetworkService {
     return this.httpPostResponse(`products`, null, false, true);
   }
 
-  getMyListing(data) {
-    return this.httpPostResponse(`my-products`, data, false, true);
+  getMyListing(data, page) {
+    return this.httpPostResponse(`my-products?page=${page}`, data, false, true);
   }
 
   getProductss(data, page) {
@@ -546,7 +547,7 @@ export class NetworkService {
   feedback(data) {
     return this.httpPostResponse(`feedback`, data, null, true);
   }
-  
+
   resetPassword(data) {
     return this.httpPostResponse(`auth/reset-password`, data, null, true);
   }

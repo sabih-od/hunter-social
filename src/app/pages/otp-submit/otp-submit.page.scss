@@ -1,4 +1,9 @@
 
+ion-header {
+  margin-top: constant(safe-area-inset-top);
+  margin-top: env(safe-area-inset-top);
+}
+
 .heading {
     font-size: 35px;
     margin-top: 0;
