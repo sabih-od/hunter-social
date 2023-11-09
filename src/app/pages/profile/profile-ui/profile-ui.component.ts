@@ -14,8 +14,8 @@ export class ProfileUIComponent extends BasePage implements OnInit {
   @Input() user_id: any;
   user_profile: any;
   posts: any;
-  posts_count: any;
-  connections_count: any;
+  // posts_count: any;
+  // connections_count: any;
   next_page: any;
   current_user: any;
   isOwnProfile: any;
@@ -31,29 +31,30 @@ export class ProfileUIComponent extends BasePage implements OnInit {
   }
 
   async ngOnInit() {
-    this.initialize();
+    // this.initialize();
     this.events.subscribe('PROFILE_PAGE_ENTERED', this.initialize.bind(this));
   }
   ionViewWillEnter(): void {
-    this.getUser();
+    // this.getUser();
   }
 
   async initialize() {
-    this.getUser();
+    // this.getUser();
     this.current_user = await this.users.getUser();
     this.isOwnProfile = this.current_user.id == this.user_id;
     console.log(this.isOwnProfile);
     const user_profile_data = await this.network.getUserProfile(this.user_id);
     this.user_profile = user_profile_data.data;
+    console.log('this.user_profile => ', this.user_profile)
     if (this.isOwnProfile) this.dataService.user_data = this.user_profile;
-    const posts_count_data = await this.network.getPostCount(this.user_id);
-    this.posts_count = posts_count_data.data.count;
-    const connections_count_data = await this.network.getConnectionCount(
-      this.user_id
-    );
-    this.connections_count = connections_count_data.data.count;
+    // const posts_count_data = await this.network.getPostCount(this.user_id);
+    // this.posts_count = posts_count_data.data.count;
+    // const connections_count_data = await this.network.getConnectionCount(
+    //   this.user_id
+    // );
+    // this.connections_count = connections_count_data.data.count;
     this.getUserPosts();
-    this.getStates();
+    // this.getStates();
   }
 
   async getUser() {
@@ -73,8 +74,7 @@ export class ProfileUIComponent extends BasePage implements OnInit {
         // console.log('this.user_profile => ', this.user_profile.profile_image);
       }
 
-
-      console.log('hello1');
+      console.log('this.user_profile => ', this.user_profile);
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }

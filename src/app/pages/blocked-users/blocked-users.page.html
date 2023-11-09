@@ -6,13 +6,19 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content>
-  <div class="banner image">
-    <div class="content">
-      <h1 class="heading1">Blocked Users</h1>
-    </div>
+<div class="banner image">
+  <div class="content">
+    <h1 class="heading1">Blocked Users</h1>
   </div>
+</div>
+
+<ion-content>
   <ion-grid>
+    <ion-searchbar aria-placeholder="Search User" [(ngModel)]="_search" class="ion-margin-bottom"
+      (ngModelChange)="onSearch()" placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-row>
       <ion-col size="6" sizeMd="4" *ngFor="let item of datings">
         <!-- <p>{{item.email}}</p> -->
@@ -21,7 +27,7 @@
         <ion-card class="ion-no-margin">
           <!-- <ion-img [src]="item.profile_image" style="height: 120px" (click)="goToProfile()"></ion-img> -->
           <img [src]="item.profile_image"
-          onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
+            onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
           <ion-card-content>
             <ion-card-title class="f-pop-smb title"> {{ item.name }} </ion-card-title>
             <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="unblockUser(item.id)">
@@ -32,7 +38,16 @@
 
       </ion-col>
 
-      <div *ngIf="datings?.length == 0" style="text-align: center;width: 100%;">
+
+      <div class="spinner" *ngIf="page == 1 && isLoading">
+        <ion-spinner name="lines" color="primary"></ion-spinner>
+      </div>
+
+      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
+      <div *ngIf="!isLoading && datings?.length == 0" style="text-align: center;width: 100%;">
         <p>No Blocked User Found</p>
       </div>
     </ion-row>

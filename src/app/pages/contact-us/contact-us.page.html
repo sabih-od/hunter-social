@@ -16,37 +16,40 @@
       </ion-label>
     </ion-item>
 
-    <ion-card class="ion-padding">
-      <ion-input placeholder="First Name" [(ngModel)]="fname"> </ion-input>
-    </ion-card>
+    <form [formGroup]="contactForm">
+      <ion-card class="ion-padding">
+        <ion-input formControlName="fname" placeholder="First Name"></ion-input>
+      </ion-card>
 
-    <ion-card class="ion-padding">
-      <ion-input placeholder="Last Name" [(ngModel)]="lname"> </ion-input>
-    </ion-card>
+      <ion-card class="ion-padding">
+        <ion-input formControlName="lname" placeholder="Last Name"></ion-input>
+      </ion-card>
 
-    <ion-card class="ion-padding">
-      <ion-input placeholder="Email Address" [(ngModel)]="email"> </ion-input>
-    </ion-card>
+      <ion-card class="ion-padding">
+        <ion-input formControlName="email" placeholder="Email Address"></ion-input>
+      </ion-card>
 
-    <ion-card class="ion-padding">
-      <ion-input placeholder="Phone Number" [(ngModel)]="phoneNumber"> </ion-input>
-    </ion-card>
+      <ion-card class="ion-padding">
+        <ion-input formControlName="phone" placeholder="Phone Number"></ion-input>
+      </ion-card>
 
-    <ion-card class="ion-padding">
-      <ion-textarea placeholder="Message" [(ngModel)]="message"> </ion-textarea>
-    </ion-card>
+      <ion-card class="ion-padding">
+        <ion-textarea formControlName="message" placeholder="Message"></ion-textarea>
+      </ion-card>
 
-    <ion-item lines="none">
-      <ion-checkbox></ion-checkbox>
-      <ion-label class="ion-margin-start">
-        <p class="content f-pop-r">I Agree with the terms and conditions</p>
-      </ion-label>
-    </ion-item>
+      <ion-item lines="none">
+        <ion-checkbox ngControl="termsAccepted" (ionChange)="onTermsChecked($event)"></ion-checkbox>
+        <ion-label class="ion-margin-start">
+          <p class="content f-pop-r">I Agree with the terms and conditions</p>
+        </ion-label>
+      </ion-item>
 
-    <ion-button class="f-pop-smb ion-margin" expand="block" (click)="sumit()">​SUBMIT NOW</ion-button>
+    </form>
+    <ion-button class="f-pop-smb ion-margin" expand="block" [disabled]="loading" (click)="sumit()">​SUBMIT
+      NOW</ion-button>
   </div>
 
   <footer [forpage]="'contact'"></footer>
 </ion-content>
 
-<chat-floating-button></chat-floating-button>
+<!-- <chat-floating-button></chat-floating-button> -->

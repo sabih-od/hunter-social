@@ -87,8 +87,8 @@ export class NetworkService {
     );
   }
 
-  getBloackedUsers() {
-    return this.httpGetResponse(`users/my-block-list`, null, true);
+  getBloackedUsers(data, page) {
+    return this.httpGetResponse(`users/my-block-list?page=${page}&query=${data.query}`, null, false);
   }
 
   likePost(postId) {

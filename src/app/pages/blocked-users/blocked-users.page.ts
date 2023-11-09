@@ -11,7 +11,10 @@ export class BlockedUsersPage extends BasePage implements OnInit {
   datings = [];
   all_datings = [];
   dating_users = 1;
-  search: '';
+  search = '';
+  _search = '';
+  isLoading = false;
+  page = 1;
   constructor(
     injector: Injector,
     public platform: Platform,
@@ -24,10 +27,11 @@ export class BlockedUsersPage extends BasePage implements OnInit {
   }
 
   async getData() {
-    let res = await this.network.getBloackedUsers();
-    if (res && res.data) {
+    this.isLoading = true;
+    let res = await this.network.getBloackedUsers({ query: this._search }, this.page);
+    if (res && res?.data?.data) {
       console.log('geBloackedUsers res.data => ', res);
-      this.datings = res.data.map((obj) => ({
+      const newDatingData = res.data.data.map((obj) => ({
         ...obj.blocked_user_detail,
         profile_image: obj.blocked_user_detail.profile_image
           ? this.image.getImageUrl(obj.blocked_user_detail.profile_image)
@@ -39,9 +43,11 @@ export class BlockedUsersPage extends BasePage implements OnInit {
         //   !obj.is_blocked_by_friend &&
         //   !obj.is_friend_blocked,
       }));
+      this.datings = this.page == 1 ? newDatingData : [...this.datings, ...newDatingData];
     }
 
     this.all_datings = [...this.datings];
+    this.isLoading = false;
 
     console.log('Here Datings getData blocked', this.datings);
   }
@@ -53,17 +59,47 @@ export class BlockedUsersPage extends BasePage implements OnInit {
     return years;
   }
 
-  async unblockUser(userid){
+  timeToken
+  onSearch(clear) {
+    if (clear) this.search = '';
+    else this.search = this._search;
+    console.log('this._search', this._search)
+    if (this.timeToken) clearTimeout(this.timeToken);
+    this.timeToken = setTimeout(() => {
+      this.datings = []
+      this.getData();
+    }, 1000);
+  }
+
+  async unblockUser(userid) {
     let formData = new FormData();
     formData.append('_method', 'delete');
     // alert(JSON.stringify(formData))
     // alert(JSON.stringify(this.user_id))
-    var res = await this.network.unblockUser(userid,formData);
-    if(res){
+    var res = await this.network.unblockUser(userid, formData);
+    if (res) {
       this.utility.presentSuccessToast(res.message);
-      this.getData();
+      this.datings = this.datings.filter(x => x.id != userid)
+      // this.getData();
       // this.nav.navigateTo('pages/chat-room');
     }
+  }
+
+  async doRefresh($event) {
+    this.isLoading = true;
+    this.page = 1;
+    await this.getData();
+    $event.target.complete();
+    this.isLoading = false;
+  }
+
+  onIonInfinite(ev) {
+    this.page = this.page + 1;
+    this.getData();
+    setTimeout(() => {
+      ev.target.complete();
+      // (ev as IonInfiniteScrollContent).target.complete();
+    }, 500);
   }
 
 }

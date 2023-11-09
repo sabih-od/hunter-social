@@ -20,18 +20,16 @@ export class DrawerComponent extends BasePage implements OnInit {
   }
 
   async ngOnInit() {
-    // let islogin = localStorage.getItem('user');
-    // if (islogin) {
+    let islogin = localStorage.getItem('user');
+    this.appPages = this.dataService.getMenus();
+    this.menuCtrl.swipeGesture(false, 'main');
+    if (islogin) {
       let res = await this.network.getUser();
-
-      console.log('97892347894239hhkdfhsjkh', { res });
-      this.appPages = this.dataService.getMenus();
-      this.menuCtrl.swipeGesture(false, 'main');
       this.events.subscribe('USER_DATA_RECEIVED', async (data) => {
         console.log('USER_DATA_RECEIVED', data);
         this.packageId = res?.data?.user?.profile_detail?.package_id;
       });
-    // }
+    }
   }
 
   navigate(url) {

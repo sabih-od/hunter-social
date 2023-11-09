@@ -55,7 +55,7 @@
         <ion-col size="6">
           <p class="count">
             <span>
-              {{ posts_count }}
+              {{ user_profile?.post_count }}
             </span>
             <br />
             Posts
@@ -64,7 +64,7 @@
         <ion-col size="6">
           <p class="count">
             <span>
-              {{ connections_count }}
+              {{ user_profile?.connection_count }}
             </span>
             <br />
             Connections
@@ -97,14 +97,14 @@
     <ion-col size="6">
       <h2>State</h2>
       <p class="about-me">
-        {{ state }}
+        {{ user_profile?.profile_detail?.state_name }}
       </p>
     </ion-col>
 
     <ion-col size="6">
       <h2>City</h2>
       <p class="interests">
-        {{ city }}
+        {{ user_profile?.profile_detail?.city_name }}
       </p>
     </ion-col>
   </ion-row>

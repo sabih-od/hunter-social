@@ -120,11 +120,13 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
         this.datings[index].canRequest = true
         this.datings[index].is_friend = false
         this.all_datings = [...this.datings];
-      } else if ('acceptRequest') {
+      } else if (data.type == 'acceptRequest') {
         this.datings[index].is_sent_friend_request = false
         this.datings[index].canRequest = false
-        this.datings[index].is_friend_requested  = false
+        this.datings[index].is_friend_requested = false
         this.datings[index].is_friend = true
+      } else if (data.type == 'block') {
+        this.datings = this.datings.filter(x => x.id != data.addressee_id)
       }
       console.log('getData', this.datings);
       return;

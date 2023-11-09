@@ -1,15 +1,10 @@
-<app-header
-  [title]="'PRIVACY'"
-  [showcurve]="false"
-  [back]="true"
-  [shouldCallApi]="false"
-  [shouldCallApii]="false"
-></app-header>
+<app-header [title]="'PRIVACY'" [showcurve]="false" [back]="true" [shouldCallApi]="false" [shouldCallApii]="false"
+  [showLoginInfo]="false"></app-header>
 
 <ion-content>
   <ion-grid>
     <ion-row class="ion-no-margin">
-      <div class="col-12">
+      <div class="col-12 privacycontent">
         <h2>Privacy Policy</h2>
         <p>
           Protecting your private information is our priority. This Statement of
@@ -27,10 +22,18 @@
           as your:
         </p>
         <ul>
-          <li><p>First and Last Name</p></li>
-          <li><p>Mailing Address</p></li>
-          <li><p>E-mail Address</p></li>
-          <li><p>Phone Number</p></li>
+          <li>
+            <p>First and Last Name</p>
+          </li>
+          <li>
+            <p>Mailing Address</p>
+          </li>
+          <li>
+            <p>E-mail Address</p>
+          </li>
+          <li>
+            <p>Phone Number</p>
+          </li>
         </ul>
         <p>
           If you purchase Hunters Social's products and services, we collect
@@ -42,10 +45,18 @@
           which is not unique to you, such as your:
         </p>
         <ul>
-          <li><p>Age</p></li>
-          <li><p>Gender</p></li>
-          <li><p>Race</p></li>
-          <li><p>Religion</p></li>
+          <li>
+            <p>Age</p>
+          </li>
+          <li>
+            <p>Gender</p>
+          </li>
+          <li>
+            <p>Race</p>
+          </li>
+          <li>
+            <p>Religion</p>
+          </li>
         </ul>
         <p>
           Please keep in mind that if you directly disclose personally
@@ -137,7 +148,9 @@
         </p>
         <p>Hunters Social uses the following methods for this purpose:</p>
         <ul>
-          <li><p>SSL Protocol</p></li>
+          <li>
+            <p>SSL Protocol</p>
+          </li>
         </ul>
         <p>
           When personal information (such as a credit card number) is
@@ -227,7 +240,9 @@
               expectations based on your relationship with us;
             </p>
           </li>
-          <li><p>Comply with an existing legal obligation; or</p></li>
+          <li>
+            <p>Comply with an existing legal obligation; or</p>
+          </li>
           <li>
             <p>
               Otherwise use your personal information, internally, in a lawful
@@ -272,19 +287,13 @@
           Statement of Privacy. If you believe that Hunters Social has not
           adhered to this Statement, please contact Hunters Social at:
         </p>
-        <p>
-          Hunters Social <br />
-          150 Watterson Rd<br />
-          Bastrop, Texas 78602<br />
-        </p>
-        <p>
-          Email Address:
-          <a href="mailto:hunterssocial@hunterssocial.com"
-            >hunterssocial@hunterssocial.com</a
-          >
-        </p>
-        <p>Telephone number: <a href="tel:5123087064">5123087064</a></p>
-        <p>Effective as of November 08, 2022</p>
+
+        <ul class="infolist">
+          <li>Hunters Social <br /> 150 Watterson Rd<br /> Bastrop, Texas 78602 </li>
+          <li>Email Address: <span>support@hunterssocial.com</span> </li>
+          <li>Telephone number: <span>5123087064</span></li>
+          <li>Effective as of November 08, 2022</li>
+        </ul>
       </div>
     </ion-row>
   </ion-grid>

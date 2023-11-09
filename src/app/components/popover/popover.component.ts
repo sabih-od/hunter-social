@@ -23,7 +23,7 @@ export class PopoverComponent extends BasePage implements OnInit {
     super(injector);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async initialize() {
     this.getUser();
@@ -57,7 +57,7 @@ export class PopoverComponent extends BasePage implements OnInit {
     });
   }
 
-  async block(){
+  async block() {
     this.popover.dismiss()
     console.log('this.data => ', this.data.item_id)
     let formData = new FormData();
@@ -66,8 +66,10 @@ export class PopoverComponent extends BasePage implements OnInit {
     // alert(JSON.stringify(formData))
     // alert(JSON.stringify(this.data.item_id))
     var res = await this.network.blockUser(formData);
-    if(res){
+    if (res) {
       this.utility.presentSuccessToast(res.message);
+      // this.events.publish('PEOPLE_UPDATED', this.data.item_id);
+      this.events.publish('DATING_UPDATED', { addressee_id: this.data.item_id, type: 'block' });
       // this.nav.navigateTo('pages/chat-room');
     }
   }

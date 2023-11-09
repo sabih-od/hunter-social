@@ -35,6 +35,10 @@ ion-card-title {
 ion-card-subtitle {
   font-weight: normal;
   font-size: 15px;
+
+  strong {
+    color: #000;
+  }
 }
 
 ion-card-content {

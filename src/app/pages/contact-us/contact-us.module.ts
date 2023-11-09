@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -20,8 +20,9 @@ import { ChatFloatingButtonModule } from 'src/app/components/chat-floating-butto
     ContactUsPageRoutingModule,
     HeaderModule,
     FooterModule,
+    ReactiveFormsModule,
     ChatFloatingButtonModule
   ],
   declarations: [ContactUsPage, ContactBannerComponent],
 })
-export class ContactUsPageModule {}
+export class ContactUsPageModule { }

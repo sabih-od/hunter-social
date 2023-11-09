@@ -22,6 +22,8 @@ export class HeaderComponent extends BasePage implements OnInit {
   @Input() shouldCallApi = true;
   @Input() shouldCallApii = true;
 
+  @Input() showLoginInfo = true;
+
   cart_count;
   notifications_count: 0;
   // search_text;
@@ -45,9 +47,9 @@ export class HeaderComponent extends BasePage implements OnInit {
   ngOnInit() {
 
     HeaderComponent.instances.push(this);
-    if (!this.user_image) this.getUser();
+    if (!this.user_image) this.showLoginInfo && this.getUser();
     this.events.subscribe('USER_DATA_RECEIVED', () => {
-      this.getUser();
+      this.showLoginInfo && this.getUser();
     });
     this.events.subscribe('ROUTE_CHANGED', () => {
       this.init();
@@ -85,7 +87,8 @@ export class HeaderComponent extends BasePage implements OnInit {
       });
 
       window.addEventListener('profilePicUpdated', function (e) {
-        this.getUser();
+
+        this.showLoginInfo && this.getUser();
       })
 
       // this.storage.get('notifications_count').then(data => {
@@ -113,7 +116,7 @@ export class HeaderComponent extends BasePage implements OnInit {
     // if (!this.shouldCallApi == !this.shouldCallApii) {
     //   return;
     // };
-    
+
 
 
 
@@ -121,7 +124,7 @@ export class HeaderComponent extends BasePage implements OnInit {
     console.log('getUser', res);
     if (res && res.data && res.data.user) {
       let user = res.data.user;
-      console.log('header this.network.getUser user => ', user) 
+      console.log('header this.network.getUser user => ', user)
       console.log("user['profile_image'] => ", user['profile_image'])
       if (user['profile_image'] && user['profile_image'] !== '') {
         HeaderComponent.instances.forEach((instance) => {

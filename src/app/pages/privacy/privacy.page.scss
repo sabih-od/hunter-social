@@ -1,0 +1,31 @@
+.privacycontent {
+    padding: 0px 12px;
+
+    p {
+        font-size: 15px;
+        margin: 0px 0 10px 0;
+    }
+
+    ul {
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        li p {
+            margin: 0;
+            font-size: 14px;
+        }
+    }
+
+    ul.infolist {
+        padding-left: 20px;
+        font-size: 14px;
+
+        li {
+            margin-bottom: 2px;
+
+            span {
+                font-family: 'PoppinsSemiBold';
+            }
+        }
+    }
+}

@@ -21,11 +21,11 @@
     >
     </ion-searchbar> -->
 
-    
+
     <ion-input placeholder="Find Your Text" *ngIf="isSearchVisible" style="border-bottom: 2px solid lightgray"
       [(ngModel)]="search_text" (ionChange)="searchNow()"></ion-input>
 
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="showLoginInfo">
       <ion-button (click)="searchNow()" *ngIf="!isSearchVisible && search_text && search_text.length > 0">
         <ion-icon style="margin-right: -5px" name="search"></ion-icon>
       </ion-button>
@@ -39,7 +39,7 @@
         total_found
         }}</ion-badge>
 
-      <ion-button *ngIf="profileVisible" (click)="gotoDashboard()">
+      <ion-button *ngIf="profileVisible && showLoginInfo" (click)="gotoDashboard()">
         <!-- <ion-icon class="side-icon" name="person-circle-outline"></ion-icon> -->
 
         <ion-avatar>
@@ -48,7 +48,7 @@
         </ion-avatar>
       </ion-button>
 
-      <ion-button *ngIf="showCart" (click)="gotoCart()">
+      <ion-button *ngIf="showCart && showLoginInfo" (click)="gotoCart()">
         <ion-icon class="side-icon" name="cart-outline"></ion-icon>
         <ion-badge class="online" color="primary">
           {{ cart_count }}
@@ -56,7 +56,7 @@
       </ion-button>
 
       <!-- <ion-col size="1.5"> -->
-      <ion-button (click)="gotoNotifications()">
+      <ion-button *ngIf="showLoginInfo" (click)="gotoNotifications()">
         <ion-icon class="side-icon" name="notifications-outline"></ion-icon>
         <ion-badge *ngIf="notifications_count != 0" class="online" color="primary">
           {{ notifications_count }}
