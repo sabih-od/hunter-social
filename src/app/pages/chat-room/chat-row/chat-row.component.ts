@@ -16,7 +16,7 @@ export class ChatRowComponent extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.item);
+    // console.log(this.item);
   }
 
   async showMenu($event) {

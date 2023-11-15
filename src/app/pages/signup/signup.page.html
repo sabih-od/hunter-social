@@ -93,7 +93,9 @@
       <ion-row>
         <ion-col>
           <ion-button class="f-pop-r btn" expand="block" color="primary" (click)="singUp()">
-            SIGN UP
+            
+            {{loading ? 'PLEASE WAIT' : 'SIGN UP'}}
+            <ion-spinner class="spinner" *ngIf="loading"></ion-spinner>
           </ion-button>
         </ion-col>
       </ion-row>

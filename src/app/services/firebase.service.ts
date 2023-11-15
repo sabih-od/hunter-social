@@ -28,6 +28,7 @@ export class FirebaseService {
 
   async setTokenToServer() {
     const fcm_token = await this.getFCMToken();
+    console.log('fcm_token => ', fcm_token)
     if (fcm_token) {
       this.network.saveFcmToken({ token: fcm_token }).then(
         (dats) => {},
@@ -40,6 +41,7 @@ export class FirebaseService {
 
   async setupFMC() {
     if (Capacitor.getPlatform() !== 'web') {
+      console.log('this.setupNativePush => ', )
       await this.setupNativePush();
     }
 

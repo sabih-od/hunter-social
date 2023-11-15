@@ -16,13 +16,13 @@
 
     <button class="requestgroupbtn" (click)="showGroupRequestModal()">Request A Group</button>
 
-    <ion-row class="ion-margin-top">
+    <ion-row class="">
       <ion-col size="12">
-        <ion-item class="searchitem">
-          <ion-searchbar [(ngModel)]="_search" (ngModelChange)="onSearch()" class="ion-margin-bottom"
+        <ion-item class="searchitem ion-no-padding">
+          <ion-searchbar [(ngModel)]="_search" (ngModelChange)="onSearch()" class=""
             placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar> 
-          <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search">
-            </ion-icon> </ion-button>
+          <!-- <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search">
+            </ion-icon> </ion-button> -->
         </ion-item>
       </ion-col>
     </ion-row>

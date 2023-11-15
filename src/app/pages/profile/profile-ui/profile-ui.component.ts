@@ -24,6 +24,7 @@ export class ProfileUIComponent extends BasePage implements OnInit {
   item: any;
   user: any;
   user_image: any;
+  profileLoading = false;
 
   constructor(injector: Injector) {
     super(injector);
@@ -39,12 +40,26 @@ export class ProfileUIComponent extends BasePage implements OnInit {
   }
 
   async initialize() {
+    this.profileLoading = true
     // this.getUser();
     this.current_user = await this.users.getUser();
     this.isOwnProfile = this.current_user.id == this.user_id;
-    console.log(this.isOwnProfile);
-    const user_profile_data = await this.network.getUserProfile(this.user_id);
-    this.user_profile = user_profile_data.data;
+    console.log('this.isOwnProfile => ', this.isOwnProfile);
+    if (!this.isOwnProfile) {
+      const user_profile_data = await this.network.getUserProfile(this.user_id);
+      user_profile_data.data.profile_image = this.image.getImageUrl(user_profile_data.data.profile_image)
+      this.user_profile = user_profile_data.data;
+      console.log('user_profile_data => ', this.user_profile)
+      this.profileLoading = false
+    } else {
+      this.user_profile = this.current_user
+      this.profileLoading = false
+    }
+
+    // this.users.userprofile.subscribe(profile => {
+    //   console.log('this.users.userprofile => ', profile)
+    // })
+
     console.log('this.user_profile => ', this.user_profile)
     if (this.isOwnProfile) this.dataService.user_data = this.user_profile;
     // const posts_count_data = await this.network.getPostCount(this.user_id);
@@ -58,10 +73,10 @@ export class ProfileUIComponent extends BasePage implements OnInit {
   }
 
   async getUser() {
-    let res = await this.network.getUser();
-    console.log(res);
-    if (res && res.data && res.data.user) {
-      this.user = res.data.user;
+    let userRes = await this.network.getUser();
+    console.log(userRes);
+    if (userRes && userRes.data && userRes.data.user) {
+      this.user = userRes.data.user;
       console.log('this.user', this.user);
 
       if (this.user['profile_image'] && this.user['profile_image'] !== '')
@@ -76,7 +91,7 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
       console.log('this.user_profile => ', this.user_profile);
     } else
-      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+      this.utility.presentFailureToast(userRes?.message ?? 'Something went wrong');
   }
   async getUserPosts(paginate = false) {
     const { data } = await this.network.getUserPosts(this.user_id);

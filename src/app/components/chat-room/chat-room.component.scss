@@ -4,3 +4,12 @@
     border-radius: 25px;
     margin-top: -9px;
 }
+
+ion-searchbar .searchbar-input-container {
+    height: 40px; /* Change this value to your desired height */
+  }
+  
+  /* Adjust the spacing after the search icon */
+  ion-searchbar .searchbar-input {
+    padding-right: 40px; /* Change this value to your desired spacing */
+  }

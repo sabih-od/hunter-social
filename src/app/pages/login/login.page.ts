@@ -54,11 +54,13 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
     this.aForm = this.formBuilder.group({
       email: [
-        '', //test@test.com
+        // '', 
+        'johnsmith@mailinator.com',
         Validators.compose([Validators.required, Validators.email]),
       ],
       password: [
-        '', // 12345678
+        // '',
+        '12345678',
         Validators.compose([
           // Validators.minLength(6),
           // Validators.maxLength(30),
@@ -103,8 +105,13 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     console.log('login res => ', res);
     if (res && res.data) {
       this.users.setToken(res.data.token);
-      this.users.setUser(res.data);
-      console.log('LOGIN_SUCCESS', res.data);
+      let userRes = await this.network.getUserProfile(res.data?.id);
+      this.users.setUser(userRes.data);
+      this.users.updateUserProfile(userRes.data)
+      localStorage.setItem('user', JSON.stringify(userRes.data));
+      this.getStates();
+      this.getInterests()
+      console.log('LOGIN_SUCCESS', res.data.data);
 
       this.aForm.setValue({ email: '', password: '' })
 
@@ -129,6 +136,18 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
       // this.openWebview();
     } else {
     }
+  }
+
+  async getStates() {
+    let res = await this.network.getStates();
+    console.log('States', res);
+    this.users.updateStates(res && res.data ? res.data : [])
+  }
+
+  async getInterests() {
+    let res = await this.network.getInterests();
+    console.log('interestsList', res);
+    this.users.interestsList = res.data
   }
 
   showForgotPassword() {

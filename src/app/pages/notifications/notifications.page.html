@@ -7,23 +7,39 @@
     </div>
   </div>
 
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="notifcontent">
-    <div class="notifications" *ngFor="let item of notifications">
-      <div class="notificationitem">
-        <img [src]="item?.profile_image" onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
+    <div class="notifications" [class.read]="item?.is_read" [class.unread]="!item?.is_read"
+      *ngFor="let item of notifications">
+      <app-notification-item [item]="item" (acceptClicked)="acceptRequest($event)"
+        (ignoreClicked)="ignoreRequest($event)"></app-notification-item>
+      <!-- <div class="notificationitem">
+        <img [src]="item?.notificationable?.user?.profile_image"
+          onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
         <div>
-          <h5>{{item?.notificationable?.addressee?.name || item?.notificationable?.requester?.name}}</h5>
+          <h5>{{item?.notificationable?.user?.name || item?.notificationable?.user?.name}}</h5>
           <p>{{item.content}}</p>
           <span>{{item.updated_at | date:"MMM dd, yyyy 'at' hh:mm a"}}</span>
+          <div style="display: flex; align-items: centers;margin-top: 4px;"
+            *ngIf="item?.notificationable?.user?.is_friend_requested">
+            <button class="acceptbtn"
+              (click)="acceptRequest(item?.notificationable?.user?.id, item.id )">Accept</button>
+            <button class="ignorebtn" (click)="ignoreRequest(item?.notificationable?.user?.id, item.id)">Ignore</button>
+          </div>
         </div>
-      </div>
+
+      </div> -->
     </div>
-    <div class="spinner" *ngIf="loading">
+    <div class="spinner" *ngIf="loading && !refresh">
       <ion-spinner name="lines" color="primary"></ion-spinner>
-      <p>Notifications Loading...</p>
+      <p>Loading...</p>
     </div>
-    <div *ngIf="!loading && notifications.length == 0" class="notifcontent">
-      <p>Notification not found</p>
+    <div *ngIf="!loading && !refresh && notifications.length == 0" class="notifcontent">
+      <p>No data found</p>
     </div>
   </div>
 

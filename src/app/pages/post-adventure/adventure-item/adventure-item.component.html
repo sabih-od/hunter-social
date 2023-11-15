@@ -2,7 +2,8 @@
   <ion-card-content class="ion-no-padding ion-no-margin ion-margin-horizontal">
     <ion-item class="ion-no-padding" lines="none">
       <ion-avatar>
-        <img class="card-img" [src]="item.user?.profile_image" />
+        <img class="card-img" [src]="item.user?.profile_image"
+          onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
       </ion-avatar>
       <ion-label class="ion-margin-start">
         <!-- (click)="goToProfile(item)" -->

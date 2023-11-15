@@ -17,7 +17,19 @@ export class HomeBannerComponent extends BasePage implements OnInit {
   showpackage = false;
 
   ngOnInit() {
-    this.getSetting();
+    // this.getSetting();
+
+    this.dataService.settings.subscribe((settings) => {
+      // console.log('subscribe => ', settings)
+      if (settings) {
+        this.userslimit = settings?.lifetime_users_limit;
+        this.usertoavail = 5000 - this.userslimit
+        if (this.userslimit == 0) {
+          this.showpackage = true;
+        }
+      }
+    });
+
   }
 
   navigate(arg) {
@@ -46,15 +58,15 @@ export class HomeBannerComponent extends BasePage implements OnInit {
     //else
   }
 
-  async getSetting() {
-    let res = await this.network.getSettings();
-    if (res) {
-      this.userslimit = res.data.lifetime_users_limit;
-      this.usertoavail = 5000 - this.userslimit
-      if (this.userslimit == 0) {
-        this.showpackage = true;
-      }
-    }
-  }
+  // async getSetting() {
+  //   let res = await this.network.getSettings();
+  //   if (res) {
+  //     this.userslimit = res.data.lifetime_users_limit;
+  //     this.usertoavail = 5000 - this.userslimit
+  //     if (this.userslimit == 0) {
+  //       this.showpackage = true;
+  //     }
+  //   }
+  // }
 
 }

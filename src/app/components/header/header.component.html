@@ -50,7 +50,7 @@
 
       <ion-button *ngIf="showCart && showLoginInfo" (click)="gotoCart()">
         <ion-icon class="side-icon" name="cart-outline"></ion-icon>
-        <ion-badge class="online" color="primary">
+        <ion-badge *ngIf="cart_count > 0" class="online" color="primary">
           {{ cart_count }}
         </ion-badge>
       </ion-button>

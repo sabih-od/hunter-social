@@ -25,8 +25,9 @@ import { ReviewsComponent } from './reviews/reviews.component';
 import { NewsLetterComponent } from './news-letter/news-letter.component';
 import { FooterModule } from 'src/app/components/footer/footer.module';
 import { AppSearchModule } from 'src/app/components/app-search/app-search.module';
-import { ChatFloatingButtonComponent } from 'src/app/components/chat-floating-button/chat-floating-button.component';
-import { DisclaimerComponent } from 'src/app/components/disclaimer/disclaimer.component';
+// import { ChatFloatingButtonComponent } from 'src/app/components/chat-floating-button/chat-floating-button.component';
+// import { DisclaimerComponent } from 'src/app/components/disclaimer/disclaimer.component';
+import { DisclaimerModule } from 'src/app/components/disclaimer/disclaimer.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -42,6 +43,7 @@ import { DisclaimerComponent } from 'src/app/components/disclaimer/disclaimer.co
     LawsModule,
     ChatFloatingButtonModule,
     FooterModule,
+    DisclaimerModule
   ],
   declarations: [
     HomePage,
@@ -52,8 +54,8 @@ import { DisclaimerComponent } from 'src/app/components/disclaimer/disclaimer.co
     HomeBannerComponent,
     ReviewsComponent,
     NewsLetterComponent,
-    ChatFloatingButtonComponent,
-    DisclaimerComponent
+    // ChatFloatingButtonComponent,
+    // DisclaimerComponent
   ],
 })
-export class HomePageModule {}
+export class HomePageModule { }

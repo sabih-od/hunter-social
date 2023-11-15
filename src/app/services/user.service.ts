@@ -2,17 +2,32 @@ import { Injectable } from '@angular/core';
 import { ImageService } from './image.service';
 import { NetworkService } from './network.service';
 import { UtilityService } from './utility.service';
+import { BehaviorSubject } from 'rxjs';
 const users = require('src/app/data/users.json');
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   user = null;
+  userprofile: BehaviorSubject<any>;
+  states: BehaviorSubject<any>;
+  cities = [];
+  interestsList = []
   constructor(
     public image: ImageService,
     public network: NetworkService,
     public utility: UtilityService
-  ) {}
+  ) {
+    this.userprofile = new BehaviorSubject(null);
+    this.states = new BehaviorSubject(null);
+  }
+
+  updateUserProfile(data) {
+    this.userprofile.next(data);
+  }
+  updateStates(data) {
+    this.states.next(data);
+  }
 
   login(formdata) {
     return new Promise((resolve) => {
@@ -35,10 +50,11 @@ export class UserService {
   getUser() {
     return new Promise<any>((res) => {
       let json = localStorage.getItem('user');
+      // console.log('getUser() json => ', json)
       if (json && json !== '') {
         let obj = JSON.parse(json);
         //console.log('USER_OBJ', obj);
-        if (obj.profile_image)
+        if (obj.profile_image && !obj.profile_image.includes('storage/uploads'))
           obj.profile_image = this.image.getImageUrl(obj.profile_image);
 
         res(obj);
@@ -98,7 +114,7 @@ export class UserService {
       !profile_image.includes('http')
       ? this.image.getImageUrl(profile_image)
       : !this.utility.isNullOrEmpty(profile_image)
-      ? profile_image
-      : this.image.getDefaultImg();
+        ? profile_image
+        : this.image.getDefaultImg();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Injector, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Platform, ViewWillEnter } from '@ionic/angular';
 import { BasePage } from 'src/app/pages/base-page/base-page';
 import { NavService } from 'src/app/services/basic/nav.service';
@@ -40,14 +40,14 @@ export class HeaderComponent extends BasePage implements OnInit {
   isIOS = false;
   skip_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'A'];
 
-  constructor(public nav: NavService, injector: Injector, pusher: PusherService, platform: Platform) {
+  constructor(public nav: NavService, injector: Injector, pusher: PusherService, platform: Platform,
+    private ref: ChangeDetectorRef) {
     super(injector);
   }
 
   ngOnInit() {
-
     HeaderComponent.instances.push(this);
-    if (!this.user_image) this.showLoginInfo && this.getUser();
+    if (!this.user_image && this.showLoginInfo) this.getUser();
     this.events.subscribe('USER_DATA_RECEIVED', () => {
       this.showLoginInfo && this.getUser();
     });
@@ -57,25 +57,34 @@ export class HeaderComponent extends BasePage implements OnInit {
     this.init();
     this.isIOS = this.platform.is('ios');
     console.log('platform => ', this.isIOS)
+
+    this.ref.detectChanges();
   }
 
   async init() {
     let token = localStorage.getItem('token');
     if (token && token != '1') {
-      const res = await this.network.getCart();
-      console.log('getCart', res);
-
-      HeaderComponent.instances.forEach((instance) => {
-        instance.cart_count = res.data?.data[0]?.qty?.substring(0, 1) ?? 0;
-      });
-
+      // const res = await this.network.getCart();
+      // console.log('getCart', res);
+      // HeaderComponent.instances.forEach((instance) => {
+      //   instance.cart_count = res.data?.data[0]?.qty?.substring(0, 1) ?? 0;
+      // });
 
 
 
-      const localnotification = JSON.parse(localStorage.getItem('notifications_count'));
+
+      const localnotification = JSON.parse(localStorage.getItem('notifications_count')) || 0;
       if (localnotification == null) localStorage.setItem('notifications_count', '0');
       this.notifications_count = localnotification == null ? 0 : JSON.parse(localStorage.getItem('notifications_count'));
       console.log('this.notifications_count => ', this.notifications_count);
+
+      // const noticount = await this.network.getUnreadNotificationCount();
+      // console.log('noticount => ', noticount.data.count)
+      // if (noticount.data.count) {
+      //   localStorage.setItem('notifications_count', noticount.data.count.toString());
+      //   this.notifications_count = noticount.data.count;
+      // }
+
       window.addEventListener('storageChange', function (e) {
         console.log('e => ', e)
         this.notifications_count = JSON.parse(localStorage.getItem('notifications_count'));
@@ -86,8 +95,8 @@ export class HeaderComponent extends BasePage implements OnInit {
         // Handle the storage change event here 
       });
 
-      window.addEventListener('profilePicUpdated', function (e) {
-
+      window.addEventListener('profilePicUpdated', (e) => {
+        console.log('header profilePicUpdated => ')
         this.showLoginInfo && this.getUser();
       })
 
@@ -118,21 +127,49 @@ export class HeaderComponent extends BasePage implements OnInit {
     // };
 
 
+    // console.log('here => ')
+    // this.users.userprofile.subscribe(user => {
+    //   console.log('eidt profile this.users.userprofile => ', user)
+    //   if (user) {
+    //     this.user_image = user['profile_image'];
+    //     if (user['profile_image'] && user['profile_image'] !== '') {
+    //       HeaderComponent.instances.forEach((instance) => {
+    //         // if (!user['profile_image'].includes('storage/uploads')) {
+    //         //   console.log('storage/uploads')
+    //         //   instance.user_image = this.image.getImageUrl(user['profile_image']);
+    //         // } else {
+    //         instance.user_image = user['profile_image'];
+    //         // }
+    //       });
+    //     }
+    //   }
+    //   // else
+    //   //   this.utility.presentFailureToast('Something went wrong');
+    // })
 
+    console.log('this.showLoginInfo => ', this.showLoginInfo)
 
-    let res = await this.network.getUser();
-    console.log('getUser', res);
-    if (res && res.data && res.data.user) {
-      let user = res.data.user;
-      console.log('header this.network.getUser user => ', user)
-      console.log("user['profile_image'] => ", user['profile_image'])
-      if (user['profile_image'] && user['profile_image'] !== '') {
-        HeaderComponent.instances.forEach((instance) => {
+    let user = await this.users.getUser();
+    console.log('header getUser => ', user);
+    if (user) {
+      this.cart_count = user.cart?.quantity || 0
+      // this.user_image = user['profile_image'];
+      console.log('header this.user_image => ', this.user_image);
+      // if (user['profile_image'] && user['profile_image'] !== '') {
+      HeaderComponent.instances.forEach((instance) => {
+        // console.log('instance => ', instance)
+
+        if (user['profile_image'] && user['profile_image'] !== '' && !user['profile_image'].includes('storage/uploads')) {
+          // console.log('storage/uploads')
           instance.user_image = this.image.getImageUrl(user['profile_image']);
-        });
-      }
+        } else {
+          // console.log('not storage/uploads')
+          instance.user_image = user['profile_image'];
+        }
+      });
+      // }
     } else
-      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+      this.utility.presentFailureToast('Something went wrong');
   }
 
   async goBack() {

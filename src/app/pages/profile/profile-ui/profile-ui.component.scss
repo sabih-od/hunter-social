@@ -1,6 +1,6 @@
 ion-avatar {
   width: 90px;
-  height: auto;
+  height: 90px;
 
   img {
     border: 2px solid black;
@@ -30,8 +30,38 @@ ion-avatar {
   justify-content: center;
   margin-top: -7px;
 
+  h2{
+    font-weight: 100;
+    font-size: 19px;
+    font-family: Anton;
+  }
+
   ion-label {
     margin-left: 0;
+  }
+}
+
+ul.interests {
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  margin: 0;
+}
+
+ul.interests li:before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #7f7f7f;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.reportbtn {
+  ion-icon {
+    margin-right: 5px;
+    font-size: 14px;
   }
 }
 
@@ -75,9 +105,11 @@ ion-button {
 
   h2 {
     margin: 0;
-    font-size: 19px;
+    font-size: 18px;
     margin-top: 10px;
     margin-bottom: 3px;
+    font-family: anton;
+    font-weight: 100;
   }
 
   p {

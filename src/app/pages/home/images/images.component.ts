@@ -12,7 +12,7 @@ export class ImagesComponent extends BasePage implements OnInit {
     super(injector);
     let dashboardData = this.dataService.getDashboardData();
     this.data = dashboardData.images;
-    console.log('data', this.data);
+    // console.log('data', this.data);
   }
 
   ngOnInit() {}

@@ -15,11 +15,11 @@ export class AboutUsComponent extends BasePage implements OnInit {
   }
 
   async ngOnInit() {
-    let res = await this.network.getUser();
-    console.log('97892347894239hhkdfhsjkh', { res });
+    // let res = await this.users.getUser();
+    // console.log('97892347894239hhkdfhsjkh', { res });
     let dashboardData = this.dataService.getDashboardData();
     this.data = dashboardData.about_us;
-    this.packageId = res?.data?.user?.profile_detail?.package_id;
+    // this.packageId = res?.data?.user?.profile_detail?.package_id;
   }
 
   navigate(url) {

@@ -23,7 +23,6 @@ dependencies {
     implementation project(':capacitor-file-select')
     implementation "androidx.core:core:1.6.+"
     implementation "com.android.billingclient:billing:4.0.0"
-    implementation "com.stripe:stripe-android:4.1.2"
 }
 
 

@@ -32,20 +32,22 @@
         <ion-segment-button value="settings">
           <ion-label>Settings</ion-label>
           <ion-icon name="settings-outline"></ion-icon>
-        </ion-segment-button> 
+        </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
 
     <div *ngIf="tab === 'notifications'">
       <div class="notifications" *ngFor="let item of notifications">
-        <div class="notificationitem">
+        <app-notification-item [item]="item" (acceptClicked)="acceptRequest($event)"
+          (ignoreClicked)="ignoreRequest($event)"></app-notification-item>
+        <!-- <div class="notificationitem">
           <img [src]="item?.profile_image" onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
           <div>
             <h5>{{item?.notificationable?.addressee?.name || item?.notificationable?.requester?.name}}</h5>
             <p>{{item.content}}</p>
             <span>{{item.updated_at | date:"MMM dd, yyyy 'at' hh:mm a"}}</span>
           </div>
-        </div>
+        </div> -->
       </div>
       <div *ngIf="!loading && notifications.length == 0" class="notifcontent">
         <p>Notification not found</p>

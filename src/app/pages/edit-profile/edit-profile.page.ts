@@ -84,16 +84,26 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
         name: 'Platinum',
       },
     ];
-    this.getStates();
-    this.getInterests();
+
+    // console.log('this.users.getUser() => ', await this.users.getUser());
+    this.getUser();
+    console.log('this.users.states => ', this.users.states)
+    this.users.states.subscribe(states => {
+      console.log('this.users.states => ', states)
+      this.states = states;
+    })
+
+    // this.getStates();
+    // this.getInterests();
+    this.interests = this.users.interestsList
   }
 
-  async getStates() {
-    let res = await this.network.getStates();
-    console.log('States', res);
-    this.states = res && res.data ? res.data : [];
-    this.getUser();
-  }
+  // async getStates() {
+  //   let res = await this.network.getStates();
+  //   console.log('States', res);
+  //   this.states = res && res.data ? res.data : [];
+  //   this.getUser();
+  // }
 
   dateTimeUpdated(ev) {
     console.log('ev.detail.value => ', ev?.detail?.value)
@@ -109,38 +119,44 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
   }
 
   async getUser() {
-    let res = await this.network.getUser();
-    console.log('Edit Profile User', res);
-    if (res && res.data && res.data.user) {
-      this.user = res.data.user;
-      console.log('this.user => ', this.user);
-      this.is_lifetime_access = this.user.is_lifetime_access;
-      this.selected_package = this.user.profile_detail.package_id;
-      this.new_package = this.user.profile_detail.package_id;
-      this.state = parseInt(this.user.profile_detail.state);
-      if (this.user.profile_detail.dob) {
-        console.log('this.user.profile_detail.dob => ', this.user.profile_detail.dob)
-        this.dob = this.user.profile_detail.dob;
-        this.user.dob = this.user.profile_detail.dob;
-      }
-      if (this.user.profile_detail.state) {
-        this.getCities(this.user.profile_detail.state);
-      }
-      this.user.interests = this.dataService.user_data?.user_interests?.map((x) => x.title) ?? [];
-      // if (!this.user['interests']) this.user['interests'] = [];
-      if (this.user['profile_image'] && this.user['profile_image'] !== '')
-        this.user_image = this.image.getImageUrl(this.user['profile_image']);
-    } else
-      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+
+    // this.users.userprofile.subscribe(user => {
+    //   console.log('eidt profile this.users.userprofile => ', user)
+    // })
+    this.user = await this.users.getUser()
+    // let res = await this.network.getUser();
+    // console.log('Edit Profile User', res);
+    // if (res && res.data && res.data.user) {
+    //   this.user = res.data.user;
+    console.log('this.user => ', this.user);
+    this.is_lifetime_access = this.user.is_lifetime_access;
+    this.selected_package = this.user.profile_detail.package_id;
+    this.new_package = this.user.profile_detail.package_id;
+    this.state = parseInt(this.user.profile_detail.state);
+    if (this.user.profile_detail.dob) {
+      console.log('this.user.profile_detail.dob => ', this.user.profile_detail.dob)
+      this.dob = this.user.profile_detail.dob;
+      this.user.dob = this.user.profile_detail.dob;
+    }
+    if (this.user.profile_detail.state) {
+      this.getCities(this.user.profile_detail.state);
+    }
+    this.user.interests = this.dataService.user_data?.user_interests?.map((x) => x.title) ?? [];
+    // if (!this.user['interests']) this.user['interests'] = [];
+    if (this.user['profile_image'] && this.user['profile_image'] !== '')
+      this.user_image = this.image.getImageUrl(this.user['profile_image']);
+    // } else
+    //   this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
 
     // this.user = this.dataService.getUser();
 
-    let newres = this.network.getUserProfile(this.user.id)
-    newres.then(value => {
-      // this.dataService.user_data = value.data;
-      this.user.interests = value.data?.user_interests?.map((x) => x.title) ?? [];
-    });
-    console.log('new res => ', newres)
+    // let newres = this.network.getUserProfile(this.user.id)
+    // console.log('newres => ', newres)
+    // newres.then(value => {
+    // this.dataService.user_data = value.data;
+    this.user.interests = this.user.user_interests?.map((x) => x.title) ?? [];
+    // });
+    // console.log('new res => ', newres)
   }
 
   async getCities(id) {
@@ -193,10 +209,10 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     let res = await this.network.editUser(data);
     console.log(res);
     if (res && res.data && res.data.user) {
-      console.log('Update User', res.data.user);
-
+      // console.log('Update User', res.data.user);
+      let userRes = await this.network.getUserProfile(res.data.user?.id);
       // if (this._img) this.user['profile_image'] = this.user_image;
-      this.users.setUser(this.user);
+      this.users.setUser(userRes?.data);
 
       this.utility.presentSuccessToast(res.message);
       this.events.publish('USER_DATA_RECEIVED');
@@ -232,13 +248,22 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     console.log('update profile pic', res);
     if (res && Object.keys(res.data).length > 0) {
 
-      var event = new Event('profilePicUpdated');
-      window.dispatchEvent(event);
 
-      let user = JSON.parse(localStorage.getItem('user'));
-      user['profile_image'] = res.data.profile_image
+      // let user = JSON.parse(localStorage.getItem('user'));
+      let user = await this.users.getUser()
+      console.log('user 1 => ', user)
+      user.profile_image = res.data.profile_image;
+      console.log('user 2 => ', user)
+      this.users.setUser(user);
+      this.users.updateUserProfile(user);
       localStorage.setItem('user', JSON.stringify(user));
       this.utility.presentSuccessToast(res.message);
+
+      var event = new Event('profilePicUpdated');
+      this.events.publish('USER_DATA_RECEIVED');
+      console.log('event profilePicUpdated => ')
+      window.dispatchEvent(event);
+
       console.log('update profile pic', res);
     }
 
@@ -332,12 +357,12 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     this.user.interests = this.user.interests.filter((x) => x !== tag);
   }
 
-  async getInterests() {
-    let res = await this.network.getInterests();
-    console.log('getInterests', res);
+  // async getInterests() {
+  //   let res = await this.network.getInterests();
+  //   console.log('getInterests', res);
 
-    this.interests = res?.data ?? [];
-  }
+  //   this.interests = res?.data ?? [];
+  // }
 
   onPackageSelected(value) {
     console.log(value);

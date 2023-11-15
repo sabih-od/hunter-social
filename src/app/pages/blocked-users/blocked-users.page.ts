@@ -31,18 +31,19 @@ export class BlockedUsersPage extends BasePage implements OnInit {
     let res = await this.network.getBloackedUsers({ query: this._search }, this.page);
     if (res && res?.data?.data) {
       console.log('geBloackedUsers res.data => ', res);
-      const newDatingData = res.data.data.map((obj) => ({
-        ...obj.blocked_user_detail,
-        profile_image: obj.blocked_user_detail.profile_image
-          ? this.image.getImageUrl(obj.blocked_user_detail.profile_image)
-          : this.image.getDefaultImg(),
-        // age: this.getAge(obj.profile_detail.dob),
-        // canRequest:
-        //   !obj.is_sent_friend_request &&
-        //   !obj.is_friend &&
-        //   !obj.is_blocked_by_friend &&
-        //   !obj.is_friend_blocked,
-      }));
+      const newDatingData = res.data.data.map((obj) => (
+        {
+          ...obj,
+          profile_image: obj?.blocked_user_detail?.profile_image
+            ? this.image.getImageUrl(obj?.blocked_user_detail?.profile_image)
+            : this.image.getDefaultImg(),
+          // age: this.getAge(obj.profile_detail.dob),
+          // canRequest:
+          //   !obj.is_sent_friend_request &&
+          //   !obj.is_friend &&
+          //   !obj.is_blocked_by_friend &&
+          //   !obj.is_friend_blocked,
+        }));
       this.datings = this.page == 1 ? newDatingData : [...this.datings, ...newDatingData];
     }
 
@@ -79,7 +80,7 @@ export class BlockedUsersPage extends BasePage implements OnInit {
     var res = await this.network.unblockUser(userid, formData);
     if (res) {
       this.utility.presentSuccessToast(res.message);
-      this.datings = this.datings.filter(x => x.id != userid)
+      this.datings = this.datings.filter(x => x.blocked_user_detail.id != userid)
       // this.getData();
       // this.nav.navigateTo('pages/chat-room');
     }

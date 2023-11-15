@@ -60,9 +60,9 @@ export class PusherService {
           let url = window.location.href;
 
           if (e.sender_id != this.userId) {
-            this.utility.presentSuccessToast(
-              e.content ?? 'You have received a new message'
-            );
+            // this.utility.presentSuccessToast(
+            //   e.content ?? 'You have received a new message'
+            // );
             //   const flag = await this.utility.presentConfirm(
             //     'Go To Chats',
             //     'Ignore',

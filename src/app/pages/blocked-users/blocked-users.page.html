@@ -26,11 +26,12 @@
 
         <ion-card class="ion-no-margin">
           <!-- <ion-img [src]="item.profile_image" style="height: 120px" (click)="goToProfile()"></ion-img> -->
-          <img [src]="item.profile_image"
+          <img [src]="item?.profile_image"
             onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
           <ion-card-content>
-            <ion-card-title class="f-pop-smb title"> {{ item.name }} </ion-card-title>
-            <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="unblockUser(item.id)">
+            <ion-card-title class="f-pop-smb title"> {{ item?.blocked_user_detail.name }} </ion-card-title>
+            <ion-button shape="round" color="primary" class="ion-no-margin" size="small"
+              (click)="unblockUser(item?.blocked_user_detail?.id)">
               Unblock
             </ion-button>
           </ion-card-content>
@@ -43,7 +44,7 @@
         <ion-spinner name="lines" color="primary"></ion-spinner>
       </div>
 
-      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll *ngIf="datings?.length != 0" (ionInfinite)="onIonInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
 

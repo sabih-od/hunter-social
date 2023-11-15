@@ -29,7 +29,7 @@ export class NetworkService {
   };
 
   login(data) {
-    return this.httpPostResponse('auth/login', data, null, true);
+    return this.httpPostResponse('auth/login', data, null, false);
   }
 
   logout() {
@@ -575,6 +575,9 @@ export class NetworkService {
   }
   getNotifications(page, limit) {
     return this.httpGetResponse(`users/notifications?page=${page}&limit=${limit}`, null);
+  }
+  getUnreadNotificationCount() {
+    return this.httpGetResponse(`users/notifications/unread-count`, null);
   }
   getRecipeAlerts(page, limit) {
     return this.httpGetResponse(`users/fetch-recipe-alerts?page=${page}&limit=${limit}`, '');

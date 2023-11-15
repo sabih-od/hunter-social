@@ -77,7 +77,7 @@ export class PeopleComponent extends BasePage implements OnInit {
       this.item.canRequest = false;
       this.item.is_sent_friend_request = true;
       // this.utility.presentSuccessToast(res.message);
-      // this.events.publish('UPDATE_CHATS');
+      this.events.publish('UPDATE_CHATS');
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }

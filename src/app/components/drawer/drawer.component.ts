@@ -20,15 +20,31 @@ export class DrawerComponent extends BasePage implements OnInit {
   }
 
   async ngOnInit() {
+    this.getSetting()
     let islogin = localStorage.getItem('user');
     this.appPages = this.dataService.getMenus();
     this.menuCtrl.swipeGesture(false, 'main');
     if (islogin) {
-      let res = await this.network.getUser();
-      this.events.subscribe('USER_DATA_RECEIVED', async (data) => {
-        console.log('USER_DATA_RECEIVED', data);
-        this.packageId = res?.data?.user?.profile_detail?.package_id;
-      });
+      const user = JSON.parse(islogin);
+      console.log('islogin => ', user)
+      // console.log('islogin => ', islogin)
+      let userRes = await this.network.getUserProfile(user?.id);
+      // let interestsRes = await this.network.getInterests();
+      this.getStates();
+      this.getInterests();
+      console.log('res.data.user => ', userRes.data)
+      // userRes.data.interests = interestsRes.data
+      // userRes.data.profile_image = this.image.getImageUrl(userRes.data.profile_image)
+      if (userRes?.data) {
+        this.users.setUser(userRes.data);
+        this.users.updateUserProfile({ ...userRes.data, profile_image: this.image.getImageUrl(userRes?.data?.profile_image) })
+        localStorage.setItem('user', JSON.stringify(userRes.data));
+        this.events.subscribe('USER_DATA_RECEIVED', async (data) => {
+          console.log('USER_DATA_RECEIVED', data);
+          this.packageId = userRes?.data?.user?.profile_detail?.package_id;
+        });
+      }
+      // console.log("localStorage.getItem('user'); => ", localStorage.getItem('user'))
     }
   }
 
@@ -195,10 +211,9 @@ export class DrawerComponent extends BasePage implements OnInit {
   }
 
   async menuClicked(item) {
+    console.log('menuClicked => ')
     this.user = await this.users.getUser();
     this.packageId = this.user.profile_detail.package_id;
-    console.log('Subscribe now', this.user);
-    this.user = await this.users.getUser();
     console.log('USER', this.user, item.role);
 
     if (item.url == 'pages/dating') {
@@ -280,6 +295,24 @@ export class DrawerComponent extends BasePage implements OnInit {
         'You are not allowed to view this page. Please upgrade your account.'
       );
     }
+  }
+
+  async getSetting() {
+    let res = await this.network.getSettings();
+    this.dataService.updateSetting(res.data)
+    console.log('drawer settings => ', res);
+  }
+
+  async getStates() {
+    let res = await this.network.getStates();
+    console.log('States', res);
+    this.users.updateStates(res && res.data ? res.data : [])
+  }
+
+  async getInterests() {
+    let res = await this.network.getInterests();
+    console.log('interestsList', res);
+    this.users.interestsList = res.data
   }
 
   openDatingChatRoom() {

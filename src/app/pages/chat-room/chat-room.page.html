@@ -1,9 +1,4 @@
-<app-header
-  [title]="'FRIENDS'"
-  [showcurve]="true"
-  [back]="true"
-  [showMenu]="false"
-></app-header>
+<app-header [title]="'FRIENDS'" [showcurve]="true" [back]="true" [showMenu]="false"></app-header>
 
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
@@ -18,11 +13,7 @@
     <ion-row class="ion-margin-top">
       <ion-col size="12">
         <ion-item class="searchitem">
-          <ion-searchbar
-            [(ngModel)]="search"
-            class="ion-margin-bottom"
-            placeholder="Search"
-          ></ion-searchbar>
+          <ion-searchbar [(ngModel)]="search" class="ion-margin-bottom" placeholder="Search"></ion-searchbar>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -39,13 +30,7 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <div
-    *ngIf="friends?.length == 0"
-    style="text-align: center; text-transform: uppercase"
-  >
-    <p>
-      You Have No friends <br />
-      Click The Plus Icon To Add Friends
-    </p>
+  <div *ngIf="friends?.length == 0" style="text-align: center; text-transform: uppercase">
+    <p>You Have No friends</p>
   </div>
 </ion-content>

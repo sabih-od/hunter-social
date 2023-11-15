@@ -48,7 +48,8 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   }
 
   async checkIfDating() {
-    let res = await this.network.getUser();
+    // console.log('checkIfDating => this.network.getUser() => ')
+    let res = await this.users.getUser();
 
     if (
       res &&
@@ -64,7 +65,8 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   }
 
   async checkUser() {
-    let res = await this.network.getUser();
+    console.log('checkUser => this.network.getUser() => ')
+    let res = await this.users.getUser();
 
     if (
       res &&

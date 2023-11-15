@@ -27,8 +27,14 @@ export class DataService {
   searchValueChanged: BehaviorSubject<any>;
   dataId;
   user_data;
+  settings: BehaviorSubject<any>;
   constructor() {
     this.searchValueChanged = new BehaviorSubject(null);
+    this.settings = new BehaviorSubject(null);
+  }
+
+  updateSetting(data) {
+    this.settings.next(data);
   }
 
   getFooterLinks() {

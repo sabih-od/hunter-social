@@ -6,7 +6,7 @@ import { NavService } from './services/basic/nav.service';
 import { FirebaseService } from './services/firebase.service';
 import { UserService } from './services/user.service';
 import { UtilityService } from './services/utility.service';
-import { SqliteService } from './services/sqlite.service';
+// import { SqliteService } from './services/sqlite.service';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 
 @Component({
@@ -23,7 +23,7 @@ export class AppComponent {
     private modalController: ModalController,
     public platform: Platform,
     public fcm: FirebaseService,
-    private sqlite: SqliteService,
+    // private sqlite: SqliteService,
 
     private zone: NgZone
 
@@ -71,12 +71,12 @@ export class AppComponent {
         });
       });
 
-      this.sqlite
-        .initialize()
-        .then(() => {
-          console.log('sqlite initialized');
-        })
-        .catch((err) => alert(err));
+      // this.sqlite
+      //   .initialize()
+      //   .then(() => {
+      //     console.log('sqlite initialized');
+      //   })
+      //   .catch((err) => alert(err));
       await this.fcm.setupFMC();
     });
   }

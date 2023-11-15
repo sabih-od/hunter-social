@@ -21,6 +21,7 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.item);
     // if(this.item.content === undefined){
     //   this.contentLabel = this.item.content;
     //   console.log("this.contentLabel",this.contentLabel);

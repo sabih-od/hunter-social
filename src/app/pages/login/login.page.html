@@ -36,7 +36,8 @@
       <ion-row>
         <ion-col>
           <ion-button class="f-pop-r btn" [disabled]="loading" expand="block" color="primary" (click)="login()">
-            LOGIN NOW
+            {{loading ? 'PLEASE WAIT' : 'LOGIN NOW'}}
+            <ion-spinner class="spinner" *ngIf="loading"></ion-spinner>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -120,7 +121,8 @@
 
       <ion-row>
         <ion-col>
-          <ion-button class="f-pop-r btn" expand="block" color="primary" [disabled]="loading" (click)="forgetPassword()"> Submit
+          <ion-button class="f-pop-r btn" expand="block" color="primary" [disabled]="loading"
+            (click)="forgetPassword()"> Submit
           </ion-button>
         </ion-col>
       </ion-row>

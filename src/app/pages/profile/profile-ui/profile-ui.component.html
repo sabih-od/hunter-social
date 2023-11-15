@@ -9,15 +9,15 @@
         ">1
       </ion-badge>
       <ion-avatar>
-        <img [src]="user_image ? user_image : '../../../assets/Images/dummy-avatar.png'" />
+        <img
+          [src]="user_profile?.profile_image ? user_profile?.profile_image : '../../../assets/Images/dummy-avatar.png'" />
       </ion-avatar>
     </div>
     <div class="pcolright">
       <ion-label class="ion-margin-start">
         <div>
-          <h2 style="text-transform: capitalize;">
-            {{ user_profile?.name }}
-          </h2>
+          <h2 style="text-transform: capitalize;"> {{ user_profile?.name }} </h2>
+          <p style="font-size: 12px;">{{ user_profile?.email }}</p>
         </div>
       </ion-label>
     </div>
@@ -30,12 +30,10 @@
       <!-- <ion-button *ngIf="isOwnProfile" (click)="itemClicked({ url: 'pages/edit-profile' })">
         Edit Profile
       </ion-button> -->
-      <!-- <ion-button *ngIf="!isOwnProfile" color="danger" (click)="blockUser()">
-        Block User
-      </ion-button> -->
-      <ion-button *ngIf="!isOwnProfile" (click)="openreport()">
-        Report User
-      </ion-button>
+      <ion-button class="reportbtn" *ngIf="!isOwnProfile" (click)="blockUser()">
+        <ion-icon name="ban-outline"></ion-icon> Block User </ion-button>
+      <ion-button class="reportbtn" *ngIf="!isOwnProfile" (click)="openreport()">
+        <ion-icon name="flag-outline"></ion-icon> Report User </ion-button>
       <!-- <ion-button *ngIf="isOwnProfile" color="danger" (click)="deleteAccount(item)">
         Delete Account
       </ion-button> -->
@@ -53,55 +51,64 @@
     <ion-col size="12">
       <ion-row class="ion-no-padding">
         <ion-col size="6">
-          <p class="count">
-            <span>
-              {{ user_profile?.post_count }}
-            </span>
-            <br />
-            Posts
-          </p>
+          <p class="count"> <span> {{ user_profile?.post_count }} </span> <br /> Posts </p>
         </ion-col>
         <ion-col size="6">
-          <p class="count">
-            <span>
-              {{ user_profile?.connection_count }}
-            </span>
-            <br />
-            Connections
-          </p>
+          <p class="count"> <span> {{ user_profile?.connection_count }} </span> <br /> Connections </p>
         </ion-col>
       </ion-row>
     </ion-col>
-
   </ion-row>
 </div>
 
 <div class="profileinfo">
   <ion-row class="ion-margin-start mb-0">
-    <ion-col size="12" *ngIf="isOwnProfile">
+    <ion-col size="12" *ngIf="user_profile?.profile_detail.brief_yourself">
       <h2>About Me</h2>
       <p class="about-me"> {{ user_profile?.profile_detail.brief_yourself }} </p>
     </ion-col>
 
-    <ion-col size="12">
+    <ion-col size="12" *ngIf="user_profile?.user_interests && (user_profile?.user_interests.length > 0)">
       <h2>Interests</h2>
-      <p class="interests">
-        <span *ngFor="let item of user_profile?.user_interests">
+      <ul class="interests">
+        <li *ngFor="let item of user_profile?.user_interests">
           {{ item.title }}
-        </span>
-      </p>
+        </li>
+      </ul>
     </ion-col>
+
+    <ion-col size="12" *ngIf="user_profile?.phone">
+      <h2>Phone</h2>
+      <p class="about-me"> {{ user_profile?.phone }} </p>
+    </ion-col>
+    <ion-col size="12" *ngIf="user_profile?.profile_detail.marital_status">
+      <h2>Marital Status</h2>
+      <p class="about-me" style="text-transform: capitalize;"> {{ user_profile?.profile_detail?.marital_status }} </p>
+    </ion-col>
+    <ion-col size="12" *ngIf="user_profile?.profile_detail.hobbies">
+      <h2>Hobbies</h2>
+      <p class="about-me"> {{ user_profile?.profile_detail?.hobbies }} </p>
+    </ion-col>
+    <ion-col size="12" *ngIf="user_profile?.profile_detail.gender">
+      <h2>Gender</h2>
+      <p class="about-me" style="text-transform: capitalize;"> {{ user_profile?.profile_detail?.gender }} </p>
+    </ion-col>
+    <ion-col size="12" *ngIf="user_profile?.profile_detail.dob">
+      <h2>Date Of Birth</h2>
+      <p class="about-me"> {{ user_profile?.profile_detail?.dob | date: "MMM dd, yyyy" }} </p>
+    </ion-col>
+
   </ion-row>
 
   <ion-row class="ion-margin-start">
-    <ion-col size="6">
+    <ion-col size="6" *ngIf="user_profile?.profile_detail?.state_name">
       <h2>State</h2>
       <p class="about-me">
         {{ user_profile?.profile_detail?.state_name }}
       </p>
     </ion-col>
 
-    <ion-col size="6">
+    <ion-col size="6" *ngIf="user_profile?.profile_detail?.city_name">
       <h2>City</h2>
       <p class="interests">
         {{ user_profile?.profile_detail?.city_name }}
@@ -110,10 +117,11 @@
   </ion-row>
 </div>
 
-<div class="posts-div">
+<div class="posts-div" *ngIf="posts && posts.length > 0">
   <ion-row style="padding: 18px">
     <ion-col size="12" *ngFor="let item of posts" class="ion-no-padding">
       <adventure-item [item]="item"></adventure-item>
     </ion-col>
   </ion-row>
 </div>
+<div style="margin-top: 15px;"></div>

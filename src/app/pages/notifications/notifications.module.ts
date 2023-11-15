@@ -9,6 +9,7 @@ import { NotificationsPageRoutingModule } from './notifications-routing.module';
 import { NotificationsPage } from './notifications.page';
 import { FooterModule } from 'src/app/components/footer/footer.module';
 import { HeaderModule } from 'src/app/components/header/header.module';
+import { NotificationItemComponent } from 'src/app/components/notification-item/notification-item.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { HeaderModule } from 'src/app/components/header/header.module';
     FooterModule,
     HeaderModule,
   ],
-  declarations: [NotificationsPage]
+  declarations: [NotificationsPage, NotificationItemComponent]
 })
 export class NotificationsPageModule {}

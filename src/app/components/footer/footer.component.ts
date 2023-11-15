@@ -9,7 +9,7 @@ import { NetworkService } from 'src/app/services/network.service';
 })
 export class FooterComponent extends BasePage implements OnInit {
   settings: {}
-  constructor(injector: Injector,    
+  constructor(injector: Injector,
     public network: NetworkService) {
     super(injector);
   }
@@ -31,12 +31,19 @@ export class FooterComponent extends BasePage implements OnInit {
     this.nav.push('pages/' + page);
   }
 
-  async getSetting(){
-    let res = await this.network.getSettings();
-    console.log('settings => ', res);
-    if(res && res.data){
-      this.settings = res.data
-    }
+  async getSetting() {
+    this.dataService.settings.subscribe((settings) => {
+      // console.log('subscribe => ', settings)
+      if (settings) {
+        this.settings = settings
+      }
+    });
+    // let res = await this.network.getSettings();
+    // this.dataService.updateSetting(res.data)
+    // console.log('settings => ', res);
+    // if (res && res.data) {
+    //   this.settings = res.data
+    // }
   }
 
 }

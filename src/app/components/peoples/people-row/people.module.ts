@@ -8,4 +8,4 @@ import { PeoplesComponent } from '../peoples.component';
   imports: [CommonModule, IonicModule],
   exports: [PeoplesComponent],
 })
-export class ChatRowModule {}
+export class PeopleModule {}

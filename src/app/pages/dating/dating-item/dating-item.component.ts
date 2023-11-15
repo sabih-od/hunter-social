@@ -22,7 +22,10 @@ export class DatingItemComponent extends BasePage implements OnInit {
     super(injector);
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    console.log("this.item.profile_image.includes('ph-avatar.png') => ", this.item.profile_image.includes('ph-avatar.png'))
+    if (this.item.profile_image.includes('ph-avatar.png')) { this.item.profile_image = '/assets/Images/dummy-profile.jpg' }
+  }
 
 
   openPopup($event) {
@@ -40,7 +43,7 @@ export class DatingItemComponent extends BasePage implements OnInit {
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
       // this.update.emit({ update: true });
-      // this.events.publish('UPDATE_CHATS', { ...res.data, type: 'unfriend' });
+      this.events.publish('UPDATE_CHATS', { ...res.data, type: 'unfriend' });
       this.events.publish('DATING_UPDATED', { addressee_id: this.item.id, type: 'unfriend' });
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');

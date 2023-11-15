@@ -14,6 +14,7 @@ import { ChatRowModule } from '../chat-rooms/chat-row/chat-row.module';
 import { ChatRowModule as ChatRow2Module } from '../chat-room/chat-row/chat-row.module';
 import { ChatRowComponent } from 'src/app/pages/chat-room/chat-row/chat-row.component';
 import { ChatRowComponent as ChatRowComponent2 } from 'src/app/pages/chat-rooms/chat-row/chat-row.component';
+import { NotificationItemComponent } from 'src/app/components/notification-item/notification-item.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,7 @@ import { ChatRowComponent as ChatRowComponent2 } from 'src/app/pages/chat-rooms/
     ChatRow2Module,
   ],
   declarations: [DashboardPage,
-  
+    NotificationItemComponent,
     ChatRowComponent,
     ChatRowComponent2,
   ]

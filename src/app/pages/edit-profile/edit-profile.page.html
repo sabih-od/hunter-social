@@ -1,7 +1,7 @@
 <app-header [title]="'User Profile'"></app-header>
 
 <ion-content>
-  <app-edit-banner></app-edit-banner>
+  <!-- <app-edit-banner></app-edit-banner> -->
   <ion-grid class="header-jumbotron">
     <ion-card style="border-radius: 10px; margin-top: 0px" class="ion-text-center light-bg ion-padding-top top-item"
       lines="none">
@@ -9,7 +9,7 @@
         <ion-card-title>Profile Picture</ion-card-title>
       </ion-card-header> -->
       <ion-avatar class="avatarimage">
-        <img style="border: 2px solid black" [src]="user_image"
+        <img style="border: 2px solid black" [src]="user?.profile_image"
           onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
       </ion-avatar>
       <ion-button (click)="doGetPicture()" class="uploadimagebtn">Upload New Image </ion-button>
@@ -50,7 +50,7 @@
 
     <ion-label>Email Address</ion-label>
     <ion-item class="margin-ver" lines="none">
-      <ion-input [(ngModel)]="user.email" class="ion-margin-start">
+      <ion-input [(ngModel)]="user.email" [disabled]="true" class="ion-margin-start">
       </ion-input>
     </ion-item>
 

@@ -8,13 +8,15 @@
   </div>
 
   <ion-grid>
-    <ion-row class="ion-margin-top">
+    <ion-row class="">
       <ion-col size="12">
-        <ion-item>
-          <ion-searchbar [(ngModel)]="_search" class="ion-margin-bottom" (ngModelChange)="onSearch()" placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar>
-          <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search"> </ion-icon> </ion-button>
+        <ion-item lines="none" class="searchitem ion-no-padding">
+          <ion-searchbar [(ngModel)]="_search" class="" (ngModelChange)="onSearch()"
+            placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar>
+          <!-- <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search">
+            </ion-icon> </ion-button> -->
         </ion-item>
-      </ion-col> 
+      </ion-col>
     </ion-row>
 
     <ion-row *ngFor="let item of friends | filter:search">
@@ -29,10 +31,7 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab> -->
-  <div *ngIf="friends?.length == 0" style="text-align: center; text-transform: uppercase">
-    <p>
-      You Have No friends <br />
-      Click The Plus Icon To Add Friends
-    </p>
+  <div *ngIf="friends?.length == 0" style="text-align: center;text-transform: uppercase;height: 84%;justify-content: center;align-items: center;display: flex;">
+    <p>You Have No friends</p>
   </div>
 </ion-content>

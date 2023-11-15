@@ -115,14 +115,14 @@ export class HomePage extends BasePage implements OnInit {
 
   async callPusherService() {
     let token = localStorage.getItem('token');
-    let res = await this.network.getUser();
-    console.log({ res });
-    if (res && res.data && res.data.user) {
-      this.users.setUser(res.data.user);
+    let user = await this.users.getUser();
+    console.log('callPusherService => ', user);
+    if (user) {
+      this.users.setUser(user);
       // get post data
-      this.pusher.globalChatNotify(token, res.data.user.id);
+      this.pusher.globalChatNotify(token, user.id);
     } else {
-      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+      this.utility.presentFailureToast('Something went wrong');
       this.nav.push('pages/login');
     }
   }
@@ -182,7 +182,7 @@ export class HomePage extends BasePage implements OnInit {
     // HomePage.selectedTab = this.tabs.getSelected();
   }
 
-  ionViewDidEnter() {}
+  ionViewDidEnter() { }
 
   openWebview() {
     const browser = this.iab.create(Config.URL + '/public/', '_self', {
@@ -191,7 +191,7 @@ export class HomePage extends BasePage implements OnInit {
     }); /*3*/
   }
 
-  hideModal(){
+  hideModal() {
     this.showmodal = false;
   }
 

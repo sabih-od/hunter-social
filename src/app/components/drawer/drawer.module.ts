@@ -5,6 +5,10 @@ import { DrawerComponent } from './drawer.component';
 import { MenuHeaderModule } from '../menu-header/menu-header.module';
 import { MenuItemModule } from '../menu-item/menu-item.module';
 import { MenuFooterModule } from '../menu-footer/menu-footer.module';
+import { HeaderModule } from '../header/header.module';
+import { FooterModule } from '../footer/footer.module';
+// import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
+import { DisclaimerModule } from '../disclaimer/disclaimer.module';
 
 @NgModule({
   declarations: [DrawerComponent],
@@ -14,7 +18,10 @@ import { MenuFooterModule } from '../menu-footer/menu-footer.module';
     MenuHeaderModule,
     MenuItemModule,
     MenuFooterModule,
+    HeaderModule,
+    FooterModule,
+    DisclaimerModule
   ],
   exports: [DrawerComponent],
 })
-export class DrawerModule {}
+export class DrawerModule { }
