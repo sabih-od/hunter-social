@@ -11,6 +11,8 @@ import { PostAdventureContentPage } from '../post-adventure-content/post-adventu
 export class PostAdventurePage extends BasePage implements OnInit {
   items;
   closed = false;
+  loading = false;
+  refresh = false;
   constructor(injector: Injector) {
     super(injector);
   }
@@ -34,6 +36,7 @@ export class PostAdventurePage extends BasePage implements OnInit {
   }
 
   async getData() {
+    this.loading = true;
     let res = await this.network.getPosts();
     let user = await this.users.getUser();
     console.log('USER', user);
@@ -57,6 +60,7 @@ export class PostAdventurePage extends BasePage implements OnInit {
         //     : '',
       }));
     }
+    this.loading = false;
   }
 
   async addNew() {

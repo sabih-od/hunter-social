@@ -83,7 +83,7 @@ export class NetworkService {
     return this.httpGetResponse(
       `posts?orderBy=${orderBy}&sortedBy=${sortedBy}`,
       null,
-      true
+      false
     );
   }
 

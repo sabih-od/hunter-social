@@ -9,16 +9,19 @@ ion-content {
 
 ion-item {
   --background: var(--ion-color-primary);
+  height: 42px;
+  border-bottom: 1px solid #333;
 
   ion-label {
     color: white;
-    font-size: 16px;
+    // font-size: 16px;
 
     h2 {
-      font-size: 16px;
+      font-size: 15px;
     }
   }
 }
+
 
 .criclebefore {
   border: 5px solid white;
@@ -32,6 +35,6 @@ ion-item {
 
 @media screen and (max-width: 600px) {
   ion-menu {
-    --width: 304px; 
+    --width: 304px;
   }
 }

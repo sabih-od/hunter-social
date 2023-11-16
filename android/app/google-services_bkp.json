@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "236648173369",
+    "project_id": "hunter-social",
+    "storage_bucket": "hunter-social.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236648173369:android:7df9e068a839efbe78a2e8",
+        "android_client_info": {
+          "package_name": "com.huntersocial.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236648173369-bna4t52sqp0a8n7p2l3ascn9uoodsost.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huntersocial.app",
+            "certificate_hash": "a65b7ac2d3ed47c26f243de728541c691e2fbea0"
+          }
+        },
+        {
+          "client_id": "236648173369-l2r6ooq481dj83gm9hn6i5cp05jcvt0f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huntersocial.app",
+            "certificate_hash": "9a6ddd5545765acfce5df1c955667190027e2597"
+          }
+        },
+        {
+          "client_id": "236648173369-ulgg06vish9keq6520niau9n7apncgc6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9KkUFe7okGcRUI46kHGR6oovWhJly67Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236648173369-ulgg06vish9keq6520niau9n7apncgc6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

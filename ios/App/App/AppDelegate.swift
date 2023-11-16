@@ -1,5 +1,6 @@
 import UIKit
 import Capacitor
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -10,16 +11,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         #if DEBUG
-  if #available(macOS 13.3, iOS 16.4, tvOS 16.4, *) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-              if let vc = self.window?.rootViewController as? CAPBridgeViewController {
-                  vc.bridge?.webView?.isInspectable = true;
-              }
+        if #available(macOS 13.3, iOS 16.4, tvOS 16.4, *) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                    if let vc = self.window?.rootViewController as? CAPBridgeViewController {
+                        vc.bridge?.webView?.isInspectable = true;
+                    }
+                }
         }
-  }
-#endif
+        #endif
 
+        FirebaseApp.configure()
         return true
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+        Messaging.messaging().token(completion: { (token, error) in
+          if let error = error {
+              NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+          } else if let token = token {
+              NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: token)
+          }
+        })
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

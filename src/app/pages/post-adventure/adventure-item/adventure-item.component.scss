@@ -1,6 +1,6 @@
 .card {
-  border-radius: 12px;
-  border: 1px solid lightgray;
+  border-radius: 0;
+  // border: 1px solid #f1f1f1;
 
   ion-item {
     --padding-start: 12px !important;
@@ -10,7 +10,12 @@
 
     p {
       font-size: 12px;
+      color: #777;
     }
+  }
+
+  h2 {
+    text-transform: capitalize;
   }
 
   ion-card-content {
@@ -28,11 +33,10 @@
   }
 
   .cardcontent {
-    padding: 0 15px 0px 15px;
+    padding: 15px 15px;
     display: block;
     width: 100%;
-    margin-bottom: 9px;
-    margin-top: 9px;
+    font-size: 14px;
   }
 
   ion-col {

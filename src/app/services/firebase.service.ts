@@ -31,7 +31,7 @@ export class FirebaseService {
     console.log('fcm_token => ', fcm_token)
     if (fcm_token) {
       this.network.saveFcmToken({ token: fcm_token }).then(
-        (dats) => {},
+        (dats) => { },
         (err) => {
           console.error(err);
         }
@@ -40,8 +40,9 @@ export class FirebaseService {
   }
 
   async setupFMC() {
+    console.log('setupFMC => ')
     if (Capacitor.getPlatform() !== 'web') {
-      console.log('this.setupNativePush => ', )
+      console.log('this.setupNativePush => ',)
       await this.setupNativePush();
     }
 
@@ -74,6 +75,7 @@ export class FirebaseService {
         }
       });
 
+      console.log('setupNativePush a => ')
       // On success, we should be able to receive notifications
       PushNotifications.addListener('registration', (token: Token) => {
         console.log('FCM_TOKEN', token.value);

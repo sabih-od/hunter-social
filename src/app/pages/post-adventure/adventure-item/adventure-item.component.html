@@ -53,10 +53,18 @@
       <source [src]="item.media_upload.url" [type]="item.media_upload.mime_type" />
     </video>
 
+    <!-- <ion-row class="actionslist">
+      <ion-col size="12">
+        <div class="likedposts">
+          You, John Smith and 2 others</div>
+      </ion-col>
+    </ion-row> -->
+
     <ion-row class="actionslist"> <!--class="ion-margin-vertical"-->
       <ion-col size="4">
         <ion-label (click)="like()">
-          <ion-icon class="left-icon" [name]="item.has_liked ? 'thumbs-up' : 'thumbs-up-outline'"></ion-icon>
+          <!-- <ion-icon class="left-icon" [name]="item.has_liked ? 'thumbs-up' : 'thumbs-up-outline'"></ion-icon> -->
+          <ion-icon class="left-icon" [name]="item.has_liked ? 'heart' : 'heart-outline'"></ion-icon>
           <ion-text class="action-text">{{
             item.count_likes > 0
             ? "Likes " + "(" + item.count_likes + ")"
@@ -68,7 +76,7 @@
 
       <ion-col size="5" (click)="showComments()">
         <ion-label>
-          <ion-icon class="left-icon" name="chatbubble-ellipses-outline"></ion-icon>
+          <ion-icon class="left-icon" name="chatbubble-outline"></ion-icon>
           <ion-text class="action-text">{{
             item.count_comments > 0
             ? "Comments " + "(" + item.count_comments + ")"

@@ -19,15 +19,53 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   constructor(injector: Injector, public popoverController: PopoverController) {
     super(injector);
   }
+  likerstext = '';
+  userid
 
   ngOnInit() {
-    console.log(this.item);
+    // console.log(this.item);
+
+
+    // this.likerstext = '';
+    // if (this.item.has_liked && this.item?.likers?.data.length == 1) { this.likerstext += 'You liked'; }
+    // else if (this.item.has_liked && this.item?.likers?.data.length == 2) { this.likerstext += 'You and '; }
+
+    // this.item?.likers?.data.map(x => {
+    //   this.likerstext += `${x.name} and ${this.item?.likers?.data.length - 1} likes`;
+    //   return;
+    // })
+    // this.getuser()
+    // const likers = this.item?.likers?.data.filter(user => {
+    //   console.log('user.pivot.user_id => ', user.pivot.user_id)
+    //   user.pivot.user_id == this.userid
+    // });
+    // console.log('likers => ', likers)
+    // const likeMessage = this.generateLikeMessage(likers);
+
+    // console.log('likerstext => ', likeMessage)
+    // console.log('this.item?.likers?.data.length => ', this.item?.likers?.data.length)
+
     // if(this.item.content === undefined){
     //   this.contentLabel = this.item.content;
     //   console.log("this.contentLabel",this.contentLabel);
     // } else{
     //   this.contentLabel = ""
     // }
+  }
+
+  generateLikeMessage(likers) {
+    const likerNames = likers.map(liker => liker.name);
+
+    if (likerNames.length === 1) {
+      return `${likerNames[0]} liked`;
+    } else if (likerNames.length === 2) {
+      return `${likerNames[0]} and ${likerNames[1]} liked`;
+    } else if (likerNames.length > 2) {
+      const othersCount = likerNames.length - 2;
+      return `${likerNames[0]}, ${likerNames[1]}, and ${othersCount} others liked`;
+    } else {
+      return "No likes";
+    }
   }
 
   openPopup($event) {

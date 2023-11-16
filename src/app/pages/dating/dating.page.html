@@ -25,16 +25,11 @@
   <div style="width: 100%; align-items: center; display: flex; padding: 0 20px 0 10px;">
     <ion-searchbar placeholder="Search" [(ngModel)]="search" (ngModelChange)="getData()"></ion-searchbar>
     <div *ngIf="!isLoading">
-
       <!-- <ion-select placeholder="Select One" [(ngModel)]="dating_users" (ngModelChange)="getData()">
         <ion-select-option [value]="0">HUNTING</ion-select-option>
         <ion-select-option [value]="1">DATING</ion-select-option>
       </ion-select> -->
-
-      <ion-button slot="end" (click)="filter()">
-        <ion-icon name="filter-outline"></ion-icon>
-        Filter
-      </ion-button>
+      <ion-button class="filterbtn" slot="end" (click)="filter()"> <ion-icon name="filter-outline"></ion-icon> Filter </ion-button>
     </div>
   </div>
 

@@ -1,13 +1,14 @@
-<!-- <ion-header class="ion-no-border">
+<ion-header *ngIf="showForgotpass" class="ion-no-border">
   <ion-toolbar>
     <ion-buttons>
-      <ion-button (click)="nav.pop()">
+      <ion-button (click)="showLoginSignup()">
         <ion-icon color="medium" name="arrow-back-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header> -->
-<ion-header></ion-header>
+</ion-header>
+
+<ion-header *ngIf="!showForgotpass" class="loginhead"></ion-header>
 
 <ion-content class="login">
   <div class="authcontainer">
