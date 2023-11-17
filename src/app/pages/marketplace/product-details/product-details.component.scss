@@ -1,5 +1,6 @@
 .cover-photo {
   position: relative;
+
   img {
     height: 215px;
     object-fit: cover;
@@ -20,8 +21,8 @@ ion-card-title {
 }
 
 ion-avatar {
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   margin-right: 13px;
 }
 
@@ -39,4 +40,76 @@ ion-avatar {
   }
 
 
+}
+
+
+
+/* ------------------------------ */
+
+.prodimage {
+  position: relative;
+
+  ion-button {
+    font-size: 15px;
+  }
+}
+
+.productinfo {
+  padding: 15px;
+}
+
+.productinfo {
+  .price {
+    text-align: right;
+  }
+
+  .price h1 {
+    margin: 0;
+    font-size: 31px;
+  }
+}
+
+.productinfo .title {
+  font-family: 'PoppinsSemiBold';
+  font-size: 22px;
+}
+
+.productinfo p {
+  margin: 0;
+  font-size: 15px;
+  color: #333;
+}
+
+.sellerinfo {
+  background: #f7f7f7;
+  padding: 15px;
+}
+
+.userinfo {
+  display: flex;
+  align-items: stretch;
+
+  .userinfoname {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+}
+
+.userinfo h2 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.userinfo p {
+  font-size: 13px;
+  color: #333;
+  margin: 0;
+}
+
+.userinfo p ion-icon {
+  margin-right: 7px;
+  display: inline-block;
+  vertical-align: middle;
 }

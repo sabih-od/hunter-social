@@ -73,17 +73,23 @@ export class HeaderComponent extends BasePage implements OnInit {
 
 
 
-      const localnotification = JSON.parse(localStorage.getItem('notifications_count')) || 0;
-      if (localnotification == null) localStorage.setItem('notifications_count', '0');
-      this.notifications_count = localnotification == null ? 0 : JSON.parse(localStorage.getItem('notifications_count'));
-      console.log('this.notifications_count => ', this.notifications_count);
+      const localnotification = JSON.parse(localStorage.getItem('notifications_count'));
+      console.log('localnotification => ', localnotification)
 
-      // const noticount = await this.network.getUnreadNotificationCount();
-      // console.log('noticount => ', noticount.data.count)
-      // if (noticount.data.count) {
-      //   localStorage.setItem('notifications_count', noticount.data.count.toString());
-      //   this.notifications_count = noticount.data.count;
-      // }
+      // // if (localnotification) localStorage.setItem('notifications_count', '0');
+      // this.notifications_count = localnotification == null ? 0 : JSON.parse(localStorage.getItem('notifications_count'));
+      // console.log('this.notifications_count => ', this.notifications_count);
+      if (!localnotification) {
+        this.notifications_count = 0;
+        const noticount = await this.network.getUnreadNotificationCount();
+        console.log('noticount => ', noticount.data.count)
+        if (noticount.data.count) {
+          localStorage.setItem('notifications_count', noticount.data.count.toString());
+          this.notifications_count = noticount.data.count;
+        }
+      } else {
+        this.notifications_count = localnotification;
+      }
 
       window.addEventListener('storageChange', function (e) {
         console.log('e => ', e)

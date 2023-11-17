@@ -14,7 +14,7 @@ export class PeopleComponent extends BasePage implements OnInit {
     super(injector);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async showMenu($event) {
     let menu = await this.popoverController.create({
@@ -38,6 +38,11 @@ export class PeopleComponent extends BasePage implements OnInit {
     let res = await this.network.unfriend(this.item.id);
     console.log('unfriend', res);
     if (res && res.data) {
+
+      let user = await this.users.getUser()
+      user.connection_count = user.connection_count - 1;
+      this.users.setUser(user)
+
       this.utility.presentSuccessToast(res.message);
       this.events.publish('PEOPLE_UPDATED');
     } else
@@ -64,6 +69,11 @@ export class PeopleComponent extends BasePage implements OnInit {
     let res = await this.network.unblock(this.item.id);
     console.log('unfriend', res);
     if (res && res.data) {
+
+      let user = await this.users.getUser()
+      user.connection_count = user.connection_count - 1;
+      this.users.setUser(user)
+
       this.utility.presentSuccessToast(res.message);
       this.events.publish('PEOPLE_UPDATED');
     } else
@@ -74,6 +84,11 @@ export class PeopleComponent extends BasePage implements OnInit {
     let res = await this.network.addFriend(this.item.id);
     console.log('addFriend', res);
     if (res && res.data) {
+
+      let user = await this.users.getUser()
+      user.connection_count = user.connection_count + 1;
+      this.users.setUser(user)
+
       this.item.canRequest = false;
       this.item.is_sent_friend_request = true;
       // this.utility.presentSuccessToast(res.message);

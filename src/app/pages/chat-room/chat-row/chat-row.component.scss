@@ -44,5 +44,8 @@ ion-grid {
 ion-item {
   --inner-padding-bottom: 10px;
   --inner-padding-top: 10px;
-  --inner-padding-end: 0;
+  --inner-padding-end: 10px;
+  --inner-padding-start: 10px;
+  --background: transparent;
+  --inner-border-width: 0;
 }

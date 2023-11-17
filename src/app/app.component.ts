@@ -8,6 +8,7 @@ import { UserService } from './services/user.service';
 import { UtilityService } from './services/utility.service';
 // import { SqliteService } from './services/sqlite.service';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +45,20 @@ export class AppComponent {
     );
   }
 
+  setStatusBarStyleDark = async () => {
+    await StatusBar.setStyle({ style: Style.Dark });
+  };
+
+  setStatusBarStyleLight = async () => {
+    await StatusBar.setStyle({ style: Style.Light });
+  };
+
   initialize() {
+
+    if (this.platform.is('ios')) {
+      this.setStatusBarStyleDark()
+    }
+
     if (
       this.platform.is('cordova') ||
       this.platform.is('ios') ||

@@ -30,7 +30,8 @@ export class ChatRoomsComponent
     // },
   ];
   groups;
-  isLoading = false;
+  loading = false;
+  refreshing = false
   search = '';
   _search = '';
 
@@ -55,12 +56,13 @@ export class ChatRoomsComponent
   }
 
   async initialize() {
-    // this.isLoading = true;
+    // this.loading = true;
     // this.dataService.chat_data = {};
     // this.nav.push('pages/chat');
     this.events.publish('OPEN_CHAT_BAR');
+    this.loading = true;
     await this.getGroups();
-    // this.isLoading = false;
+    // this.loading = false;
     this.events.subscribe('UPDATE_GROUPS', this.getGroups.bind(this));
   }
 
@@ -79,13 +81,14 @@ export class ChatRoomsComponent
       }));
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+    this.loading = false;
   }
 
   async doRefresh($event) {
-    // this.isLoading = true;
+    this.refreshing = true;
     await this.getGroups();
     $event.target.complete();
-    //this.isLoading = false;
+    this.refreshing = false;
   }
 
   viewGroup(item) {
@@ -96,7 +99,7 @@ export class ChatRoomsComponent
     }
   }
 
-  showGroupRequestModal(){
+  showGroupRequestModal() {
     this.modals.present(RequestAGroupComponent);
   }
 

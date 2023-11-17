@@ -10,6 +10,7 @@ export class NotificationItemComponent implements OnInit {
   @Input() item: any;
   @Output() acceptClicked = new EventEmitter();
   @Output() ignoreClicked = new EventEmitter();
+  @Output() notificationClicked = new EventEmitter();
 
   constructor() { }
 
@@ -17,6 +18,13 @@ export class NotificationItemComponent implements OnInit {
 
     console.log('item => ', this.item)
 
+  }
+
+  clickItem(notiItem) {
+    if (notiItem?.is_read == 0) {
+      this.item.is_read = 1;
+      this.notificationClicked.emit(notiItem?.id)
+    }
   }
 
   acceptRequest(userid, id) {

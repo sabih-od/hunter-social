@@ -144,7 +144,7 @@ export class HomePage extends BasePage implements OnInit {
       // get post data
       this.getData();
     } else {
-      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+      // this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
       this.nav.push('pages/login');
     }
   }

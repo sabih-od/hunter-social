@@ -73,9 +73,12 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
   //   this.productList = data.data.data;
   // }
   async getStates() {
-    let res = await this.network.getStates();
-    console.log('getStates', res);
-    this.states = res.data;
+    let res = await this.users.states.subscribe(states => {
+      this.states = states;
+      console.log('this.states => ', this.states);
+    });
+    // console.log('getStates', res);
+    // this.states = res.data;
   }
   async myListing(item) {
     console.log('user', this.userId);
@@ -196,13 +199,13 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
   }
 
 
-  onIonInfinite(ev) {
+  onIonInfinite($event) {
     this.page = this.page + 1;
     if (this.isMyProductListing) this.myListing(null)
     else this.getProducts(null)
     // this.onFilter();
     setTimeout(() => {
-      ev.target.complete();
+      $event.target.complete();
       // (ev as IonInfiniteScrollContent).target.complete();
     }, 500);
   }

@@ -16,7 +16,7 @@
     <div class="notifications" [class.read]="item?.is_read" [class.unread]="!item?.is_read"
       *ngFor="let item of notifications">
       <app-notification-item [item]="item" (acceptClicked)="acceptRequest($event)"
-        (ignoreClicked)="ignoreRequest($event)"></app-notification-item>
+        (ignoreClicked)="ignoreRequest($event)" (notificationClicked)="clickNotification($event)" ></app-notification-item>
       <!-- <div class="notificationitem">
         <img [src]="item?.notificationable?.user?.profile_image"
           onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />

@@ -262,6 +262,11 @@ export class DashboardPage extends BasePage implements OnInit {
     console.log('acceptRequest', res);
     if (res && res.data) {
       // this.utility.presentSuccessToast(res.message);
+
+      let user = await this.users.getUser()
+      user.connection_count = user.connection_count + 1;
+      this.users.setUser(user)
+
       const index = this.notifications.findIndex(x => x.id == id)
       this.notifications[index].notificationable.user.is_friend_requested = false;
       this.notifications[index].notificationable.user.is_friend = true;

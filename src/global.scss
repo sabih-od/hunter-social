@@ -319,7 +319,7 @@ app-header {
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  height: 250px;
+  height: 200px;
   padding: 15px;
   display: flex;
   align-items: center;
@@ -339,7 +339,7 @@ app-header {
   .heading1 {
     color: #fff;
     font-family: Anton;
-    font-size: 50px;
+    font-size: 40px;
     margin: 0;
     line-height: 1;
   }
@@ -352,6 +352,10 @@ app-header {
 
 
 ion-searchbar {
+  padding-inline-end: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  height: 42px !important;
 
   /* overall styles here */
   .searchbar-input-container {
@@ -363,7 +367,8 @@ ion-searchbar {
     input {
       /* input element styles here */
       padding-inline-start: 40px !important;
-      font-size: 16px !important;
+      font-size: 15px !important;
+      padding-inline-end: 0 !important;
     }
 
     ion-icon {

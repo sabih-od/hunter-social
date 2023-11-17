@@ -27,7 +27,8 @@ export class ChatRoomComponent extends BasePage implements OnInit {
     // },
   ];
   friends;
-  isLoading = false;
+  loading = false;
+  refreshing = false;
   search = '';
   sender_id = undefined;
   _search = '';
@@ -44,11 +45,11 @@ export class ChatRoomComponent extends BasePage implements OnInit {
   }
 
   async initialize() {
-    this.isLoading = true;
+    this.loading = true;
     this.dataService.chat_data = {};
     // this.nav.push('pages/chat');
     await this.getFriends();
-    this.isLoading = false;
+    this.loading = false;
     this.events.subscribe('UPDATE_CHATS', this.getFriends.bind(this));
   }
 
@@ -88,9 +89,9 @@ export class ChatRoomComponent extends BasePage implements OnInit {
   }
 
   async doRefresh($event) {
-    this.isLoading = true;
+    this.refreshing = true;
     await this.getFriends();
     $event.target.complete();
-    this.isLoading = false;
+    this.refreshing = false;
   }
 }

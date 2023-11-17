@@ -31,31 +31,29 @@ export class NotificationsPage extends BasePage implements OnInit {
 
     let response = await this.network.getNotifications(this.page, this.limit);
     console.log('getNotifications response => ', response)
-    // this.notifications = response?.data?.data.map((notifi) => ({
-    //   ...notifi,
-    //   // hasUnread: self.sender_id === notifi.id,
-    //   // content: notifi?.notificationable && (notifi?.notificationable?.user?.is_friend_requested && notifi?.notificationable?.user.name + ' sent you friend request' || notifi?.notificationable?.user?.is_friend && notifi?.notificationable?.user.name + ' accepted friend request'),
-    //   profile_image: this.image.getImageUrl(notifi?.notificationable?.user?.profile_image || notifi?.notificationable?.user?.profile_image),
-    // }));
+    this.notifications = response?.data?.data.map((notifi) => ({
+      ...notifi,
+      // hasUnread: self.sender_id === notifi.id,
+      // content: notifi?.notificationable && (notifi?.notificationable?.user?.is_friend_requested && notifi?.notificationable?.user.name + ' sent you friend request' || notifi?.notificationable?.user?.is_friend && notifi?.notificationable?.user.name + ' accepted friend request'),
+      profile_image: this.image.getImageUrl(notifi?.notificationable?.user?.profile_image || notifi?.notificationable?.user?.profile_image),
+    }));
+    console.log('this.notifications => ', this.notifications)
 
-    if (this.page == 1) {
-      this.notifications = []
-    }
 
-    for (let i = 0; i < response?.data?.data.length; i++) {
-      let obj = { ...response?.data?.data[i] }
-      if (obj.notificationable) {
-        obj.notificationable.user.profile_image = this.image.getImageUrl(obj.notificationable.user.profile_image)
-        if (obj.notificationable.status == 2) {
-          obj.content = `${obj.notificationable.user?.name} has been blocked!`
-        } else if (obj.notificationable.user.is_friend) {
-          obj.content = `${obj.notificationable.user?.name} friend request accepted`
-        } else if (obj.notificationable.user.is_friend_requested) {
-          obj.content = obj.notificationable.user?.name + ' sent you friend request'
-        }
-      }
-      this.notifications.push(obj)
-    }
+    // for (let i = 0; i < response?.data?.data.length; i++) {
+    //   let obj = { ...response?.data?.data[i] }
+    //   if (obj.notificationable) {
+    //     obj.notificationable.user.profile_image = this.image.getImageUrl(obj.notificationable.user.profile_image)
+    //     if (obj.notificationable.status == 2) {
+    //       obj.content = `${obj.notificationable.user?.name} has been blocked!`
+    //     } else if (obj.notificationable.user.is_friend) {
+    //       obj.content = `${obj.notificationable.user?.name} friend request accepted`
+    //     } else if (obj.notificationable.user.is_friend_requested) {
+    //       obj.content = obj.notificationable.user?.name + ' sent you friend request'
+    //     }
+    //   }
+    //   this.notifications.push(obj)
+    // }
 
     console.log('this.notifications => ', this.notifications)
     // console.log('this.currentFriends => ', this.notifications)
@@ -75,6 +73,11 @@ export class NotificationsPage extends BasePage implements OnInit {
       const index = this.notifications.findIndex(x => x.id == id)
       this.notifications[index].notificationable.user.is_friend_requested = false;
       this.notifications[index].notificationable.user.is_friend = true;
+
+      let user = await this.users.getUser()
+      user.connection_count = user.connection_count + 1;
+      this.users.setUser(user)
+
       this.events.publish('UPDATE_CHATS');
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
@@ -92,10 +95,21 @@ export class NotificationsPage extends BasePage implements OnInit {
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
 
+  async clickNotification(id) {
+    console.log('clickNotification id => ', id)
+    let res = await this.network.readNotifiaction(id)
+    console.log('clickNotification => ', res)
+    const count = JSON.parse(localStorage.getItem('notifications_count'));
+    localStorage.setItem('notifications_count', (count - 1).toString());
+    var event = new Event('storageChange');
+    window.dispatchEvent(event);
+
+  }
 
   async doRefresh($event) {
     this.refresh = true;
     this.page = 1;
+    this.notifications = []
     await this.getNotifications();
     $event.target.complete();
     this.refresh = false;

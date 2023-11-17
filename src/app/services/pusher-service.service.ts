@@ -5,6 +5,9 @@ import { NavService } from './basic/nav.service';
 import { DataService } from './data.service';
 import { UtilityService } from './utility.service';
 import { Config } from '../../app/config/main.config';
+import { Capacitor, Plugins } from '@capacitor/core';
+import { ActionPerformed } from '@capacitor/push-notifications';
+const { LocalNotifications } = Plugins;
 declare const Pusher: any;
 @Injectable({
   providedIn: 'root',
@@ -88,13 +91,53 @@ export class PusherService {
         var event = new Event('storageChange');
         window.dispatchEvent(event);
 
-        this.utility.presentSuccessToast(
-          e.message ?? 'You have received a new notification'
-        );
+        if (Capacitor.getPlatform() !== 'web') {
+          const notifs = await LocalNotifications.schedule({
+            notifications: [
+              {
+                title: 'Hunter Social',
+                body: e.message ?? 'You have received a new notification',
+                id: 1,
+                schedule: { at: new Date(Date.now() + 1000) },
+                sound: null,
+                attachments: null,
+                actionTypeId: '',
+                extra: null,
+                actions: [
+                  {
+                    id: 'ignore',
+                    title: 'Ignore',
+                    requiresAuthentication: false,
+                    foreground: true,
+                  },
+                  {
+                    id: 'accept',
+                    title: 'Accept',
+                    requiresAuthentication: false,
+                    foreground: true,
+                  },
+                ],
+              },
+            ],
+          });
+        } else {
+          this.utility.presentSuccessToast(
+            e.message ?? 'You have received a new notification'
+          );
+        }
 
 
 
       });
+
+      if (Capacitor.getPlatform() !== 'web') {
+        LocalNotifications.addListener('localNotificationActionPerformed', (notificationAction: ActionPerformed) => {
+          console.log('notificationAction', notificationAction);
+          if (notificationAction.actionId == 'tap') {
+            this.nav.push('pages/notifications')
+          }
+        });
+      }
 
       resolve(true);
     });

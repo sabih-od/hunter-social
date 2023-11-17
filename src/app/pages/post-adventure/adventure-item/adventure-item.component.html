@@ -65,11 +65,7 @@
         <ion-label (click)="like()">
           <!-- <ion-icon class="left-icon" [name]="item.has_liked ? 'thumbs-up' : 'thumbs-up-outline'"></ion-icon> -->
           <ion-icon class="left-icon" [name]="item.has_liked ? 'heart' : 'heart-outline'"></ion-icon>
-          <ion-text class="action-text">{{
-            item.count_likes > 0
-            ? "Likes " + "(" + item.count_likes + ")"
-            : "Like"
-            }}
+          <ion-text class="action-text">{{ item.count_likes > 0 ? "Likes " + "(" + item.count_likes + ")" : "Like" }}
           </ion-text>
         </ion-label>
       </ion-col>

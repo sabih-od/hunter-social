@@ -14,7 +14,8 @@ import { UserDetailComponentComponent } from 'src/app/pages/dating/user-detail-c
 export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   datings;
   all_datings = [];
-  isLoading = false;
+  loading = false;
+  refreshing = false;
   search = '';
   dating_users = 0;
   role_id;
@@ -37,7 +38,7 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
     console.log('this._search', this._search)
     if (this.timeToken) clearTimeout(this.timeToken);
     this.timeToken = setTimeout(() => {
-      this.isLoading = true;
+      this.loading = true;
       this.page = 1;
       this.datings = []
       this.getData();
@@ -64,12 +65,12 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   }
 
   async ngOnInit() {
-    this.isLoading = true;
+    this.loading = true;
     this.dating_enabled = await this.datingEnable();
     // this.datings = this.dataService.getDatings();
     this.events.subscribe('DATING_UPDATED', this.getData.bind(this));
     this.checkUser();
-    // this.isLoading = false;
+    // this.loading = false;
     const res = await this.users.getUser();
     this.role_id = res.role_id;
     console.log('USRE', this.role_id);
@@ -99,11 +100,11 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   }
 
   async doRefresh($event) {
-    this.isLoading = true;
+    this.refreshing = true;
     this.page = 1;
+    this.datings = []
     await this.getData();
     $event.target.complete();
-    // this.isLoading = false;
   }
 
   async getData(data = null) {
@@ -156,7 +157,7 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
     }
     this.all_datings = this.datings; //[...this.datings];
 
-    this.isLoading = false;
+    this.loading = false;
     console.log('Here Datings getData com', this.datings);
   }
 
@@ -199,7 +200,7 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
     console.log('this._search', this._search)
     if (this.timeToken) clearTimeout(this.timeToken);
     this.timeToken = setTimeout(() => {
-      this.isLoading = true;
+      this.loading = true;
       this.page = 1;
       this.datings = []
       this.getData();

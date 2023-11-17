@@ -59,6 +59,11 @@ export class ChatRowComponent extends BasePage implements OnInit {
     let res = await this.network.acceptRequest(this.item.id);
     console.log('acceptRequest', res);
     if (res && res.data) {
+
+      let user = await this.users.getUser()
+      user.connection_count = user.connection_count + 1;
+      this.users.setUser(user)
+
       this.utility.presentSuccessToast(res.message);
       this.events.publish('UPDATE_CHATS');
     } else
@@ -79,6 +84,11 @@ export class ChatRowComponent extends BasePage implements OnInit {
     let res = await this.network.unfriend(this.item.id);
     console.log('unfriend', res);
     if (res && res.data) {
+
+      let user = await this.users.getUser()
+      user.connection_count = user.connection_count - 1;
+      this.users.setUser(user)
+      
       this.utility.presentSuccessToast(res.message);
       this.events.publish('UPDATE_CHATS');
     } else

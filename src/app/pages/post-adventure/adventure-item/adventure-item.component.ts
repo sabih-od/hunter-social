@@ -25,7 +25,6 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   ngOnInit() {
     // console.log(this.item);
 
-
     // this.likerstext = '';
     // if (this.item.has_liked && this.item?.likers?.data.length == 1) { this.likerstext += 'You liked'; }
     // else if (this.item.has_liked && this.item?.likers?.data.length == 2) { this.likerstext += 'You and '; }
@@ -35,12 +34,7 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     //   return;
     // })
     // this.getuser()
-    // const likers = this.item?.likers?.data.filter(user => {
-    //   console.log('user.pivot.user_id => ', user.pivot.user_id)
-    //   user.pivot.user_id == this.userid
-    // });
-    // console.log('likers => ', likers)
-    // const likeMessage = this.generateLikeMessage(likers);
+
 
     // console.log('likerstext => ', likeMessage)
     // console.log('this.item?.likers?.data.length => ', this.item?.likers?.data.length)
@@ -68,6 +62,7 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     }
   }
 
+
   openPopup($event) {
     console.log(this.item);
     if (this.item.is_reported == false) {
@@ -79,6 +74,15 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     } else {
       this.alert.presentFailureToast('Already reported!');
     }
+  }
+
+  async getuser() {
+    const user = await this.users.getUser()
+    this.userid = user?.id
+
+    console.log('likers => ', this.item?.likers?.data)
+    const likeMessage = this.generateLikeMessage(this.item?.likers?.data);
+    console.log('likerstext => ', likeMessage)
   }
 
   async like() {

@@ -30,10 +30,11 @@
   ({{ item.count }})
 </p> -->
 <div class="market-place-content">
-  <h1>Market Place</h1>
+  <!-- <h1>Market Place</h1> -->
 
   <div class="searchtop">
-    <ion-searchbar [(ngModel)]="topSearch" (ionInput)="onTopInput($event)" shape="round"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="topSearch" (ionInput)="onTopInput($event)" placeholder="Search Products..."
+      shape="round"></ion-searchbar>
     <ion-select [(ngModel)]="state_id" (ngModelChange)="getProducts(null)">
       <ion-select-option value="">Select State</ion-select-option>
       <ion-select-option *ngFor="let item of states" [value]="item.id">{{item.name}}</ion-select-option>
@@ -55,8 +56,8 @@
     Listing</ion-button>
   <!-- <ion-button expand="block">Block</ion-button> -->
   <h1 style="margin-bottom: 0; margin-top: 30px;">Filters</h1>
-  <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onInput($event)" (ionChange)="onFilter()"
-    shape="round"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onInput($event)" placeholder="Filter Category..."
+    (ionChange)="onFilter()" shape="round"></ion-searchbar>
   <ion-list>
     <ion-item>
       <ion-label><strong>Categories</strong></ion-label>
@@ -67,6 +68,12 @@
     </ion-item>
   </ion-list>
 </div>
+
+<div class="spinner" *ngIf="loading">
+  <ion-spinner name="lines" color="primary"></ion-spinner>
+  <p>Loading...</p>
+</div>
+
 <ion-grid class="ion-no-padding">
   <ion-row>
     <ion-col *ngFor="let item of productList" size-md="6" size-xs="12">

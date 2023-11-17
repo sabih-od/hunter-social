@@ -6,23 +6,60 @@
 }
 
 .requestgroupbtn {
-    padding: 10px 15px;
-    background: #333;
-    border-radius: 5px;
-    margin-left: auto;
-    display: block;
-    margin-right: 18px;
-    margin-top: 7px;
-    margin-bottom: -20px;
+    /* padding: 10px 15px; */
+    /* background: #000; */
+    /* border-radius: 5px; */
+    /* margin-left: auto; */
+    /* display: block; */
+    /* margin-right: 18px; */
+    /* margin-top: 7px; */
+    /* margin-bottom: -20px; */
     color: #fff;
+    /* min-width: 33px; */
+    // height: 40px;
+    // font-size: 20px;
+    // max-width: 40px;
+    // min-width: 40px;
+    // --border-radius: 13px;
+    // --padding-start: 0;
+    // --padding-end: 0;
+
+
+    color: #fff;
+    height: 40px;
+    /* font-size: 20px; */
+    /* max-width: 40px; */
+    /* min-width: 40px; */
+    /* --border-radius: 13px; */
+    --padding-start: 13px;
+    --padding-end: 13px;
+    font-size: 14px;
+    --border-radius: 10px;
+
 }
 
 
-ion-searchbar {
-    height: 50px !important;
-    padding-inline-start: 0px !important;
-    padding-inline-end: 0px !important;
-    padding: 0 !important;
+// ion-searchbar {
+//     height: 50px !important;
+//     padding-inline-start: 0px !important;
+//     padding-inline-end: 0px !important;
+//     padding: 0 !important;
+// }
+
+
+.chatitem:nth-child(odd) {
+    background-color: #f7f7f7;
+}
+
+.spinner {
+    flex-direction: column;
+    height: calc(100vh - 300px);
+
+    p {
+        margin-bottom: 0;
+        font-size: 14px;
+        margin-top: 5px;
+    }
 }
 
 .searchbar-input-container.sc-ion-searchbar-ios {

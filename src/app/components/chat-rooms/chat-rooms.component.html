@@ -1,38 +1,51 @@
+<ion-grid>
+  <ion-row class="">
+    <ion-col size="12">
+      <ion-item lines="none" class="searchitem ion-no-padding">
+        <ion-searchbar [(ngModel)]="_search" (ngModelChange)="onSearch()" class="" placeholder="Search groups..."
+          (ionClear)="onSearch(true)"></ion-searchbar>
+
+        <ion-button class="requestgroupbtn" (click)="showGroupRequestModal()">
+          <!-- <ion-icon name="add-circle-outline"></ion-icon> -->
+          Request
+        </ion-button>
+        <!-- <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search">
+        </ion-icon> </ion-button> -->
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="spinner" *ngIf="isLoading">
+  <div class="spinner" *ngIf="loading && !refreshing">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+    <p>Loading...</p>
+  </div>
+
+  <div class="spinner" *ngIf="loading">
     <ion-spinner name="lines" color="primary"></ion-spinner>
   </div>
 
-  <ion-grid>
-    <!-- <ion-row>
+  <!-- <ion-grid> -->
+  <!-- <ion-row>
       <ion-col size="12">
         <ion-img src="assets/images/chat-room-banner.jpg"></ion-img>
       </ion-col>
     </ion-row> -->
 
-    <button class="requestgroupbtn" (click)="showGroupRequestModal()">Request A Group</button>
 
-    <ion-row class="">
-      <ion-col size="12">
-        <ion-item class="searchitem ion-no-padding">
-          <ion-searchbar [(ngModel)]="_search" (ngModelChange)="onSearch()" class=""
-            placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar> 
-          <!-- <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search">
-            </ion-icon> </ion-button> -->
-        </ion-item>
-      </ion-col>
-    </ion-row>
 
-    <ion-row *ngFor="let item of groups |filter:search">
-      <ion-col size="12">
-        <chat-row2 [item]="item"></chat-row2>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
+  <div class="chatitem" *ngFor="let item of groups |filter:search">
+    <!-- <ion-col size="12"> -->
+    <chat-row2 [item]="item"></chat-row2>
+    <!-- </ion-col> -->
+  </div>
+  <!-- </ion-grid> -->
 
   <footer></footer>
 </ion-content>

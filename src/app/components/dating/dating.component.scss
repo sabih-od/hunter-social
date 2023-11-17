@@ -21,5 +21,12 @@ ion-searchbar {
 }
 
 .spinner {
-    height: 86%;
+    flex-direction: column;
+    height: calc(100vh - 300px);
+
+    p {
+        margin-bottom: 0;
+        font-size: 14px;
+        margin-top: 5px;
+    }
 }

@@ -2,7 +2,7 @@
   <figure>
     <!-- <ion-img [src]="item.profile_image" (click)="goToProfile()"></ion-img> -->
     <img [src]="item.profile_image" (click)="goToProfile()"
-          onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
+      onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
     <ion-buttons class="dotsicon" slot="end">
       <ion-button (click)="openPopup($event)">
         <ion-icon id="click-trigger" name="ellipsis-vertical-outline"></ion-icon>
@@ -19,23 +19,26 @@
     <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="unfriend()"
       *ngIf="item.is_friend">
       Unfriend
+      <ion-spinner *ngIf="loading" class="spinnericon"></ion-spinner>
     </ion-button>
 
-    <ion-text *ngIf="item.is_sent_friend_request">
+    <!-- <ion-text *ngIf="item.is_sent_friend_request">
       <p class="green-txt">Friend Request Sent</p>
-    </ion-text>
+    </ion-text> -->
     <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="cancelRequest()"
       *ngIf="item.is_sent_friend_request">
       Cancel Request
+      <ion-spinner *ngIf="loading" class="spinnericon"></ion-spinner>
     </ion-button>
 
 
     <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="acceptRequest()"
-      *ngIf="item.is_friend_requested"> 
+      *ngIf="item.is_friend_requested">
       Accept Request
+      <ion-spinner *ngIf="loading" class="spinnericon"></ion-spinner>
     </ion-button>
-    
-    
+
+
     <ion-text *ngIf="item.is_friend_blocked">
       <p class="red-txt">Blocked</p>
     </ion-text>
@@ -43,11 +46,13 @@
     <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="unblockFriend()"
       *ngIf="item.is_friend_blocked">
       Unblock
+      <ion-spinner *ngIf="loading" class="spinnericon"></ion-spinner>
     </ion-button>
 
-    <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="addFriend()"
-      *ngIf="item.canRequest">
+    <ion-button shape="round" color="primary" [disabled]="loading" class="ion-no-margin" size="small"
+      (click)="addFriend()" *ngIf="item.canRequest">
       Add Friend
+      <ion-spinner *ngIf="loading" class="spinnericon"></ion-spinner>
     </ion-button>
   </ion-card-content>
 </ion-card>

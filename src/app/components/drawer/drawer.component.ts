@@ -205,6 +205,8 @@ export class DrawerComponent extends BasePage implements OnInit {
     this.menuCtrl.toggle();
     let res = await this.network.logout();
     this.users.removeToken();
+    localStorage.removeItem('userDataa');
+    localStorage.removeItem('notifications_count');
     this.users.removeUser();
     this.nav.push('pages/login');
     console.log(res);

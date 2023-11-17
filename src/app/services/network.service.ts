@@ -259,11 +259,11 @@ export class NetworkService {
     );
   }
   getMyProducts() {
-    return this.httpPostResponse(`products`, null, false, true);
+    return this.httpPostResponse(`products`, null, false, false);
   }
 
   getMyListing(data, page) {
-    return this.httpPostResponse(`my-products?page=${page}`, data, false, true);
+    return this.httpPostResponse(`my-products?page=${page}`, data, false, false);
   }
 
   getProductss(data, page) {
@@ -579,6 +579,12 @@ export class NetworkService {
   getUnreadNotificationCount() {
     return this.httpGetResponse(`users/notifications/unread-count`, null);
   }
+  readNotifiaction(data) {
+    return this.httpPostResponse(`users/notifications/unread-notifications`, data, null);
+  }
+
+
+
   getRecipeAlerts(page, limit) {
     return this.httpGetResponse(`users/fetch-recipe-alerts?page=${page}&limit=${limit}`, '');
   }

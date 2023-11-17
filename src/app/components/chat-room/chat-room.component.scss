@@ -1,15 +1,32 @@
 .searchBtn {
-    height: 45px;
-    width: 50px;
-    border-radius: 25px;
-    margin-top: -9px;
+  height: 45px;
+  width: 50px;
+  border-radius: 25px;
+  margin-top: -9px;
 }
 
 ion-searchbar .searchbar-input-container {
-    height: 40px; /* Change this value to your desired height */
+  height: 40px;
+  /* Change this value to your desired height */
+}
+
+/* Adjust the spacing after the search icon */
+ion-searchbar .searchbar-input {
+  padding-right: 40px;
+  /* Change this value to your desired spacing */
+}
+
+.chatitem:nth-child(odd){
+  background-color: #f7f7f7;
+}
+
+.spinner {
+  flex-direction: column;
+  height: calc(100vh - 300px);
+
+  p {
+    margin-bottom: 0;
+    font-size: 14px;
+    margin-top: 5px;
   }
-  
-  /* Adjust the spacing after the search icon */
-  ion-searchbar .searchbar-input {
-    padding-right: 40px; /* Change this value to your desired spacing */
-  }
+}

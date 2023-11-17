@@ -13,7 +13,7 @@
     <ion-row class="ion-margin-top">
       <ion-col size="12">
         <ion-item class="searchitem">
-          <ion-searchbar [(ngModel)]="search" class="ion-margin-bottom" placeholder="Search"></ion-searchbar>
+          <ion-searchbar [(ngModel)]="search" class="ion-margin-bottom" placeholder="Search friends..."></ion-searchbar>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -31,6 +31,6 @@
     </ion-fab-button>
   </ion-fab>
   <div *ngIf="friends?.length == 0" style="text-align: center; text-transform: uppercase">
-    <p>You Have No friends</p>
+    <p>You have no friend</p>
   </div>
 </ion-content>

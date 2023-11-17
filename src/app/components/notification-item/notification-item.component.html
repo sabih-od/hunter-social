@@ -1,4 +1,4 @@
-<div class="notificationitem">
+<div class="notificationitem" (click)="clickItem(item)">
   <img [src]="item?.notificationable?.user?.profile_image"
     onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
   <div>

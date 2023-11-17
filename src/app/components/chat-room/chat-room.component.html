@@ -1,37 +1,48 @@
+<ion-grid>
+  <ion-row class="">
+    <ion-col size="12">
+      <ion-item lines="none" class="searchitem ion-no-padding">
+        <ion-searchbar [(ngModel)]="_search" class="" (ngModelChange)="onSearch()" placeholder="Search friends..."
+          (ionClear)="onSearch(true)"></ion-searchbar>
+        <!-- <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search">
+          </ion-icon> </ion-button> -->
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="spinner" *ngIf="isLoading">
+
+
+
+  <div class="spinner" *ngIf="loading && !refreshing">
     <ion-spinner name="lines" color="primary"></ion-spinner>
+    <p>Loading...</p>
   </div>
 
-  <ion-grid>
-    <ion-row class="">
-      <ion-col size="12">
-        <ion-item lines="none" class="searchitem ion-no-padding">
-          <ion-searchbar [(ngModel)]="_search" class="" (ngModelChange)="onSearch()"
-            placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar>
-          <!-- <ion-button (click)="onSearch()" class="searchBtn"> <ion-icon class="ion-text-center" name="search">
-            </ion-icon> </ion-button> -->
-        </ion-item>
-      </ion-col>
-    </ion-row>
+  <div class="chatitem" *ngFor="let item of friends | filter:search">
+    <chat-row [item]="item"></chat-row>
+  </div>
 
+  <!-- <ion-grid>
     <ion-row *ngFor="let item of friends | filter:search">
       <ion-col size="12">
         <chat-row [item]="item"></chat-row>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
   <!-- <ion-fab horizontal="end" vertical="bottom" slot="fixed" (click)="addNew()">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab> -->
-  <div *ngIf="friends?.length == 0" style="text-align: center;text-transform: uppercase;height: 84%;justify-content: center;align-items: center;display: flex;">
-    <p>You Have No friends</p>
+  <div *ngIf="!loading && !refreshing && friends?.length == 0"
+    style="text-align: center;text-transform: uppercase;height: 84%;justify-content: center;align-items: center;display: flex;">
+    <p>You have no friend</p>
   </div>
 </ion-content>

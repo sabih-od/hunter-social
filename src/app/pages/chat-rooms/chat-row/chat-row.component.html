@@ -1,6 +1,7 @@
 <ion-item class="ion-no-padding">
   <ion-avatar class="image">
-    <img [src]="item.media_upload?.url" onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
+    <img [src]="item.media_upload?.url"
+      onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
 
     <!-- <p class="counter f-pop-m">20</p> -->
   </ion-avatar>
@@ -14,14 +15,8 @@
   </ion-icon>
   <ion-icon style="margin-left: 2%; font-size: 22px" name="ellipsis-vertical-outline" (click)="showMenu($event)">
   </ion-icon>
-  <div *ngIf=" item.hasUnread" style="
-      background-color: tomato;
-      width: 10px;
-      height: 10px;
-      border-radius: 5px;
-      margin-left: -7px;
-      margin-top: 8px;
-    ">
+  <div *ngIf=" item.hasUnread"
+    style=" background-color: tomato; width: 10px; height: 10px; border-radius: 5px; margin-left: -7px; margin-top: 8px; ">
   </div>
 
   <!-- <p class="time f-pop-m">{{ item.time }} Mins</p> -->
