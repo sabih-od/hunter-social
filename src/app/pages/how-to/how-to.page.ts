@@ -10,6 +10,8 @@ import { IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/angular';
 export class HowToPage extends BasePage implements OnInit {
   list = [];
   search_text: string;
+  loading = true;
+  page = 1;
 
   onSearchTextChange(searchText: string) {
     this.search_text = searchText;
@@ -33,9 +35,8 @@ export class HowToPage extends BasePage implements OnInit {
       event.target.complete();
     }, 2000);
   }
-  pageno = 1;
   async getData() {
-    let res = await this.network.howToVideos(this.pageno);
+    let res = await this.network.howToVideos(this.page);
     if (res.data.data.length > 0) {
       console.log('howToVideos', res);
       let user = await this.users.getUser();
@@ -54,13 +55,15 @@ export class HowToPage extends BasePage implements OnInit {
       } else {
         this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
       }
+      this.loading = false
     } else {
 
+      this.loading = false
     }
   }
 
   onIonInfinite(ev) {
-    this.pageno = this.pageno + 1;
+    this.page = this.page + 1;
     this.getData();
     setTimeout(() => {
       ev.target.complete();

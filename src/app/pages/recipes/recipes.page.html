@@ -1,25 +1,15 @@
-<app-header
-  [title]="'GAME RECIPES'"
-  [showcurve]="false"
-  [back]="false"
-  [showMenu]="true"
-  (searchTextChange)="onSearchTextChange($event)"
-></app-header>
+<app-header [title]="'GAME RECIPES'" [showcurve]="false" [back]="false" [showMenu]="true"
+  (searchTextChange)="onSearchTextChange($event)"></app-header>
 
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content [color]="light"></ion-refresher-content>
   </ion-refresher>
   <app-recipe-banner></app-recipe-banner>
-  <div
-    style="
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      text-transform: capitalizes;
-    "
-  >
-    <ion-button (click)="addNew()" color="dark">Add Recipe Here</ion-button>
+  <div style=" margin: 12px 15px 0 15px; ">
+    <ion-button expand="block" (click)="addNew()" color="dark"><ion-icon slot="end"
+        name="add-circle-outline"></ion-icon>Add Recipe Here
+    </ion-button>
   </div>
   <!-- <ion-row class="ion-margin-top">
     <ion-col size="12">
@@ -29,18 +19,18 @@
 
   <recipe *ngFor="let item of recipies | filter:search_text" [item]="item"></recipe>
 
-  <div
-    style="
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      text-transform: capitalizes;
-    "
-  >
-    <ion-button *ngIf="last_page > page_num" (click)="loadMore()" color="dark"
-      >load more</ion-button
-    >
+
+  <div class="spinner" *ngIf="loading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+    <p>Loading...</p>
   </div>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <!-- <div style=" text-align: center; margin-top: 20px; margin-bottom: 20px; text-transform: capitalizes; ">
+    <ion-button *ngIf="last_page > page_num" (click)="loadMore()" color="dark">load more</ion-button>
+  </div> -->
 
   <footer></footer>
 </ion-content>

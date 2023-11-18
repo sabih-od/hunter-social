@@ -1,4 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 import { ViewWillEnter } from '@ionic/angular';
 import { PLAN_TYPE } from 'src/app/data/const/enums';
 import { BasePage } from 'src/app/pages/base-page/base-page';
@@ -30,11 +31,20 @@ export class DrawerComponent extends BasePage implements OnInit {
       // console.log('islogin => ', islogin)
       let userRes = await this.network.getUserProfile(user?.id);
       // let interestsRes = await this.network.getInterests();
+      this.getNotificationCount()
       this.getStates();
       this.getInterests();
       console.log('res.data.user => ', userRes.data)
       // userRes.data.interests = interestsRes.data
       // userRes.data.profile_image = this.image.getImageUrl(userRes.data.profile_image)
+      const fcmtoken = localStorage.getItem('fcm_token')
+      console.log('drawer fcm_token => ', fcmtoken)
+      // if (!fcmtoken) {
+      if (Capacitor.getPlatform() !== 'web') {
+        await this.network.setFcmToken(fcmtoken);
+      }
+      // }
+
       if (userRes?.data) {
         this.users.setUser(userRes.data);
         this.users.updateUserProfile({ ...userRes.data, profile_image: this.image.getImageUrl(userRes?.data?.profile_image) })
@@ -203,8 +213,13 @@ export class DrawerComponent extends BasePage implements OnInit {
 
   async logout() {
     this.menuCtrl.toggle();
+    const fcmtoken = localStorage.getItem('fcm_token')
+    if (Capacitor.getPlatform() !== 'web') {
+      let fcm = await this.network.deleteFcmToken(fcmtoken);
+    }
     let res = await this.network.logout();
     this.users.removeToken();
+    // localStorage.removeItem('fcm_token')
     localStorage.removeItem('userDataa');
     localStorage.removeItem('notifications_count');
     this.users.removeUser();
@@ -315,6 +330,14 @@ export class DrawerComponent extends BasePage implements OnInit {
     let res = await this.network.getInterests();
     console.log('interestsList', res);
     this.users.interestsList = res.data
+  }
+
+  async getNotificationCount() {
+    const noticount = await this.network.getUnreadNotificationCount();
+    console.log('getUnreadNotificationCount => ', noticount)
+    if (noticount?.data?.count) {
+      localStorage.setItem('notifications_count', noticount?.data?.count?.toString());
+    }
   }
 
   openDatingChatRoom() {

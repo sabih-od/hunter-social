@@ -25,18 +25,19 @@ export class NotificationsPage extends BasePage implements OnInit {
 
   async getNotifications() {
 
-    localStorage.setItem('notifications_count', '0');
-    var event = new Event('storageChange');
-    window.dispatchEvent(event);
+    // localStorage.setItem('notifications_count', '0');
+    // var event = new Event('storageChange');
+    // window.dispatchEvent(event);
 
     let response = await this.network.getNotifications(this.page, this.limit);
     console.log('getNotifications response => ', response)
-    this.notifications = response?.data?.data.map((notifi) => ({
+    const notiitems = response?.data?.data.map((notifi) => ({
       ...notifi,
       // hasUnread: self.sender_id === notifi.id,
       // content: notifi?.notificationable && (notifi?.notificationable?.user?.is_friend_requested && notifi?.notificationable?.user.name + ' sent you friend request' || notifi?.notificationable?.user?.is_friend && notifi?.notificationable?.user.name + ' accepted friend request'),
-      profile_image: this.image.getImageUrl(notifi?.notificationable?.user?.profile_image || notifi?.notificationable?.user?.profile_image),
+      profile_image: this.image.getImageUrl(notifi?.user?.profile_image),
     }));
+    this.notifications = this.page != 1 ? [...this.notifications, ...notiitems] : notiitems;
     console.log('this.notifications => ', this.notifications)
 
 
@@ -97,7 +98,9 @@ export class NotificationsPage extends BasePage implements OnInit {
 
   async clickNotification(id) {
     console.log('clickNotification id => ', id)
-    let res = await this.network.readNotifiaction(id)
+    let res = await this.network.readNotifiaction({
+      "ids": id
+    })
     console.log('clickNotification => ', res)
     const count = JSON.parse(localStorage.getItem('notifications_count'));
     localStorage.setItem('notifications_count', (count - 1).toString());
@@ -109,10 +112,18 @@ export class NotificationsPage extends BasePage implements OnInit {
   async doRefresh($event) {
     this.refresh = true;
     this.page = 1;
-    this.notifications = []
+    // this.notifications = []
     await this.getNotifications();
     $event.target.complete();
     this.refresh = false;
+  }
+
+  async onIonInfinite(ev) {
+    this.page = this.page + 1;
+    await this.getNotifications();
+    setTimeout(() => {
+      ev.target.complete();
+    }, 700);
   }
 
 }

@@ -29,7 +29,7 @@
           <img [src]="item?.profile_image"
             onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
           <ion-card-content>
-            <ion-card-title class="f-pop-smb title"> {{ item?.blocked_user_detail.name }} </ion-card-title>
+            <ion-card-title class="f-pop-smb title"> {{ item?.blocked_user_detail?.name }} </ion-card-title>
             <ion-button shape="round" color="primary" class="ion-no-margin" size="small"
               (click)="unblockUser(item?.blocked_user_detail?.id)">
               Unblock

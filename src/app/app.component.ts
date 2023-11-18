@@ -9,6 +9,7 @@ import { UtilityService } from './services/utility.service';
 // import { SqliteService } from './services/sqlite.service';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-root',
@@ -55,7 +56,7 @@ export class AppComponent {
 
   initialize() {
 
-    if (this.platform.is('ios')) {
+    if (Capacitor.getPlatform() !== 'web') {
       this.setStatusBarStyleDark()
     }
 

@@ -54,7 +54,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
     this.aForm = this.formBuilder.group({
       email: [
-        // '', 
+        // '',
         'johnsmith@mailinator.com',
         Validators.compose([Validators.required, Validators.email]),
       ],
@@ -105,6 +105,11 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     console.log('login res => ', res);
     if (res && res.data) {
       this.users.setToken(res.data.token);
+      const fcmtoken = localStorage.getItem('fcm_token')
+      console.log('login fcm_token => ', fcmtoken)
+      if (Capacitor.getPlatform() !== 'web') {
+        await this.network.setFcmToken(fcmtoken);
+      }
       let userRes = await this.network.getUserProfile(res.data?.id);
       this.users.setUser(userRes.data);
       this.users.updateUserProfile(userRes.data)

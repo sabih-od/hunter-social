@@ -18,6 +18,17 @@ ion-avatar {
   top: 10px;
 }
 
+.spinner {
+  flex-direction: column;
+  height: calc(100vh - 100vh/2);
+
+  p {
+    margin-bottom: 0;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+}
+
 .pcolleft {
   margin-top: -40px;
   position: relative;
@@ -30,7 +41,7 @@ ion-avatar {
   justify-content: center;
   margin-top: -7px;
 
-  h2{
+  h2 {
     font-weight: 100;
     font-size: 19px;
     font-family: Anton;

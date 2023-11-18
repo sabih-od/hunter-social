@@ -1,0 +1,15 @@
+.spinner {
+    flex-direction: column;
+    height: calc(100vh - 100vh/2);
+
+    p {
+        margin-bottom: 0;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+}
+
+.card-content-ios ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+}

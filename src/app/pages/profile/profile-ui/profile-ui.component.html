@@ -10,7 +10,8 @@
       </ion-badge>
       <ion-avatar>
         <img
-          [src]="user_profile?.profile_image ? user_profile?.profile_image : '../../../assets/Images/dummy-avatar.png'" />
+          [src]="user_profile?.profile_image ? user_profile?.profile_image : '../../../assets/Images/dummy-avatar.png'"
+          onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
       </ion-avatar>
     </div>
     <div class="pcolright">
@@ -24,7 +25,7 @@
   </div>
 </div>
 
-<div class="bg-light">
+<div class="bg-light" *ngIf="!profileLoading">
   <ion-row class="ion-no-padding">
     <ion-col class="actionbtns" size="12">
       <!-- <ion-button *ngIf="isOwnProfile" (click)="itemClicked({ url: 'pages/edit-profile' })">
@@ -60,6 +61,12 @@
     </ion-col>
   </ion-row>
 </div>
+
+<div class="spinner" *ngIf="profileLoading">
+  <ion-spinner name="lines" color="primary"></ion-spinner>
+  <p>Loading...</p>
+</div>
+
 
 <div class="profileinfo">
   <ion-row class="ion-margin-start mb-0">

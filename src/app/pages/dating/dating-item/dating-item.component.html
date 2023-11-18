@@ -16,7 +16,7 @@
       >Age {{ item.age }} Years</ion-card-subtitle
     > -->
 
-    <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="unfriend()"
+    <ion-button shape="round" color="primary" class="ion-no-margin unfriend" size="small" (click)="unfriend()"
       *ngIf="item.is_friend">
       Unfriend
       <ion-spinner *ngIf="loading" class="spinnericon"></ion-spinner>
@@ -25,14 +25,14 @@
     <!-- <ion-text *ngIf="item.is_sent_friend_request">
       <p class="green-txt">Friend Request Sent</p>
     </ion-text> -->
-    <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="cancelRequest()"
+    <ion-button shape="round" color="primary" class="ion-no-margin unfriend" size="small" (click)="cancelRequest()"
       *ngIf="item.is_sent_friend_request">
       Cancel Request
       <ion-spinner *ngIf="loading" class="spinnericon"></ion-spinner>
     </ion-button>
 
 
-    <ion-button shape="round" color="primary" class="ion-no-margin" size="small" (click)="acceptRequest()"
+    <ion-button shape="round" color="primary" class="ion-no-margin accept" size="small" (click)="acceptRequest()"
       *ngIf="item.is_friend_requested">
       Accept Request
       <ion-spinner *ngIf="loading" class="spinnericon"></ion-spinner>

@@ -13,6 +13,7 @@ export class RecipesPage extends BasePage implements OnInit {
   last_page;
 
   search_text: string;
+  loading = false
 
   onSearchTextChange(searchText: string) {
     this.search_text = searchText;
@@ -48,11 +49,13 @@ export class RecipesPage extends BasePage implements OnInit {
             },
             reviews_count: (x.reviews_count += 1),
             rating: Math.round((x.total_reviews + data.rating) / (x.reviews_count)),
-          } 
+          }
       );
       // this.getData();
     });
     // this.addNew();
+
+    this.loading = true;
     this.getData();
     // this.recipies = this.dataService.getGameRecepies();
   }
@@ -75,6 +78,7 @@ export class RecipesPage extends BasePage implements OnInit {
         })),
       ];
       this.last_page = res.data.last_page;
+      this.loading = false;
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
@@ -84,8 +88,18 @@ export class RecipesPage extends BasePage implements OnInit {
     if (res && res.data.success) this.getData();
   }
 
-  loadMore() {
-    this.page_num++;
-    this.getData();
+  // loadMore() {
+  //   this.page_num++;
+  //   this.getData();
+  // }
+
+
+  async onIonInfinite(ev) {
+    this.page_num = this.page_num + 1;
+    await this.getData();
+    setTimeout(() => {
+      ev.target.complete();
+    }, 700);
   }
+
 }

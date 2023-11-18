@@ -1,4 +1,4 @@
-<app-header [title]="'Hunter Social'" [showcurve]="false" [back]="false" [showMenu]="true"
+<app-header [title]="'Hunters Social'" [showcurve]="false" [back]="false" [showMenu]="true"
   (searchTextChange)="onSearchTextChange($event)"></app-header>
 
 <ion-content>
@@ -8,9 +8,17 @@
   <app-how-to-banner></app-how-to-banner>
   <h2>HOW TO VIDEOS</h2>
 
+
   <app-card-submission></app-card-submission>
 
-  <app-how-to-cards *ngFor="let item of list | customFilter: search_text" [item]="item"></app-how-to-cards> 
+  <app-how-to-cards *ngFor="let item of list | customFilter: search_text" [item]="item"></app-how-to-cards>
+
+  <div class="spinner" *ngIf="loading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+    <p>Loading...</p>
+  </div>
+
+
   <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>

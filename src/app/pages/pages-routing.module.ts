@@ -266,6 +266,10 @@ const routes: Routes = [
     path: 'otp-submit',
     loadChildren: () => import('./otp-submit/otp-submit.module').then( m => m.OtpSubmitPageModule)
   },
+  {
+    path: 'conversations',
+    loadChildren: () => import('./conversations/conversations.module').then( m => m.ConversationsPageModule)
+  },
 
 
   

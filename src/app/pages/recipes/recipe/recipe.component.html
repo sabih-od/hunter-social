@@ -2,7 +2,8 @@
   <ion-card-header class="ion-inherit-color ios hydrated ion-no-padding ion-no-margin">
     <ion-item lines="none">
       <ion-avatar (click)="viewProfile(item.user_id)">
-        <img [src]="item.profile_image" />
+        <img [src]="item.profile_image"
+          onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
       </ion-avatar>
       <ion-label class="ion-margin-start">
         {{ item.user.name }}
@@ -17,35 +18,39 @@
   </ion-card-subtitle> -->
     <ion-grid>
       <ion-row class="cardcontent">
-        <ion-col size="10" class="ion-no-padding ion-no-margin">
+        <ion-col size="12" class="ion-no-padding ion-no-margin">
           <ion-card-title role="heading" class="ion-inherit-color ios hydrated">{{ item.name }}
           </ion-card-title>
         </ion-col>
-        <ion-col size="2" *ngIf="item.created_by_me">
-          <ion-button style="margin-top: -8px" color="success" (click)="editRecipe()">
-            <ion-icon name="pencil"></ion-icon>
-          </ion-button>
-          <ion-button style="margin-top: -8px" color="danger" (click)="deleteRecipe()">
-            <ion-icon name="trash"></ion-icon>
-          </ion-button>
-        </ion-col>
       </ion-row>
 
-      <ion-row class="cardrating">
-        <ion-item lines="none">
+      <div class="cardrating">
+        <p>Rating </p>
+        <div style="margin-right: 5px;">
           <ion-icon [name]="item.rating + 1 <= n ? 'star-outline' : 'star'"
             [color]="item.rating + 1 <= n ? 'dark' : 'dark'" *ngFor="let n of [1, 2, 3, 4, 5]"></ion-icon>
-          <p>({{ item.reviews_count }})</p>
-        </ion-item>
-      </ion-row>
+        </div>
+        <p>({{ item.reviews_count | number : '1.1-2'}})</p>
+      </div>
     </ion-grid>
   </ion-item>
 
-  <img style="width: 100%" [src]="item.media_upload?.url"
-    onerror="this.onerror=null;this.src='/assets/Images/dummy-image-square.jpg';" />
-  <ion-card-content class="ios card-content-ios hydrated">
+  <div class="recipieimage">
+    <img style="width: 100%" [src]="item.media_upload?.url"
+      onerror="this.onerror=null;this.src='/assets/Images/dummy-image-square.jpg';" />
+    <div class="recipebtns" *ngIf="item.created_by_me">
+      <ion-button (click)="editRecipe()">
+        <ion-icon name="pencil-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="deleteRecipe()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <ion-card-content class="ios card-content-ios hydrated recipiecontent">
     <h2 class="f-pop-smb title">Ingredients</h2>
-    <div [innerHTML]="item.ingredients"></div>
+    <div class="ingredients" [innerHTML]="item.ingredients"></div>
     <h2 class="f-pop-smb title">Directions</h2>
     <!-- <ingredient *ngFor="let _item of item.Directions" [item]="_item"></ingredient> -->
     <div [innerHTML]="item.description"></div>
@@ -57,12 +62,19 @@
       </ion-col>
     </ion-row> -->
 
-    <ion-row class="raterecipies">
+    <div class="toberated">
+      <p>{{ item.auth_review ? "Rated Recipe" : "Rate Recipe" }}</p>
+      <div>
+        <ion-icon [name]="rating + 1 <= n ? 'star-outline' : 'star'" [color]="rating + 1 <= n ? 'medium' : 'primary'"
+          *ngFor="let n of [1, 2, 3, 4, 5]" (click)="changeRate(n)"></ion-icon>
+      </div>
+    </div>
+    <!-- <ion-row class="raterecipies">
       <ion-col size="12">
         <ion-item style="margin-left: -20px; font-size: 20px" lines="none">
           <ion-label>{{
             item.auth_review ? "Rated Recipe" : "Rate Recipe"
-            }}</ion-label> 
+            }}</ion-label>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -71,12 +83,12 @@
       <ion-col>
         <div>
           <ion-icon [name]="rating + 1 <= n ? 'star-outline' : 'star'" [color]="rating + 1 <= n ? 'medium' : 'primary'"
-            *ngFor="let n of [1, 2, 3, 4, 5]"  (click)="changeRate(n)"></ion-icon>
+            *ngFor="let n of [1, 2, 3, 4, 5]" (click)="changeRate(n)"></ion-icon>
         </div>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
-    <ion-row style="margin-left: -10px" *ngIf="!item.auth_review"> 
+    <ion-row style="margin-left: -10px" *ngIf="!item.auth_review">
       <ion-col>
         <ion-button (click)="rateRecipe()" style="width: 100%">
           Submit

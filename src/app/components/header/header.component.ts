@@ -63,6 +63,7 @@ export class HeaderComponent extends BasePage implements OnInit {
 
   async init() {
     let token = localStorage.getItem('token');
+    console.log('token => ', token)
     if (token && token != '1') {
       // const res = await this.network.getCart();
       // console.log('getCart', res);

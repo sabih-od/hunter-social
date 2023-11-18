@@ -91,40 +91,40 @@ export class PusherService {
         var event = new Event('storageChange');
         window.dispatchEvent(event);
 
-        if (Capacitor.getPlatform() !== 'web') {
-          const notifs = await LocalNotifications.schedule({
-            notifications: [
-              {
-                title: 'Hunter Social',
-                body: e.message ?? 'You have received a new notification',
-                id: 1,
-                schedule: { at: new Date(Date.now() + 1000) },
-                sound: null,
-                attachments: null,
-                actionTypeId: '',
-                extra: null,
-                actions: [
-                  {
-                    id: 'ignore',
-                    title: 'Ignore',
-                    requiresAuthentication: false,
-                    foreground: true,
-                  },
-                  {
-                    id: 'accept',
-                    title: 'Accept',
-                    requiresAuthentication: false,
-                    foreground: true,
-                  },
-                ],
-              },
-            ],
-          });
-        } else {
-          this.utility.presentSuccessToast(
-            e.message ?? 'You have received a new notification'
-          );
-        }
+        // if (Capacitor.getPlatform() !== 'web') {
+        //   const notifs = await LocalNotifications.schedule({
+        //     notifications: [
+        //       {
+        //         title: 'Hunter Social',
+        //         body: e.message ?? 'You have received a new notification',
+        //         id: 1,
+        //         schedule: { at: new Date(Date.now() + 1000) },
+        //         sound: null,
+        //         attachments: null,
+        //         actionTypeId: '',
+        //         extra: null,
+        //         actions: [
+        //           {
+        //             id: 'ignore',
+        //             title: 'Ignore',
+        //             requiresAuthentication: false,
+        //             foreground: true,
+        //           },
+        //           {
+        //             id: 'accept',
+        //             title: 'Accept',
+        //             requiresAuthentication: false,
+        //             foreground: true,
+        //           },
+        //         ],
+        //       },
+        //     ],
+        //   });
+        // } else {
+        //   this.utility.presentSuccessToast(
+        //     e.message ?? 'You have received a new notification'
+        //   );
+        // }
 
 
 

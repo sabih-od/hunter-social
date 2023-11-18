@@ -10,12 +10,16 @@ import {
 } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { EventsService } from './basic/events.service';
+import { NavService } from './basic/nav.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
-  constructor(public events: EventsService, public network: NetworkService) {
+  constructor(
+    public events: EventsService,
+    public network: NetworkService,
+    public nav: NavService) {
     this.assignEvents();
   }
 
@@ -28,7 +32,7 @@ export class FirebaseService {
 
   async setTokenToServer() {
     const fcm_token = await this.getFCMToken();
-    console.log('fcm_token => ', fcm_token)
+    console.log('setTokenToServer fcm_token => ', fcm_token)
     if (fcm_token) {
       this.network.saveFcmToken({ token: fcm_token }).then(
         (dats) => { },
@@ -78,8 +82,7 @@ export class FirebaseService {
       console.log('setupNativePush a => ')
       // On success, we should be able to receive notifications
       PushNotifications.addListener('registration', (token: Token) => {
-        console.log('FCM_TOKEN', token.value);
-
+        console.log('registration FCM_TOKEN', token.value);
         localStorage.setItem('fcm_token', token.value);
       });
 
@@ -100,11 +103,13 @@ export class FirebaseService {
       PushNotifications.addListener(
         'pushNotificationActionPerformed',
         (notification) => {
-          console.log(
-            'pushNotificationActionPerformed',
-            notification.notification.data
-          );
-          localStorage.setItem('notification', JSON.stringify(notification));
+          console.log('pushNotificationActionPerformed', notification.notification);
+          if (notification.notification.data.type == 'message') {
+            this.nav.push('pages/conversations')
+          } else {
+            this.nav.push('pages/notifications')
+          }
+          // localStorage.setItem('notification', JSON.stringify(notification));
         }
       );
 

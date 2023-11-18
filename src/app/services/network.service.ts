@@ -255,7 +255,7 @@ export class NetworkService {
   getrecipes(page) {
     return this.httpGetResponse(
       `recipes${page ? `?page=${page}` : ''}`,
-      null, true
+      null, false
     );
   }
   getMyProducts() {
@@ -439,7 +439,7 @@ export class NetworkService {
   }
 
   howToVideos(pageno) {
-    return this.httpGetResponse(`how-to-videos?page=${pageno}`, null, true);
+    return this.httpGetResponse(`how-to-videos?page=${pageno}`, null, false);
   }
 
   postHowToVideo(data, id) {
@@ -596,6 +596,12 @@ export class NetworkService {
     return this.httpGetResponse(`orders`);
   }
 
+  setFcmToken(token) {
+    return this.httpPostResponse(`user/fcm-token`, { token: token }, null)
+  }
+  deleteFcmToken(token) {
+    return this.httpDeleteResponse(`user/fcm-token/${token}`)
+  }
 
 
   httpPostResponse(

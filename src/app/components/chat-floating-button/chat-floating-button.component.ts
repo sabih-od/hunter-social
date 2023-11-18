@@ -98,6 +98,7 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   }
 
   showChatBar(data) {
-    this.modals.present(ChatBatsComponent, data);
+    // this.modals.present(ChatBatsComponent, data);
+    this.nav.push('pages/conversations')
   }
 }

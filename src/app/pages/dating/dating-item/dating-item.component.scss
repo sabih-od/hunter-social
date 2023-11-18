@@ -29,6 +29,12 @@ figure {
   }
 }
 
+.unfriend {
+  --ion-color-base: #fe5060 !important;
+}
+.accept {
+  --ion-color-base: #2a9d45 !important;
+}
 ion-card-content {
   padding: 14px 10px !important;
   text-align: center;
@@ -38,10 +44,14 @@ ion-card-content {
     margin-bottom: 6px;
     font-family: poppinssemibold;
     font-weight: normal;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
-.spinnericon{
+.spinnericon {
   width: 13px;
   margin-left: 6px;
 }

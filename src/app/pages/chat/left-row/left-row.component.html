@@ -3,8 +3,7 @@
     <ion-col class="ion-no-padding" size="12">
       <p style="font-weight: bold; font-size: 1.5vh; margin-bottom: 3px; margin-left: 2px;" *ngIf="item.isGroup">
         {{item.sender?.name}}</p>
-      <ion-card class="ion-padding ion-no-margin f-pop-m"
-        style="border-bottom-left-radius: 0px; border: 1px solid #e1e1e1;">
+      <ion-card class="ion-padding ion-no-margin f-pop-m" style="border-bottom-left-radius: 0px;">
         <img *ngIf="item?.media_upload?.url" src="{{item?.media_upload?.url}}" class="chatimage" />
         <div *ngIf="item?.media_upload?.url && showdownloadicon && !downloading" class="downloadimg"
           (click)="downloadimage(item?.media_upload?.url)">
@@ -24,4 +23,4 @@
       <p class="f-pop-m time">{{ item.created_at | date:'short' }}</p>
     </ion-col>
   </ion-row>
-</ion-grid> 
+</ion-grid>

@@ -80,7 +80,7 @@ export class BlockedUsersPage extends BasePage implements OnInit {
     var res = await this.network.unblockUser(userid, formData);
     if (res) {
       this.utility.presentSuccessToast(res.message);
-      this.datings = this.datings.filter(x => x.blocked_user_detail.id != userid)
+      this.datings = this.datings.filter(x => x.user_id != userid)
       // this.getData();
       // this.nav.navigateTo('pages/chat-room');
     }
