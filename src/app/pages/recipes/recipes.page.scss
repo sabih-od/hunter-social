@@ -13,3 +13,14 @@
     padding-left: 20px;
     margin-bottom: 0;
 }
+
+.maincontent {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  @media screen and (max-width: 500px) {
+    .maincontent {
+      width: 96%;
+    }
+  }

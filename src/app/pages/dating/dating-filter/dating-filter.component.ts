@@ -44,25 +44,33 @@ export class DatingFilterComponent extends BasePage implements OnInit {
   }
 
   async getStates() {
-    let res = await this.network.getStates();
-    console.log(res);
-    if (res && res.data) {
-      this.states = res.data;
+    this.users.states.subscribe(states => {
+      console.log('states -> ', states)
+      this.states = states
       if (this.filteredstate) { this.obj.state = this.filteredstate; }
-    }
-    else
-      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+    })
+    // let res = await this.network.getStates();
+    // console.log(res);
+    // if (res && res.data) {
+    //   this.states = res.data;
+    //   if (this.filteredstate) { this.obj.state = this.filteredstate; }
+    // }
+    // else
+    //   this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
 
   async getInterests() {
-    let res = await this.network.getInterests();
-    console.log(res);
-    if (res && res.data) {
-      this.interests = res.data;
-      if (this.filteredinterests) { this.obj.interests = this.filteredinterests }
-    }
-    else
-      this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+    this.interests = await this.users.interestsList
+    console.log('this.interesasd => ', this.interests)
+    if (this.filteredinterests) { this.obj.interests = this.filteredinterests }
+    // let res = await this.network.getInterests();
+    // console.log('this.interesasd => ', res);
+    // if (res && res.data) {
+    //   this.interests = res.data;
+    //   if (this.filteredinterests) { this.obj.interests = this.filteredinterests }
+    // }
+    // else
+    //   this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
 
   async getCities(id) {

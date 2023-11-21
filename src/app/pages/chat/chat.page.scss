@@ -1,3 +1,10 @@
+ion-header {
+  ion-item {
+    --background: transparent;
+    color: #fff;
+  }
+}
+
 ion-avatar {
   width: 40px;
   height: 40px;
@@ -81,12 +88,13 @@ ion-card {
 
 .bottominputbox {
   width: 100%;
-    display: flex;
-    align-items: center;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    margin: 10px auto 22px auto;
-    color: #000;
-    border-bottom: 0;
-    font-size: 15px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  margin: 10px auto 22px auto;
+  color: #000;
+  border-bottom: 0;
+  font-size: 15px;
+  background: #f6f6f6;
 }

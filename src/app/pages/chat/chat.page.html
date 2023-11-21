@@ -1,8 +1,8 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-item lines="none" class="ion-no-padding">
       <!-- <ion-icon (click)="goBack()" class="back-icon" name="arrow-back-circle"></ion-icon> -->
-      <ion-icon (click)="goBack()" class="back-icon" name="arrow-back-circle-outline"></ion-icon>
+      <ion-icon (click)="goBack()" class="back-icon" name="arrow-back-circle"></ion-icon>
       <ion-avatar class="image ion-margin-horizontal">
         <img [src]="item.isGroup ? item.media_upload?.url : item?.profile_image"
           onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-avatar.png';" />

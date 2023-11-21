@@ -4,9 +4,9 @@
     <p>{{item.content}}</p>
     <span>{{item.updated_at | date:"MMM dd, yyyy 'at' hh:mm a"}}</span>
     <div style="display: flex; align-items: centers;margin-top: 4px;"
-      *ngIf="item?.notificationable?.user?.is_friend_requested">
-      <button class="acceptbtn" (click)="acceptRequest(item?.notificationable?.user?.id, item.id )">Accept</button>
-      <button class="ignorebtn" (click)="ignoreRequest(item?.notificationable?.user?.id, item.id)">Ignore</button>
+      *ngIf="item?.is_friend_request">
+      <button class="acceptbtn" (click)="acceptRequest(item?.user?.id, item.id )">Accept</button>
+      <button class="ignorebtn" (click)="ignoreRequest(item?.user?.id, item.id)">Ignore</button>
     </div>
   </div>
 </div>

@@ -16,7 +16,8 @@ export class DatingPage
   implements OnInit, ViewWillEnter, ViewWillLeave {
   datings;
   all_datings = [];
-  isLoading = false;
+  loading = false;
+  refresh = false;
   search = '';
   dating_users = 1;
   showmodal = true;
@@ -42,11 +43,10 @@ export class DatingPage
   }
 
   async ngOnInit() {
-    this.isLoading = true;
+    this.loading = true;
     // this.datings = this.dataService.getDatings();
     this.events.subscribe('DATING_UPDATED', this.getData.bind(this));
     this.checkUser();
-    this.isLoading = false;
     // let data = await this.modals.present(UserDetailComponentComponent);
   }
 
@@ -66,11 +66,10 @@ export class DatingPage
   }
 
   async doRefresh($event) {
-    this.isLoading = true;
+    this.refresh = true;
     this.page = 1;
     await this.getData();
     $event.target.complete();
-    this.isLoading = false;
   }
 
   async getData(data = null) {
@@ -120,9 +119,12 @@ export class DatingPage
     this.all_datings = [...this.datings];
 
     console.log('Here Datings getData dating.page.ts => ', this.datings);
+    this.loading = false;
+    this.refresh = false;
   }
 
   async searchData(d) {
+    this.datings = [];
     console.log('Searching', d);
 
     let res = await this.network.searchDatingUsers(d);
@@ -144,6 +146,7 @@ export class DatingPage
     this.all_datings = [...this.datings];
 
     console.log('Here Datings searchData ', this.datings);
+    this.loading = false;
   }
 
   getAge(dob: any) {
@@ -192,7 +195,13 @@ export class DatingPage
   async filter() {
     let data = await this.modals.present(
       DatingFilterComponent,
-      { filteredages: this.ages, filteredgenders: this.genders, filteredinterests: this.interests, filteredstate: this.state, filteredcity: this.city },
+      {
+        filteredages: this.ages,
+        filteredgenders: this.genders,
+        filteredinterests: this.interests,
+        filteredstate: this.state,
+        filteredcity: this.city
+      },
       // {},
       // this.filters,
       'halfmodal'
@@ -202,18 +211,27 @@ export class DatingPage
     const d = data.data;
     this.filters = d.data;
 
-    if (d.data.ages) { this.ages = d.data.ages.split('|') }
-    if (d.data.genders) { this.genders = d.data.genders.split('|') }
-    if (d.data.interests) { this.interests = d.data.interests.split('|') }
-    if (d.data.state) { this.state = d.data.state }
-    if (d.data.city) { this.city = d.data.city }
-    if (d.data.cityname) { this.cityname = d.data.cityname.name }
-    if (d.data.statename) { this.statename = d.data.statename.name }
+    // if (d.data.ages) { this.ages = d.data.ages ? d.data.ages.split('|') : '' }
+    // if (d.data.genders) { this.genders = d.data.genders.split('|') }
+    // if (d.data.interests) { this.interests = d.data.interests.split('|') }
+    // if (d.data.state) { this.state = d.data.state }
+    // if (d.data.city) { this.city = d.data.city }
+    // if (d.data.cityname) { this.cityname = d.data.cityname.name }
+    // if (d.data.statename) { this.statename = d.data.statename.name }
+
+    this.ages = d.data?.ages ? d.data?.ages.split('|') : '';
+    this.genders = d.data?.genders ? d.data?.genders.split('|') : '';
+    this.interests = d.data?.interests ? d.data?.interests.split('|') : ''
+    this.state = d.data?.state ? d.data?.state : ''
+    this.city = d.data?.city ? d.data?.city : ''
+    this.cityname = d.data?.cityname?.name ? d.data?.cityname?.name : ''
+    this.statename = d.data?.statename?.name ? d.data.statename?.name : ''
 
 
 
     console.log('d', d);
     if (d.data != 'A') {
+      this.loading = true;
       this.searchData(d.data);
     }
   }

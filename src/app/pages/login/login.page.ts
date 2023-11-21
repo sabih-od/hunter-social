@@ -54,13 +54,13 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
     this.aForm = this.formBuilder.group({
       email: [
-        // '',
-        'johnsmith@mailinator.com',
+        '',
+        // 'johnsmith@mailinator.com',
         Validators.compose([Validators.required, Validators.email]),
       ],
       password: [
-        // '',
-        '12345678',
+        '',
+        // '12345678',
         Validators.compose([
           // Validators.minLength(6),
           // Validators.maxLength(30),

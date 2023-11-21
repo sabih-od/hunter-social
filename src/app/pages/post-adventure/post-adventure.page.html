@@ -28,7 +28,10 @@
       for members to post their memories that they wish to share with other members. Simply click on share a memory and
       begin posting your own adventure along with pictures. All inappropriate posts shall be removed. </p>
     <div class="centered">
-      <ion-button (click)="addNew()"> Share a memory </ion-button>
+      <!-- <ion-button (click)="addNew()"> Share a memory </ion-button> -->
+      <ion-button expand="block" (click)="addNew()" color="dark"><ion-icon slot="end"
+        name="add-circle-outline"></ion-icon>Share a memory
+    </ion-button>
     </div>
 
     <ion-grid>

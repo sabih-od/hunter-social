@@ -25,13 +25,15 @@ ion-card-subtitle {
 
 .filterbtn {
   font-size: 15px;
-  ion-icon{
-   margin-right: 7px; 
+  height: 40px;
+
+  ion-icon {
+    margin-right: 7px;
   }
 }
 
 .filters {
-  padding: 0 20px;
+  padding: 7px 20px 0px 20px;
 
   p {
     margin: 0 0 8px 0;
@@ -49,5 +51,21 @@ ion-card-subtitle {
       border-radius: 4px;
       text-transform: uppercase;
     }
+  }
+}
+
+.nodatafound {
+  text-align: center;
+  width: 100%;
+}
+
+.spinner {
+  flex-direction: column;
+  height: calc(100vh - 100vh/2);
+
+  p {
+    margin-bottom: 0;
+    font-size: 14px;
+    margin-top: 5px;
   }
 }

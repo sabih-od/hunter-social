@@ -84,23 +84,23 @@
       </ul>
     </ion-col>
 
-    <ion-col size="12" *ngIf="user_profile?.phone">
+    <ion-col size="12" *ngIf="isOwnProfile && user_profile?.phone">
       <h2>Phone</h2>
       <p class="about-me"> {{ user_profile?.phone }} </p>
     </ion-col>
-    <ion-col size="12" *ngIf="user_profile?.profile_detail.marital_status">
+    <ion-col size="12" *ngIf="isOwnProfile && user_profile?.profile_detail.marital_status">
       <h2>Marital Status</h2>
       <p class="about-me" style="text-transform: capitalize;"> {{ user_profile?.profile_detail?.marital_status }} </p>
     </ion-col>
-    <ion-col size="12" *ngIf="user_profile?.profile_detail.hobbies">
+    <ion-col size="12" *ngIf="isOwnProfile && user_profile?.profile_detail.hobbies">
       <h2>Hobbies</h2>
       <p class="about-me"> {{ user_profile?.profile_detail?.hobbies }} </p>
     </ion-col>
-    <ion-col size="12" *ngIf="user_profile?.profile_detail.gender">
+    <ion-col size="12" *ngIf="isOwnProfile && user_profile?.profile_detail.gender">
       <h2>Gender</h2>
       <p class="about-me" style="text-transform: capitalize;"> {{ user_profile?.profile_detail?.gender }} </p>
     </ion-col>
-    <ion-col size="12" *ngIf="user_profile?.profile_detail.dob">
+    <ion-col size="12" *ngIf="isOwnProfile && user_profile?.profile_detail.dob">
       <h2>Date Of Birth</h2>
       <p class="about-me"> {{ user_profile?.profile_detail?.dob | date: "MMM dd, yyyy" }} </p>
     </ion-col>

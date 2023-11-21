@@ -22,14 +22,15 @@
       </ion-item>
     </ion-col>
   </ion-row> -->
-  <div style="width: 100%; align-items: center; display: flex; padding: 0 20px 0 10px;">
+  <div style="width: 100%; align-items: center; display: flex; padding: 0 20px 0 10px; margin-top: 15px;">
     <ion-searchbar placeholder="Search" [(ngModel)]="search" (ngModelChange)="getData()"></ion-searchbar>
-    <div *ngIf="!isLoading">
+    <div>
       <!-- <ion-select placeholder="Select One" [(ngModel)]="dating_users" (ngModelChange)="getData()">
         <ion-select-option [value]="0">HUNTING</ion-select-option>
         <ion-select-option [value]="1">DATING</ion-select-option>
       </ion-select> -->
-      <ion-button class="filterbtn" slot="end" (click)="filter()"> <ion-icon name="filter-outline"></ion-icon> Filter </ion-button>
+      <ion-button class="filterbtn" slot="end" (click)="filter()"> <ion-icon name="options-outline"></ion-icon> Filter
+      </ion-button>
     </div>
   </div>
 
@@ -47,8 +48,9 @@
 
   <app-disclaimer></app-disclaimer>
 
-  <div class="spinner" *ngIf="isLoading">
+  <div class="spinner" *ngIf="loading && !refresh">
     <ion-spinner name="lines" color="primary"></ion-spinner>
+    <p>Loading...</p>
   </div>
 
 
@@ -58,18 +60,14 @@
       <ion-col size="6" sizeMd="4" *ngFor="let item of datings | filter:search">
         <dating-item [item]="item" (update)="getData()"></dating-item>
       </ion-col>
+      <div *ngIf="!loading && !refresh && datings.length == 0" class="nodatafound">
+        <p>No Records found</p>
+      </div>
       <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-    </ion-row>
-    <ion-row *ngIf="datings?.length == 0">
-      <ion-col>
-        <ion-item>
-          <ion-label>
-            No Records Found
-          </ion-label>
-        </ion-item>
-      </ion-col>
+
+
     </ion-row>
   </ion-grid>
 

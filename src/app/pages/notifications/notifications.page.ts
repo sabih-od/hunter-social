@@ -72,8 +72,8 @@ export class NotificationsPage extends BasePage implements OnInit {
     if (res && res.data) {
       // this.utility.presentSuccessToast(res.message);
       const index = this.notifications.findIndex(x => x.id == id)
-      this.notifications[index].notificationable.user.is_friend_requested = false;
-      this.notifications[index].notificationable.user.is_friend = true;
+      this.notifications[index].is_friend_request = false;
+      // this.notifications[index].notificationable.user.is_friend = true;
 
       let user = await this.users.getUser()
       user.connection_count = user.connection_count + 1;
