@@ -1,3 +1,47 @@
 .title {
   font-size: 18px;
 }
+
+.comingsoon {
+  flex-direction: column;
+  height: 45vh;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 0 30px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 70px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  p {
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+.spinner {
+  flex-direction: column;
+  height: 45vh;
+
+  p {
+    margin-bottom: 0;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .spinner,
+  .comingsoon {
+    height: 30vh;
+  }
+}

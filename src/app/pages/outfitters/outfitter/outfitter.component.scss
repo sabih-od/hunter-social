@@ -3,24 +3,37 @@ ion-icon {
 }
 
 ion-card {
-  width: 97%;
-  height: 90%;
+  margin-bottom: 15px;
 }
 
 .title {
-  font-size: 12px;
+  font-size: 24px;
 }
 
-.padding-5 {
-  padding: 5px;
+ion-card-content {
+  padding: 17px;
 }
 
 .detail {
-  font-size: 9px;
+  font-size: 15px;
   color: black;
-  margin-top: 12px;
+  margin-top: 4px;
+  text-transform: capitalize;
+  font-family: 'Poppins';
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.info strong {
+  min-width: 53px;
+  display: inline-block;
+}
+
+.info {
+  font-size: 14px;
+  color: #333;
 }
 
 .margin-l-5 {
-  margin-left: 5px;
+  // margin-left: 5px;
 }

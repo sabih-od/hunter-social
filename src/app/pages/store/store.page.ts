@@ -8,7 +8,7 @@ import { BasePage } from '../base-page/base-page';
 })
 export class StorePage extends BasePage implements OnInit {
   stores = [];
-  isLoading = true;
+  loading = true;
   constructor(injector: Injector) {
     super(injector);
   }
@@ -22,11 +22,11 @@ export class StorePage extends BasePage implements OnInit {
     let res = await this.network.getProducts();
     console.log('getProducts', res);
     if (res && res.data) {
-      this.isLoading = false;
+      this.loading = false;
       this.stores = res.data;
     } else {
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
-      this.isLoading = false;
+      this.loading = false;
     }
   }
 

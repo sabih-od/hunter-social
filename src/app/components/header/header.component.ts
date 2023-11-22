@@ -25,7 +25,7 @@ export class HeaderComponent extends BasePage implements OnInit {
   @Input() showLoginInfo = true;
 
   cart_count;
-  notifications_count: 0;
+  notifications_count = 0;
   // search_text;
   isSearchVisible = false;
   user_image;
@@ -73,14 +73,13 @@ export class HeaderComponent extends BasePage implements OnInit {
 
 
 
-
-      const localnotification = JSON.parse(localStorage.getItem('notifications_count'));
-      console.log('localnotification => ', localnotification)
-
+      const localnotification = localStorage.getItem('notifications_count');
+      console.log('localnotification asd => ', localnotification)
+      console.log('localnotification => ', Number(localnotification))
       // // if (localnotification) localStorage.setItem('notifications_count', '0');
-      // this.notifications_count = localnotification == null ? 0 : JSON.parse(localStorage.getItem('notifications_count'));
+      // this.notifications_count = localnotification == null ? 0 : Number(localStorage.getItem('notifications_count'));
       // console.log('this.notifications_count => ', this.notifications_count);
-      if (!localnotification) {
+      if (!localnotification || isNaN(Number(localnotification))) {
         this.notifications_count = 0;
         const noticount = await this.network.getUnreadNotificationCount();
         console.log('noticount => ', noticount.data.count)
@@ -89,15 +88,15 @@ export class HeaderComponent extends BasePage implements OnInit {
           this.notifications_count = noticount.data.count;
         }
       } else {
-        this.notifications_count = localnotification;
+        this.notifications_count = Number(localnotification);
       }
 
       window.addEventListener('storageChange', function (e) {
         console.log('e => ', e)
-        this.notifications_count = JSON.parse(localStorage.getItem('notifications_count'));
+        this.notifications_count = Number(localStorage.getItem('notifications_count'));
         console.log('this.notifications_count event => ', this.notifications_count);
         HeaderComponent.instances.forEach((instance) => {
-          instance.notifications_count = JSON.parse(localStorage.getItem('notifications_count'));
+          instance.notifications_count = Number(localStorage.getItem('notifications_count'));
         });
         // Handle the storage change event here 
       });

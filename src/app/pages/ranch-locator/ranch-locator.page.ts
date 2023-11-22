@@ -18,6 +18,7 @@ export class RanchLocatorPage extends BasePage implements OnInit {
   hunting_guides = [];
   ranchPage = 1;
   huntingPage = 1;
+  loading = true;
   processingPage = 1;
   path = null;
   ranchLastPage = -1;
@@ -41,6 +42,7 @@ export class RanchLocatorPage extends BasePage implements OnInit {
     state = this.path ? this.path : state;
     console.log(this.ranchPage)
     let res = await this.network.getRanches(state, this.ranchPage);
+    this.loading = false;
     console.log('getRanches', res.data.data);
     if (res && res.data.data) {
       this.ranchLastPage = res.data.last_page;

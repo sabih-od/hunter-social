@@ -5,18 +5,11 @@
   <app-outfitter-banner></app-outfitter-banner>
 
   <ion-label>
-    <div>
-      <h2 class="text1">
-        <b>
-          CLICK ON A STATE<br />
-          TO FIND AN<br />
-          OUTFITTER NEAR<br />
-          YOU</b>
-      </h2>
-    </div>
+    <h2 class="text1"> Click On a State To Find An OUTFITTER Near You </h2>
   </ion-label>
-
-  <ion-searchbar placeholder="Search for city.."></ion-searchbar>
+  <div style="width: 92%;margin: 0 auto;margin-bottom: 16px;">
+    <ion-searchbar placeholder="Search for city.."></ion-searchbar>
+  </div>
 
   <div class="map_svg_container" data-v-46eb5eb4="" style="
     position: relative;
@@ -1203,7 +1196,7 @@
 
   <ion-grid class="bg ion-no-padding ion-no-margin">
     <ion-row class="ion-padding ion-no-margin">
-      <ion-col size="6" *ngFor="let item of items" class="ion-no-padding ion-no-margin">
+      <ion-col sizeMd="6" size="12" *ngFor="let item of items" class="ion-no-padding ion-no-margin">
         <outfitter [item]="item"></outfitter>
       </ion-col>
     </ion-row>

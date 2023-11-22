@@ -28,6 +28,8 @@ export class DashboardPage extends BasePage implements OnInit {
   loading = true;
   current_user: any;
   orderslength = 0;
+  page = 1;
+  friendspage = 1;
 
   async ngOnInit() {
     this.loading = true;
@@ -45,16 +47,18 @@ export class DashboardPage extends BasePage implements OnInit {
 
   async getfriends() {
     this.sender_id = this.dataService.dataId;
-    let res = await this.network.getDashboardFriends(1, 10);
+    let res = await this.network.getDashboardFriends(this.friendspage, 20);
     this.loading = false;
     console.log('friends response => ', res?.data?.data)
     let self = this;
     if (res && res?.data?.data) {
-      this.friends = res?.data?.data.map((item) => ({
+      const friendslist = res?.data?.data.map((item) => ({
         ...item,
         // hasUnread: self.sender_id === item.id,
         profile_image: this.image.getImageUrl(item?.profile_image),
       }));
+      this.friends = this.friendspage != 1 ? [...this.friends, ...friendslist] : friendslist;
+      console.log('this.friends => ', this.friends)
 
       // this.friends = [
       //   {
@@ -82,6 +86,14 @@ export class DashboardPage extends BasePage implements OnInit {
       this.orderslength = resp?.data.length || 0;
     }
 
+  }
+
+  async loadmorefriends(ev) {
+    this.friendspage = this.friendspage + 1;
+    await this.getfriends();
+    setTimeout(() => {
+      ev.target.complete();
+    }, 700);
   }
 
   // async getNotifications() {
@@ -144,28 +156,32 @@ export class DashboardPage extends BasePage implements OnInit {
     window.dispatchEvent(event);
 
     let response = await this.network.getNotifications(1, 10);
+
     console.log('getNotifications response => ', response)
-    // this.notifications = response?.data?.data.map((notifi) => ({
-    //   ...notifi,
-    //   // hasUnread: self.sender_id === notifi.id,
-    //   // content: notifi?.notificationable && (notifi?.notificationable?.user?.is_friend_requested && notifi?.notificationable?.user.name + ' sent you friend request' || notifi?.notificationable?.user?.is_friend && notifi?.notificationable?.user.name + ' accepted friend request'),
-    //   profile_image: this.image.getImageUrl(notifi?.notificationable?.user?.profile_image || notifi?.notificationable?.user?.profile_image),
-    // }));
-    this.notifications = []
-    for (let i = 0; i < response?.data?.data.length; i++) {
-      let obj = { ...response?.data?.data[i] }
-      if (obj.notificationable) {
-        obj.notificationable.user.profile_image = this.image.getImageUrl(obj.notificationable.user.profile_image)
-        if (obj.notificationable.status == 2) {
-          obj.content = `${obj.notificationable.user?.name} has been blocked!`
-        } else if (obj.notificationable.user.is_friend) {
-          obj.content = `${obj.notificationable.user?.name} friend request accepted`
-        } else if (obj.notificationable.user.is_friend_requested) {
-          obj.content = obj.notificationable.user?.name + ' sent you friend request'
-        }
-      }
-      this.notifications.push(obj)
-    }
+    const notiitems = response?.data?.data.map((notifi) => ({
+      ...notifi,
+      // hasUnread: self.sender_id === notifi.id,
+      // content: notifi?.notificationable && (notifi?.notificationable?.user?.is_friend_requested && notifi?.notificationable?.user.name + ' sent you friend request' || notifi?.notificationable?.user?.is_friend && notifi?.notificationable?.user.name + ' accepted friend request'),
+      profile_image: this.image.getImageUrl(notifi?.user?.profile_image),
+    }));
+    this.notifications = this.page != 1 ? [...this.notifications, ...notiitems] : notiitems;
+    console.log('this.notifications => ', this.notifications)
+
+    // this.notifications = []
+    // for (let i = 0; i < response?.data?.data.length; i++) {
+    //   let obj = { ...response?.data?.data[i] }
+    //   if (obj.notificationable) {
+    //     obj.notificationable.user.profile_image = this.image.getImageUrl(obj.notificationable.user.profile_image)
+    //     if (obj.notificationable.status == 2) {
+    //       obj.content = `${obj.notificationable.user?.name} has been blocked!`
+    //     } else if (obj.notificationable.user.is_friend) {
+    //       obj.content = `${obj.notificationable.user?.name} friend request accepted`
+    //     } else if (obj.notificationable.user.is_friend_requested) {
+    //       obj.content = obj.notificationable.user?.name + ' sent you friend request'
+    //     }
+    //   }
+    //   this.notifications.push(obj)
+    // }
     // console.log('this.currentFriends => ', this.notifications)
     // console.log('this.currentFriends[1].profile_image => ', this.notifications[1].profile_image)
     // this.notifications = response?.data?.data
@@ -262,14 +278,15 @@ export class DashboardPage extends BasePage implements OnInit {
     console.log('acceptRequest', res);
     if (res && res.data) {
       // this.utility.presentSuccessToast(res.message);
+      const index = this.notifications.findIndex(x => x.id == id)
+      this.notifications[index].is_friend_request = false;
+      // this.notifications[index].notificationable.user.is_friend = true;
 
       let user = await this.users.getUser()
       user.connection_count = user.connection_count + 1;
       this.users.setUser(user)
 
-      const index = this.notifications.findIndex(x => x.id == id)
-      this.notifications[index].notificationable.user.is_friend_requested = false;
-      this.notifications[index].notificationable.user.is_friend = true;
+      this.events.publish('UPDATE_CHATS');
       this.events.publish('UPDATE_CHATS');
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');

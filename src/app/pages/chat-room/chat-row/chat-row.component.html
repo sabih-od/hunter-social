@@ -1,11 +1,11 @@
 <ion-item class="ion-no-padding">
-  <ion-avatar class="image">
+  <ion-avatar class="image" (click)="goToProfile()">
     <img [src]="item.profile_image" onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
 
     <!-- <p class="counter f-pop-m">20</p> -->
   </ion-avatar>
 
-  <ion-label class="f-pop-r" style="margin-left: 10px">
+  <ion-label class="f-pop-r" style="margin-left: 10px" (click)="goToProfile()">
     <h2 class="title f-pop-smb">{{ item.name }}</h2>
     <!-- <p class="content">Created By:{{ item.created_by }}</p>
     <p class="content">{{ item.participants }} Participants</p> -->

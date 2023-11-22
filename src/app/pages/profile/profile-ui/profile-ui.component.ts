@@ -24,7 +24,7 @@ export class ProfileUIComponent extends BasePage implements OnInit {
   item: any;
   user: any;
   user_image: any;
-  profileLoading = false;
+  profileLoading = true;
 
   constructor(injector: Injector) {
     super(injector);
@@ -40,7 +40,6 @@ export class ProfileUIComponent extends BasePage implements OnInit {
   }
 
   async initialize() {
-    this.profileLoading = true
     // this.getUser();
     this.current_user = await this.users.getUser();
     this.isOwnProfile = this.current_user.id == this.user_id;

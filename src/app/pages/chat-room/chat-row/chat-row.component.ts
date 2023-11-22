@@ -88,7 +88,7 @@ export class ChatRowComponent extends BasePage implements OnInit {
       let user = await this.users.getUser()
       user.connection_count = user.connection_count - 1;
       this.users.setUser(user)
-      
+
       this.utility.presentSuccessToast(res.message);
       this.events.publish('UPDATE_CHATS');
     } else
@@ -110,5 +110,11 @@ export class ChatRowComponent extends BasePage implements OnInit {
       this.events.publish('UPDATE_CHATS');
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
+  }
+
+  goToProfile() {
+    this.nav.navigateTo('pages/profile', {
+      queryParams: { user_id: this.item.id },
+    });
   }
 }

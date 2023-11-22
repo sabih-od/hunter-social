@@ -15,14 +15,18 @@
       <ion-button (click)="doGetPicture()" class="uploadimagebtn">Upload New Image </ion-button>
     </ion-card>
   </ion-grid>
+
   <ion-segment value="profile" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="profile">
+      <ion-icon name="people-outline"></ion-icon>
       <ion-label>Profile</ion-label>
     </ion-segment-button>
     <ion-segment-button value="membership" *ngIf="is_lifetime_access == 0">
+      <ion-icon name="wallet-outline"></ion-icon>
       <ion-label>Membership</ion-label>
     </ion-segment-button>
     <ion-segment-button value="password">
+      <ion-icon name="lock-open-outline"></ion-icon>
       <ion-label>Change Password</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -169,64 +173,27 @@
   </ion-card>
 
   <ion-card class="ion-margin-bottom" *ngIf="view_type === 2">
-    <ion-item class="ion-no-padding">
-      <ion-label class="ion-margin-start">
-        <h2 class="f-pop-smb header">Membership</h2>
-      </ion-label>
-
-      <!-- <ion-img class="icon-bg" src="assets/images/edit-ic.png"></ion-img> -->
-    </ion-item>
-
-    <ion-row>
-      <ion-col class="ion-margin-start" size="12">
-        <h1 style="font-weight: bold; font-size: 20px">
-          Current Membership: {{package[selected_package -1].name}}
-        </h1>
-        <h2 style="font-size: 15px">Current Membership</h2>
-        <div style="
-            width: 90%;
-            border: 1px solid lightgray;
-            border-radius: 10px;
-            padding-left: 10px;
-          ">
-          <p>{{package[selected_package -1].name}}</p>
-        </div>
-      </ion-col>
-
-      <ion-col class="ion-margin-start" size="12">
-        <h1 style="font-weight: bold; font-size: 20px">
-          Want To Update Your Package?
-        </h1>
-        <h5 *ngFor="let item of package; let i = index">
-          <input type="radio" color="blue" name="package" [checked]="new_package == item.id"
-            (change)="onPackageSelected(item.id)" />
-          {{item.name}} - {{item.price}}
-        </h5>
-      </ion-col>
-      <ion-row>
-        <ion-col>
-          <div style="margin-left: 30px;">
-            <a (click)="privacyPolicy()" style="text-align: center;"><u>Privacy Policy</u></a>
-          </div>
-          <div *ngIf="platform == 'ios'" style="margin-top: 20px; margin-bottom: 20px; margin-left: 30px;">
-            <a (click)="TermofUse()"> <u>Term of Use</u></a>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-col class="ion-margin-start" size="12">
-        <ion-button (click)="updatePackage()" style="margin-top: 10px; margin-bottom: 30px" color="secondary">Update
-          Package
-        </ion-button>
-
-        <ion-button *ngIf="isIos()" (click)="restorePurchases()" style="margin-top: 10px; margin-bottom: 30px"
-          color="dark">Restore Purchases
-        </ion-button>
-
-        <!-- <ion-button color="p">
-          Update Package
-        </ion-button> -->
-      </ion-col>
-    </ion-row>
+    <h2 class="f-pop-smb header">Membership</h2>
+    <h1 style=" color: #000; margin: 0; font-size: 36px; margin-top: -12px; ">{{package[selected_package -1].name}}</h1>
+    <p
+      style="font-weight: bold;font-size: 20px;border-top: 1px solid #ddd;margin: 14px 0 0px 0;padding: 15px 0;color: #333;">
+      Want To Update Your Package? </p>
+    <div class="inputradio" *ngFor="let item of package; let i = index">
+      <input type="radio" color="blue" name="package" [checked]="new_package == item.id"
+        (change)="onPackageSelected(item.id)" />
+      {{item.name}} - {{item.price}}
+    </div>
+    <div class="privacybtn">
+      <a (click)="privacyPolicy()"><u>Privacy Policy</u></a>
+      <a *ngIf="isIos()" (click)="TermofUse()"> <u>Term of Use</u></a>
+    </div>
+    <div>
+      <ion-button (click)="updatePackage()" style="margin-top: 10px; margin-bottom: 30px" color="secondary">Update
+        Package </ion-button>
+      <ion-button *ngIf="isIos()" (click)="restorePurchases()" style="margin-top: 10px; margin-bottom: 30px"
+        color="dark">Restore Purchases
+      </ion-button>
+    </div>
   </ion-card>
 
   <ion-card class="ion-margin-bottom" *ngIf="view_type === 3">

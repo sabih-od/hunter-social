@@ -2,7 +2,7 @@
   <img [src]="item?.profile_image" onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
   <div>
     <p>{{item.content}}</p>
-    <span>{{item.updated_at | date:"MMM dd, yyyy 'at' hh:mm a"}}</span>
+    <span>{{item.created_at | date:"MMM dd, yyyy 'at' hh:mm a"}}</span>
     <div style="display: flex; align-items: centers;margin-top: 4px;"
       *ngIf="item?.is_friend_request">
       <button class="acceptbtn" (click)="acceptRequest(item?.user?.id, item.id )">Accept</button>

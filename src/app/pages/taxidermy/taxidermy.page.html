@@ -4,7 +4,7 @@
   <app-taxidermy-banner></app-taxidermy-banner>
 
   <div class="text">
-    <h2><b>Click on a state to find a taxidermist or a game processor</b></h2>
+    <h2>Click on a state to find a taxidermist or a game processor</h2>
   </div>
   <div class="map_svg_container" data-v-46eb5eb4="" style="
       position: relative;
@@ -1190,15 +1190,15 @@
     <h1><b>TAXIDERMY</b></h1>
   </div>
 
-  <ion-card *ngFor="let item of taxidermies  |filter:search">
+  <ion-card class="itemcard" *ngFor="let item of taxidermies  | filter:search">
     <ion-card-content>
       <ion-item lines="none">
         <ion-label class="ion-text-wrap">
           <ion-card-title>{{item.name}}</ion-card-title>
-          <ion-card-subtitle>{{item.address}}</ion-card-subtitle>
-          <ion-card-subtitle>Phone : {{item.phone}}</ion-card-subtitle>
-          <ion-card-subtitle>Rating : {{item.rating}}</ion-card-subtitle>
-          <ion-card-subtitle (click)="showWebsite(item)" *ngIf="item.website && item.website !== ''">Visit Website
+          <ion-card-subtitle class="address">{{item.address}}</ion-card-subtitle>
+          <ion-card-subtitle><strong>Phone</strong>{{item.phone}}</ion-card-subtitle>
+          <ion-card-subtitle><strong>Rating</strong>{{item.rating}}</ion-card-subtitle>
+          <ion-card-subtitle class="website" (click)="showWebsite(item)" *ngIf="item.website && item.website !== ''">Visit Website
           </ion-card-subtitle>
         </ion-label>
       </ion-item>
@@ -1207,7 +1207,8 @@
 
   <ion-item>
     <ion-button *ngIf="taxidermyPage > 1" (click)="next('taxidermy', false)">Previous</ion-button>
-    <ion-button [hidden]="(taxidermyPage) == taxidermyLastPage" (click)="next('taxidermy', true)" slot="end">Next</ion-button>
+    <ion-button [hidden]="(taxidermyPage) == taxidermyLastPage" (click)="next('taxidermy', true)"
+      slot="end">Next</ion-button>
   </ion-item>
 
   <div style="text-align: center; margin-top: 50px">
@@ -1231,7 +1232,8 @@
 
   <ion-item>
     <ion-button *ngIf="processingPage > 1" (click)="next('processing', false)">Previous</ion-button>
-    <ion-button [hidden]="(processingPage) == processingLastPage" (click)="next('processing', true)" slot="end">Next</ion-button>
+    <ion-button [hidden]="(processingPage) == processingLastPage" (click)="next('processing', true)"
+      slot="end">Next</ion-button>
   </ion-item>
 
   <ion-item class="ion-margin-end" #target>

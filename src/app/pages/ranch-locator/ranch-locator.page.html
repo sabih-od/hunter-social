@@ -17,6 +17,7 @@
       height: 600px;
       overflow: scroll;
       overflow-x: scroll;
+    margin-bottom: 50px;
     ">
     <div id="svggroup">
       <svg height="600" version="1.1" width="1000" xmlns="http://www.w3.org/2000/svg"
@@ -1193,6 +1194,11 @@
 
   <div style="text-align: center; font-family: poppins">
     <h2 class="heading1">RANCHES</h2>
+  </div>
+
+  <div class="spinner" *ngIf="loading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+    <p>Loading...</p>
   </div>
 
   <ion-grid>

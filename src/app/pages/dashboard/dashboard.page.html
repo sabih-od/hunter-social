@@ -49,6 +49,10 @@
           </div>
         </div> -->
       </div>
+      <div class="spinner" *ngIf="loading">
+        <ion-spinner name="lines" color="primary"></ion-spinner>
+        <p>Loading...</p>
+      </div>
       <div *ngIf="!loading && notifications.length == 0" class="notifcontent">
         <p>Notification not found</p>
       </div>
@@ -81,16 +85,20 @@
     </div>
 
     <div *ngIf="tab === 'friends'">
-      <!-- <h3 class="tabtitle">Current Friends</h3> -->
-      <ion-grid class="no-padding" *ngIf="!loading">
-        <ion-row *ngFor="let item of friends"> <!--  | filter:search -->
-          <ion-col class="no-padding" size="12">
-            <chat-row [item]="item"></chat-row>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <div *ngIf="!loading">
+        <div class="chatitem" *ngFor="let item of friends"> <!--  | filter:search -->
+          <chat-row [item]="item"></chat-row>
+        </div>
+      </div>
+      <ion-infinite-scroll *ngIf="!loading" (ionInfinite)="loadmorefriends($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
       <div *ngIf="!loading && friends.length == 0" class="notifcontent">
         <p class="nodatafound">No data found</p>
+      </div>
+      <div class="spinner" *ngIf="loading">
+        <ion-spinner name="lines" color="primary"></ion-spinner>
+        <p>Loading...</p>
       </div>
     </div>
 
@@ -137,12 +145,14 @@
         </div>
       </div>
 
+      <div class="spinner" *ngIf="loading">
+        <ion-spinner name="lines" color="primary"></ion-spinner>
+        <p>Loading...</p>
+      </div>
+
     </div>
 
-    <div class="spinner" *ngIf="loading">
-      <ion-spinner name="lines" color="primary"></ion-spinner>
-      <p>Loading...</p>
-    </div>
+
 
     <!-- <div class="currentfriends">
       <div class="frienditem" *ngFor="let item of currentFriends">

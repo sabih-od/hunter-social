@@ -18,10 +18,21 @@ ion-grid {
     }
 }
 
+ion-segment-button {
+    width: 128px;
+    height: 56px;
+}
+
+.chatitem:nth-child(odd) {
+    background-color: #f7f7f7;
+}
+
 .spinner {
     margin-top: 10px;
     flex-direction: column;
-    p{
+    height: 300px;
+
+    p {
         margin-bottom: 0;
         font-size: 14px;
         margin-top: 5px;
@@ -29,7 +40,7 @@ ion-grid {
 }
 
 .innercontent {
-    padding: 15px;
+    padding: 15px 0 15px 0px;
 
     .tabtitle {
         font-size: 18px;
@@ -65,11 +76,11 @@ ion-grid {
             display: block;
             text-align: right;
         }
-        
+
         .currentfriends .frienditem div {
             width: 100%;
         }
-        
+
         img {
             width: 45px;
             height: 45px;
@@ -83,6 +94,7 @@ ion-grid {
             font-family: 'PoppinsSemiBold';
             font-size: 14px;
         }
+
         span {
             font-size: 12px;
         }
@@ -90,11 +102,12 @@ ion-grid {
 }
 
 .settings {
-    ion-label{
+    ion-label {
         font-family: 'poppins';
         font-size: 15px;
     }
-    ion-icon{
+
+    ion-icon {
         font-size: 22px;
     }
 }
@@ -104,17 +117,19 @@ ion-grid {
     text-align: center;
 }
 
-
+ion-segment {
+    margin-bottom: 10px;
+}
 
 .notifications {
-    padding: 12px 0;
+    padding: 12px 15px;
     border-bottom: 1px solid #ddd;
 
     .notificationitem {
         display: flex;
         align-items: center;
 
-        img { 
+        img {
             width: 40px;
             margin-right: 10px;
             border-radius: 40px;

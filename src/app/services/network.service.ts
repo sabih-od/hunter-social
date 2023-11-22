@@ -298,7 +298,7 @@ export class NetworkService {
 
 
   getProducts() {
-    return this.httpGetResponse(`products`, null, true);
+    return this.httpGetResponse(`products`, null, false);
   }
 
   getProductDetail(id) {
@@ -379,7 +379,7 @@ export class NetworkService {
         ? `map-data/ranches/${state}?page=${page}`
         : `map-data/ranches?page=${page}`,
       null,
-      true
+      false
     );
   }
 
@@ -389,7 +389,7 @@ export class NetworkService {
         ? `map-data/professional_hunting/${state}`
         : `map-data/professional_hunting?page=${page}`,
       null,
-      true
+      false
     );
   }
 

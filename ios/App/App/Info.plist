@@ -23,7 +23,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>3.3</string>
 	<key>CFBundleVersion</key>
-	<string>72</string>
+	<string>73</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -38,11 +38,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Please allow Hunter Social to access your camera to pick and upload selected image to server</string>
+	<string>Please grant permission for Hunters Social to access your camera in order to capture a profile picture.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Please allow Hunter Social to access to your photo library to save images.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photos are uploaded on posts and adventures to share with others inside the app</string>
+	<string>Please grant permission for Hunters Social to access your photo library, allowing the selection and upload of a desired image as your profile picture.</string>
 	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
 	<true/>
 	<key>UIFileSharingEnabled</key>

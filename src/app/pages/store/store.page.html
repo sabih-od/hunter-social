@@ -1,14 +1,20 @@
-<app-header
-  [title]="'STORE'"
-  [showcurve]="false"
-  [back]="false"
-  [showMenu]="true"
-></app-header>
+<app-header [title]="'STORE'" [showcurve]="false" [back]="false" [showMenu]="true"></app-header>
 
 <ion-content>
   <app-store-banner></app-store-banner>
   <!-- <h2 *ngIf="!item" style="padding: 20px">Coming Soon</h2> -->
-  <h2 *ngIf="!isLoading && stores.length == 0" style="padding: 20px">Coming Soon</h2>
+  <div class="comingsoon" *ngIf="!loading && stores.length == 0">
+    <!-- <ion-icon name="stopwatch-outline"></ion-icon> -->
+    <ion-icon name="megaphone-outline"></ion-icon>
+    <h2>Coming Soon</h2>
+    <p>Coming soon to elevate your hunting experience</p>
+  </div>
+
+  <div class="spinner" *ngIf="loading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+    <p>Loading...</p>
+  </div>
+
   <ion-grid>
     <ion-row class="ion-no-margin">
       <ion-col size="12" *ngFor="let item of stores |filter: search">

@@ -1,5 +1,66 @@
-.text{
-  font-family: poppins;
+.text {
+  // font-family: poppins;
+  // text-align: center;
+  // margin-top: 80px;
+
+  font-family: 'PoppinsSemiBold';
+  font-size: 27px;
   text-align: center;
-  margin-top: 80px;
+  margin-top: 0 !important;
+  padding: 30px 15px;
+
+  h2 {
+    text-transform: capitalize;
+    margin: 0;
+  }
+
+}
+
+ion-card-title {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.itemcard {
+  ion-item {
+    --padding-start: 0;
+  }
+
+  ion-label {
+    margin: 0;
+  }
+
+  ion-card-subtitle.address {
+    font-size: 15px;
+    margin-bottom: 3px;
+  }
+
+  ion-card-subtitle {
+    font-size: 13px;
+    color: #333;
+    text-transform: capitalize;
+    font-weight: normal;
+    margin-bottom: 0px;
+
+    strong {
+      min-width: 62px;
+      display: inline-block;
+    }
+  }
+
+  ion-card-subtitle.website {
+    text-transform: uppercase !important;
+    font-family: poppinssemibold;
+    margin-top: 3px;
+  }
+
+  .itemcard ion-card-subtitle strong {
+    min-width: 55px;
+    display: inline-block;
+  }
+}
+
+ion-card-content {
+  padding-inline-end: 0px !important;
+  padding-bottom: 20px;
 }

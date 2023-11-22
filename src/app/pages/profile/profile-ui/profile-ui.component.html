@@ -2,11 +2,8 @@
   <app-profile-banner [isSelf]="isOwnProfile"></app-profile-banner>
   <div class="top-row">
     <div size="3" class="pcolleft">
-      <ion-badge class="online" [color]="
-          user_profile?.is_user_logged_in === 1 || isOwnProfile
-            ? 'success'
-            : 'danger'
-        ">1
+      <ion-badge class="online"
+        [color]=" user_profile?.is_user_logged_in === 1 || isOwnProfile ? 'success' : 'danger' ">1
       </ion-badge>
       <ion-avatar>
         <img
@@ -27,14 +24,14 @@
 
 <div class="bg-light" *ngIf="!profileLoading">
   <ion-row class="ion-no-padding">
-    <ion-col class="actionbtns" size="12">
+    <ion-col class="actionbtns" size="12" *ngIf="!isOwnProfile">
       <!-- <ion-button *ngIf="isOwnProfile" (click)="itemClicked({ url: 'pages/edit-profile' })">
-        Edit Profile
+        Edit Profile 
       </ion-button> -->
-      <ion-button class="reportbtn" *ngIf="!isOwnProfile" (click)="blockUser()">
-        <ion-icon name="ban-outline"></ion-icon> Block User </ion-button>
-      <ion-button class="reportbtn" *ngIf="!isOwnProfile" (click)="openreport()">
-        <ion-icon name="flag-outline"></ion-icon> Report User </ion-button>
+      <ion-button class="reportbtn" (click)="blockUser()">
+        <ion-icon name="ban-outline"></ion-icon> Block</ion-button>
+      <ion-button class="reportbtn" (click)="openreport()">
+        <ion-icon name="flag-outline"></ion-icon> Report</ion-button>
       <!-- <ion-button *ngIf="isOwnProfile" color="danger" (click)="deleteAccount(item)">
         Delete Account
       </ion-button> -->
