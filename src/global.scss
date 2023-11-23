@@ -350,6 +350,9 @@ app-header {
   }
 }
 
+ion-segment {
+  background: #efefef;
+}
 
 ion-searchbar {
   padding-inline-end: 0 !important;
@@ -362,6 +365,9 @@ ion-searchbar {
     height: 40px !important;
     padding-inline-start: 0 !important;
     padding-inline-end: 0 !important;
+    --background: #efefef;
+    --border-radius: 12px !important;
+    --box-shadow: none;
 
     /* inner input styles here */
     input {
@@ -373,6 +379,7 @@ ion-searchbar {
 
     ion-icon {
       margin-left: 5px !important;
+      left: 7px !important;
     }
   }
 }

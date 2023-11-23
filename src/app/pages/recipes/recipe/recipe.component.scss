@@ -23,8 +23,21 @@ ion-card-header {
     border-bottom: 1px solid #ddd;
   }
 
+  p {
+    font-size: 18px;
+    color: #000;
+    font-family: 'PoppinsSemibold';
+    margin: 0;
+    margin-bottom: -3px;
+  }
+
+  span {
+    font-size: 12px;
+    color: #666;
+  }
+
   ion-label {
-    font-family: poppinsMedium !important;
+    // font-family: poppinsMedium !important;
   }
 }
 

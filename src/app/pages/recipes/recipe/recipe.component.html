@@ -6,7 +6,8 @@
           onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
       </ion-avatar>
       <ion-label class="ion-margin-start">
-        {{ item.user.name }}
+        <p>{{ item.user.name }}</p>
+        <span>{{item.created_at | date:"MMM dd, yyyy 'at' hh:mm a"}}</span>
       </ion-label>
       <ion-icon (click)="openPopup($event)" id="click-trigger" *ngIf="item.user.id != userData.id"
         name="ellipsis-vertical-outline" style="font-size: 14px; margin-left: 100px"></ion-icon>

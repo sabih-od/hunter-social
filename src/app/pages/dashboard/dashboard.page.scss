@@ -20,7 +20,7 @@ ion-grid {
 
 ion-segment-button {
     width: 128px;
-    height: 56px;
+    height: 65px;
 }
 
 .chatitem:nth-child(odd) {
@@ -118,7 +118,8 @@ ion-segment-button {
 }
 
 ion-segment {
-    margin-bottom: 10px;
+    width: 96%;
+    margin: 0 auto 10px auto;
 }
 
 .notifications {
