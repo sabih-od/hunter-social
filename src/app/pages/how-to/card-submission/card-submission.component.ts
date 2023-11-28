@@ -14,6 +14,8 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
   title;
   post_file;
   item;
+  poster = '';
+  videoloading = false;
 
   constructor(injector: Injector, public dom: DomSanitizer) {
     super(injector);
@@ -24,9 +26,10 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
     document.getElementById('fileInput').onchange = function (value: any) {
       //alert('Selected file: ' + value);
       let file = value.target.files[0];
-      console.log(file);
+      console.log('file => ', file);
       if (!file) return;
       const reader = self.getFileReader();
+      console.log('reader => ', reader);
 
       reader.readAsArrayBuffer(file);
 
@@ -56,12 +59,21 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
     this.events.subscribe('EDIT_VIDEO', (item) => {
       console.log('ITEM', item);
       this.title = item.title;
+      this.videoloading = false;
       this.video = item.media_upload.url;
       this.item = item;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = this.video.nativeElement.videoWidth;
+      canvas.height = this.video.nativeElement.videoHeight;
+      canvas.getContext('2d').drawImage(this.video.nativeElement, 0, 0, canvas.width, canvas.height);
+      this.poster = canvas.toDataURL('image/png');
+      // this.poster = this.video + '#t=0.1';
     });
   }
 
   select_Video() {
+    this.videoloading = true;
     document.getElementById('fileInput').dispatchEvent(new Event('click'));
   }
 
@@ -78,6 +90,7 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
     if (file) {
       console.log('Selected file', file);
       const { base64, blob, path, isVideo } = file;
+      console.log('path => ', path)
       this.video = this.dom.bypassSecurityTrustUrl(URL.createObjectURL(blob));
       this.post_file = blob;
     }
@@ -91,6 +104,7 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
   }
 
   fileSelected() {
+    this.videoloading = true;
     alert('File Selected xD');
     var name: any = document.getElementById('fileInput');
     alert('Selected file: ' + name.files.item(0).name);

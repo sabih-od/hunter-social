@@ -1,18 +1,23 @@
 <ion-card>
-  <p>Post a How to Video</p>
+  <p>Post a "How to" Video</p>
   <div>
-    <ion-input type="text" id="title" name="title" placeholder="Enter Title" [(ngModel)]="title">
-    </ion-input>
-    <input [hidden]="true" style="margin-left: 60px; height: 0px" type="file" id="fileInput" name="fileInput"
-      accept="video/mp4,video/x-m4v,video/*" onchange="fileSelected()" #file />
-    <ion-button (click)="file.click()">
-      <ion-icon name="videocam"></ion-icon>
-      {{ item ? "Change" : "Select" }} Video
+    <div class="inoutbtn">
+      <ion-input type="text" id="title" name="title" placeholder="Enter Title" [(ngModel)]="title"></ion-input>
+      <input [hidden]="true" style="margin-left: 60px; height: 0px" type="file" id="fileInput" name="fileInput"
+        accept="video/mp4,video/x-m4v,video/*" onchange="fileSelected()" #file />
+      <ion-button (click)="file.click()" *ngIf="!video">
+        {{ item ? "Change" : "Select" }} Video <ion-icon name="videocam-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <ion-button *ngIf="video" slot="end" size="medium" color="primary" (click)="postData()">{{ item ? "Update Video" :
+      "Post Video"
+      }}<ion-icon slot="end" name="videocam-outline"></ion-icon>
     </ion-button>
-    <ion-button slot="end" size="medium" color="primary" (click)="postData()">{{ item ? "Update Video" : "Post Video" }}
-    </ion-button>
-    <ion-button slot="end" size="medium" color="danger" (click)="cancel()" *ngIf="item">Cancel</ion-button>
+    <ion-button slot="end" size="medium" color="danger" (click)="cancel()" *ngIf="video">Cancel<ion-icon slot="end"
+        name="close-circle-outline"></ion-icon></ion-button>
   </div>
+
+  <div *ngIf="videoloading">asdasdasd</div>
 
   <video *ngIf="video" width="100%" height="100%" preload="none" controls>
     <source [src]="video" type="video/mp4" />

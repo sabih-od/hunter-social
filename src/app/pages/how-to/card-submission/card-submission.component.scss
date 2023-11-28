@@ -1,14 +1,25 @@
 ion-card {
 
-    padding: 13px;
-    margin: 6px 0;
+    padding: 20px;
+    margin: 20px 10px;
     box-shadow: none;
+    background: #f7f7f7;
+
+    // padding: 13px;
+    // margin: 6px 0;
+    // box-shadow: none;
+
+    .inoutbtn {
+        // display: flex;
+        // align-items: center;
+    }
 
     p {
-        font-size: 15px;
+        font-size: 24px;
         margin: 0;
         color: #000;
         margin-bottom: 7px;
+        font-family: 'Anton';
     }
 
     ion-item {
@@ -16,19 +27,27 @@ ion-card {
     }
 
     ion-input {
-        font-family: poppins !important;
+        font-family: 'Poppins' !important;
         --padding-start: 15px !important;
-        border: 1px solid #ddd;
+        border: 1px solid #f0efef;
         margin-bottom: 7px;
+        background: #fff;
+        --padding-top: 14px;
+        --padding-end: 10px;
+        --padding-bottom: 14px;
+        font-size: 15px;
     }
 
     ion-button {
-        font-size: 14px;
+        font-size: 15px;
         line-height: 1;
+        text-transform: uppercase;
+        --border-radius: 0;
+        height: 3em;
 
         ion-icon {
-            margin-right: 10px;
-            display: none;
+            margin-left: 7px;
+            // display: none;
         }
     }
 

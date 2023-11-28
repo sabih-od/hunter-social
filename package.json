@@ -69,7 +69,7 @@
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-media-capture": "^3.0.3",
-    "cordova-plugin-purchase": "^11.0.0",
+    "cordova-plugin-purchase": "^13.0.0",
     "cordova-res": "^0.15.4",
     "force": "^0.0.3",
     "i": "^0.3.7",

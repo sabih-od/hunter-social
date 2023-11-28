@@ -26,6 +26,27 @@ ion-searchbar {
   margin-top: 10px;
 }
 
+.nodatafound {
+  flex-direction: column;
+  height: 35vh;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 0 30px;
+  text-align: center;
+  width: 100%;
+
+  ion-icon {
+    font-size: 70px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
 img {
   display: block;
   height: 180px;

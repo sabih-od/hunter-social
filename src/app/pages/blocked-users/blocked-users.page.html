@@ -14,7 +14,7 @@
 
 <ion-content>
   <ion-grid>
-    <ion-searchbar aria-placeholder="Search User" [(ngModel)]="_search" class="ion-margin-bottom"
+    <ion-searchbar *ngIf="!isLoading && datings?.length != 0" aria-placeholder="Search User" [(ngModel)]="_search" class="ion-margin-bottom"
       (ngModelChange)="onSearch()" placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar>
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
@@ -48,7 +48,8 @@
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
 
-      <div *ngIf="!isLoading && datings?.length == 0" style="text-align: center;width: 100%;">
+      <div *ngIf="!isLoading && datings?.length == 0" class="nodatafound">
+        <ion-icon name="people-outline"></ion-icon>
         <p>No Blocked User Found</p>
       </div>
     </ion-row>
