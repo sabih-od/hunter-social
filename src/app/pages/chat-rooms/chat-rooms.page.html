@@ -31,7 +31,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngFor="let item of groups |filter:search">
+    <ion-row *ngFor="let item of groups | filter:search">
       <ion-col size="12">
         <chat-row [item]="item"></chat-row>
       </ion-col>

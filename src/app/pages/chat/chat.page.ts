@@ -19,13 +19,14 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   messages: any;
   text: any;
   user: any;
-  @ViewChild('content') private content: IonContent;
+  @ViewChild('content', { static: true }) private content: IonContent;
   channel_id: any;
   channel: any;
   isLoading = true;
   isMsgLoading = false;
   _img: any;
   testimg: String = 'https://hunterssocial.com/storage/398/DreamShaper_v5_A_small_kif_with_perfect_cute_realistic_face_pl_2.jpg'
+  next_page_url = null;
 
   constructor(injector: Injector, public pusher: PusherService) {
     super(injector);
@@ -39,51 +40,123 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.initialize();
   }
-
+  newmsgloading = false;
+  handleScroll(event) {
+    // Your custom logic when scroll reaches the top
+    // console.log('Scroll reached the top!', event);
+    // console.log('Scroll reached the top!', event.detail.scrollTop);
+    if (event.detail.scrollTop == 0 && this.next_page_url) {
+      this.newmsgloading = true;
+      this.page = this.page + 1;
+      console.log('this.page => ', this.page)
+      console.log('this.item => ', this.item)
+      if (this.item.is_admin) this.getAdminMessages();
+      else if (this.item.isGroup) this.getGruoupChatData();
+      else if (this.user) this.getChatData();
+    }
+  }
   goBack() {
     this.nav.pop();
   }
 
   async initialize() {
     this.item = this.dataService.chat_data;
+    console.log('this.item => ', this.item)
     this.user = await this.users.getUser();
-    console.log(this.item);
-    if (this.item.isGroup) await this.getGruoupChatData();
-    else this.getChatData();
-    
+    console.log('this.item => ', this.item);
+    if (this.item.is_admin) this.getAdminMessages();
+    else if (this.item.isGroup) this.getGruoupChatData();
+    else if (this.user) this.getChatData();
   }
 
+  page = 1;
+  is_group = false;
+
   async getChatData() {
-    let res = await this.network.getChatMessages(this.item.id);
+    this.is_group = true;
+    let res = await this.network.getChatMessages(this.item.id, this.page);
     console.log('getChatData', res);
     this.isLoading = false;
+    this.newmsgloading = false;
     if (res && res.data) {
+      this.next_page_url = res.data?.messages.next_page_url;
+      console.log('next_page_url => ', this.next_page_url);
       this.channel_id = res.data.channel_id;
+      this.dataService.channel_id = res.data.channel_id;
       this.listenMessages();
       res.data.messages.data.sort((a, b) => {
         return b.created_at - a.created_at;
       });
-      this.messages = res.data.messages.data.reverse();
-      this.scrollToBottom();
+      const reversemessages = res.data.messages.data.reverse();
+      this.messages = this.page != 1 ? [...reversemessages, ...this.messages] : reversemessages;
+      this.page == 1 && this.scrollToBottom();
+      this.page != 1 && this.content.scrollToPoint(0, 220);
+    }
+  }
+
+
+  async getAdminMessages() {
+    let res = await this.network.getAdminMessages(this.page);
+    console.log('getAdminMessages', res);
+    this.isLoading = false;
+    if (res && res.data) {
+      this.next_page_url = res.data.next_page_url;
+      console.log('next_page_url => ', this.next_page_url);
+      res.data.data.sort((a, b) => {
+        return b.created_at - a.created_at;
+      });
+
+      let token = localStorage.getItem('token');
+      this.pusher.initAdminChannel('admin-chat', token);
+      this.channel = this.pusher.getChannel();
+      console.log('this.channel => ', this.channel)
+      this.channel.bind('adminChatMessage', async ({ message }) => {
+        console.log('AdminChatMessage Event Recieved => ', message);
+        let self = this;
+        // if (message.sender_id !== this.user.id) {
+        this.messages.push({
+          content: message.content,
+          // channel_id: message.channel_id,
+          // sender_id: message.sender_id,
+          media_upload: message?.media_upload,
+          created_at: message.created_at,
+        });
+        self.scrollToBottom();
+        // }
+      });
+
+      // this.channel_id = res.data.channel_id;
+      // this.listenMessages();
+      // res.data.messages.data.sort((a, b) => {
+      //   return b.created_at - a.created_at;
+      // });
+      const reversemessages = res.data.data.reverse();
+      this.messages = this.page != 1 ? [...reversemessages, ...this.messages] : reversemessages;
+      this.page == 1 && this.scrollToBottom();
+      this.page != 1 && this.content.scrollToPoint(0, 220);
     }
   }
 
   async getGruoupChatData() {
-    let res = await this.network.getChatRoomMessages(this.item.channel_id);
+    let res = await this.network.getChatRoomMessages(this.item.channel_id, this.page);
     console.log('getGruoupChatData', res);
+    this.isLoading = false;
     if (res && res.data) {
-      this.channel_id = res.data.channel_id;
+      this.next_page_url = res.data?.messages?.next_page_url;
+      console.log('next_page_url => ', this.next_page_url);
+      this.channel_id = res.data?.channel_id;
       this.listenMessages();
-      res.data.messages.data.sort((a, b) => {
-        return b.created_at - a.created_at;
+      res.data?.messages?.data?.sort((a, b) => {
+        return b?.created_at - a?.created_at;
       });
-      res.data.messages.data = res.data.messages.data.map((a) => ({
+      res.data.messages.data = res?.data?.messages.data.map((a) => ({
         ...a,
         isGroup: true,
       }));
-      this.messages = res.data.messages.data.reverse();
-      console.log('getGruoupChatData after', this.messages);
-      this.scrollToBottom();
+      const reversemessages = res.data.messages.data.reverse();
+      this.messages = this.page != 1 ? [...reversemessages, ...this.messages] : reversemessages;
+      this.page == 1 && this.scrollToBottom();
+      this.page != 1 && this.content.scrollToPoint(0, 220);
     }
   }
 
@@ -106,7 +179,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     this.pusher.init(this.channel_id, token);
     this.channel = this.pusher.getChannel();
     this.channel.bind('chatMessage', ({ message }) => {
-      console.log('Event Recieved', message);
+      console.log('Event Recieved => ', message);
       let self = this;
       // if (message.sender_id !== this.user.id) {
       this.messages.push({
@@ -209,4 +282,19 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
         );
     }
   }
+
+  // loadmoremessages(ev) {
+  //   if (this.next_page_url) {
+  //     this.page = this.page + 1;
+  //     console.log('this.page => ', this.page)
+  //     if (this.item.is_admin) this.getAdminMessages();
+  //     else if (this.user) this.getChatData();
+  //     setTimeout(() => {
+  //       ev.target.complete();
+  //       // (ev as IonInfiniteScrollContent).target.complete();
+  //     }, 500);
+  //   } else {
+  //     ev.target.complete();
+  //   }
+  // }
 }

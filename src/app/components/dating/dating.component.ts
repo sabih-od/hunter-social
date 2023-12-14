@@ -22,6 +22,7 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   dating_enabled = false;
   _search = '';
   page = 1;
+  next_page_url = null;
 
   constructor(injector: Injector, private iab: InAppBrowser) {
     super(injector);
@@ -137,6 +138,8 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
 
     let res = await this.network.getDatings(this.dating_users, this._search, this.page);
     console.log('getDating => ', res?.data?.data);
+    this.next_page_url = res?.data?.next_page_url;
+    console.log('this.next_page_url => ', this.next_page_url)
     if (res && res?.data?.data) {
       // var newdata = res.data.splice(0,10)
       const newDatingData = res?.data?.data.map((obj) => ({

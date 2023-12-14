@@ -42,8 +42,8 @@
       <ion-spinner name="lines" color="primary"></ion-spinner>
       <p>Loading...</p>
     </div>
-    
-    <ion-infinite-scroll *ngIf="!loading" (ionInfinite)="onIonInfinite($event)">
+
+    <ion-infinite-scroll *ngIf="!loading && next_page_url" (ionInfinite)="onIonInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
 

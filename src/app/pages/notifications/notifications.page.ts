@@ -1,5 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { BasePage } from '../base-page/base-page';
+import { Badge } from '@ionic-native/badge/ngx';
+// import { Badge } from '@capawesome/capacitor-badge';
 
 @Component({
   selector: 'app-notifications',
@@ -12,8 +14,10 @@ export class NotificationsPage extends BasePage implements OnInit {
   refresh = false;
   page = 1;
   limit = 12;
+  next_page_url = null;
   constructor(
     injector: Injector,
+    private badge: Badge
   ) {
     super(injector);
   }
@@ -31,6 +35,7 @@ export class NotificationsPage extends BasePage implements OnInit {
 
     let response = await this.network.getNotifications(this.page, this.limit);
     console.log('getNotifications response => ', response)
+    this.next_page_url = response?.data?.next_page_url;
     const notiitems = response?.data?.data.map((notifi) => ({
       ...notifi,
       // hasUnread: self.sender_id === notifi.id,
@@ -103,6 +108,10 @@ export class NotificationsPage extends BasePage implements OnInit {
     })
     console.log('clickNotification => ', res)
     const count = JSON.parse(localStorage.getItem('notifications_count'));
+
+
+    this.badge.decrease(1);
+    // const badgeres =  await Badge.decrease();
     localStorage.setItem('notifications_count', (count - 1).toString());
     var event = new Event('storageChange');
     window.dispatchEvent(event);
@@ -119,11 +128,13 @@ export class NotificationsPage extends BasePage implements OnInit {
   }
 
   async onIonInfinite(ev) {
-    this.page = this.page + 1;
-    await this.getNotifications();
-    setTimeout(() => {
-      ev.target.complete();
-    }, 700);
+    if (this.next_page_url) {
+      this.page = this.page + 1;
+      await this.getNotifications();
+      setTimeout(() => {
+        ev.target.complete();
+      }, 700);
+    }
   }
 
 }

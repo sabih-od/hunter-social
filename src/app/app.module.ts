@@ -35,6 +35,8 @@ import { SqliteService } from './services/sqlite.service';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 import { RequestAGroupModule } from './components/request-a-group/request-a-group.module';
 // import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -54,6 +56,7 @@ import { RequestAGroupModule } from './components/request-a-group/request-a-grou
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     FormBuilder,
+    AppVersion,
     UtilityService,
     WebView,
     InAppBrowser,
@@ -76,6 +79,7 @@ import { RequestAGroupModule } from './components/request-a-group/request-a-grou
     InAppPurchase2,
     SQLite,
     SqliteService,
+    Badge
   ],
   bootstrap: [AppComponent],
 })

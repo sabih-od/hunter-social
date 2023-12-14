@@ -22,23 +22,40 @@
 </ion-header>
 
 
-<ion-content #content>
+<ion-content #content [scrollEvents]="true" (ionScroll)="handleScroll($any($event))">
   <ion-grid *ngIf="!isLoading">
     <ion-row>
+
+      <!-- <ion-infinite-scroll *ngIf="!loading" (ionInfinite)="loadmoremessages($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll> -->
+      <div class="spinner" style="width: 100%;" *ngIf="newmsgloading && next_page_url">
+        <ion-spinner color="primary"></ion-spinner>
+      </div>
+
       <ion-col size="12" *ngFor="let item of messages">
-        <div class="ion-float-left">
+        <div class="ion-float-left" *ngIf="!user">
+          <left-row [item]="item"></left-row>
+        </div>
+        <div class="ion-float-left" *ngIf="user">
           <left-row *ngIf="item.sender_id !== user.id" [item]="item"></left-row>
         </div>
-        <div class="ion-float-right">
+        <div class="ion-float-right" *ngIf="user">
           <right-row *ngIf="item.sender_id === user.id" [item]="item"></right-row>
         </div>
       </ion-col>
+
+
     </ion-row>
   </ion-grid>
 
 
   <div class="spinner" *ngIf="isLoading">
     <ion-spinner color="primary"></ion-spinner>
+    <!-- <p>Loading...</p> -->
+  </div>
+  <div class="spinner" *ngIf="!isLoading && messages.length == 0">
+    <p>No message found</p>
   </div>
 
   <div class="tempimage" *ngIf="_img">
@@ -50,14 +67,14 @@
 
 </ion-content>
 
-<ion-footer style="background-color: white">
+<ion-footer style="background-color: white" *ngIf="!item.is_admin">
   <div class="bottominputbox">
     <ion-input [(ngModel)]="text" placeholder="Type your message..." class="inputchat">
     </ion-input>
     <div>
       <ion-button fill="clear" (click)="uploadPicture()">
         <!-- <ion-icon name="attach-outline"></ion-icon> -->
-        <ion-icon name="image-outline"></ion-icon> 
+        <ion-icon name="image-outline"></ion-icon>
       </ion-button>
       <ion-button fill="clear" (click)="sendMessage()" [disabled]="isMsgLoading">
         <!-- <ion-icon name="send"></ion-icon> -->

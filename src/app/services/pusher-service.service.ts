@@ -7,6 +7,8 @@ import { UtilityService } from './utility.service';
 import { Config } from '../../app/config/main.config';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { ActionPerformed } from '@capacitor/push-notifications';
+import { Badge } from '@ionic-native/badge/ngx';
+// import { Badge } from '@capawesome/capacitor-badge';
 const { LocalNotifications } = Plugins;
 declare const Pusher: any;
 @Injectable({
@@ -21,7 +23,8 @@ export class PusherService {
     private utility: UtilityService,
     public dataService: DataService,
     public nav: NavService,
-    public eventService: EventsService
+    public eventService: EventsService,
+    private badge: Badge
   ) { }
 
   public init(channel_id, token) {
@@ -33,6 +36,18 @@ export class PusherService {
       },
     });
     this.channel = pusher.subscribe('private-channel-' + channel_id);
+  }
+
+  public initAdminChannel(channel_id, token) {
+    var pusher = new Pusher('b17eef1edf2329b7f6e5', {
+      cluster: 'mt1',
+      authEndpoint: Config.SERVICEURL + '/broadcasting/auth',
+      auth: {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    });
+    console.log('channel_id -> ', channel_id)
+    this.channel = pusher.subscribe('private-' + channel_id);
   }
 
   public getChannel() {
@@ -56,25 +71,27 @@ export class PusherService {
       this.gChannel = pusher.subscribe(`private-user-${userId}`);
       console.log('harvey');
       this.gChannel.bind('chatNotify', async (e) => {
-        console.log('Event Recieved', e);
+        console.log('Event Recieved chatNotify => ', e);
+        this.eventService.publish('UPDATE_CHANNELS', e);
         this.dataService.dataId = e.sender_id;
         console.log('MEYOUUSER', e.sender_id, this.userId);
         if (!this.nav.router.url.includes('pages/chat-room')) {
           let url = window.location.href;
 
           if (e.sender_id != this.userId) {
+
             // this.utility.presentSuccessToast(
             //   e.content ?? 'You have received a new message'
             // );
-            //   const flag = await this.utility.presentConfirm(
-            //     'Go To Chats',
-            //     'Ignore',
-            //     'Message Received',
-            //     'You Have a New Message'
-            //   );
-            //   if (flag) {
-            //     this.nav.push('pages/chat-room');
-            //   }
+            // const flag = await this.utility.presentConfirm(
+            //   'Go To Chats',
+            //   'Ignore',
+            //   'Message Received',
+            //   'You Have a New Message'
+            // );
+            // if (flag) {
+            //   this.nav.push('pages/chat-room');
+            // }
           }
         } else {
           this.eventService.publish('UPDATE_CHATS');
@@ -88,6 +105,9 @@ export class PusherService {
         let notifications_count = JSON.parse(localStorage.getItem('notifications_count'))
         notifications_count = parseInt(notifications_count);
         localStorage.setItem('notifications_count', notifications_count + 1)
+
+        this.badge.increase(1);
+        // await Badge.set({ count: notifications_count + 1 });
         var event = new Event('storageChange');
         window.dispatchEvent(event);
 

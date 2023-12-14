@@ -1,5 +1,6 @@
 <ion-fab vertical="bottom" [horizontal]="horizontal" slot="fixed">
-  <ion-fab-button  id="fabButton" #fabButton (click)="showChatBar()">
+  <ion-badge *ngIf="message_count != 0" color="primary">{{message_count}}</ion-badge>
+  <ion-fab-button id="fabButton" #fabButton (click)="showChatBar()">
     <!-- <ion-icon name="chatbox"></ion-icon> -->
     <ion-icon name="chatbubbles-outline"></ion-icon>
   </ion-fab-button>

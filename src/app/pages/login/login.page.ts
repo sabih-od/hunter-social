@@ -10,6 +10,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { ViewWillEnter } from '@ionic/angular';
 import { resolve } from 'dns';
 import { Config } from 'src/app/config/main.config';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +41,12 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   ngOnInit() {
     this.getSetting();
     this.setupForm();
+    this.setStatusBarStyleDark()
   }
+
+  setStatusBarStyleDark = async () => {
+    await StatusBar.setStyle({ style: Style.Light });
+  };
 
   setupPasswordForm() {
     const re = /\S+@\S+\.\S+/;

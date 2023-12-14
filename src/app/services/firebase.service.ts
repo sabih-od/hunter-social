@@ -11,6 +11,8 @@ import {
 import { Capacitor } from '@capacitor/core';
 import { EventsService } from './basic/events.service';
 import { NavService } from './basic/nav.service';
+import { DataService } from './data.service';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +21,12 @@ export class FirebaseService {
   constructor(
     public events: EventsService,
     public network: NetworkService,
-    public nav: NavService) {
+    public dataService: DataService,
+    public nav: NavService,
+    public badge: Badge) {
     this.assignEvents();
   }
+
 
   assignEvents() {
     this.events.subscribe(
@@ -94,9 +99,23 @@ export class FirebaseService {
         'pushNotificationReceived',
         (notification: PushNotificationSchema) => {
           console.log('NOTIFICATION_RECEIVED', notification);
+          const extradata = JSON.parse(notification.data.extra_data)
+          console.log('extradata?.channel_id => ', extradata?.channel_id);
+          console.log('this.dataService.channel_id => ', this.dataService.channel_id);
 
-          this.events.publish('dashboard:notificationReceived', notification);
-          this.events.publish('dashboard:refreshpage', notification);
+          if (extradata?.channel_id) {
+            const messagescount = localStorage.getItem('messages_count');
+            const countnew = String(Number(messagescount) + 1);
+            localStorage.setItem('messages_count', countnew);
+            this.dataService.updateMessageCount(countnew);
+            this.updateBadge(countnew)
+          }
+
+          if (extradata?.channel_id != this.dataService.channel_id) {
+            console.log('wokring');
+            this.events.publish('dashboard:notificationReceived', notification);
+            this.events.publish('dashboard:refreshpage', notification);
+          }
         }
       );
 
@@ -104,7 +123,10 @@ export class FirebaseService {
         'pushNotificationActionPerformed',
         (notification) => {
           console.log('pushNotificationActionPerformed', notification.notification);
-          if (notification.notification.data.type == 'message') {
+          const extradata = JSON.parse(notification.notification.data.extra_data)
+          if (extradata?.channel_id) {
+            localStorage.setItem('messages_count', '0');
+            this.dataService.updateMessageCount(0);
             this.nav.push('pages/conversations')
           } else {
             this.nav.push('pages/notifications')
@@ -117,6 +139,14 @@ export class FirebaseService {
 
       resolve();
     });
+  }
+
+
+  async updateBadge(messagecount) {
+    const badgecount = await this.badge.get();
+    // if (badgecount != 0 && messagecount < badgecount) {
+    this.badge.set(Number(badgecount) + Number(messagecount))
+    // }
   }
 
   async getFCMToken() {

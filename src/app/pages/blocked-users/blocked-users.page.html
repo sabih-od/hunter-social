@@ -14,8 +14,9 @@
 
 <ion-content>
   <ion-grid>
-    <ion-searchbar *ngIf="!isLoading && datings?.length != 0" aria-placeholder="Search User" [(ngModel)]="_search" class="ion-margin-bottom"
-      (ngModelChange)="onSearch()" placeholder="Search" (ionClear)="onSearch(true)"></ion-searchbar>
+    <ion-searchbar *ngIf="!isLoading && datings?.length != 0" aria-placeholder="Search User" [(ngModel)]="_search"
+      class="ion-margin-bottom" (ngModelChange)="onSearch()" placeholder="Search"
+      (ionClear)="onSearch(true)"></ion-searchbar>
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -24,7 +25,7 @@
         <!-- <p>{{item.email}}</p> -->
         <!-- <dating-item [item]="item" (update)="getData()"></dating-item> -->
 
-        <ion-card class="ion-no-margin">
+        <ion-card *ngIf="item" class="ion-no-margin">
           <!-- <ion-img [src]="item.profile_image" style="height: 120px" (click)="goToProfile()"></ion-img> -->
           <img [src]="item?.profile_image"
             onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
@@ -44,7 +45,7 @@
         <ion-spinner name="lines" color="primary"></ion-spinner>
       </div>
 
-      <ion-infinite-scroll *ngIf="datings?.length != 0" (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll *ngIf="next_page_url" (ionInfinite)="onIonInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
 

@@ -3,6 +3,7 @@ import { BasePage } from 'src/app/pages/base-page/base-page';
 import { UserDetailComponentComponent } from 'src/app/pages/dating/user-detail-component/user-detail-component.component';
 import { NavService } from 'src/app/services/basic/nav.service';
 import { ChatBatsComponent } from '../chat-bats/chat-bats.component';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @Component({
   selector: 'chat-floating-button',
@@ -15,7 +16,7 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   activated = false;
   static instances = [];
 
-  constructor(injector: Injector, public nav: NavService) {
+  constructor(injector: Injector, public nav: NavService, public badge: Badge) {
     super(injector);
     ChatFloatingButtonComponent.instances.push(this);
 
@@ -27,6 +28,8 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
     });
   }
 
+  message_count = 0;
+
   ngOnInit() {
     this.checkIfDating();
     this.events.subscribe('DATING_PROFILE_CREATED', () => {
@@ -37,13 +40,29 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
     this.events.subscribe('SHOW_GROUPS', () => {
       this.showChatBar({ showGroup: true });
     });
+
+    this.events.subscribe('UPDATE_CHANNELS', this.newMessage.bind(this));
+
+    this.dataService.messages_count.subscribe(data => {
+      console.log('this.dataService.messages_count data => ', data)
+      this.message_count = data;
+    })
+    // const messagescount = localStorage.getItem('messages_count');
+    // this.message_count = Number(messagescount);
+
+  }
+
+  newMessage(data) {
+    console.log('chat floating button new message recieved', data);
   }
 
   openSocialChatRoom() {
+    localStorage.setItem('messages_count', '0');
     this.nav.navigateTo('pages/chat-room');
   }
 
   openDatingChatRoom() {
+    localStorage.setItem('messages_count', '0');
     this.nav.navigateTo('pages/dating');
   }
 
@@ -90,6 +109,7 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   }
 
   groupChat() {
+    localStorage.setItem('messages_count', '0');
     this.nav.push('pages/chat-rooms');
   }
 
@@ -97,7 +117,18 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
     if (!this.isDatingUser) this.editUser();
   }
 
-  showChatBar(data) {
+  async showChatBar(data) {
+    if (this.platform.is('cordova')) {
+      const badgecount = await this.badge.get();
+      const count = localStorage.getItem('messages_count');
+      console.log('badgecount => ', badgecount);
+      if (badgecount != 0 && Number(count) < badgecount) {
+        this.badge.set(Number(badgecount) - Number(count))
+      }
+    }
+
+    localStorage.setItem('messages_count', '0');
+    this.dataService.updateMessageCount(0);
     // this.modals.present(ChatBatsComponent, data);
     this.nav.push('pages/conversations')
   }

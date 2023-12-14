@@ -15,6 +15,7 @@ export class BlockedUsersPage extends BasePage implements OnInit {
   _search = '';
   isLoading = false;
   page = 1;
+  next_page_url = null;
   constructor(
     injector: Injector,
     public platform: Platform,
@@ -29,6 +30,8 @@ export class BlockedUsersPage extends BasePage implements OnInit {
   async getData() {
     this.isLoading = true;
     let res = await this.network.getBloackedUsers({ query: this._search }, this.page);
+    this.next_page_url = res?.data?.next_page_url;
+    console.log('this.next_page_url => ', this.next_page_url)
     if (res && res?.data?.data) {
       console.log('geBloackedUsers res.data => ', res);
       const newDatingData = res.data.data.map((obj) => (
@@ -64,9 +67,11 @@ export class BlockedUsersPage extends BasePage implements OnInit {
   onSearch(clear) {
     if (clear) this.search = '';
     else this.search = this._search;
-    console.log('this._search', this._search)
+    console.log('this._search', this._search);
+    console.log('this.page => ', this.page)
     if (this.timeToken) clearTimeout(this.timeToken);
     this.timeToken = setTimeout(() => {
+    this.page = 1;
       this.datings = []
       this.getData();
     }, 1000);

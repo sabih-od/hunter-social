@@ -12,6 +12,7 @@ export class HowToPage extends BasePage implements OnInit {
   search_text: string;
   loading = true;
   page = 1;
+  next_page_url = null;
 
   onSearchTextChange(searchText: string) {
     this.search_text = searchText;
@@ -37,6 +38,8 @@ export class HowToPage extends BasePage implements OnInit {
   }
   async getData() {
     let res = await this.network.howToVideos(this.page);
+    this.next_page_url = res?.data?.next_page_url;
+    console.log('this.next_page_url => ', this.next_page_url)
     if (res.data.data.length > 0) {
       console.log('howToVideos', res);
       let user = await this.users.getUser();

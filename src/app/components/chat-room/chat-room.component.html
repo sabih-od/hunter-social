@@ -27,6 +27,9 @@
   <div class="chatitem" *ngFor="let item of friends | filter:search">
     <chat-row [item]="item"></chat-row>
   </div>
+  <ion-infinite-scroll *ngIf="!loading" (ionInfinite)="loadmorefriends($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
   <!-- <ion-grid>
     <ion-row *ngFor="let item of friends | filter:search">
@@ -45,4 +48,11 @@
     style="text-align: center;text-transform: uppercase;height: 84%;justify-content: center;align-items: center;display: flex;">
     <p>You have no friend</p>
   </div>
+
 </ion-content>
+
+<!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button (click)="showBroadcastMessage()">
+    <ion-icon name="megaphone-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab> -->

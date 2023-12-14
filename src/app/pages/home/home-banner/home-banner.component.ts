@@ -34,8 +34,9 @@ export class HomeBannerComponent extends BasePage implements OnInit {
 
   navigate(arg) {
     //arg == chat
-    if (arg === 'contact') this.nav.push('pages/contact-us');
-    else this.nav.push('pages/store');
+    // if (arg === 'contact') this.nav.push('pages/contact-us');
+    // else this.nav.push('pages/store');
+    this.nav.push('pages/'+arg);
 
     // arg = bulb
 

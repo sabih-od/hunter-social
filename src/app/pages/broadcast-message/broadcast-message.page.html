@@ -1,0 +1,54 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Broadcast Message</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button (click)="close()">
+        <ion-icon class="back-icon" name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class=""><ion-label class="title f-anton">Broadcast Message</ion-label></ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-buttons>
+        <ion-button (click)="close()">
+          <ion-icon name="arrow-back-circle"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title class="f-anton">Broadcast Message</ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="bottominputbox">
+    <ion-textarea [(ngModel)]="text" placeholder="Type your message here..." class="inputchat">
+    </ion-textarea>
+
+    <div class="tempimage" *ngIf="_img">
+      <button (click)="removeTempImg()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </button>
+      <img src="{{_img}}" />
+    </div>
+
+    <div class="sendbtns">
+      <ion-button (click)="uploadPicture()">
+        Image
+        <ion-icon name="image-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="sendMessage()" [disabled]="isMsgLoading">
+        Send Message
+        <ion-icon name="paper-plane-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

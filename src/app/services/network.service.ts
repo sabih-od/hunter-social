@@ -103,17 +103,25 @@ export class NetworkService {
     return this.httpDeleteResponse(`posts/${post_id}`);
   }
 
-  getChatMessages(id = '4edff87e-4b27-479b-ab5a-6f6841f6ec83') {
-    return this.httpGetResponse(`chats/messages/${id}?page=1`, null, false);
+  getChatMessages(id = '4edff87e-4b27-479b-ab5a-6f6841f6ec83', page) {
+    return this.httpGetResponse(`chats/messages/${id}?page=${page}`, null, false);
   }
 
   sendChatMessages(data, id = '4f26f995-b292-4fae-8aba-2d2ebbb84edb') {
     return this.httpPostResponse(`chats/messages/${id}`, data);
   }
 
-  getFriends() {
+  getFriends(page) {
     return this.httpGetResponse(
-      `users/friends?orderBy=created_at&sortedBy=desc`,
+      `users/friends?page=${page}&orderBy=created_at&sortedBy=desc`,
+      null,
+      false
+    );
+  }
+
+  getAdminMessages(page) {
+    return this.httpGetResponse(
+      `admin-chat-message/?page=${page}`,
       null,
       false
     );
@@ -360,9 +368,9 @@ export class NetworkService {
     return this.httpPostResponse(`users/groups/join`, data, null, false);
   }
 
-  getChatRoomMessages(id) {
+  getChatRoomMessages(id, page) {
     return this.httpGetResponse(
-      `chats/messages/group/${id}?page=1`,
+      `chats/messages/group/${id}?page=${page}`,
       null,
       false
     );

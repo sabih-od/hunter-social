@@ -23,7 +23,9 @@ export class DataService {
   races_data: any = [];
   cart;
   chat_data;
+  channel_id;
   equipment;
+  messages_count: BehaviorSubject<number>;
   searchValueChanged: BehaviorSubject<any>;
   dataId;
   user_data;
@@ -31,10 +33,15 @@ export class DataService {
   constructor() {
     this.searchValueChanged = new BehaviorSubject(null);
     this.settings = new BehaviorSubject(null);
+    this.messages_count = new BehaviorSubject(null);
   }
 
   updateSetting(data) {
     this.settings.next(data);
+  }
+
+  updateMessageCount(data) {
+    this.messages_count.next(data);
   }
 
   getFooterLinks() {

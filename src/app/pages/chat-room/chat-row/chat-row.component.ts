@@ -96,6 +96,7 @@ export class ChatRowComponent extends BasePage implements OnInit {
   }
 
   async viewChat(item) {
+    console.log('item => ', item)
     this.dataService.chat_data = item;
     let isOpen = await this.modals.isModalOpen();
     if (isOpen) this.modals.dismiss({ date: 'A' });

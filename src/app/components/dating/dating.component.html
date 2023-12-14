@@ -47,7 +47,8 @@
       <ion-col size="6" sizeMd="4" *ngFor="let item of datings | filter:search">
         <dating-item [item]="item" (update)="getData()"></dating-item>
       </ion-col>
-      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+
+      <ion-infinite-scroll *ngIf="next_page_url" (ionInfinite)="onIonInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-row>

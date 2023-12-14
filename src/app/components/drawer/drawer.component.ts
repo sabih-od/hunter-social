@@ -54,6 +54,20 @@ export class DrawerComponent extends BasePage implements OnInit {
           this.packageId = userRes?.data?.user?.profile_detail?.package_id;
         });
       }
+
+
+
+      const messagescount = localStorage.getItem('messages_count');
+      console.log('messagescount => ', messagescount)
+      if (messagescount == null) {
+        localStorage.setItem('messages_count', '0');
+        console.log('messagescount => ', Number(messagescount))
+      } else {
+        if (Number(messagescount) != 0) this.dataService.updateMessageCount(Number(messagescount));
+        else this.dataService.updateMessageCount(0);
+
+      }
+
       // console.log("localStorage.getItem('user'); => ", localStorage.getItem('user'))
     }
   }

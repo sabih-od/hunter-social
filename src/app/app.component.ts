@@ -10,6 +10,8 @@ import { UtilityService } from './services/utility.service';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @Component({
   selector: 'app-root',
@@ -26,11 +28,24 @@ export class AppComponent {
     public platform: Platform,
     public fcm: FirebaseService,
     // private sqlite: SqliteService,
+    private zone: NgZone,
+    private appVersion: AppVersion,
+    private badge: Badge
 
-    private zone: NgZone
 
   ) {
     platform.ready().then(() => {
+      this.appVersion.getVersionNumber().then(res => {
+        console.log('getVersionNumber => ', res);
+      }).catch(error => {
+        console.log(error);
+      });
+      this.appVersion.getVersionCode().then(res => {
+        console.log('getVersionCode => ', res);
+      }).catch(error => {
+        console.log(error);
+      });
+
       this.initialize();
     });
     document.addEventListener(
@@ -44,15 +59,18 @@ export class AppComponent {
       },
       false
     );
+    if (Capacitor.getPlatform() !== 'web') {
+      this.setStatusBarStyleDark()
+    }
   }
 
   setStatusBarStyleDark = async () => {
     await StatusBar.setStyle({ style: Style.Dark });
   };
 
-  setStatusBarStyleLight = async () => {
-    await StatusBar.setStyle({ style: Style.Light });
-  };
+  // setStatusBarStyleLight = async () => {
+  //   await StatusBar.setStyle({ style: Style.Light });
+  // };
 
   initialize() {
 
@@ -71,7 +89,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(async () => {
-
+      // this.badge.clear();
       App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
         this.zone.run(() => {
           // Example url: https://beerswift.app/tabs/tab2
@@ -94,6 +112,8 @@ export class AppComponent {
       //   .catch((err) => alert(err));
       await this.fcm.setupFMC();
     });
+
+    
   }
 
   async createBackRoutingLogics(url) {

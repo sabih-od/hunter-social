@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <div #cardElement></div>
+
+    <button (click)="paymentSheet()" style="padding: 10px;">Payment Sheet</button>
+    <button (click)="applePay()" style="padding: 10px;">Apple Pay</button>
+    <button (click)="paymentFlow()" style="padding: 10px;">Payment Flow</button>
+    <button (click)="subscribe()" style="padding: 10px;">Subscribe</button>
+    <!-- <strong>Ready to create an app?</strong>
+    <div style="width: 200px;">{{savedfileuri}}</div>
+    <div>
+      <img [src]="imagesrc" style="width: 70px;height: 70px;" />
+    </div>
+    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer"
+        href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <button style="padding: 10px;margin-top: 10px;" (click)="downloadimage()">Download Image</button>
+
+    <input type="text" [(ngModel)]="term">
+    <div *ngFor="let item of howtovideos | customFilter : term">
+      <p>
+        {{item.title}}
+      </p>
+    </div> -->
+  </div>
+</ion-content>

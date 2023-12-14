@@ -2,6 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { PeoplesComponent } from 'src/app/components/peoples/peoples.component';
 import { BasePage } from '../base-page/base-page';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-chat-room',
@@ -31,6 +32,7 @@ export class ChatRoomPage extends BasePage implements OnInit, ViewWillEnter {
   isLoading = false;
   search = '';
   sender_id = undefined;
+  page = 1;
 
   constructor(injector: Injector) {
     super(injector);
@@ -55,21 +57,27 @@ export class ChatRoomPage extends BasePage implements OnInit, ViewWillEnter {
 
   async getFriends() {
     this.sender_id = this.dataService.dataId;
-    let res = await this.network.getFriends();
+    let res = await this.network.getFriends(this.page);
     let self = this;
-    console.log('getFriends', res);
+    console.log('getFriends =>', res);
     if (res && res.data) {
-      this.friends = res.data.map((user) => ({
+      const friendslist = res.data.map((user) => ({
         ...user,
         hasUnread: self.sender_id === user.id,
         profile_image: self.image.getImageUrl(user.profile_image),
       }));
 
+
+      this.friends = this.page != 1 ? [...this.friends, ...friendslist] : friendslist;
+
+      // const sortedData = _.orderBy(this.friends, ['created_at'], ['asc']);
+      // console.log('sortedData => ', sortedData);
+
       // this.friends = [
       //   {
       //     name: 'Atif Garam',
       //     is_friend: true,
-          
+
       //   }
       // ]
     } else
@@ -85,6 +93,7 @@ export class ChatRoomPage extends BasePage implements OnInit, ViewWillEnter {
 
   async doRefresh($event) {
     this.isLoading = true;
+    this.page = 1;
     await this.getFriends();
     $event.target.complete();
     this.isLoading = false;
