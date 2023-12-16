@@ -151,7 +151,7 @@ export class DashboardPage extends BasePage implements OnInit {
   async getNotifications() {
     this.loading = true;
 
-    localStorage.setItem('notifications_count', '0');
+    // localStorage.setItem('notifications_count', '0');
     var event = new Event('storageChange');
     window.dispatchEvent(event);
 

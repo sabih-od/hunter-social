@@ -58,7 +58,7 @@
       <!-- <ion-col size="1.5"> -->
       <ion-button *ngIf="showLoginInfo" (click)="gotoNotifications()">
         <ion-icon class="side-icon" name="notifications-outline"></ion-icon>
-        <ion-badge *ngIf="notifications_count != 0" class="online" color="primary">
+        <ion-badge *ngIf="notifications_count != null && notifications_count != 0" class="online" color="primary">
           {{ notifications_count }}
         </ion-badge>
       </ion-button>

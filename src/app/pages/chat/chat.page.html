@@ -4,16 +4,16 @@
       <!-- <ion-icon (click)="goBack()" class="back-icon" name="arrow-back-circle"></ion-icon> -->
       <ion-icon (click)="goBack()" class="back-icon" name="arrow-back-circle"></ion-icon>
       <ion-avatar class="image ion-margin-horizontal">
-        <img [src]="item.isGroup ? item.media_upload?.url : item?.profile_image"
+        <img [src]="item?.isGroup ? item?.media_upload?.url : item?.profile_image"
           onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-avatar.png';" />
         <!-- <div class="online-indicator"></div> -->
       </ion-avatar>
       <ion-label>
-        <h2 class="title f-pop-smb">{{item.isGroup ? item?.title :item?.name}}</h2>
+        <h2 class="title f-pop-smb">{{item?.isGroup ? item?.title :item?.name}}</h2>
         <!-- <p class="f-pop-r content">Online {{item.time}} mins ago</p> -->
       </ion-label>
 
-      <ion-icon slot="end" *ngIf="item.isGroup" name="person-remove-outline" (click)="leave()"></ion-icon>
+      <ion-icon slot="end" *ngIf="item?.isGroup" name="person-remove-outline" (click)="leave()"></ion-icon>
       <!-- <ion-img src="assets/images/call-ic.png" slot="end"></ion-img>
       <ion-img src="assets/images/video-ic.png" slot="end"></ion-img>
       <ion-img src="assets/images/user-ic.png" slot="end"></ion-img> -->
@@ -38,10 +38,10 @@
           <left-row [item]="item"></left-row>
         </div>
         <div class="ion-float-left" *ngIf="user">
-          <left-row *ngIf="item.sender_id !== user.id" [item]="item"></left-row>
+          <left-row *ngIf="item.sender_id !== user?.id" [item]="item"></left-row>
         </div>
         <div class="ion-float-right" *ngIf="user">
-          <right-row *ngIf="item.sender_id === user.id" [item]="item"></right-row>
+          <right-row *ngIf="item.sender_id === user?.id" [item]="item"></right-row>
         </div>
       </ion-col>
 
@@ -67,7 +67,7 @@
 
 </ion-content>
 
-<ion-footer style="background-color: white" *ngIf="!item.is_admin">
+<ion-footer style="background-color: white" *ngIf="!item?.is_admin">
   <div class="bottominputbox">
     <ion-input [(ngModel)]="text" placeholder="Type your message..." class="inputchat">
     </ion-input>

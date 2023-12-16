@@ -27,6 +27,8 @@ export class PusherService {
     private badge: Badge
   ) { }
 
+  notifications_count = 0;
+
   public init(channel_id, token) {
     var pusher = new Pusher('b17eef1edf2329b7f6e5', {
       cluster: 'mt1',
@@ -36,6 +38,12 @@ export class PusherService {
       },
     });
     this.channel = pusher.subscribe('private-channel-' + channel_id);
+  }
+
+  getNotificationCount() {
+    this.dataService.notifications_count.subscribe(data => {
+      this.notifications_count = data;
+    })
   }
 
   public initAdminChannel(channel_id, token) {
@@ -102,9 +110,10 @@ export class PusherService {
         // this is used for user friend request notification
 
         console.log('USER NOTIFICATION', e);
-        let notifications_count = JSON.parse(localStorage.getItem('notifications_count'))
-        notifications_count = parseInt(notifications_count);
-        localStorage.setItem('notifications_count', notifications_count + 1)
+        // let notifications_count = JSON.parse(localStorage.getItem('notifications_count'))
+        // notifications_count = parseInt(notifications_count);
+        // localStorage.setItem('notifications_count', notifications_count + 1)
+        this.dataService.updateNotificationsCount(this.notifications_count + 1);
 
         this.badge.increase(1);
         // await Badge.set({ count: notifications_count + 1 });

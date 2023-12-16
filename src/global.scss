@@ -390,6 +390,22 @@ ion-searchbar {
   font-size: 14px;
 }
 
+
+.app-update-alert {
+  .alert-title {
+    font-weight: normal !important;
+    font-family: PoppinsSemiBold;
+    color: #000;
+    font-size: 20px;
+  }
+
+  .alert-button {
+    font-weight: normal !important;
+    font-family: PoppinsSemiBold !important;
+    color: #000;
+  }
+}
+
 @media screen and (max-width: 600px) {
 
   .chatitem {

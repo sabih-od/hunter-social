@@ -1,6 +1,7 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { BasePage } from '../base-page/base-page';
 import { PusherService } from 'src/app/services/pusher-service.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-conversations',
@@ -14,11 +15,12 @@ export class ConversationsPage extends BasePage implements OnInit {
   // ngOnInit() {
   // }
 
-  constructor(injector: Injector, pusher: PusherService) {
+  constructor(injector: Injector, pusher: PusherService,
+    private route: ActivatedRoute, private router: Router
+  ) {
     super(injector);
   }
-
-  tab = 'friends';
+  tab = '';
   _showGroup;
 
   @Input() set showGroup(val) {
@@ -26,6 +28,20 @@ export class ConversationsPage extends BasePage implements OnInit {
   }
 
   ngOnInit() {
+    console.log('tab => ', this.tab)
+    this.route.queryParams.subscribe((params) => {
+      // Get the value of the query parameter
+      console.log('params => ', params)
+      if (params) {
+        if (params['type'] == 'groups') { this.tab = 'groups' }
+        if (params['type'] == 'individual') { this.tab = 'friends' }
+        if (params['type'] == 'admin') { this.tab = 'admin' }
+        if (params['type'] == 'people') { this.tab = 'people' }
+        // this.activeSegment = params['type'] || 'defaultSegmentValue'; // Set a default value if needed
+      } else {
+        this.tab = 'friends';
+      }
+    });
   }
 
   segmentChanged($event) {

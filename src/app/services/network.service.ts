@@ -121,7 +121,7 @@ export class NetworkService {
 
   getAdminMessages(page) {
     return this.httpGetResponse(
-      `admin-chat-message/?page=${page}`,
+      `admin-chat-message?page=${page}`,
       null,
       false
     );

@@ -236,6 +236,7 @@ export class DrawerComponent extends BasePage implements OnInit {
     // localStorage.removeItem('fcm_token')
     localStorage.removeItem('userDataa');
     localStorage.removeItem('notifications_count');
+    localStorage.setItem('messages_count', '0');
     this.users.removeUser();
     this.nav.push('pages/login');
     console.log(res);
@@ -349,9 +350,10 @@ export class DrawerComponent extends BasePage implements OnInit {
   async getNotificationCount() {
     const noticount = await this.network.getUnreadNotificationCount();
     console.log('getUnreadNotificationCount => ', noticount)
-    if (noticount?.data?.count) {
-      localStorage.setItem('notifications_count', noticount?.data?.count?.toString());
-    }
+    this.dataService.updateNotificationsCount(noticount?.data?.count);
+    // localStorage.setItem('notifications_count', noticount?.data?.count?.toString());
+    // if (noticount?.data?.count) {
+    // }
   }
 
   openDatingChatRoom() {

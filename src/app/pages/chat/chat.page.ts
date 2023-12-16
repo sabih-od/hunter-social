@@ -8,6 +8,7 @@ import {
 import { IonContent } from '@ionic/angular';
 import { PusherService } from 'src/app/services/pusher-service.service';
 import { BasePage } from '../base-page/base-page';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -28,7 +29,9 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   testimg: String = 'https://hunterssocial.com/storage/398/DreamShaper_v5_A_small_kif_with_perfect_cute_realistic_face_pl_2.jpg'
   next_page_url = null;
 
-  constructor(injector: Injector, public pusher: PusherService) {
+  constructor(injector: Injector, public pusher: PusherService,
+    private route: ActivatedRoute, private router: Router
+  ) {
     super(injector);
   }
   ngAfterViewInit() {
@@ -38,6 +41,25 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      // Get the value of the query parameter
+      console.log('params => ', params)
+      if (params) {
+        if (params?.is_admin == '1') {
+          console.log('andar gaya')
+          this.item = {
+            "id": "admin",
+            // "email": "johnmartin@mailinator.com",
+            "name": "Hunter Social",
+            // "created_at": "2023-01-20T17:40:57.000000Z",
+            "profile_image": "https://hunterssocial.com/assets/images/udpate-logo.png",
+            "hasUnread": false,
+            "is_admin": true,
+          }
+        }
+      }
+    });
+
     this.initialize();
   }
   newmsgloading = false;
@@ -50,8 +72,8 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       this.page = this.page + 1;
       console.log('this.page => ', this.page)
       console.log('this.item => ', this.item)
-      if (this.item.is_admin) this.getAdminMessages();
-      else if (this.item.isGroup) this.getGruoupChatData();
+      if (this.item?.is_admin) this.getAdminMessages();
+      else if (this.item?.isGroup) this.getGruoupChatData();
       else if (this.user) this.getChatData();
     }
   }
@@ -60,12 +82,14 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   }
 
   async initialize() {
-    this.item = this.dataService.chat_data;
+    if (!this.item) {
+      this.item = this.dataService.chat_data;
+    }
     console.log('this.item => ', this.item)
     this.user = await this.users.getUser();
     console.log('this.item => ', this.item);
-    if (this.item.is_admin) this.getAdminMessages();
-    else if (this.item.isGroup) this.getGruoupChatData();
+    if (this.item?.is_admin) this.getAdminMessages();
+    else if (this.item?.isGroup) this.getGruoupChatData();
     else if (this.user) this.getChatData();
   }
 
@@ -74,7 +98,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
 
   async getChatData() {
     this.is_group = true;
-    let res = await this.network.getChatMessages(this.item.id, this.page);
+    let res = await this.network.getChatMessages(this.item?.id, this.page);
     console.log('getChatData', res);
     this.isLoading = false;
     this.newmsgloading = false;
@@ -113,7 +137,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       this.channel.bind('adminChatMessage', async ({ message }) => {
         console.log('AdminChatMessage Event Recieved => ', message);
         let self = this;
-        // if (message.sender_id !== this.user.id) {
+        // if (message.sender_id !== this.user?.id) {
         this.messages.push({
           content: message.content,
           // channel_id: message.channel_id,
@@ -181,7 +205,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     this.channel.bind('chatMessage', ({ message }) => {
       console.log('Event Recieved => ', message);
       let self = this;
-      // if (message.sender_id !== this.user.id) {
+      // if (message.sender_id !== this.user?.id) {
       this.messages.push({
         content: message.content,
         channel_id: message.channel_id,
@@ -242,7 +266,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
         // this.messages.push({
         //   content: this.text,
         //   channel_id: this.channel_id,
-        //   sender_id: this.user.id,
+        //   sender_id: this.user?.id,
         //   time: new Date(),
         // });
         // this.scrollToBottom();
@@ -250,7 +274,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       // this.messages.push({
       //   message: this.text,
       //   time: this.getTime(new Date()),
-      //   id: this.messages[this.messages.length - 1].id + 1,
+      //   id: this.messages[this.messages.length - 1]?.id + 1,
       // }); 3
       this.text = '';
       this._img = '';
@@ -287,7 +311,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   //   if (this.next_page_url) {
   //     this.page = this.page + 1;
   //     console.log('this.page => ', this.page)
-  //     if (this.item.is_admin) this.getAdminMessages();
+  //     if (this.item?.is_admin) this.getAdminMessages();
   //     else if (this.user) this.getChatData();
   //     setTimeout(() => {
   //       ev.target.complete();

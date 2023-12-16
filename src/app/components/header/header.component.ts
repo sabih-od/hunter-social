@@ -72,31 +72,37 @@ export class HeaderComponent extends BasePage implements OnInit {
       // });
 
 
-
-      const localnotification = localStorage.getItem('notifications_count');
-      console.log('localnotification asd => ', localnotification)
-      console.log('localnotification => ', Number(localnotification))
-      // // if (localnotification) localStorage.setItem('notifications_count', '0');
-      // this.notifications_count = localnotification == null ? 0 : Number(localStorage.getItem('notifications_count'));
-      // console.log('this.notifications_count => ', this.notifications_count);
-      if (!localnotification || isNaN(Number(localnotification))) {
-        this.notifications_count = 0;
-        const noticount = await this.network.getUnreadNotificationCount();
-        console.log('noticount => ', noticount.data.count)
-        if (noticount.data.count) {
-          localStorage.setItem('notifications_count', noticount.data.count.toString());
-          this.notifications_count = noticount.data.count;
-        }
-      } else {
-        this.notifications_count = Number(localnotification);
-      }
+      this.dataService.notifications_count.subscribe(data => {
+        console.log('this.dataService.notifications_count data => ', data)
+        this.notifications_count = data;
+      })
+      // this.getNotificationsCount();
+      // const localnotification = localStorage.getItem('notifications_count');
+      // console.log('localnotification asd => ', localnotification)
+      // console.log('localnotification => ', Number(localnotification))
+      // // // if (localnotification) localStorage.setItem('notifications_count', '0');
+      // // this.notifications_count = localnotification == null ? 0 : Number(localStorage.getItem('notifications_count'));
+      // // console.log('this.notifications_count => ', this.notifications_count);
+      // if (!localnotification || isNaN(Number(localnotification))) {
+      //   this.notifications_count = 0;
+      //   const noticount = await this.network.getUnreadNotificationCount();
+      //   console.log('noticount => ', noticount.data.count)
+      //   if (noticount.data.count) {
+      //     localStorage.setItem('notifications_count', noticount.data.count.toString());
+      //     this.notifications_count = noticount.data.count;
+      //   }
+      // } else {
+      //   this.notifications_count = Number(localnotification);
+      // }
 
       window.addEventListener('storageChange', function (e) {
         console.log('e => ', e)
-        this.notifications_count = Number(localStorage.getItem('notifications_count'));
+        this.getNotificationsCount();
+        // this.notifications_count = Number(localStorage.getItem('notifications_count'));
         console.log('this.notifications_count event => ', this.notifications_count);
         HeaderComponent.instances.forEach((instance) => {
-          instance.notifications_count = Number(localStorage.getItem('notifications_count'));
+          this.getNotificationsCount();
+          // instance.notifications_count = Number(localStorage.getItem('notifications_count'));
         });
         // Handle the storage change event here 
       });
@@ -118,6 +124,13 @@ export class HeaderComponent extends BasePage implements OnInit {
     }
   }
 
+
+  getNotificationsCount() {
+    this.dataService.notifications_count.subscribe(data => {
+      console.log('header this.dataService.notifications_count data => ', data)
+      this.notifications_count = data;
+    })
+  }
 
   async getUser() {
 

@@ -79,6 +79,7 @@ export class HomePage extends BasePage implements OnInit {
     this.callPusherService();
   }
 
+
   async ngOnInit() {
     // const notifs = await LocalNotifications.schedule({
     //   notifications: [
@@ -112,6 +113,7 @@ export class HomePage extends BasePage implements OnInit {
     //  this.initialize();
     //this.modals.present(UserDetailComponentComponent);
   }
+
 
   async callPusherService() {
     let token = localStorage.getItem('token');

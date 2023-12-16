@@ -107,15 +107,22 @@ export class NotificationsPage extends BasePage implements OnInit {
       "ids": id
     })
     console.log('clickNotification => ', res)
-    const count = JSON.parse(localStorage.getItem('notifications_count'));
+    // const count = JSON.parse(localStorage.getItem('notifications_count'));
 
+    this.getNotificationCount();
 
     this.badge.decrease(1);
     // const badgeres =  await Badge.decrease();
-    localStorage.setItem('notifications_count', (count - 1).toString());
+    // localStorage.setItem('notifications_count', (count - 1).toString());
     var event = new Event('storageChange');
     window.dispatchEvent(event);
 
+  }
+
+  async getNotificationCount() {
+    const noticount = await this.network.getUnreadNotificationCount();
+    console.log('getUnreadNotificationCount notifications page => ', noticount)
+    this.dataService.updateNotificationsCount(noticount?.data?.count);
   }
 
   async doRefresh($event) {

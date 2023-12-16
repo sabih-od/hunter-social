@@ -125,6 +125,9 @@ export class FirebaseService {
           console.log('pushNotificationActionPerformed', notification.notification);
           const extradata = JSON.parse(notification.notification.data.extra_data)
           if (extradata?.channel_id) {
+            // if (extradata?.type == 'individual') { this.nav.push('pages/conversations?type=individual') }
+            // else if (extradata?.type == 'groups') { this.nav.push('pages/conversations?type=groups') }
+            // else if (extradata?.type == 'admin') { this.nav.push('pages/chat?is_admin=1') }
             localStorage.setItem('messages_count', '0');
             this.dataService.updateMessageCount(0);
             this.nav.push('pages/conversations')
