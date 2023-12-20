@@ -22,7 +22,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 export class AppComponent {
   isModalOpen;
   versionNumber;
-  newIOSVersionNumber = "3.5";
+  newIOSVersionNumber = "3.6";
   newAndroidVersion = "1.2"
   // versionCode;
 
@@ -47,7 +47,7 @@ export class AppComponent {
         this.appVersion.getVersionNumber().then(res => {
           console.log('getVersionNumber => ', res);
           this.versionNumber = res;
-          this.checkAppUpdates()
+          // this.checkAppUpdates()
           // console.log('this.versionNumber => ', this.versionNumber);
         }).catch(error => {
           console.log(error);
@@ -157,9 +157,9 @@ export class AppComponent {
 
   checkAppUpdates() {
     console.log('this.versionNumber => ', this.versionNumber)
-    // if (this.platform.is('ios') && this.versionNumber != this.newIOSVersionNumber) {
-    //   this.presentAlert();
-    // }
+    if (this.platform.is('ios') && this.versionNumber != this.newIOSVersionNumber) {
+      this.presentAlert();
+    }
     if (this.platform.is('android') && this.versionNumber != this.newAndroidVersion) {
       this.presentAlert();
     }

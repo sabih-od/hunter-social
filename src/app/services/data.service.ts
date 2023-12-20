@@ -27,6 +27,7 @@ export class DataService {
   equipment;
   messages_count: BehaviorSubject<number>;
   notifications_count: BehaviorSubject<number>;
+  notification_and_message_count: BehaviorSubject<any>;
   searchValueChanged: BehaviorSubject<any>;
   dataId;
   user_data;
@@ -36,6 +37,7 @@ export class DataService {
     this.settings = new BehaviorSubject(null);
     this.messages_count = new BehaviorSubject(null);
     this.notifications_count = new BehaviorSubject(null);
+    this.notification_and_message_count = new BehaviorSubject(null);
   }
 
   updateSetting(data) {
@@ -48,6 +50,10 @@ export class DataService {
 
   updateNotificationsCount(data) {
     this.notifications_count.next(data);
+  }
+
+  updateUnreadMessageAndNotificationCount(data) {
+    this.notification_and_message_count.next(data);
   }
 
   getFooterLinks() {

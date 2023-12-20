@@ -11,13 +11,16 @@
 
   </ion-label>
 
-  <ion-icon (click)="viewGroup(item)" name="chatbubble-outline" style="font-size: 22px" *ngIf="!item.canJoin">
-  </ion-icon>
+  <div class="chationc" (click)="viewGroup(item)">
+    <ion-icon name="chatbubble-outline" style="font-size: 22px" *ngIf="!item.canJoin">
+    </ion-icon>
+    <ion-badge *ngIf="item?.notifications > 0" color="danger">{{item?.notifications}}</ion-badge>
+  </div>
   <ion-icon style="margin-left: 2%; font-size: 22px" name="ellipsis-vertical-outline" (click)="showMenu($event)">
   </ion-icon>
-  <div *ngIf=" item.hasUnread"
+  <!-- <div *ngIf="item.hasUnread"
     style=" background-color: tomato; width: 10px; height: 10px; border-radius: 5px; margin-left: -7px; margin-top: 8px; ">
-  </div>
+  </div> -->
 
   <!-- <p class="time f-pop-m">{{ item.time }} Mins</p> -->
 </ion-item>

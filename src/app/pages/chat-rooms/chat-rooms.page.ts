@@ -50,6 +50,33 @@ export class ChatRoomsPage extends BasePage implements OnInit, ViewWillEnter {
     await this.getGroups();
     // this.isLoading = false;
     this.events.subscribe('UPDATE_GROUPS', this.getGroups.bind(this));
+    this.events.subscribe('UPDATE_CHANNELS', this.newMessage.bind(this));
+  }
+
+  newMessage(data) {
+    console.log('newMessage Groups data => ', data)
+    // this.users.getNotificationCount()
+    if (data.channel_id) {
+      const list = this.groups.map(x => {
+        if (x.id == data.channel_id) {
+          // x.hasUnread = true;
+          x.notifications = x.notifications + 1
+        }
+        return x;
+      })
+
+      console.log('list => ', list)
+      // const index = _.findIndex(list, { 'sender_id': data.channel_id });
+      const index = list.findIndex(x => x.id == data.channel_id);
+      console.log('index => ', index)
+      if (index !== -1) {
+        const movedObject = list.splice(index, 1)[0];
+        list.unshift(movedObject);
+      }
+      console.log('list => ', list)
+
+      this.groups = list;
+    }
   }
 
   async getGroups() {

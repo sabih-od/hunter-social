@@ -3,6 +3,7 @@ import { PopoverController } from '@ionic/angular';
 import { BasePage } from '../../base-page/base-page';
 import { MenuNotFriendComponent } from '../menu-not-friend/menu-not-friend.component';
 import { MenuComponent } from '../menu/menu.component';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @Component({
   selector: 'chat-row',
@@ -11,7 +12,7 @@ import { MenuComponent } from '../menu/menu.component';
 })
 export class ChatRowComponent extends BasePage implements OnInit {
   @Input() item;
-  constructor(injector: Injector, public popoverController: PopoverController) {
+  constructor(injector: Injector, public popoverController: PopoverController, public badge: Badge) {
     super(injector);
   }
 
@@ -84,7 +85,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
     let res = await this.network.unfriend(this.item.id);
     console.log('unfriend', res);
     if (res && res.data) {
-
       let user = await this.users.getUser()
       user.connection_count = user.connection_count - 1;
       this.users.setUser(user)
@@ -96,12 +96,16 @@ export class ChatRowComponent extends BasePage implements OnInit {
   }
 
   async viewChat(item) {
-    console.log('item => ', item)
+    console.log('viewChat item => ', item)
     this.dataService.chat_data = item;
     let isOpen = await this.modals.isModalOpen();
     if (isOpen) this.modals.dismiss({ date: 'A' });
+    item.notifications = 0;
+    // this.badge.decrease(item?.notifications)
     this.nav.push('pages/chat');
   }
+
+
 
   async block() {
     let res = await this.network.block(this.item.id);

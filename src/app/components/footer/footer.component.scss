@@ -86,8 +86,17 @@ ion-grid {
   padding-top: 15px;
 }
 
+.versionnumber {
+  color: #fff;
+  text-align: center;
+  // font-family: poppins;
+  font-size: 12px;
+  padding: 10px;
+  border-top: 1px solid #333;
+}
+
 @media screen and (max-width: 500px) {
   .logotext h2 {
-    font-size: 13px; 
+    font-size: 13px;
   }
 }

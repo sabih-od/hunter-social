@@ -4,12 +4,24 @@
     padding: 10px 22px;
 }
 
-ion-icon.badge {
+ion-badge.badge {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     margin: 0 auto 0 auto;
     margin-left: 50%;
+    display: inline-table;
+    // width: 12px;
+}
+
+ion-icon.badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto 0 auto;
+    margin-left: 52%;
+    display: inline-table;
     width: 12px;
 }

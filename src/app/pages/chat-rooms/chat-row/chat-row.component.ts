@@ -1,8 +1,9 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { Platform, PopoverController } from '@ionic/angular';
 import { BasePage } from '../../base-page/base-page';
 import { MenuNotFriendComponent } from '../menu-not-friend/menu-not-friend.component';
 import { MenuComponent } from '../menu/menu.component';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @Component({
   selector: 'chat-row2',
@@ -11,11 +12,11 @@ import { MenuComponent } from '../menu/menu.component';
 })
 export class ChatRowComponent extends BasePage implements OnInit {
   @Input() item;
-  constructor(injector: Injector, public popoverController: PopoverController) {
+  constructor(injector: Injector, public popoverController: PopoverController, public badge: Badge, public platform: Platform) {
     super(injector);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async joinChatRoom() {
     let res = await this.network.joinChatRoom({
@@ -55,14 +56,17 @@ export class ChatRowComponent extends BasePage implements OnInit {
   }
 
   async viewGroup(item) {
+    console.log('viewGroup item => ', item)
     if (!item.canJoin) {
       // Iser is already joined move to chat page
       this.dataService.chat_data = { ...item, isGroup: true };
       let isOpen = await this.modals.isModalOpen();
       if (isOpen) this.modals.dismiss({ date: 'A' });
+      item.notifications = 0;
       this.nav.push('pages/chat');
     }
   }
+
 
   async showMenu($event) {
     let menu = await this.popoverController.create({

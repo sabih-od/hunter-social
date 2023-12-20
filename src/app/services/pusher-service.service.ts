@@ -8,6 +8,7 @@ import { Config } from '../../app/config/main.config';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { ActionPerformed } from '@capacitor/push-notifications';
 import { Badge } from '@ionic-native/badge/ngx';
+import { UserService } from './user.service';
 // import { Badge } from '@capawesome/capacitor-badge';
 const { LocalNotifications } = Plugins;
 declare const Pusher: any;
@@ -24,6 +25,7 @@ export class PusherService {
     public dataService: DataService,
     public nav: NavService,
     public eventService: EventsService,
+    public users: UserService,
     private badge: Badge
   ) { }
 
@@ -80,9 +82,11 @@ export class PusherService {
       console.log('harvey');
       this.gChannel.bind('chatNotify', async (e) => {
         console.log('Event Recieved chatNotify => ', e);
-        this.eventService.publish('UPDATE_CHANNELS', e);
+        if (e.chat_type == 'individual') this.eventService.publish('UPDATE_CHANNELS', e);
+        if (e.chat_type == 'group') this.eventService.publish('UPDATE_NEW_GROUPS', e);
         this.dataService.dataId = e.sender_id;
         console.log('MEYOUUSER', e.sender_id, this.userId);
+        this.users.getNotificationCount();
         if (!this.nav.router.url.includes('pages/chat-room')) {
           let url = window.location.href;
 
@@ -113,9 +117,8 @@ export class PusherService {
         // let notifications_count = JSON.parse(localStorage.getItem('notifications_count'))
         // notifications_count = parseInt(notifications_count);
         // localStorage.setItem('notifications_count', notifications_count + 1)
-        this.dataService.updateNotificationsCount(this.notifications_count + 1);
-
-        this.badge.increase(1);
+        // this.dataService.updateNotificationsCount(this.notifications_count + 1);
+        // this.badge.increase(1);
         // await Badge.set({ count: notifications_count + 1 });
         var event = new Event('storageChange');
         window.dispatchEvent(event);

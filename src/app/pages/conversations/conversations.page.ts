@@ -15,6 +15,10 @@ export class ConversationsPage extends BasePage implements OnInit {
   // ngOnInit() {
   // }
 
+  adminNotiCount = 0;
+  friendNotiCount = 0;
+  groupNotiCount = 0;
+
   constructor(injector: Injector, pusher: PusherService,
     private route: ActivatedRoute, private router: Router
   ) {
@@ -28,11 +32,13 @@ export class ConversationsPage extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log('tab => ', this.tab)
+    console.log('tab => ', this.tab);
+    this.getNotificationsObject()
+
     this.route.queryParams.subscribe((params) => {
       // Get the value of the query parameter
       console.log('params => ', params)
-      if (params) {
+      if (Object.keys(params).length > 0) {
         if (params['type'] == 'groups') { this.tab = 'groups' }
         if (params['type'] == 'individual') { this.tab = 'friends' }
         if (params['type'] == 'admin') { this.tab = 'admin' }
@@ -42,7 +48,23 @@ export class ConversationsPage extends BasePage implements OnInit {
         this.tab = 'friends';
       }
     });
+
   }
+
+  async getNotificationsObject() {
+
+    this.dataService.notification_and_message_count.subscribe(data => {
+      console.log('this.dataService.notification_and_message_count data => ', data)
+      this.adminNotiCount = data?.admin;
+      this.friendNotiCount = data?.friend;
+      this.groupNotiCount = data?.group;
+    })
+    // let res = await this.network.getUnreadMessageAndNotificationCount();
+    // this.adminNotiCount = res.data.admin;
+    // this.friendNotiCount = res.data.friend;
+    // this.groupNotiCount = res.data.group;
+  }
+
 
   segmentChanged($event) {
     if ($event.target.value == 'admin') {

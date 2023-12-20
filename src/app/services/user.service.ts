@@ -3,6 +3,9 @@ import { ImageService } from './image.service';
 import { NetworkService } from './network.service';
 import { UtilityService } from './utility.service';
 import { BehaviorSubject } from 'rxjs';
+import { DataService } from './data.service';
+import { Platform } from '@ionic/angular';
+import { Badge } from '@ionic-native/badge/ngx';
 const users = require('src/app/data/users.json');
 @Injectable({
   providedIn: 'root',
@@ -16,7 +19,10 @@ export class UserService {
   constructor(
     public image: ImageService,
     public network: NetworkService,
-    public utility: UtilityService
+    public utility: UtilityService,
+    public dataService: DataService,
+    public platform: Platform,
+    public badge: Badge
   ) {
     this.userprofile = new BehaviorSubject(null);
     this.states = new BehaviorSubject(null);
@@ -91,6 +97,16 @@ export class UserService {
   //     }
   //   });
   // }
+
+  async getNotificationCount() {
+    const noticount = await this.network.getUnreadMessageAndNotificationCount();
+    console.log('getUnreadMessageAndNotificationCount => ', noticount)
+    this.dataService.updateUnreadMessageAndNotificationCount(noticount?.data);
+    this.dataService.updateNotificationsCount(noticount?.data?.unread_count);
+    
+  }
+
+
 
   setToken(token) {
     return localStorage.setItem('token', token);

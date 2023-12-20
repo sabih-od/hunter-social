@@ -31,7 +31,7 @@ export class DrawerComponent extends BasePage implements OnInit {
       // console.log('islogin => ', islogin)
       let userRes = await this.network.getUserProfile(user?.id);
       // let interestsRes = await this.network.getInterests();
-      this.getNotificationCount()
+      this.users.getNotificationCount()
       this.getStates();
       this.getInterests();
       console.log('res.data.user => ', userRes.data)
@@ -347,14 +347,22 @@ export class DrawerComponent extends BasePage implements OnInit {
     this.users.interestsList = res.data
   }
 
-  async getNotificationCount() {
-    const noticount = await this.network.getUnreadNotificationCount();
-    console.log('getUnreadNotificationCount => ', noticount)
-    this.dataService.updateNotificationsCount(noticount?.data?.count);
-    // localStorage.setItem('notifications_count', noticount?.data?.count?.toString());
-    // if (noticount?.data?.count) {
-    // }
-  }
+  // async getNotificationCount() {
+  //   const noticount = await this.network.getUnreadNotificationCount();
+  //   console.log('getUnreadNotificationCount => ', noticount)
+  //   this.dataService.updateNotificationsCount(noticount?.data?.count);
+  //   // localStorage.setItem('notifications_count', noticount?.data?.count?.toString());
+  //   // if (noticount?.data?.count) {
+  //   // }
+  // }
+
+
+  // async getNotificationCount() {
+  //   const noticount = await this.network.getUnreadMessageAndNotificationCount();
+  //   console.log('getUnreadMessageAndNotificationCount => ', noticount)
+  //   this.dataService.updateUnreadMessageAndNotificationCount(noticount?.data);
+  //   this.dataService.updateNotificationsCount(noticount?.data?.unread_count);
+  // }
 
   openDatingChatRoom() {
     this.nav.navigateTo('pages/dating');

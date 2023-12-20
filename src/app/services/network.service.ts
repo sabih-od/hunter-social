@@ -361,7 +361,7 @@ export class NetworkService {
   }
 
   getGroups() {
-    return this.httpGetResponse(`groups`, null, false);
+    return this.httpGetResponse(`users/groups`, null, false);
   }
 
   joinChatRoom(data) {
@@ -378,6 +378,10 @@ export class NetworkService {
 
   leaveGroup(channel_id) {
     return this.httpPostResponse(`users/groups/leave`, { channel_id }, null);
+  }
+
+  getUnreadMessageAndNotificationCount() {
+    return this.httpGetResponse(`users/unread-notifications-count`, null, false);
   }
 
   getRanches(state = undefined, page) {
@@ -588,6 +592,7 @@ export class NetworkService {
     return this.httpGetResponse(`users/notifications/unread-count`, null);
   }
   readNotifiaction(data) {
+    console.log('readNotifiaction data => ', data)
     return this.httpPostResponse(`users/notifications/unread-notifications`, data, null);
   }
 

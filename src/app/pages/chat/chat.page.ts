@@ -116,6 +116,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       this.page == 1 && this.scrollToBottom();
       this.page != 1 && this.content.scrollToPoint(0, 220);
     }
+    this.updateNotificationCount()
   }
 
 
@@ -159,6 +160,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       this.page == 1 && this.scrollToBottom();
       this.page != 1 && this.content.scrollToPoint(0, 220);
     }
+    this.updateNotificationCount()
   }
 
   async getGruoupChatData() {
@@ -182,6 +184,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       this.page == 1 && this.scrollToBottom();
       this.page != 1 && this.content.scrollToPoint(0, 220);
     }
+    this.updateNotificationCount()
   }
 
   removeTempImg() {
@@ -225,6 +228,16 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     setTimeout(() => {
       self.content.scrollToBottom();
     }, 500);
+  }
+
+  async updateNotificationCount() {
+    // let noticount = await this.network.getUnreadNotificationCount();
+    const noticount = await this.network.getUnreadMessageAndNotificationCount();
+    console.log('getUnreadMessageAndNotificationCount => ', noticount)
+    this.dataService.updateUnreadMessageAndNotificationCount(noticount?.data);
+    
+    console.log('noticount => ', noticount.data.unread_count)
+    this.dataService.updateNotificationsCount(noticount.data.unread_count)
   }
 
   async sendMessage() {

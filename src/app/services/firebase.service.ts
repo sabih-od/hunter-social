@@ -104,11 +104,11 @@ export class FirebaseService {
           console.log('this.dataService.channel_id => ', this.dataService.channel_id);
 
           if (extradata?.channel_id) {
-            const messagescount = localStorage.getItem('messages_count');
-            const countnew = String(Number(messagescount) + 1);
-            localStorage.setItem('messages_count', countnew);
-            this.dataService.updateMessageCount(countnew);
-            this.updateBadge(countnew)
+            // const messagescount = localStorage.getItem('messages_count');
+            // const countnew = String(Number(messagescount) + 1);
+            // localStorage.setItem('messages_count', countnew);
+            // this.dataService.updateMessageCount(countnew);
+            // this.updateBadge(countnew)
           }
 
           if (extradata?.channel_id != this.dataService.channel_id) {
@@ -125,14 +125,32 @@ export class FirebaseService {
           console.log('pushNotificationActionPerformed', notification.notification);
           const extradata = JSON.parse(notification.notification.data.extra_data)
           if (extradata?.channel_id) {
-            // if (extradata?.type == 'individual') { this.nav.push('pages/conversations?type=individual') }
-            // else if (extradata?.type == 'groups') { this.nav.push('pages/conversations?type=groups') }
-            // else if (extradata?.type == 'admin') { this.nav.push('pages/chat?is_admin=1') }
-            localStorage.setItem('messages_count', '0');
-            this.dataService.updateMessageCount(0);
-            this.nav.push('pages/conversations')
+            console.log('extradata?.type => ', extradata?.type)
+            if (extradata?.type == 'individual') {
+              console.log('Here in individual')
+              this.nav.push('pages/conversations', {
+                type: 'individual',
+              })
+            }
+            else if (extradata?.type == 'group') {
+              console.log('Here in group')
+              this.nav.push('pages/conversations', {
+                type: 'groups',
+              })
+            }
+            // else
+            //   localStorage.setItem('messages_count', '0');
+            // this.dataService.updateMessageCount(0);
           } else {
-            this.nav.push('pages/notifications')
+            if (extradata?.type == 'admin') {
+              console.log('Here in individual')
+              this.nav.push('pages/chat', {
+                is_admin: 1,
+              })
+            } else {
+              this.nav.push('pages/notifications')
+            }
+
           }
           // localStorage.setItem('notification', JSON.stringify(notification));
         }
@@ -146,9 +164,9 @@ export class FirebaseService {
 
 
   async updateBadge(messagecount) {
-    const badgecount = await this.badge.get();
+    // const badgecount = await this.badge.get();
     // if (badgecount != 0 && messagecount < badgecount) {
-    this.badge.set(Number(badgecount) + Number(messagecount))
+    // this.badge.set(Number(badgecount) + Number(messagecount))
     // }
   }
 

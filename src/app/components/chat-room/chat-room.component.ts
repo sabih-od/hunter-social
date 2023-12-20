@@ -48,7 +48,7 @@ export class ChatRoomComponent extends BasePage implements OnInit {
 
   async ngOnInit() {
     this.initialize();
-    this.initPusher();
+    // this.initPusher();
   }
 
   async initialize() {
@@ -70,10 +70,12 @@ export class ChatRoomComponent extends BasePage implements OnInit {
   }
   newMessage(data) {
     console.log('newMessage data => ', data)
+    // this.users.getNotificationCount()
     if (data.sender_id) {
       const list = this.friends.map(x => {
         if (x.id == data.sender_id) {
-          x.hasUnread = true;
+          // x.hasUnread = true;
+          x.notifications = x.notifications + 1
         }
         return x;
       })

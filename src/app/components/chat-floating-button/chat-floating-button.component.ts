@@ -43,13 +43,24 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
 
     this.events.subscribe('UPDATE_CHANNELS', this.newMessage.bind(this));
 
-    this.dataService.messages_count.subscribe(data => {
-      console.log('this.dataService.messages_count data => ', data)
-      this.message_count = data;
-    })
+    this.getNotificationsObject()
+    // this.dataService.messages_count.subscribe(data => {
+    //   console.log('this.dataService.messages_count data => ', data)
+    //   this.message_count = data;
+    // })
     // const messagescount = localStorage.getItem('messages_count');
     // this.message_count = Number(messagescount);
 
+  }
+
+  async getNotificationsObject() {
+    this.dataService.notification_and_message_count.subscribe(data => {
+      console.log('this.dataService.notification_and_message_count floating data => ', data)
+      // if (data?.admin && data?.friend && data?.group) {
+      this.message_count = data?.admin + data?.friend + data?.group;
+      console.log('this.message_count => ', this.message_count)
+      // }
+    })
   }
 
   newMessage(data) {
@@ -57,12 +68,12 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   }
 
   openSocialChatRoom() {
-    localStorage.setItem('messages_count', '0');
+    // localStorage.setItem('messages_count', '0');
     this.nav.navigateTo('pages/chat-room');
   }
 
   openDatingChatRoom() {
-    localStorage.setItem('messages_count', '0');
+    // localStorage.setItem('messages_count', '0');
     this.nav.navigateTo('pages/dating');
   }
 
@@ -109,7 +120,7 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   }
 
   groupChat() {
-    localStorage.setItem('messages_count', '0');
+    // localStorage.setItem('messages_count', '0');
     this.nav.push('pages/chat-rooms');
   }
 
@@ -118,17 +129,17 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   }
 
   async showChatBar(data) {
-    if (this.platform.is('cordova')) {
-      const badgecount = await this.badge.get();
-      const count = localStorage.getItem('messages_count');
-      console.log('badgecount => ', badgecount);
-      if (badgecount != 0 && Number(count) < badgecount) {
-        this.badge.set(Number(badgecount) - Number(count))
-      }
-    }
+    // if (this.platform.is('cordova')) {
+    //   const badgecount = await this.badge.get();
+    //   const count = localStorage.getItem('messages_count');
+    //   console.log('badgecount => ', badgecount);
+    //   if (badgecount != 0 && Number(count) < badgecount) {
+    //     this.badge.set(Number(badgecount) - Number(count))
+    //   }
+    // }
 
-    localStorage.setItem('messages_count', '0');
-    this.dataService.updateMessageCount(0);
+    // localStorage.setItem('messages_count', '0');
+    // this.dataService.updateMessageCount(0);
     // this.modals.present(ChatBatsComponent, data);
     this.nav.push('pages/conversations')
   }

@@ -30,6 +30,9 @@
     <ion-segment-button value="friends">
       <ion-label>Friends</ion-label>
       <ion-icon name="chatbubbles-outline"></ion-icon>
+      <ion-badge *ngIf="friendNotiCount && friendNotiCount != 0" class="badge"
+        color="primary">{{friendNotiCount}}</ion-badge>
+      <!-- <ion-icon *ngIf="friendNotiCount > 0" name="ellipse" class="badge" size="small" color="danger"></ion-icon> -->
     </ion-segment-button>
     <ion-segment-button value="people">
       <ion-label>People</ion-label>
@@ -38,11 +41,16 @@
     <ion-segment-button value="groups">
       <ion-label>Groups</ion-label>
       <ion-icon name="people-outline"></ion-icon>
+      <ion-badge *ngIf="groupNotiCount && groupNotiCount != 0" class="badge"
+        color="primary">{{groupNotiCount}}</ion-badge>
+      <!-- <ion-icon *ngIf="groupNotiCount > 0" name="ellipse" class="badge" size="small" color="danger"></ion-icon> -->
     </ion-segment-button>
     <ion-segment-button value="admin">
       <ion-label>Admin</ion-label>
       <ion-icon name="person-outline"></ion-icon>
-      <!-- <ion-icon name="ellipse" class="badge" size="small" color="danger"></ion-icon> -->
+      <ion-badge *ngIf="adminNotiCount && adminNotiCount != 0" class="badge"
+        color="primary">{{adminNotiCount}}</ion-badge>
+      <!-- <ion-icon *ngIf="adminNotiCount > 0" name="ellipse" class="badge" size="small" color="danger">1</ion-icon> -->
     </ion-segment-button>
   </ion-segment>
 </div>

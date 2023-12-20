@@ -101,23 +101,53 @@ export class NotificationsPage extends BasePage implements OnInit {
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
 
-  async clickNotification(id) {
-    console.log('clickNotification id => ', id)
-    let res = await this.network.readNotifiaction({
-      "ids": id
-    })
-    console.log('clickNotification => ', res)
-    // const count = JSON.parse(localStorage.getItem('notifications_count'));
+  async clickNotification(item) {
+    console.log('clickNotification item => ', item)
+    if (item?.cm_u_id) {
+      this.nav.push('pages/conversations', {
+        type: 'individual',
+      })
+    }
+    else if (item?.admin_user_id) {
+      this.nav.push('pages/chat', {
+        is_admin: 1,
+      })
+    } else {
+      console.log('clickNotification 123 => ')
+      let res = await this.network.readNotifiaction({
+        "ids": item?.id
+      })
+      console.log('clickNotification => ', res)
+      // this.users.getNotificationCount()
+      // const count = JSON.parse(localStorage.getItem('notifications_count'));
+      this.badge.decrease(1);
+      this.users.getNotificationCount();
+    }
 
-    this.getNotificationCount();
-
-    this.badge.decrease(1);
     // const badgeres =  await Badge.decrease();
     // localStorage.setItem('notifications_count', (count - 1).toString());
-    var event = new Event('storageChange');
-    window.dispatchEvent(event);
+    // var event = new Event('storageChange');
+    // window.dispatchEvent(event);
 
   }
+
+  // async clickNotification(id) {
+  //   console.log('clickNotification id => ', id)
+  //   let res = await this.network.readNotifiaction({
+  //     "ids": id
+  //   })
+  //   console.log('clickNotification => ', res)
+  //   // const count = JSON.parse(localStorage.getItem('notifications_count'));
+
+  //   this.getNotificationCount();
+
+  //   this.badge.decrease(1);
+  //   // const badgeres =  await Badge.decrease();
+  //   // localStorage.setItem('notifications_count', (count - 1).toString());
+  //   var event = new Event('storageChange');
+  //   window.dispatchEvent(event);
+
+  // }
 
   async getNotificationCount() {
     const noticount = await this.network.getUnreadNotificationCount();

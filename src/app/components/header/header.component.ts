@@ -1,4 +1,5 @@
 import { Component, Injector, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Badge } from '@ionic-native/badge/ngx';
 import { Platform, ViewWillEnter } from '@ionic/angular';
 import { BasePage } from 'src/app/pages/base-page/base-page';
 import { NavService } from 'src/app/services/basic/nav.service';
@@ -40,7 +41,7 @@ export class HeaderComponent extends BasePage implements OnInit {
   isIOS = false;
   skip_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'A'];
 
-  constructor(public nav: NavService, injector: Injector, pusher: PusherService, platform: Platform,
+  constructor(public nav: NavService, injector: Injector, pusher: PusherService, platform: Platform, public badge: Badge,
     private ref: ChangeDetectorRef) {
     super(injector);
   }
@@ -74,7 +75,14 @@ export class HeaderComponent extends BasePage implements OnInit {
 
       this.dataService.notifications_count.subscribe(data => {
         console.log('this.dataService.notifications_count data => ', data)
-        this.notifications_count = data;
+        if (data != null) {
+          this.notifications_count = data;
+          if (this.platform.is('cordova')) {
+            this.badge.get().then((count) => {
+              this.badge.set(data);
+            });
+          }
+        }
       })
       // this.getNotificationsCount();
       // const localnotification = localStorage.getItem('notifications_count');

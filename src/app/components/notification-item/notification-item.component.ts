@@ -17,13 +17,21 @@ export class NotificationItemComponent implements OnInit {
   ngOnInit() {
 
     console.log('item => ', this.item)
+    if (this.item.cm_name) {
+      this.item.content = `${this.item.cm_name} sent message "${this.item.content}"`;
+    }
+    else if (this.item.admin_user_name) {
+      this.item.content = `New message from Admin "${this.item.content}"`;
+      this.item.profile_image = '/assets/Images/ov-logo.png'
+    }
 
   }
 
   clickItem(notiItem) {
     if (notiItem?.is_read == 0) {
       this.item.is_read = 1;
-      this.notificationClicked.emit(notiItem?.id)
+      // this.notificationClicked.emit(notiItem?.id)
+      this.notificationClicked.emit(notiItem)
     }
   }
 

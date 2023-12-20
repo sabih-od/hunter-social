@@ -27,13 +27,18 @@
   </ion-label>
 
   <!-- <ion-item slot="end" lines="none"></ion-item> -->
-  <ion-icon *ngIf="item.is_friend" (click)="viewChat(item)" name="chatbubble-outline" style="font-size: 22px">
-  </ion-icon>
+  <div class="chationc" (click)="viewChat(item)">
+    <ion-icon *ngIf="item?.is_friend" name="chatbubble-outline">
+    </ion-icon>
+    <ion-badge *ngIf="item?.notifications > 0" color="danger">{{item?.notifications}}</ion-badge>
+  </div>
   <ion-icon style="margin-left: 2%; font-size: 22px" name="ellipsis-vertical-outline" (click)="showMenu($event)">
   </ion-icon>
-  <div *ngIf="item.hasUnread"
+
+
+  <!-- <div *ngIf="item.hasUnread"
     style=" background-color: tomato; width: 10px; height: 10px; border-radius: 5px; margin-left: -38px; margin-right: 30px; margin-top: -10px; position: relative; ">
-  </div>
+  </div> -->
 
   <!-- <p class="time f-pop-m">{{ item.time }} Mins</p> -->
 </ion-item>
