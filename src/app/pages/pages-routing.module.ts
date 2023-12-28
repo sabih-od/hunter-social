@@ -271,10 +271,10 @@ const routes: Routes = [
     path: 'conversations',
     loadChildren: () => import('./conversations/conversations.module').then( m => m.ConversationsPageModule)
   },
-  // {
-  //   path: 'test',
-  //   loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
-  // },
+  {
+    path: 'test',
+    loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
+  },
   {
     path: 'broadcast-message',
     loadChildren: () => import('./broadcast-message/broadcast-message.module').then( m => m.BroadcastMessagePageModule)

@@ -5,6 +5,8 @@ import { Capacitor } from '@capacitor/core';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
 import { first, lastValueFrom } from 'rxjs';
+import { StripeService } from 'src/app/services/stripe2.service';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -15,14 +17,70 @@ import { environment } from 'src/environments/environment';
 export class TestPage implements OnInit {
   @ViewChild('cardElement') cardElement: ElementRef;
 
-  constructor(private platform: Platform, private http: HttpClient) {
+  private stripe: any;
+  private card: any;
+  private user;
+
+  constructor(
+    private platform: Platform,
+    private http: HttpClient,
+    private stripeService: StripeService,
+    private users: UserService,
+  ) {
     if (Capacitor.isPluginAvailable("Stripe")) {
       Stripe.initialize({
         publishableKey: environment.stripe.publishableKey
       });
     }
   }
-  ngOnInit() {
+
+  async ngOnInit() {
+    this.stripe = await this.stripeService.getStripe();
+
+    this.user = await this.users.getUser();
+    console.log('this.user testapge => ', this.user)
+
+    // Create an instance of the card Element
+    const appearance = {
+      // theme: 'flat',
+      // variables: { colorPrimaryText: '#262626' }
+    };
+    const options = {
+      classes: {
+        webkitAutofill: 'StripeElement--webkit-autofill'
+      },
+      style: {
+        base: {
+          iconColor: '#000000',
+          color: '#000000',
+          backgroundColor: '#f7f7f7',
+          // paddingTop: '10px',
+          // fontWeight: '300',
+          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+          // fontSize: '18px',
+          // '::placeholder': {
+          //   color: '#CFD7E0'
+          // }
+        }
+      }
+    };
+    // const elements = stripe.elements(
+    //   // { clientSecret, appearance }
+    // );
+    // const paymentElement = elements.create('payment', options);
+    // paymentElement.mount('#payment-element');
+    // const elements = this.stripe.elements({ appearance: { theme: "stripe", variables: { colorPrimaryText: '#262626' } } });
+    // this.cardElement = elements.create("card",
+    //   // { layout: { type: 'tabs', defaultCollapsed: false, } }
+    // );
+    // this.card.mount(this.cardElement.nativeElement);
+
+    this.card = this.stripe.elements(appearance).create('card', options);
+
+    // Mount the card element to the view
+    this.card.mount(this.cardElement.nativeElement);
+
+
   }
 
   data = {
@@ -32,6 +90,49 @@ export class TestPage implements OnInit {
     currency: 'usd'
   }
 
+
+  async createCardToken() {
+
+    try {
+      // let card = {
+      //   number: '4242424242424242',
+      //   exp_month: 12,
+      //   exp_year: 2026,
+      //   cvc: '314',
+      // };
+      console.log('createCardToken => ')
+
+      // const form = document.getElementById('payment-form'); // Replace with the ID of your form
+      // form.addEventListener('submit', async (event) => {
+      //   event.preventDefault();
+
+      // Create a card token
+      const { token, error } = await this.stripe.createToken(this.card, { name: this.user?.name });
+      console.log('token => ', token)
+
+    } catch (err) {
+      console.log('err => ', err)
+    }
+  }
+
+  async createPaymentMethodFromCard() {
+    try {
+      console.log('createPaymentMethodFromCard => ')
+
+      this.stripe.createPaymentMethod({
+        type: 'card',
+        card: this.card,
+        billing_details: {
+          name: this.user.name,
+        },
+      }).then(function (result) {
+        console.log('result => ', result)
+        // Handle result.error or result.paymentMethod
+      });
+    } catch (err) {
+      console.log('err => ', err)
+    }
+  }
 
   async subscribe() {
     try {
