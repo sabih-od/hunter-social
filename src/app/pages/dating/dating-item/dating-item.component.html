@@ -1,9 +1,9 @@
-<ion-card class="ion-no-margin">
+<ion-card class="ion-no-margin" id="dating{{index}}">
   <figure>
     <!-- <ion-img [src]="item.profile_image" (click)="goToProfile()"></ion-img> -->
     <img [src]="item.profile_image" (click)="goToProfile()"
       onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
-    <ion-buttons class="dotsicon" slot="end">
+    <ion-buttons class="dotsicon" slot="end" id="dot{{index}}">
       <ion-button (click)="openPopup($event)">
         <ion-icon id="click-trigger" name="ellipsis-vertical-outline"></ion-icon>
       </ion-button>

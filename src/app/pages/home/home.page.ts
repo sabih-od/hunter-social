@@ -114,6 +114,8 @@ export class HomePage extends BasePage implements OnInit {
     //this.modals.present(UserDetailComponentComponent);
   }
 
+  
+
 
   async callPusherService() {
     let token = localStorage.getItem('token');

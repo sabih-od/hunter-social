@@ -741,6 +741,11 @@ export class NetworkService {
         const headers = new HttpHeaders({ "Content-Type": contenttype });
         headerobj = { headers: headers }
       }
+      // var origin = window.location.protocol + '//' + window.location.host;
+      // const headers = new HttpHeaders({
+      //   'Access-Control-Allow-Origin': '*', "Origin": origin, "X-Requested-With": 'asdas'
+      // });
+      // headerobj = { headers: headers }
 
       const seq = type === 'get' ? this.api.get(url, {}) : Object.keys(headerobj).length > 0 ? this.api.post(url, data, headerobj) : this.api.post(url, data);
 

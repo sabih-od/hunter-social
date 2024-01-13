@@ -23,13 +23,14 @@
     </ion-col>
   </ion-row> -->
   <div style="width: 100%; align-items: center; display: flex; padding: 0 20px 0 10px; margin-top: 15px;">
-    <ion-searchbar placeholder="Search" [(ngModel)]="search" (ngModelChange)="getData()"></ion-searchbar>
+    <ion-searchbar id="step2" placeholder="Search" [(ngModel)]="search" (ngModelChange)="getData()"></ion-searchbar>
     <div>
       <!-- <ion-select placeholder="Select One" [(ngModel)]="dating_users" (ngModelChange)="getData()">
         <ion-select-option [value]="0">HUNTING</ion-select-option>
         <ion-select-option [value]="1">DATING</ion-select-option>
       </ion-select> -->
-      <ion-button class="filterbtn" slot="end" (click)="filter()"> <ion-icon name="options-outline"></ion-icon> Filter
+      <ion-button id="step1" class="filterbtn" slot="end" (click)="filter()"> <ion-icon
+          name="options-outline"></ion-icon> Filter
       </ion-button>
     </div>
   </div>
@@ -56,9 +57,9 @@
 
 
   <ion-grid>
-    <ion-row>
-      <ion-col size="6" sizeMd="4" *ngFor="let item of datings | filter:search">
-        <dating-item [item]="item" (update)="getData()"></dating-item>
+    <ion-row id="step3">
+      <ion-col size="6" sizeMd="4" *ngFor="let item of datings | filter:search; let i = index">
+        <dating-item [item]="item" [index]="i" (update)="getData()"></dating-item>
       </ion-col>
       <div *ngIf="!loading && !refresh && datings.length == 0" class="nodatafound">
         <p>No Records found</p>

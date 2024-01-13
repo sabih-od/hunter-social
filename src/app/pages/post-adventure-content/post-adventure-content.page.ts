@@ -20,6 +20,8 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
   user_image;
   isVideo = false;
   type;
+  loadingimage = false;
+  isIOS = false;
 
   @Input() set item(val) {
     this._item = val;
@@ -40,11 +42,15 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
     this.permission.checkStoragePermissions();
     this.user_image = (await this.users.getUser()).profile_image;
     this.handleFileClick();
+
+    this.isIOS = this.platform.is('ios');
   }
 
   handleFileClick() {
     let self = this;
+
     document.getElementById('fileInput').onchange = function (value: any) {
+      // self.loadingimage = true;
       //alert('Selected file: ' + value);
       let file = value.target.files[0];
       console.log(file);
@@ -62,21 +68,20 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
         let blob: Blob = new Blob([
           new Uint8Array(reader.result as ArrayBuffer),
         ]);
+        // self.loadingimage = false;
         console.log(blob);
         self.post_image = self.dom.bypassSecurityTrustUrl(
           URL.createObjectURL(blob)
         );
         self._img = blob;
         self.isVideo = self.image.isVideo(file.name);
-
         // create blobURL, such that we could use it in an image element:
       };
 
       reader.onerror = (error) => {
+        // self.loadingimage = false;
         console.log('Error Occured');
-
         console.log(error);
-
         //handle errors
       };
     };
@@ -108,6 +113,7 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
       );
       this._img = blob;
       this.isVideo = isVideo;
+
       //}
       // if (file) {
       //   // if (this.platform.is('ios')) {
@@ -180,8 +186,8 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
         res?.message
           ? res.message
           : res?.error && res.error.errors.post_file
-          ? res.error.errors.post_file
-          : 'Something went wrong'
+            ? res.error.errors.post_file
+            : 'Something went wrong'
       );
   }
 

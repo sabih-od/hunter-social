@@ -419,3 +419,37 @@ ion-searchbar {
     }
   }
 }
+
+
+.introjs-helperLayer {
+  background: transparent !important;
+  border: 0;
+  box-shadow: rgba(33, 33, 33, 0.6) 0px 0px 0px 5000px !important;
+}
+
+.introjs-tooltip-header,
+.introjs-bullets {
+  display: none;
+}
+
+.introjs-tooltiptext {
+  color: #000;
+  font-size: 14px;
+}
+
+.introjs-button {
+  background: #333 !important;
+  border: 0;
+  font-size: 13px;
+  text-shadow: none;
+  color: #fff;
+  font-family: 'PoppinsMedium';
+  margin-left: 5px;
+  border-radius: 6px;
+}
+
+.introjs-disabled,
+.introjs-disabled:hover,
+.introjs-disabled:focus {
+  background: #777 !important;
+}

@@ -1,0 +1,76 @@
+ion-title {
+    text-align: left;
+    margin-left: 0;
+    padding-inline: 0px;
+
+    ion-label {
+        font-family: "Anton";
+        font-weight: normal;
+    }
+}
+
+.title {
+    font-size: 20px;
+    margin-left: 5px;
+    font-weight: 100;
+    text-transform: uppercase;
+}
+
+.titlepadding {
+    padding-inline: 50px;
+}
+
+.container {
+    padding: 20px;
+}
+
+.postpagebtn {
+    font-size: 15px;
+    width: 95%;
+    height: 3.2em;
+
+    ion-icon {
+        margin-right: 10px;
+    }
+}
+
+textarea {
+    width: 100%;
+    background: #f7f7f7;
+    border: 0;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.postbtn {
+    ion-icon {
+        margin-right: 0px;
+        margin-left: 10px;
+    }
+
+}
+
+.spinner {
+    flex-direction: column;
+    height: 170px;
+}
+
+.preview {
+    position: relative;
+    // border-radius: 10px;
+    margin-top: 15px;
+    // overflow: hidden;
+}
+
+.close {
+    right: 5px;
+    width: 40px;
+    padding: 0;
+    top: 5px;
+    position: absolute;
+    z-index: 1;
+    --padding-start: 0;
+    --padding-end: 0;
+    font-size: 14px;
+
+}

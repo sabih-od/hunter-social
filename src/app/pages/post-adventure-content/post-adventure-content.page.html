@@ -1,43 +1,41 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-item lines="none" color="primary">
-      <ion-buttons>
-        <ion-button (click)="close()">
-          <ion-icon name="close"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-
-      <ion-title>Post Your Adventure</ion-title>
-    </ion-item>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon class="back-icon" name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title [class.titlepadding]="isIOS">
+      <ion-label class="title f-anton">Post Your Adventure</ion-label>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header class="">
-      <textarea placeholder="Share a Memory?" [(ngModel)]="content" rows="7"
-        style="width: 100%; background: white; padding: 5px"></textarea>
-    </ion-card-header>
-    <ion-card-content>
+  <div class="container">
+    <textarea placeholder="Share a Memory?" [(ngModel)]="content" rows="7"></textarea>
+
+    <div>
       <ion-grid class="ion-no-padding">
         <ion-row>
           <ion-col>
 
             <input [hidden]="true" style="margin-left: 60px; height: 0px" type="file" id="fileInput" name="fileInput"
               accept="video/mp4,video/x-m4v,video/*,image/png,image/jpg,image/*" onchange="fileSelected()" #file />
-            <ion-button size="large" color="light" (click)="file.click()">
+            <ion-button size="large" (click)="file.click()" class="postpagebtn">
               <ion-icon name="images-outline"></ion-icon><span>Photo/Video</span>
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button size="large" color="light" style="width: 100%" (click)="post()">Post</ion-button>
+            <ion-button size="large" style="width: 100%" class="postpagebtn postbtn" (click)="post()">Post<ion-icon
+                name="paper-plane-outline"></ion-icon></ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
-      <ion-item *ngIf="post_image">
-        <ion-button size="large" color="danger" style="width: 100%" (click)="removeMedia()">Remove Media</ion-button>
-      </ion-item>
-
+      <div class="spinner" *ngIf="loadingimage">
+        <ion-spinner name="lines" color="primary"></ion-spinner>
+        <p>Loading...</p>
+      </div>
       <!-- <div style="margin-left: 18px">
         <a class="m-pointer" type="file"
           ><ion-icon name="images-outline"></ion-icon
@@ -45,14 +43,14 @@
         >
         <ion-button size="large" color="light">Post</ion-button>
       </div> -->
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content *ngIf="post_image">
+    </div>
+    <div class="preview" *ngIf="post_image">
+      <ion-button class="close" color="danger" (click)="removeMedia()"><ion-icon
+          name="close-outline"></ion-icon></ion-button>
       <img *ngIf="!isVideo" [src]="post_image" />
       <video *ngIf="isVideo" width="320" height="240" preload="none" controls>
         <source [src]="post_image" type="video/mp4" />
       </video>
-    </ion-card-content>
-  </ion-card>
+    </div>
+  </div>
 </ion-content>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EventsService } from 'src/app/services/basic/events.service';
 
 @Component({
   selector: 'app-disclaimer',
@@ -9,11 +10,14 @@ export class DisclaimerComponent implements OnInit {
 
   showmodal = true;
 
-  constructor() { }
+  constructor(
+    public eventService: EventsService,
+  ) { }
 
   ngOnInit() { }
 
   hideModal() {
+    this.eventService.publish('DISCLAIMER_CLOSED');
     this.showmodal = false;
   }
 

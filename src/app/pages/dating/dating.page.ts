@@ -48,6 +48,67 @@ export class DatingPage
     this.events.subscribe('DATING_UPDATED', this.getData.bind(this));
     this.checkUser();
     // let data = await this.modals.present(UserDetailComponentComponent);
+
+    this.events.subscribe('DISCLAIMER_CLOSED', this.showTips.bind(this));
+
+
+  }
+
+  showTips() {
+    console.log('DISCLAIMER_CLOSED');
+    const tipsread = localStorage.getItem('dating_tips_read');
+    if (!tipsread) {
+      setTimeout(() => {
+        this.introMethod();
+        localStorage.setItem('dating_tips_read', 'true');
+      }, 1000);
+    }
+  }
+
+  introMethod() {
+    // import IntroJS
+    const IntroJs = require("./../../../../node_modules/intro.js/intro");
+    let intro = IntroJs();
+    console.log("inside intro.js");
+    intro.setOptions({
+      steps: [
+        // {
+        //   intro: "Ahlan wa Sahlan"
+        // }, 
+        {
+          element: "#step1",
+          intro: "Search by specifying gender, country, category, and age preferences to discover meaningful connections that align with your preferences",
+          position: "bottom"
+        },
+        {
+          element: "#step2",
+          intro: "Find your perfect match effortlessly by entering specific criteria into our search field",
+          position: "bottom"
+        },
+        // {
+        //   element: "#step3",
+        //   intro: "Easily connect by adding friends, remove connections with unfriending, exercise control with blocking, and maintain a safe community by reporting any concerns",
+        //   position: "top"
+        // },
+        {
+          element: "#dating0",
+          intro: "Easily connect by adding friends, remove connections with unfriending and cancel request",
+          position: "top"
+        },
+        {
+          element: "#dot0",
+          intro: "Block user and maintain a safe community by reporting any concerns",
+          position: "top"
+        }
+      ],
+      showProgress: false,
+      // skipLabel: "Annuler",
+      doneLabel: "Done",
+      nextLabel: "Next",
+      prevLabel: "Prev",
+      overlayOpacity: "0.6"
+    });
+    intro.start();
   }
 
   async checkUser() {

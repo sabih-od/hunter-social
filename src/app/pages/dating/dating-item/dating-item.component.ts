@@ -15,12 +15,14 @@ import { BasePage } from '../../base-page/base-page';
 })
 export class DatingItemComponent extends BasePage implements OnInit {
   @Input() item: any;
+  @Input() index: any;
 
   @Output('update') update: EventEmitter<any> = new EventEmitter<any>();
   loading = false;
 
   constructor(injector: Injector) {
     super(injector);
+    this.index = this.index ? this.index : 1;
   }
 
   ngOnInit() {

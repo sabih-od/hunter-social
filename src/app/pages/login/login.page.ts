@@ -41,7 +41,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   ngOnInit() {
     this.getSetting();
     this.setupForm();
-    this.setStatusBarStyleDark()
+    if (Capacitor.getPlatform() !== 'web') { this.setStatusBarStyleDark() }
   }
 
   setStatusBarStyleDark = async () => {
@@ -192,7 +192,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   async getSetting() {
     let res = await this.network.getSettings();
     if (res) {
-      this.userslimit = res.data.lifetime_users_limit;
+      this.userslimit = res?.data?.lifetime_users_limit ? res?.data?.lifetime_users_limit : 0;
       this.usertoavail = 5000 - this.userslimit
       if (this.userslimit == 0) {
         this.showpackage = true;
