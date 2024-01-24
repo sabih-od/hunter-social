@@ -51,16 +51,16 @@ export class TestPage implements OnInit {
       },
       style: {
         base: {
-          iconColor: '#000000',
-          color: '#000000',
-          backgroundColor: '#f7f7f7',
-          // paddingTop: '10px',
-          // fontWeight: '300',
+          // iconColor: '#000000',
+          // color: '#000000',
+          // backgroundColor: '#f7f7f7',
+          paddingTop: '10px',
+          fontWeight: '400',
           fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-          // fontSize: '18px',
-          // '::placeholder': {
-          //   color: '#CFD7E0'
-          // }
+          fontSize: '18px',
+          '::placeholder': {
+            color: '#777777'
+          }
         }
       }
     };

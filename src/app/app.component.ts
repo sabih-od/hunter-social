@@ -44,14 +44,15 @@ export class AppComponent {
 
 
       if (this.platform.is('cordova')) {
-        this.appVersion.getVersionNumber().then(res => {
-          console.log('getVersionNumber => ', res);
-          this.versionNumber = res;
-          // this.checkAppUpdates()
-          // console.log('this.versionNumber => ', this.versionNumber);
-        }).catch(error => {
-          console.log(error);
-        });
+        this.checkForUpdate();
+        // this.appVersion.getVersionNumber().then(res => {
+        //   console.log('getVersionNumber => ', res);
+        //   this.versionNumber = res;
+        //   // this.checkAppUpdates()
+        //   // console.log('this.versionNumber => ', this.versionNumber);
+        // }).catch(error => {
+        //   console.log(error);
+        // });
         // this.appVersion.getVersionCode().then(res => {
         //   console.log('getVersionCode => ', res);
         //   this.versionCode = res;
@@ -78,6 +79,29 @@ export class AppComponent {
       this.setStatusBarStyleDark()
     }
   }
+
+
+  async checkForUpdate() {
+    try {
+      const currentVersion = '1.31'; // await this.appVersion.getVersionNumber();
+      const appStoreUrl = 'https://itunes.apple.com/lookup?bundleId=com.hunterssocial.app'; // Replace with your app's bundle ID
+
+      const response = await fetch(appStoreUrl);
+      const data = await response.json();
+
+      if (data.results.length > 0) {
+        console.log('latest data.results => ', data.results);
+        const latestVersion = data.results[0].version;
+        if (latestVersion !== currentVersion) {
+          console.log('currentVersion version => ', currentVersion);
+          this.presentAlert();
+        }
+      }
+    } catch (error) {
+      console.error('Error checking for update', error);
+    }
+  }
+
 
   setStatusBarStyleDark = async () => {
     await StatusBar.setStyle({ style: Style.Dark });
