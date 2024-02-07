@@ -13,6 +13,7 @@ import { EventsService } from './basic/events.service';
 import { NavService } from './basic/nav.service';
 import { DataService } from './data.service';
 import { Badge } from '@ionic-native/badge/ngx';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class FirebaseService {
     public network: NetworkService,
     public dataService: DataService,
     public nav: NavService,
+    public users: UserService,
     public badge: Badge) {
     this.assignEvents();
   }
@@ -102,7 +104,7 @@ export class FirebaseService {
           const extradata = JSON.parse(notification.data.extra_data)
           console.log('extradata?.channel_id => ', extradata?.channel_id);
           console.log('this.dataService.channel_id => ', this.dataService.channel_id);
-
+          // this.users.getNotificationCount();
           if (extradata?.channel_id) {
             // const messagescount = localStorage.getItem('messages_count');
             // const countnew = String(Number(messagescount) + 1);

@@ -127,6 +127,21 @@ export class NetworkService {
     );
   }
 
+  getChatbotMessages(page) {
+    return this.httpGetResponse(
+      `bot-message?page=${page}`,
+      null,
+      false
+    );
+  }
+  sentChatbotMessages(data) {
+    return this.httpPostResponse(
+      `bot-message`,
+      data,
+      false
+    );
+  }
+
   getUsers() {
     return this.httpGetResponse(
       `users?orderBy=created_at&sortedBy=desc`,
@@ -196,6 +211,10 @@ export class NetworkService {
 
   switchToDatingProfile(data) {
     return this.httpPostResponse(`users/dating`, data, null, false);
+  }
+
+  getQuestions() {
+    return this.httpGetResponse(`tag-questions`, null, false);
   }
 
   getDatings(dating_users, search, page) {

@@ -3,33 +3,25 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="12">
+      <ion-col size="12" no-padding>
         <p class="placeholder">Interests*</p>
-        <ion-item class="ion-no-padding" lines="none" style="
-            width: 93%;
-            margin: 2%;
-            border-radius: 5px;
-            border: 1px solid lightgray;
-          ">
-          <!-- <ion-input class="f-pop-m input ion-padding-start" [(ngModel)]="search" placeholder="Add Tag"
+        <!-- <ion-item class="ion-no-padding" lines="none"> -->
+        <!-- <ion-input class="f-pop-m input ion-padding-start" [(ngModel)]="search" placeholder="Add Tag"
             (ionChange)="interestSearched($event)" class="ion-margin-start f-pop-m">
             (keyup.enter)="addInput()"
           </ion-input> -->
-          <ion-select style="width: 100%; border-radius: 5px; border: 1px solid lightgray" placeholder="Interests"
-            multiple="true" class="select" [(ngModel)]="data.interests">
-            <ion-select-option [value]="item" *ngFor="let item of interests">{{
-              item
-              }}</ion-select-option>
-          </ion-select>
-          <!-- <ion-button (click)="addInput()" *ngIf="search && search != ''" style="font-size: 80%" slot="end"
+        <ion-select placeholder="Interests" multiple="true" class="select" [(ngModel)]="data.interests">
+          <ion-select-option [value]="item" *ngFor="let item of interests">{{item}}</ion-select-option>
+        </ion-select>
+        <!-- <ion-button (click)="addInput()" *ngIf="search && search != ''" style="font-size: 80%" slot="end"
             fill="clear">
             Submit
           </ion-button> -->
-        </ion-item>
+        <!-- </ion-item> -->
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row *ngIf="data.interests.length > 0">
       <ion-col>
         <ion-chip *ngFor="let item of data.interests">
           <ion-label>{{ item }}</ion-label>
@@ -57,21 +49,21 @@
         <ion-col size="12" class="ion-no-margin ion-no-padding">
           <p class="placeholder">Gender*</p>
         </ion-col>
-        <ion-col size="4" class="ion-no-margin ion-no-padding">
+        <ion-col class="ion-no-margin ion-no-padding">
           <ion-item lines="none">
             <ion-label>Male</ion-label>
             <ion-radio slot="start" value="male"></ion-radio>
           </ion-item>
         </ion-col>
 
-        <ion-col size="8">
+        <ion-col class="ion-no-margin ion-no-padding">
           <ion-item lines="none">
             <ion-label>Female</ion-label>
             <ion-radio slot="start" value="female"></ion-radio>
           </ion-item>
         </ion-col>
 
-        <ion-col>
+        <ion-col class="ion-no-margin ion-no-padding">
           <ion-item lines="none">
             <ion-label>Rather not say</ion-label>
             <ion-radio slot="start" value="nosay"></ion-radio>
@@ -85,21 +77,21 @@
         <ion-col size="12" class="ion-no-margin ion-no-padding">
           <p class="placeholder">Marital status*</p>
         </ion-col>
-        <ion-col size="3.5" class="ion-no-margin ion-no-padding">
+        <ion-col class="ion-no-margin ion-no-padding">
           <ion-item lines="none">
             <ion-label>Single</ion-label>
             <ion-radio slot="start" value="single"></ion-radio>
           </ion-item>
         </ion-col>
 
-        <ion-col size="4.25">
+        <ion-col class="ion-no-margin ion-no-padding">
           <ion-item lines="none">
             <ion-label>Married </ion-label>
             <ion-radio slot="start" value="married"></ion-radio>
           </ion-item>
         </ion-col>
 
-        <ion-col size="4.25">
+        <ion-col class="ion-no-margin ion-no-padding">
           <ion-item lines="none">
             <ion-label>Divorced </ion-label>
             <ion-radio slot="start" value="divorced"></ion-radio>
@@ -150,6 +142,100 @@
         </ion-textarea>
       </ion-col>
     </ion-row>
+
+    <!-- (ionChange)="getOptionsSelected($event.detail.value)" -->
+    <!--[(ngModel)]="data.tag_option_ids"-->
+    <!--(click)="getOptionsSelected(option.id)"-->
+
+    <!-- <ng-container *ngFor="let question of tagquestionslist">
+      <div class="checkboxes">
+        <ion-row>
+          <ion-col size="12" class="ion-no-margin ion-no-padding">
+            <p class="placeholder">{{question.content}}</p>
+          </ion-col>
+          <ion-col class="ion-no-margin ion-no-padding" *ngFor="let option of question.tag_options">
+            <ion-item lines="none">
+              <ion-label [id]="option.id">{{option.content}}</ion-label>
+              <ion-checkbox slot="start" [(ngModel)]="data.tag_option_ids[option.id]"
+                [value]="option.id"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ng-container> -->
+
+    <ion-radio-group [(ngModel)]="data.ethnicity">
+      <ion-row>
+        <ion-col size="12" class="ion-no-margin ion-no-padding">
+          <p class="placeholder">Ethnicity</p>
+        </ion-col>
+        <ion-col class="ion-no-margin ion-no-padding" *ngFor="let option of ethnicitylist">
+          <ion-item lines="none">
+            <ion-label>{{option}}</ion-label>
+            <ion-radio slot="start" [value]="option"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-radio-group>
+
+    <div class="checkboxes">
+      <ion-row>
+        <ion-col size="12" class="ion-no-margin ion-no-padding">
+          <p class="placeholder">{{communicationstylelist.content}}</p>
+        </ion-col>
+        <ion-col class="ion-no-margin ion-no-padding" *ngFor="let option of communicationstylelist.tag_options">
+          <ion-item lines="none">
+            <ion-label>{{option.content}}</ion-label>
+            <ion-checkbox slot="start" [value]="option.id" [(ngModel)]="data.communication[option.id]"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div class="checkboxes">
+      <ion-row>
+        <ion-col size="12" class="ion-no-margin ion-no-padding">
+          <p class="placeholder">{{receivelove.content}}</p>
+        </ion-col>
+        <ion-col class="ion-no-margin ion-no-padding" *ngFor="let option of receivelove.tag_options">
+          <ion-item lines="none">
+            <ion-label>{{option.content}}</ion-label>
+            <ion-checkbox slot="start" [value]="option.id" [(ngModel)]="data.love[option.id]"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <ion-radio-group [(ngModel)]="data.education">
+      <ion-row>
+        <ion-col size="12" class="ion-no-margin ion-no-padding">
+          <p class="placeholder">{{educationlevel.content}}</p>
+        </ion-col>
+        <ion-col class="ion-no-margin ion-no-padding" *ngFor="let option of educationlevel.tag_options">
+          <ion-item lines="none">
+            <ion-label>{{option.content}}</ion-label>
+            <ion-radio slot="start" [value]="option.id"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-radio-group>
+
+    <ion-radio-group [(ngModel)]="data.zodiac">
+      <ion-row>
+        <ion-col size="12" class="ion-no-margin ion-no-padding">
+          <p class="placeholder">{{zodiacsign.content}}</p>
+        </ion-col>
+        <ion-col class="ion-no-margin ion-no-padding" *ngFor="let option of zodiacsign.tag_options">
+          <ion-item lines="none">
+            <ion-label>{{option.content}}</ion-label>
+            <ion-radio slot="start" [value]="option.id"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-radio-group>
+
+
+
 
     <ion-row>
       <ion-col size="12">

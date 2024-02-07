@@ -79,6 +79,7 @@ export class HeaderComponent extends BasePage implements OnInit {
           this.notifications_count = data;
           if (this.platform.is('cordova')) {
             this.badge.get().then((count) => {
+              console.log('this.badge.get count => ', count)
               this.badge.set(data);
             });
           }
@@ -102,14 +103,14 @@ export class HeaderComponent extends BasePage implements OnInit {
       // } else {
       //   this.notifications_count = Number(localnotification);
       // }
-
+      const self = this;
       window.addEventListener('storageChange', function (e) {
         console.log('e => ', e)
-        this.getNotificationsCount();
+        self.getNotificationsCount();
         // this.notifications_count = Number(localStorage.getItem('notifications_count'));
         console.log('this.notifications_count event => ', this.notifications_count);
         HeaderComponent.instances.forEach((instance) => {
-          this.getNotificationsCount();
+          self.getNotificationsCount();
           // instance.notifications_count = Number(localStorage.getItem('notifications_count'));
         });
         // Handle the storage change event here 

@@ -218,10 +218,10 @@ const routes: Routes = [
     path: 'subscription',
     loadChildren: () => import('./subscription/subscription.module').then( m => m.SubscriptionPageModule)
   },
-  {
-    path: 'stripe-payment',
-    loadChildren: () => import('./stripe-payment/stripe-payment.module').then( m => m.StripePaymentPageModule)
-  },
+  // {
+  //   path: 'stripe-payment',
+  //   loadChildren: () => import('./stripe-payment/stripe-payment.module').then( m => m.StripePaymentPageModule)
+  // },
   {
     path: 'marketplace',
     loadChildren: () => import('./marketplace/marketplace.module').then( m => m.MarketplacePageModule)
@@ -271,10 +271,10 @@ const routes: Routes = [
     path: 'conversations',
     loadChildren: () => import('./conversations/conversations.module').then( m => m.ConversationsPageModule)
   },
-  {
-    path: 'test',
-    loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
-  },
+  // {
+  //   path: 'test',
+  //   loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
+  // },
   {
     path: 'broadcast-message',
     loadChildren: () => import('./broadcast-message/broadcast-message.module').then( m => m.BroadcastMessagePageModule)

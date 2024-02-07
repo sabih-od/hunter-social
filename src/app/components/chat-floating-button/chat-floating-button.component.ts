@@ -57,7 +57,8 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
     this.dataService.notification_and_message_count.subscribe(data => {
       console.log('this.dataService.notification_and_message_count floating data => ', data)
       // if (data?.admin && data?.friend && data?.group) {
-      this.message_count = data?.admin + data?.friend + data?.group;
+      const total = data?.admin + data?.friend + data?.group;
+      this.message_count = isNaN(total) ? 0 : total;
       console.log('this.message_count => ', this.message_count)
       // }
     })

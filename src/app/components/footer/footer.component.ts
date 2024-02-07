@@ -29,15 +29,15 @@ export class FooterComponent extends BasePage implements OnInit {
     this.links = this.dataService.getFooterLinks();
     this.getSetting();
 
-    if (this.platform.is('cordova')) {
-      this.appVersion.getVersionNumber().then(res => {
-        console.log('getVersionNumber => ', res);
-        this.versionNumber = res;
-        // console.log('this.versionNumber => ', this.versionNumber);
-      }).catch(error => {
-        console.log(error);
-      });
-    }
+    // if (this.platform.is('cordova')) {
+    //   this.appVersion.getVersionNumber().then(res => {
+    //     console.log('getVersionNumber => ', res);
+    //     this.versionNumber = res;
+    //     // console.log('this.versionNumber => ', this.versionNumber);
+    //   }).catch(error => {
+    //     console.log(error);
+    //   });
+    // }
 
   }
 

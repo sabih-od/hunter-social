@@ -251,6 +251,7 @@ export class DatingPage
   city;
   cityname;
   statename;
+  ethnicities;
   filters = {}
 
   async filter() {
@@ -261,7 +262,8 @@ export class DatingPage
         filteredgenders: this.genders,
         filteredinterests: this.interests,
         filteredstate: this.state,
-        filteredcity: this.city
+        filteredcity: this.city,
+        filteredethnicities: this.ethnicities,
       },
       // {},
       // this.filters,
@@ -283,6 +285,7 @@ export class DatingPage
     this.ages = d.data?.ages ? d.data?.ages.split('|') : '';
     this.genders = d.data?.genders ? d.data?.genders.split('|') : '';
     this.interests = d.data?.interests ? d.data?.interests.split('|') : ''
+    this.ethnicities = d.data?.ethnicities ? d.data?.ethnicities.split('|') : ''
     this.state = d.data?.state ? d.data?.state : ''
     this.city = d.data?.city ? d.data?.city : ''
     this.cityname = d.data?.cityname?.name ? d.data?.cityname?.name : ''

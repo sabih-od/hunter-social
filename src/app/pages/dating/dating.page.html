@@ -41,6 +41,7 @@
     <p *ngIf="interests"><strong>Interests</strong><span *ngFor="let x of interests">{{x}}</span></p>
     <p *ngIf="state"><strong>States</strong><span>{{statename}}</span></p>
     <p *ngIf="city"><strong>City</strong><span>{{cityname}}</span></p>
+    <p *ngIf="ethnicities"><strong>Ethnicity</strong><span *ngFor="let x of ethnicities">{{x}}</span></p>
   </div>
   <!-- <p *ngIf="filters?.ages">Ages: {{filters?.ages}}</p>
   <p *ngIf="filters?.genders">Gender: {{filters?.genders}}</p>

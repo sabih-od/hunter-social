@@ -11,11 +11,27 @@ export class DatingFilterComponent extends BasePage implements OnInit {
   cities = [];
   interests = [];
 
+  communicationstylelist = [];
+  receivelove = [];
+  educationlevel = [];
+  zodiacsign = [];
+  ethnicitylist = ['Alaska Native', 'Asian', 'African American', 'Hispanic', 'Native Hawaiian', 'White'];
+
+
   filteredages
   filteredgenders
   filteredinterests
   filteredstate
   filteredcity
+  filteredethnicities
+
+
+  tag_option_ids = [];
+  love = [];
+  communication = [];
+  education = [];
+  zodiac = [];
+  ethnicities = [];
 
   obj = {
     search: '',
@@ -26,6 +42,8 @@ export class DatingFilterComponent extends BasePage implements OnInit {
     city: null,
     cityname: null,
     statename: null,
+    ethnicities: [],
+    tag_option_ids: null,
   };
   constructor(injector: Injector) {
     super(injector);
@@ -34,15 +52,26 @@ export class DatingFilterComponent extends BasePage implements OnInit {
   ngOnInit() {
     this.getStates();
     this.getInterests();
+    this.getTagQuestions();
     console.log('this.filteredages => ', this.filteredages)
     console.log('this.filteredgenders => ', this.filteredgenders)
     console.log('this.filteredinterests => ', this.filteredinterests)
     console.log('this.filteredstate => ', this.filteredstate)
     console.log('this.filteredcity => ', this.filteredcity)
+    console.log('this.filteredethnicities => ', this.filteredethnicities)
     if (this.filteredages) { this.obj.ages = this.filteredages }
     if (this.filteredgenders) { this.obj.genders = this.filteredgenders }
+    if (this.filteredethnicities) { this.obj.ethnicities = this.filteredethnicities }
   }
-
+  async getTagQuestions() {
+    const response = await this.network.getQuestions();
+    // console.log('getTagQuestions response.data => ', response.data);
+    // this.tagquestionslist = response.data;
+    this.communicationstylelist = response.data[0];
+    this.receivelove = response.data[1];
+    this.educationlevel = response.data[2];
+    this.zodiacsign = response.data[3];
+  }
   async getStates() {
     this.users.states.subscribe(states => {
       console.log('states -> ', states)
@@ -97,6 +126,7 @@ export class DatingFilterComponent extends BasePage implements OnInit {
     temp.ages = this.obj.ages.join('|') as any;
     temp.genders = this.obj.genders.join('|') as any;
     temp.interests = this.obj.interests.join('|') as any;
+    temp.ethnicities = this.obj.ethnicities.join('|') as any;
     temp.statename = this.states.find(x => x.id == this.obj.state) as any;
     temp.cityname = this.cities.find(x => x.id == this.obj.city) as any;
 

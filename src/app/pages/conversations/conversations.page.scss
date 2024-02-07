@@ -1,7 +1,15 @@
 .segmentclass {
     background: #FFF;
     color: #000;
-    padding: 10px 22px;
+    padding: 10px 10px;
+}
+ion-segment-button {
+    min-width: 60px;
+}
+
+ion-label{
+    text-transform: capitalize;
+    font-size: 13px;
 }
 
 ion-badge.badge {

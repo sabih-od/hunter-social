@@ -2,8 +2,8 @@ class cons {
   static secure = 's';
   // static domain = "testv23.demowebsitelinks.com/hunter_social.com/public/api";
   // static domain = 'hunterssocial.com';
-  // static domain = 'service.demowebsitelinks.com:3015';
-  static domain = 'services1.demowebsitelinks.com:3038';
+  static domain = 'service.demowebsitelinks.com:3015';
+  // static domain = 'services1.demowebsitelinks.com:3038';
   // static domain = '66.29.129.229';
   // static domain = 'testdomainhunter.com';
   // static domain = 'testv23.demowebsitelinks.com/hunter_social.com/public';

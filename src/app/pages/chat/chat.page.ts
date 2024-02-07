@@ -17,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   item: any;
-  messages: any;
+  messages: any = [];
   text: any;
   user: any;
   @ViewChild('content', { static: true }) private content: IonContent;
@@ -56,6 +56,17 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
             "hasUnread": false,
             "is_admin": true,
           }
+        } else if (params?.is_chatbot) {
+          console.log('Chatbot pe gaya')
+          this.item = {
+            "id": "chatbot",
+            // "email": "johnmartin@mailinator.com",
+            "name": "Big Buck",
+            // "created_at": "2023-01-20T17:40:57.000000Z",
+            "profile_image": "https://hunterssocial.com/assets/images/udpate-logo.png",
+            "hasUnread": false,
+            "is_chatbot": true,
+          }
         }
       }
     });
@@ -70,9 +81,10 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     if (event.detail.scrollTop == 0 && this.next_page_url) {
       this.newmsgloading = true;
       this.page = this.page + 1;
-      console.log('this.page => ', this.page)
-      console.log('this.item => ', this.item)
+      console.log('handleScroll this.page => ', this.page)
+      console.log('handleScroll this.item => ', this.item)
       if (this.item?.is_admin) this.getAdminMessages();
+      else if (this.item?.is_chatbot) this.getChatbotMessages();
       else if (this.item?.isGroup) this.getGruoupChatData();
       else if (this.user) this.getChatData();
     }
@@ -85,10 +97,10 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     if (!this.item) {
       this.item = this.dataService.chat_data;
     }
-    console.log('this.item => ', this.item)
+    console.log('initialize this.item => ', this.item)
     this.user = await this.users.getUser();
-    console.log('this.item => ', this.item);
     if (this.item?.is_admin) this.getAdminMessages();
+    else if (this.item?.is_chatbot) this.getChatbotMessages();
     else if (this.item?.isGroup) this.getGruoupChatData();
     else if (this.user) this.getChatData();
   }
@@ -119,6 +131,30 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     this.updateNotificationCount()
   }
 
+  async getChatbotMessages() {
+    let res = await this.network.getChatbotMessages(this.page);
+    console.log('getChatbotMessages', res);
+    this.isLoading = false;
+    if (res && res.data) {
+      this.next_page_url = res.data.next_page_url;
+      console.log('next_page_url => ', this.next_page_url);
+      res.data.data.sort((a, b) => {
+        return b.created_at - a.created_at;
+      });
+      const reversemessages = res.data.data.reverse();
+      console.log('reversemessages => ', reversemessages);
+      this.messages = this.page != 1 ? [...reversemessages, ...this.messages] : reversemessages;
+      if (this.messages.length == 0) {
+        this.messages.push({
+          prompt_content: '',
+          response_content: 'Hello! How can I assist you with your hunting or fishing questions?',
+          created_at: new Date().toISOString()
+        });
+      }
+      this.page == 1 && this.scrollToBottom();
+      this.page != 1 && this.content.scrollToPoint(0, 220);
+    }
+  }
 
   async getAdminMessages() {
     let res = await this.network.getAdminMessages(this.page);
@@ -235,9 +271,42 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     const noticount = await this.network.getUnreadMessageAndNotificationCount();
     console.log('getUnreadMessageAndNotificationCount => ', noticount)
     this.dataService.updateUnreadMessageAndNotificationCount(noticount?.data);
-    
+
     console.log('noticount => ', noticount.data.unread_count)
     this.dataService.updateNotificationsCount(noticount.data.unread_count)
+  }
+
+  async askChatBot() {
+    this.isMsgLoading = true;
+    console.log('this.text => ', this.text);
+    this.messages.push({
+      prompt_content: this.text,
+      response_content: '',
+      created_at: new Date().toISOString()
+    });
+    this.scrollToBottom();
+    const newtext = this.text;
+    this.text = '';
+    let res = await this.network.sentChatbotMessages(
+      { content: newtext }
+    );
+
+    console.log('sentChatbotMessages => ', res)
+    this.isMsgLoading = false;
+    if (res && res.data.answer) {
+      const replica = [...this.messages];
+      const index = replica.length - 1;
+      replica[index].response_content = res.data.answer;
+      this.messages = replica;
+      // this.messages.push({
+      //   prompt_content: this.text,
+      //   response_content: res.data.answer,
+      //   created_at: new Date().toISOString()
+      // });
+      this.scrollToBottom();
+    } else {
+    }
+
   }
 
   async sendMessage() {

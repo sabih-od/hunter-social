@@ -23,9 +23,11 @@ export class DrawerComponent extends BasePage implements OnInit {
   async ngOnInit() {
     this.getSetting()
     let islogin = localStorage.getItem('user');
+    let token = localStorage.getItem('token');
     this.appPages = this.dataService.getMenus();
     this.menuCtrl.swipeGesture(false, 'main');
-    if (islogin) {
+    console.log('token => ', token);
+    if (islogin && token) {
       const user = JSON.parse(islogin);
       console.log('islogin => ', user)
       // console.log('islogin => ', islogin)
@@ -236,6 +238,7 @@ export class DrawerComponent extends BasePage implements OnInit {
     // localStorage.removeItem('fcm_token')
     localStorage.removeItem('userDataa');
     localStorage.removeItem('notifications_count');
+    localStorage.removeItem('dating_tips_read');
     localStorage.setItem('messages_count', '0');
     this.users.removeUser();
     this.nav.push('pages/login');

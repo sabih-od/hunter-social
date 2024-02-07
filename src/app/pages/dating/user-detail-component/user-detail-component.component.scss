@@ -2,16 +2,78 @@ ion-radio {
     margin-right: 5px;
 }
 
+ion-grid {
+    padding: 15px;
+}
+
 ion-label {
     font-size: 14px;
 }
 
+ion-item.item-radio-checked {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    --background: #ddd;
+}
+
+ion-select {
+    width: 100%;
+    border-radius: 7px;
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+}
+
+ion-radio-group,
+.checkboxes {
+    margin-top: 10px !important;
+    display: block;
+}
+
+ion-radio-group ion-col,
+.checkboxes ion-col {
+    flex-grow: inherit;
+}
+
+ion-radio-group ion-item,
+.checkboxes ion-item {
+    --background: #dddddd;
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 5px 10px 5px;
+}
+
+ion-radio-group ion-item.item-radio-checked,
+.checkboxes ion-item.item-checkbox-checked {
+    --background: #555;
+    color: #fff;
+}
+
+ion-radio-group ion-item ion-radio,
+.checkboxes ion-item ion-checkbox {
+    --color: transparent;
+    --color-checked: transparent;
+    position: absolute;
+    --background-checked: transparent;
+    --background: transparent;
+    --border-color: transparent;
+    --border-color-checked: transparent;
+    --border-width: 0;
+    --checkmark-color: transparent;
+    width: 100%;
+    height: 100%;
+    --border-radius: 0;
+    left: 0;
+}
+
 .input {
-    border: 1px solid lightgray;
+    border: 1px solid #dddddd;
 }
 
 .placeholder {
-    font-size: 12px;
-    font-weight: bold;
-    color: gray;
+    font-size: 16px;
+    font-weight: normal;
+    color: black;
+    // font-family: 'PoppinsMedium';
+    margin: 0;
+    margin-bottom: 7px;
 }

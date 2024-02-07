@@ -400,9 +400,11 @@ ion-searchbar {
   }
 
   .alert-button {
-    font-weight: normal !important;
-    font-family: PoppinsSemiBold !important;
+    // font-weight: normal !important;
+    // font-family: PoppinsSemiBold !important;
     color: #000;
+    text-transform: uppercase;
+    font-size: 14px;
   }
 }
 

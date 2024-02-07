@@ -13,6 +13,7 @@ import { Capacitor } from '@capacitor/core';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Badge } from '@ionic-native/badge/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +23,9 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 export class AppComponent {
   isModalOpen;
   versionNumber;
-  newIOSVersionNumber = "3.6";
-  newAndroidVersion = "1.2"
+  // newIOSVersionNumber = "3.6";
+  // newAndroidVersion = "1.2"
+  currentVersion = "1.33";
   // versionCode;
 
   constructor(
@@ -42,24 +44,9 @@ export class AppComponent {
   ) {
     platform.ready().then(() => {
 
-
-      if (this.platform.is('cordova')) {
+      // if (this.platform.is('cordova')) {
+      if (this.platform.is('ios')) {
         this.checkForUpdate();
-        // this.appVersion.getVersionNumber().then(res => {
-        //   console.log('getVersionNumber => ', res);
-        //   this.versionNumber = res;
-        //   // this.checkAppUpdates()
-        //   // console.log('this.versionNumber => ', this.versionNumber);
-        // }).catch(error => {
-        //   console.log(error);
-        // });
-        // this.appVersion.getVersionCode().then(res => {
-        //   console.log('getVersionCode => ', res);
-        //   this.versionCode = res;
-        // }).catch(error => {
-        //   console.log(error);
-        // });
-
       }
       this.initialize();
 
@@ -83,18 +70,21 @@ export class AppComponent {
 
   async checkForUpdate() {
     try {
-      const currentVersion = '1.31'; // await this.appVersion.getVersionNumber();
-      const appStoreUrl = 'https://itunes.apple.com/lookup?bundleId=com.hunterssocial.app'; // Replace with your app's bundle ID
+      // const currentVersion = await this.appVersion.getVersionNumber();
+      // const currentVersion = '1.32'; 
+      if (this.platform.is('ios')) {
+        const appStoreUrl = 'https://itunes.apple.com/lookup?bundleId=com.hunterssocial.app';
 
-      const response = await fetch(appStoreUrl);
-      const data = await response.json();
+        const response = await fetch(appStoreUrl);
+        const data = await response.json();
 
-      if (data.results.length > 0) {
-        console.log('latest data.results => ', data.results);
-        const latestVersion = data.results[0].version;
-        if (latestVersion !== currentVersion) {
-          console.log('currentVersion version => ', currentVersion);
-          this.presentAlert();
+        if (data.results.length > 0) {
+          console.log('latest data.results => ', data.results);
+          console.log('currentVersion version => ', this.currentVersion);
+          const latestVersion = data.results[0].version;
+          if (latestVersion !== this.currentVersion) {
+            this.presentAlert();
+          }
         }
       }
     } catch (error) {
@@ -149,6 +139,9 @@ export class AppComponent {
       //     console.log('sqlite initialized');
       //   })
       //   .catch((err) => alert(err));
+      // let permStatus = await PushNotifications.checkPermissions();
+      // console.log('permisions permStatus => ', permStatus);
+
       await this.fcm.setupFMC();
     });
 
@@ -179,15 +172,15 @@ export class AppComponent {
     }
   }
 
-  checkAppUpdates() {
-    console.log('this.versionNumber => ', this.versionNumber)
-    if (this.platform.is('ios') && this.versionNumber != this.newIOSVersionNumber) {
-      this.presentAlert();
-    }
-    if (this.platform.is('android') && this.versionNumber != this.newAndroidVersion) {
-      this.presentAlert();
-    }
-  }
+  // checkAppUpdates() {
+  //   console.log('this.versionNumber => ', this.versionNumber)
+  //   if (this.platform.is('ios') && this.versionNumber != this.newIOSVersionNumber) {
+  //     this.presentAlert();
+  //   }
+  //   if (this.platform.is('android') && this.versionNumber != this.newAndroidVersion) {
+  //     this.presentAlert();
+  //   }
+  // }
 
   async presentAlert() {
     const alert = await this.alertController.create({

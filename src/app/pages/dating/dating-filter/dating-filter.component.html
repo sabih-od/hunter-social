@@ -22,7 +22,7 @@
     <ion-row class="ion-no-padding ion-no-margin padd">
       <ion-col size="12">
         <ion-label class="p-holder">Age</ion-label>
-        <ion-select placeholder="Age" multiple="true" class="select" [(ngModel)]="obj.ages">
+        <ion-select placeholder="Select Age" multiple="true" class="select" [(ngModel)]="obj.ages">
           <ion-select-option value="18-22">18-22</ion-select-option>
           <ion-select-option value="23-26">23-26</ion-select-option>
           <ion-select-option value="27-33">27-33</ion-select-option>
@@ -36,8 +36,17 @@
 
     <ion-row class="ion-no-padding ion-no-margin padd">
       <ion-col size="12">
+        <ion-label class="p-holder">Ethnicity</ion-label>
+        <ion-select placeholder="Select Ethnicity" multiple="true" class="select" [(ngModel)]="obj.ethnicities">
+          <ion-select-option [value]="option" *ngFor="let option of ethnicitylist">{{option}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-no-margin padd">
+      <ion-col size="12">
         <ion-label class="p-holder">Gender</ion-label>
-        <ion-select placeholder="Gender" multiple="true" class="select" [(ngModel)]="obj.genders">
+        <ion-select placeholder="Select Gender" multiple="true" class="select" [(ngModel)]="obj.genders">
           <ion-select-option value="male">Male</ion-select-option>
           <ion-select-option value="female">Female</ion-select-option>
           <ion-select-option value="notsay">Rather, not say</ion-select-option>
@@ -48,7 +57,7 @@
     <ion-row class="ion-no-padding ion-no-margin padd">
       <ion-col size="12">
         <ion-label class="p-holder">Interests</ion-label>
-        <ion-select placeholder="Interests" multiple="true" class="select" [(ngModel)]="obj.interests">
+        <ion-select placeholder="Select Interests" multiple="true" class="select" [(ngModel)]="obj.interests">
           <ion-select-option [value]="item" *ngFor="let item of interests">{{
             item
             }}</ion-select-option>
@@ -77,6 +86,48 @@
         </ion-select>
       </ion-col>
     </ion-row>
+
+
+    <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="communicationstylelist.content">
+      <ion-col size="12">
+        <ion-label class="p-holder">{{communicationstylelist.content}}</ion-label>
+        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="communication">
+          <ion-select-option [value]="option.id"
+            *ngFor="let option of communicationstylelist.tag_options">{{option.content}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="receivelove.content">
+      <ion-col size="12">
+        <ion-label class="p-holder">{{receivelove.content}}</ion-label>
+        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="love">
+          <ion-select-option [value]="option.id"
+            *ngFor="let option of receivelove.tag_options">{{option.content}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="educationlevel.content">
+      <ion-col size="12">
+        <ion-label class="p-holder">{{educationlevel.content}}</ion-label>
+        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="education">
+          <ion-select-option [value]="option.id"
+            *ngFor="let option of educationlevel.tag_options">{{option.content}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="zodiacsign.content">
+      <ion-col size="12">
+        <ion-label class="p-holder">{{zodiacsign.content}}</ion-label>
+        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="zodiac">
+          <ion-select-option [value]="option.id"
+            *ngFor="let option of zodiacsign.tag_options">{{option.content}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
 
     <ion-row class="ion-no-padding ion-no-margin padd">
       <ion-col size="12" class="ion-text-end">
