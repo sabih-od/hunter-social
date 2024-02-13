@@ -39,6 +39,36 @@ export class ProfileUIComponent extends BasePage implements OnInit {
     // this.getUser();
   }
 
+  questions = [];
+  tag_option_ids = [];
+  communication;
+  love;
+  education;
+  zodiac;
+  async getTagQuestions() {
+    this.users.tagQuestions.subscribe(data => {
+      if (data) {
+        // this.questions = data.map(ques => ques.tag_options.filter(opt => this.tag_option_ids.includes(opt.id)))
+        this.questions = data.map((ques) => {
+          return {
+            label: ques.label,
+            content: ques.content,
+            tag_options: ques.tag_options.filter(opt => {
+              return this.tag_option_ids.includes(opt.id)
+            })
+          }
+        });
+        console.log('this.questions data => ', this.questions)
+
+        // console.log('this.tag_option_ids => ', this.tag_option_ids)
+        // this.communication = data[0].tag_options.filter(x => this.tag_option_ids.includes(x.id))
+        // this.love = data[1].tag_options.filter(x => this.tag_option_ids.includes(x.id))
+        // this.education = data[2].tag_options.filter(x => this.tag_option_ids.includes(x.id))
+        // this.zodiac = data[3].tag_options.filter(x => this.tag_option_ids.includes(x.id))
+      }
+    });
+
+  }
   async initialize() {
     // this.getUser();
     this.current_user = await this.users.getUser();
@@ -53,6 +83,8 @@ export class ProfileUIComponent extends BasePage implements OnInit {
     } else {
       this.user_profile = this.current_user
       this.profileLoading = false
+      this.tag_option_ids = this.user_profile.tag_selections.map(x => x.tag_option_id)
+      this.getTagQuestions();
     }
 
     // this.users.userprofile.subscribe(profile => {

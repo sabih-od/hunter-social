@@ -145,31 +145,80 @@
         </ion-input>
       </ion-item>
 
-      <ion-item lines="none">
-        <ion-textarea class="a1" [(ngModel)]="user.profile_detail.brief_yourself" style="
-          width: 100%;
-          border-radius: 5px;
-          border: 1px solid lightgray;
-    font-size: 14px;
-        " autoGrow="true" placeholder="Brief description of yourself"></ion-textarea>
+      <ion-item class="margin-ver" lines="none" style="--padding-start: 0;">
+        <ion-textarea class="a1" [(ngModel)]="user.profile_detail.brief_yourself" autoGrow="true"
+          placeholder="Brief description of yourself"></ion-textarea>
       </ion-item>
+
+      <ion-label>Ethnicity</ion-label>
+      <ion-item lines="none" class="margin-ver">
+        <ion-select cancelText="Cancel" okText="Ok" title="Select Options" placeholder="Select Options"
+          class="a1 ion-margin-start" multiple="false" [(ngModel)]="ethnicity">
+          <ion-select-option [value]="option" *ngFor="let option of ethnicitylist">
+            {{option}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <div *ngFor="let ques of questions">
+        <ion-label>{{ques?.content}}</ion-label>
+        <ion-item *ngIf="ques?.content" lines="none" class="margin-ver">
+          <ion-select cancelText="Cancel" okText="Ok" title="Select Options" placeholder="Select Options"
+            class="a1 ion-margin-start" [multiple]="ques.is_multi_select == 1 ? true : false"
+            (ionChange)="getSelectedTagOptions($event)" [(ngModel)]="ques.tag_option_ids">
+            <ion-select-option [value]="option.id" *ngFor="let option of ques.tag_options">
+              {{option?.content}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <!-- <ion-label *ngIf="communicationstylelist?.content">{{communicationstylelist?.content}}</ion-label>
+      <ion-item *ngIf="communicationstylelist?.content" lines="none" class="margin-ver">
+        <ion-select cancelText="Cancel" okText="Ok" title="Select Options" placeholder="Select Options"
+          class="a1 ion-margin-start" multiple="true" (ionChange)="getSelectedTagOptions($event)"
+          [(ngModel)]="communication">
+          <ion-select-option [value]="option.id" *ngFor="let option of communicationstylelist.tag_options">
+            {{option?.content}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-label *ngIf="receivelove?.content">{{receivelove?.content}}</ion-label>
+      <ion-item *ngIf="receivelove?.content" lines="none" class="margin-ver">
+        <ion-select cancelText="Cancel" okText="Ok" title="Select Options" placeholder="Select Options"
+          class="a1 ion-margin-start" multiple="true" (ionChange)="getSelectedTagOptions($event)" [(ngModel)]="love">
+          <ion-select-option [value]="option.id" *ngFor="let option of receivelove.tag_options">
+            {{option?.content}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-label *ngIf="educationlevel?.content">{{educationlevel?.content}}</ion-label>
+      <ion-item *ngIf="educationlevel?.content" lines="none" class="margin-ver">
+        <ion-select cancelText="Cancel" okText="Ok" title="Select Options" placeholder="Select Options"
+          class="a1 ion-margin-start" multiple="false" (ionChange)="getSelectedTagOptions($event)"
+          [(ngModel)]="education">
+          <ion-select-option [value]="option.id" *ngFor="let option of educationlevel.tag_options">
+            {{option?.content}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-label *ngIf="zodiacsign?.content">{{zodiacsign?.content}}</ion-label>
+      <ion-item *ngIf="zodiacsign?.content" lines="none" class="margin-ver">
+        <ion-select cancelText="Cancel" okText="Ok" title="Select Options" placeholder="Select Options"
+          class="a1 ion-margin-start" multiple="false" (ionChange)="getSelectedTagOptions($event)" [(ngModel)]="zodiac">
+          <ion-select-option [value]="option.id" *ngFor="let option of zodiacsign.tag_options">
+            {{option?.content}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item> -->
+
+
     </div>
-    <!-- <ion-item class="margin-ver ion-no-padding">
-      <ion-img class="ion-margin-start" src="assets/images/gender-outline.png"></ion-img>
 
-      <ion-select [(ngModel)]="user.gender" class="ion-margin-start f-pop-m" placeholder="Gender">
-        <ion-select-option>Male</ion-select-option>
-        <ion-select-option>Female</ion-select-option>
-      </ion-select>
-    </ion-item> -->
-
-
-    <!-- <ion-item class="margin-ver ion-no-padding ion-margin-bottom" lines="none">
-      <ion-img class="ion-margin-start" src="assets/images/location-outline.png"></ion-img>
-
-      <ion-input [(ngModel)]="user.address" class="ion-margin-start f-pop-m ion-text-wrap" placeholder="Address">
-      </ion-input>
-    </ion-item> -->
   </ion-card>
 
   <ion-card class="ion-margin-bottom" *ngIf="view_type === 2">

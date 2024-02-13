@@ -36,6 +36,8 @@ export class DrawerComponent extends BasePage implements OnInit {
       this.users.getNotificationCount()
       this.getStates();
       this.getInterests();
+      this.getTagQuestions();
+      this.getEthnicities();
       console.log('res.data.user => ', userRes.data)
       // userRes.data.interests = interestsRes.data
       // userRes.data.profile_image = this.image.getImageUrl(userRes.data.profile_image)
@@ -336,6 +338,19 @@ export class DrawerComponent extends BasePage implements OnInit {
     let res = await this.network.getSettings();
     this.dataService.updateSetting(res.data)
     console.log('drawer settings => ', res);
+  }
+
+  async getTagQuestions() {
+    const res = await this.network.getQuestions();
+    console.log('tagQuestions', res);
+    this.users.updateTagQuestions(res && res.data ? res.data : [])
+  }
+
+  async getEthnicities() {
+    const res = await this.network.getQuestions();
+    const ethnicities = ['Alaska Native', 'Asian', 'African American', 'Hispanic', 'Native Hawaiian', 'White'];
+    console.log('ethnicities', res);
+    this.users.updateEthnicities(ethnicities)
   }
 
   async getStates() {

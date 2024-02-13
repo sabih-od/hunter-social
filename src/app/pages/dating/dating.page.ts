@@ -22,6 +22,7 @@ export class DatingPage
   dating_users = 1;
   showmodal = true;
   page = 1;
+  next_page_url = null;
 
   constructor(injector: Injector, private iab: InAppBrowser) {
     super(injector);
@@ -162,6 +163,7 @@ export class DatingPage
     let res = await this.network.getDatings(this.dating_users, this.search, this.page);
     console.log('network.getDatings res => ', res);
     if (res && res.data) {
+      if (res.data.next_page_url) this.next_page_url = res.data.next_page_url;
       const newDatingData = res?.data?.data?.map((obj) => ({
         ...obj,
         profile_image: obj.profile_image
@@ -190,7 +192,8 @@ export class DatingPage
 
     let res = await this.network.searchDatingUsers(d);
     if (res && res.data) {
-      this.datings = res.data.map((obj) => ({
+      if (res.data.next_page_url) this.next_page_url = res.data.next_page_url;
+      const newDatingData = res?.data?.data.map((obj) => ({
         ...obj,
         profile_image: obj.profile_image
           ? this.image.getImageUrl(obj.profile_image)
@@ -202,6 +205,7 @@ export class DatingPage
           !obj.is_blocked_by_friend &&
           !obj.is_friend_blocked,
       }));
+      this.datings = this.page == 1 ? newDatingData : [...this.datings, ...newDatingData];
     }
 
     this.all_datings = [...this.datings];
@@ -236,25 +240,36 @@ export class DatingPage
   }
 
   onIonInfinite(ev) {
-    this.page = this.page + 1;
-    this.getData();
-    setTimeout(() => {
+
+    if (this.next_page_url != null) {
+      this.page = this.page + 1;
+      this.getData();
+      setTimeout(() => {
+        ev.target.complete();
+        // (ev as IonInfiniteScrollContent).target.complete();
+      }, 500);
+    } else {
       ev.target.complete();
-      // (ev as IonInfiniteScrollContent).target.complete();
-    }, 500);
+    }
   }
 
   ages;
   genders;
   interests;
-  state;
   city;
   cityname;
+  state;
   statename;
+  zodiac;
+  education;
+  love;
+  communication;
   ethnicities;
   filters = {}
 
   async filter() {
+    this.page = 1;
+    this.next_page_url = null;
     let data = await this.modals.present(
       DatingFilterComponent,
       {
@@ -264,6 +279,10 @@ export class DatingPage
         filteredstate: this.state,
         filteredcity: this.city,
         filteredethnicities: this.ethnicities,
+        filteredzodiac: this.zodiac,
+        filterededucation: this.education,
+        filteredlove: this.love,
+        filteredcommunication: this.communication
       },
       // {},
       // this.filters,
@@ -272,7 +291,9 @@ export class DatingPage
     console.log('Filter_Data', data);
 
     const d = data.data;
+    console.log('d => ', d);
     this.filters = d.data;
+    console.log('this.filters => ', this.filters);
 
     // if (d.data.ages) { this.ages = d.data.ages ? d.data.ages.split('|') : '' }
     // if (d.data.genders) { this.genders = d.data.genders.split('|') }
@@ -286,11 +307,23 @@ export class DatingPage
     this.genders = d.data?.genders ? d.data?.genders.split('|') : '';
     this.interests = d.data?.interests ? d.data?.interests.split('|') : ''
     this.ethnicities = d.data?.ethnicities ? d.data?.ethnicities.split('|') : ''
-    this.state = d.data?.state ? d.data?.state : ''
     this.city = d.data?.city ? d.data?.city : ''
     this.cityname = d.data?.cityname?.name ? d.data?.cityname?.name : ''
+    this.state = d.data?.state ? d.data?.state : ''
     this.statename = d.data?.statename?.name ? d.data.statename?.name : ''
+    this.zodiac = d.data?.zodiac ? d.data?.zodiac : ''
+    this.education = d.data?.education ? d.data?.education : ''
+    this.love = d.data?.love ? d.data?.love : ''
+    this.communication = d.data?.communication ? d.data?.communication : ''
 
+    let tag_option_ids = [...this.zodiac, ...this.education, ...this.love, ...this.communication];
+    const newarr = tag_option_ids.map(x => encodeURIComponent(x.id));
+    d.data.tag_option_ids = newarr.join('|')
+
+    delete d.data?.zodiac;
+    delete d.data?.education;
+    delete d.data?.love;
+    delete d.data?.communication;
 
 
     console.log('d', d);

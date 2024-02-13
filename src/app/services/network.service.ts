@@ -218,7 +218,7 @@ export class NetworkService {
   }
 
   getDatings(dating_users, search, page) {
-    var str = `users?orderBy=created_at&sortedBy=desc`;
+    var str = `users/dating?orderBy=created_at&sortedBy=desc`;
 
     if (dating_users && dating_users != '') {
       str += `&dating_users=${dating_users}`;

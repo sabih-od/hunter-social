@@ -11,11 +11,11 @@ export class DatingFilterComponent extends BasePage implements OnInit {
   cities = [];
   interests = [];
 
-  communicationstylelist = [];
-  receivelove = [];
-  educationlevel = [];
-  zodiacsign = [];
-  ethnicitylist = ['Alaska Native', 'Asian', 'African American', 'Hispanic', 'Native Hawaiian', 'White'];
+  communicationstylelist;
+  receivelove;
+  educationlevel;
+  zodiacsign;
+  ethnicitylist;
 
 
   filteredages
@@ -24,14 +24,12 @@ export class DatingFilterComponent extends BasePage implements OnInit {
   filteredstate
   filteredcity
   filteredethnicities
-
+  filteredzodiac
+  filteredlove
+  filteredcommunication
+  filterededucation
 
   tag_option_ids = [];
-  love = [];
-  communication = [];
-  education = [];
-  zodiac = [];
-  ethnicities = [];
 
   obj = {
     search: '',
@@ -41,8 +39,12 @@ export class DatingFilterComponent extends BasePage implements OnInit {
     state: null,
     city: null,
     cityname: null,
+    zodiac: null,
     statename: null,
     ethnicities: [],
+    love: [],
+    communication: [],
+    education: [],
     tag_option_ids: null,
   };
   constructor(injector: Injector) {
@@ -62,16 +64,29 @@ export class DatingFilterComponent extends BasePage implements OnInit {
     if (this.filteredages) { this.obj.ages = this.filteredages }
     if (this.filteredgenders) { this.obj.genders = this.filteredgenders }
     if (this.filteredethnicities) { this.obj.ethnicities = this.filteredethnicities }
+    if (this.filteredzodiac) { this.obj.zodiac = this.filteredzodiac.map(x => x.id); }
+    if (this.filterededucation) { this.obj.education = this.filterededucation.map(x => x.id); }
+    if (this.filteredlove) { this.obj.love = this.filteredlove.map(x => x.id); }
+    if (this.filteredcommunication) { this.obj.communication = this.filteredcommunication.map(x => x.id); }
   }
+
   async getTagQuestions() {
-    const response = await this.network.getQuestions();
+    // const response = await this.network.getQuestions();
+    this.users.ethnicities.subscribe(data => {
+      this.ethnicitylist = data
+    });
+    this.users.tagQuestions.subscribe(data => {
+      this.getTagQuestions = data
+      this.communicationstylelist = this.getTagQuestions[0];
+      this.receivelove = this.getTagQuestions[1];
+      this.educationlevel = this.getTagQuestions[2];
+      this.zodiacsign = this.getTagQuestions[3];
+      console.log('tagQuestions this.zodiacsign => ', this.zodiacsign)
+    });
     // console.log('getTagQuestions response.data => ', response.data);
     // this.tagquestionslist = response.data;
-    this.communicationstylelist = response.data[0];
-    this.receivelove = response.data[1];
-    this.educationlevel = response.data[2];
-    this.zodiacsign = response.data[3];
   }
+
   async getStates() {
     this.users.states.subscribe(states => {
       console.log('states -> ', states)
@@ -129,6 +144,13 @@ export class DatingFilterComponent extends BasePage implements OnInit {
     temp.ethnicities = this.obj.ethnicities.join('|') as any;
     temp.statename = this.states.find(x => x.id == this.obj.state) as any;
     temp.cityname = this.cities.find(x => x.id == this.obj.city) as any;
+    // console.log('this.zodiac => ', this.zodiac);
+    console.log('this.communicationstylelist.tag_options => ', this.communicationstylelist.tag_options);
+    console.log('this.obj.communication => ', this.obj.communication);
+    temp.zodiac = this.zodiacsign.tag_options.filter(item => this.obj.zodiac?.includes(item.id));
+    temp.education = this.educationlevel.tag_options.filter(item => this.obj.education?.includes(item.id));
+    temp.love = this.receivelove.tag_options.filter(item => this.obj.love?.includes(item.id));
+    temp.communication = this.communicationstylelist.tag_options.filter(item => this.obj.communication?.includes(item.id));
 
     Object.keys(temp).forEach(
       (k) => (temp[k] == null || temp[k] == '') && delete temp[k]

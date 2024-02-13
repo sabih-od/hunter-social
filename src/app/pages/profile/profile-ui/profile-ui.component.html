@@ -89,7 +89,7 @@
       <h2>Marital Status</h2>
       <p class="about-me" style="text-transform: capitalize;"> {{ user_profile?.profile_detail?.marital_status }} </p>
     </ion-col>
-    <ion-col size="12" *ngIf="isOwnProfile && user_profile?.profile_detail.hobbies">
+    <ion-col size="12" *ngIf="isOwnProfile && user_profile?.profile_detail.hobbies && user_profile?.profile_detail.hobbies != 'null'">
       <h2>Hobbies</h2>
       <p class="about-me"> {{ user_profile?.profile_detail?.hobbies }} </p>
     </ion-col>
@@ -118,6 +118,23 @@
         {{ user_profile?.profile_detail?.city_name }}
       </p>
     </ion-col>
+
+    <ion-col size="12" *ngIf="user_profile?.profile_detail?.ethnicity">
+      <h2>Ethnicity</h2>
+      <p class="interests">
+        {{ user_profile?.profile_detail?.ethnicity }}
+      </p>
+    </ion-col>
+
+    <ion-col size="12" *ngFor="let ques of questions">
+      <h2>{{ques.label}}</h2>
+      <ul class="interests">
+        <li *ngFor="let opt of ques.tag_options">
+          {{ opt.content }}
+        </li>
+      </ul>
+    </ion-col>
+
   </ion-row>
 </div>
 

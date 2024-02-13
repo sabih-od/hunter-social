@@ -1,5 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { BasePage } from '../../base-page/base-page';
+import { Share } from '@capacitor/share';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-home-banner',
@@ -15,6 +17,15 @@ export class HomeBannerComponent extends BasePage implements OnInit {
   userslimit = 0;
   usertoavail = 0;
   showpackage = false;
+
+  async invite() {
+    await Share.share({
+      title: 'Install now and unleash your social adventure',
+      text: 'Join the hunt for unforgettable moments with Hunters Social',
+      url: Capacitor.getPlatform() == 'ios' ? 'https://appstoreconnect.apple.com/apps/1663547600/appstore' : 'https://play.google.com/store/apps/details?id=com.huntersocial.app',
+      dialogTitle: 'Hunters Social',
+    });
+  }
 
   ngOnInit() {
     // this.getSetting();
@@ -36,7 +47,7 @@ export class HomeBannerComponent extends BasePage implements OnInit {
     //arg == chat
     // if (arg === 'contact') this.nav.push('pages/contact-us');
     // else this.nav.push('pages/store');
-    this.nav.push('pages/'+arg);
+    this.nav.push('pages/' + arg);
 
     // arg = bulb
 

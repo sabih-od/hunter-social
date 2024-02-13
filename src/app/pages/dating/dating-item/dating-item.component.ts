@@ -26,7 +26,7 @@ export class DatingItemComponent extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("this.item.profile_image.includes('ph-avatar.png') => ", this.item.profile_image.includes('ph-avatar.png'))
+    // console.log("this.item.profile_image.includes('ph-avatar.png') => ", this.item.profile_image.includes('ph-avatar.png'))
     if (this.item.profile_image.includes('ph-avatar.png')) { this.item.profile_image = '/assets/Images/dummy-profile.jpg' }
   }
 

@@ -38,7 +38,8 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
   // receivelove = ["Thoughtful gestures", "Presents", "Touch", "Compliments", "Time together"];
   // educationlevel = ["Bechelors", "In College", "High School", "PhD", "In Grad School", "Masters", "Trade School"];
   // zodiacsign = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
-  ethnicitylist = ['Alaska Native', 'Asian', 'African American', 'Hispanic', 'Native Hawaiian', 'White'];
+  // ethnicitylist = ['Alaska Native', 'Asian', 'African American', 'Hispanic', 'Native Hawaiian', 'White'];
+  ethnicitylist = [];
   communicationstylelist = [];
   receivelove = [];
   educationlevel = [];
@@ -57,14 +58,29 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
   }
 
   async getTagQuestions() {
-    const response = await this.network.getQuestions();
+    // const response = await this.network.getQuestions();
+    this.users.ethnicities.subscribe(data => {
+      this.ethnicitylist = data
+    });
+    this.users.tagQuestions.subscribe(data => {
+      this.communicationstylelist = data[0];
+      this.receivelove = data[1];
+      this.educationlevel = data[2];
+      this.zodiacsign = data[3];
+    });
     // console.log('getTagQuestions response.data => ', response.data);
-    this.tagquestionslist = response.data;
-    this.communicationstylelist = response.data[0];
-    this.receivelove = response.data[1];
-    this.educationlevel = response.data[2];
-    this.zodiacsign = response.data[3];
+    // this.tagquestionslist = response.data;
+
   }
+  // async getTagQuestions() {
+  //   const response = await this.network.getQuestions();
+  //   // console.log('getTagQuestions response.data => ', response.data);
+  //   this.tagquestionslist = response.data;
+  //   this.communicationstylelist = response.data[0];
+  //   this.receivelove = response.data[1];
+  //   this.educationlevel = response.data[2];
+  //   this.zodiacsign = response.data[3];
+  // }
 
   async getStates() {
     this.states = this.users.states.value;
@@ -87,6 +103,7 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
     this.data.education != '' && this.data.tag_option_ids.push(this.data.education);
     this.data.zodiac != '' && this.data.tag_option_ids.push(this.data.zodiac);
     this.data.tag_option_ids = this.data.tag_option_ids.map(Number);
+    this.data.dob = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     const newdata = { ...this.data }
     delete newdata.communication;
     delete newdata.love;
@@ -105,6 +122,10 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
       this.utility.presentSuccessToast(res.message);
       this.modals.dismiss({ success: true });
       this.events.publish('DATING_PROFILE_CREATED');
+      let userRes = await this.network.getUser();
+      this.users.setUser(userRes.data.user);
+      this.users.updateUserProfile(userRes.data.user)
+      localStorage.setItem('user', JSON.stringify(userRes.data.user));
     } else {
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
     }

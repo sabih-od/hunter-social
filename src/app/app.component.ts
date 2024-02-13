@@ -25,7 +25,7 @@ export class AppComponent {
   versionNumber;
   // newIOSVersionNumber = "3.6";
   // newAndroidVersion = "1.2"
-  currentVersion = "1.33";
+  currentVersion = "1.34";
   // versionCode;
 
   constructor(

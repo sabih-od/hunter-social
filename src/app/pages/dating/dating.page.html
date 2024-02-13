@@ -42,6 +42,10 @@
     <p *ngIf="state"><strong>States</strong><span>{{statename}}</span></p>
     <p *ngIf="city"><strong>City</strong><span>{{cityname}}</span></p>
     <p *ngIf="ethnicities"><strong>Ethnicity</strong><span *ngFor="let x of ethnicities">{{x}}</span></p>
+    <p *ngIf="zodiac"><strong>Zodiac</strong><span *ngFor="let x of zodiac">{{x.content}}</span></p>
+    <p *ngIf="education"><strong>Education</strong><span *ngFor="let x of education">{{x.content}}</span></p>
+    <p *ngIf="love"><strong>Love</strong><span *ngFor="let x of love">{{x.content}}</span></p>
+    <p *ngIf="communication"><strong>Communication</strong><span *ngFor="let x of communication">{{x.content}}</span></p>
   </div>
   <!-- <p *ngIf="filters?.ages">Ages: {{filters?.ages}}</p>
   <p *ngIf="filters?.genders">Gender: {{filters?.genders}}</p>

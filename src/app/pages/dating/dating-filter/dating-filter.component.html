@@ -90,8 +90,8 @@
 
     <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="communicationstylelist.content">
       <ion-col size="12">
-        <ion-label class="p-holder">{{communicationstylelist.content}}</ion-label>
-        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="communication">
+        <ion-label class="p-holder">{{communicationstylelist.label}}</ion-label>
+        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="obj.communication">
           <ion-select-option [value]="option.id"
             *ngFor="let option of communicationstylelist.tag_options">{{option.content}}</ion-select-option>
         </ion-select>
@@ -100,8 +100,8 @@
 
     <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="receivelove.content">
       <ion-col size="12">
-        <ion-label class="p-holder">{{receivelove.content}}</ion-label>
-        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="love">
+        <ion-label class="p-holder">{{receivelove.label}}</ion-label>
+        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="obj.love">
           <ion-select-option [value]="option.id"
             *ngFor="let option of receivelove.tag_options">{{option.content}}</ion-select-option>
         </ion-select>
@@ -110,8 +110,8 @@
 
     <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="educationlevel.content">
       <ion-col size="12">
-        <ion-label class="p-holder">{{educationlevel.content}}</ion-label>
-        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="education">
+        <ion-label class="p-holder">{{educationlevel.label}}</ion-label>
+        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="obj.education">
           <ion-select-option [value]="option.id"
             *ngFor="let option of educationlevel.tag_options">{{option.content}}</ion-select-option>
         </ion-select>
@@ -120,8 +120,8 @@
 
     <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="zodiacsign.content">
       <ion-col size="12">
-        <ion-label class="p-holder">{{zodiacsign.content}}</ion-label>
-        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="zodiac">
+        <ion-label class="p-holder">{{zodiacsign.label}}</ion-label>
+        <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="obj.zodiac">
           <ion-select-option [value]="option.id"
             *ngFor="let option of zodiacsign.tag_options">{{option.content}}</ion-select-option>
         </ion-select>

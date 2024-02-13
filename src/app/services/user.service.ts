@@ -14,6 +14,8 @@ export class UserService {
   user = null;
   userprofile: BehaviorSubject<any>;
   states: BehaviorSubject<any>;
+  tagQuestions: BehaviorSubject<any>;
+  ethnicities: BehaviorSubject<any>;
   cities = [];
   interestsList = []
   constructor(
@@ -26,6 +28,8 @@ export class UserService {
   ) {
     this.userprofile = new BehaviorSubject(null);
     this.states = new BehaviorSubject(null);
+    this.tagQuestions = new BehaviorSubject(null);
+    this.ethnicities = new BehaviorSubject(null);
   }
 
   updateUserProfile(data) {
@@ -33,6 +37,13 @@ export class UserService {
   }
   updateStates(data) {
     this.states.next(data);
+  }
+
+  updateTagQuestions(data) {
+    this.tagQuestions.next(data);
+  }
+  updateEthnicities(data) {
+    this.ethnicities.next(data);
   }
 
   login(formdata) {
@@ -103,7 +114,7 @@ export class UserService {
     console.log('getUnreadMessageAndNotificationCount => ', noticount)
     this.dataService.updateUnreadMessageAndNotificationCount(noticount?.data);
     this.dataService.updateNotificationsCount(noticount?.data?.unread_count);
-    
+
   }
 
 

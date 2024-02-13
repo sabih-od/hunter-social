@@ -167,7 +167,7 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     if (res) {
       this.userslimit = res.data.lifetime_users_limit;
       this.usertoavail = 5000 - this.userslimit
-      if(this.userslimit == 0){
+      if (this.userslimit == 0) {
         this.showpackage = true;
       }
     }
@@ -211,6 +211,12 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     if (res?.data?.user?.token) {
       token = res.data.user.token;
       localStorage.setItem('token', token);
+      let userRes = await this.network.getUserProfile(res.data.user?.id);
+      this.users.setUser(userRes.data);
+      this.users.updateUserProfile(userRes.data)
+      localStorage.setItem('user', JSON.stringify(userRes.data));
+      this.getStates();
+      this.getInterests()
     }
 
     if (res) {
@@ -257,6 +263,18 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     // }
 
     this.loading = false;
+  }
+
+  async getStates() {
+    let res = await this.network.getStates();
+    console.log('States', res);
+    this.users.updateStates(res && res.data ? res.data : [])
+  }
+
+  async getInterests() {
+    let res = await this.network.getInterests();
+    console.log('interestsList', res);
+    this.users.interestsList = res.data
   }
 
   onTelephoneChange(ev) {

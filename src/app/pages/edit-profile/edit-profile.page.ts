@@ -47,6 +47,20 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
   selected_package = 1;
   new_package = 1;
 
+  ethnicitylist = [];
+  communicationstylelist;
+  receivelove;
+  educationlevel;
+  zodiacsign;
+
+  tag_option_ids = [];
+  love = [];
+  communication = [];
+  education;
+  zodiac;
+  ethnicity;
+
+
 
   products: IAPProduct[] = [];
 
@@ -61,7 +75,7 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
   }
   ionViewWillEnter(): void {
     if (this.user) this.getUser();
-    console.log('this.user => ', this.user);
+    console.log('ionViewWillEnter this.user => ', this.user);
   }
 
   async ngOnInit() {
@@ -124,14 +138,26 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     //   console.log('eidt profile this.users.userprofile => ', user)
     // })
     this.user = await this.users.getUser()
+    this.getTagQuestions();
     // let res = await this.network.getUser();
     // console.log('Edit Profile User', res);
     // if (res && res.data && res.data.user) {
     //   this.user = res.data.user;
-    console.log('this.user => ', this.user);
+    console.log('a this.user => ', this.user);
+
+    this.tag_option_ids = this.user.tag_selections.map(x => x.tag_option_id);
+    // this.getSelectedTagOptions();
+
+    console.log('a this.tag_option_ids => ', this.tag_option_ids);
     this.is_lifetime_access = this.user.is_lifetime_access;
     this.selected_package = this.user.profile_detail.package_id;
+    this.ethnicity = this.user.profile_detail.ethnicity;
+    // this.communication = this.tag_option_ids;
+    // this.love = this.tag_option_ids;
+    // this.education = this.tag_option_ids;
+    // this.zodiac = this.tag_option_ids;
     this.new_package = this.user.profile_detail.package_id;
+    // this.tag_option_ids = [3, 4, 10, 21, 14];
     this.state = parseInt(this.user.profile_detail.state);
     if (this.user.profile_detail.dob) {
       console.log('this.user.profile_detail.dob => ', this.user.profile_detail.dob)
@@ -175,21 +201,85 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }
 
+  getSelectedTagOptions() {
+    // this.tag_option_ids = [...this.communication, ...this.love,];
+    // if (this.zodiac && this.zodiac != '') this.tag_option_ids.push(this.zodiac);
+    // if (this.education && this.education != '') this.tag_option_ids.push(this.education);
+    const newarr = this.questions.map(ques => ques.tag_option_ids.map(opt => opt));
+    const mergedArray = [].concat(...newarr);
+    console.log('mergedArray newarr => ', mergedArray)
+  }
+
+  questions = [];
+
+  getTagQuestions() {
+    // this.tag_option_ids = [3, 4, 10, 21, 14];
+    // const response = await this.network.getQuestions();
+    this.users.ethnicities.subscribe(data => {
+      if (data) {
+        console.log('ethnicities data => ', data);
+        this.ethnicitylist = data
+      }
+    });
+    this.users.tagQuestions.subscribe(data => {
+      if (data) {
+        if (data) {
+          this.questions = data.map((ques) => {
+            return {
+              ...ques,
+              tag_option_ids: ques.tag_options.map(opt => {
+                if (this.tag_option_ids.includes(opt.id)) return opt.id;
+              }).filter(Boolean)
+            }
+          });
+        }
+        console.log('this.questions data => ', this.questions);
+
+        // this.communicationstylelist = data[0];
+        // this.communication = this.filterTagOptionIdsToValues(this.communicationstylelist);
+        // console.log('this.communication => ', this.communication);
+        // this.receivelove = data[1];
+        // this.love = this.filterTagOptionIdsToValues(this.receivelove);
+        // console.log('this.love => ', this.love);
+        // this.educationlevel = data[2];
+        // this.education = this.filterTagOptionIdsToValues(this.educationlevel);
+        // if (this.education.length > 0) { this.education = this.education[0] }
+        // console.log('this.education => ', this.education);
+        // this.zodiacsign = data[3];
+        // this.zodiac = this.filterTagOptionIdsToValues(this.zodiacsign);
+        // if (this.zodiac.length > 0) { this.zodiac = this.zodiac[0] }
+        // console.log('this.zodiac => ', this.zodiac);
+      }
+    });
+
+  }
+
+  filterTagOptionIdsToValues(dataobj) {
+    return dataobj?.tag_options?.map(x => this.tag_option_ids.includes(x.id) && x.id).filter(Boolean);
+  }
+
   async editProfile() {
     let data = new FormData();
     let user = this.user;
     console.log(user);
 
     data.append('name', user['name']);
-    data.append('email', user['email']);
-    data.append('phone', user['phone']);
-    data.append('gender', user['gender']);
+    user['email'] && data.append('email', user['email']);
+    user['phone'] && data.append('phone', user['phone']);
+    user['gender'] && data.append('gender', user['gender']);
     data.append('brief_yourself', this.user.profile_detail.brief_yourself);
-    data.append('dob', user['dob']);
+    user['dob'] && data.append('dob', user['dob']);
     data.append('state', this.state);
     data.append('city', this.city);
-    data.append('location', user['profile_detail']['location']);
-    data.append('hobbies', user['profile_detail']['hobbies']);
+    user['profile_detail']['location'] && data.append('location', user['profile_detail']['location']);
+    user['profile_detail']['hobbies'] && data.append('hobbies', user['profile_detail']['hobbies']);
+    if (this.tag_option_ids) {
+      for (var i = 0; i < this.tag_option_ids?.length; i++) {
+        data.append(`tag_option_ids[${i}]`, this.tag_option_ids[i]);
+      }
+    }
+    // data.append('tag_option_ids', this.tag_option_ids);
+    data.append('ethnicity', this.ethnicity ? this.ethnicity : '');
     for (var i = 0; i < user.interests?.length; i++) {
       data.append(`interests[${i}]`, user.interests[i]);
     }
@@ -205,6 +295,11 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
       console.log(imageData);
       data.append('profile_image', imageData);
     }
+
+
+
+    console.log('editProfile this.ethnicity => ', this.ethnicity)
+    console.log('editProfile this.tag_option_ids => ', data.get('tag_option_ids'))
 
     let res = await this.network.editUser(data);
     console.log(res);
