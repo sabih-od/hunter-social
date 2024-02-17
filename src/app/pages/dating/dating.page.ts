@@ -73,9 +73,6 @@ export class DatingPage
     console.log("inside intro.js");
     intro.setOptions({
       steps: [
-        // {
-        //   intro: "Ahlan wa Sahlan"
-        // }, 
         {
           element: "#step1",
           intro: "Search by specifying gender, country, category, and age preferences to discover meaningful connections that align with your preferences",
@@ -86,11 +83,6 @@ export class DatingPage
           intro: "Find your perfect match effortlessly by entering specific criteria into our search field",
           position: "bottom"
         },
-        // {
-        //   element: "#step3",
-        //   intro: "Easily connect by adding friends, remove connections with unfriending, exercise control with blocking, and maintain a safe community by reporting any concerns",
-        //   position: "top"
-        // },
         {
           element: "#dating0",
           intro: "Easily connect by adding friends, remove connections with unfriending and cancel request",
@@ -260,11 +252,9 @@ export class DatingPage
   cityname;
   state;
   statename;
-  zodiac;
-  education;
-  love;
-  communication;
+  questions;
   ethnicities;
+  tag_option_ids;
   filters = {}
 
   async filter() {
@@ -279,10 +269,7 @@ export class DatingPage
         filteredstate: this.state,
         filteredcity: this.city,
         filteredethnicities: this.ethnicities,
-        filteredzodiac: this.zodiac,
-        filterededucation: this.education,
-        filteredlove: this.love,
-        filteredcommunication: this.communication
+        filteredtagids: this.tag_option_ids
       },
       // {},
       // this.filters,
@@ -295,14 +282,6 @@ export class DatingPage
     this.filters = d.data;
     console.log('this.filters => ', this.filters);
 
-    // if (d.data.ages) { this.ages = d.data.ages ? d.data.ages.split('|') : '' }
-    // if (d.data.genders) { this.genders = d.data.genders.split('|') }
-    // if (d.data.interests) { this.interests = d.data.interests.split('|') }
-    // if (d.data.state) { this.state = d.data.state }
-    // if (d.data.city) { this.city = d.data.city }
-    // if (d.data.cityname) { this.cityname = d.data.cityname.name }
-    // if (d.data.statename) { this.statename = d.data.statename.name }
-
     this.ages = d.data?.ages ? d.data?.ages.split('|') : '';
     this.genders = d.data?.genders ? d.data?.genders.split('|') : '';
     this.interests = d.data?.interests ? d.data?.interests.split('|') : ''
@@ -311,19 +290,8 @@ export class DatingPage
     this.cityname = d.data?.cityname?.name ? d.data?.cityname?.name : ''
     this.state = d.data?.state ? d.data?.state : ''
     this.statename = d.data?.statename?.name ? d.data.statename?.name : ''
-    this.zodiac = d.data?.zodiac ? d.data?.zodiac : ''
-    this.education = d.data?.education ? d.data?.education : ''
-    this.love = d.data?.love ? d.data?.love : ''
-    this.communication = d.data?.communication ? d.data?.communication : ''
-
-    let tag_option_ids = [...this.zodiac, ...this.education, ...this.love, ...this.communication];
-    const newarr = tag_option_ids.map(x => encodeURIComponent(x.id));
-    d.data.tag_option_ids = newarr.join('|')
-
-    delete d.data?.zodiac;
-    delete d.data?.education;
-    delete d.data?.love;
-    delete d.data?.communication;
+    this.questions = d.data?.selectedques;
+    this.tag_option_ids = d.data.tag_option_ids;
 
 
     console.log('d', d);

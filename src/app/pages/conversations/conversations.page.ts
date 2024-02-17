@@ -47,6 +47,7 @@ export class ConversationsPage extends BasePage implements OnInit {
       } else {
         this.tab = 'friends';
       }
+      console.log('tab => ', this.tab);
     });
 
   }
@@ -59,10 +60,6 @@ export class ConversationsPage extends BasePage implements OnInit {
       this.friendNotiCount = data?.friend;
       this.groupNotiCount = data?.group;
     })
-    // let res = await this.network.getUnreadMessageAndNotificationCount();
-    // this.adminNotiCount = res.data.admin;
-    // this.friendNotiCount = res.data.friend;
-    // this.groupNotiCount = res.data.group;
   }
 
 

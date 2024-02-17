@@ -66,6 +66,7 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
 
   newMessage(data) {
     console.log('chat floating button new message recieved', data);
+    // this.users.getNotificationCount()
   }
 
   openSocialChatRoom() {

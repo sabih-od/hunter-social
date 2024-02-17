@@ -16,12 +16,16 @@
         <ion-segment-button value="friends">
           <ion-label>Friends</ion-label>
           <ion-icon name="people-outline"></ion-icon>
+          <ion-badge *ngIf="friendNotiCount && friendNotiCount != 0" class="badge"
+            color="primary">{{friendNotiCount}}</ion-badge>
         </ion-segment-button>
 
         <!-- (click)="goToNotifications()" -->
         <ion-segment-button value="notifications">
           <ion-label>Notifications</ion-label>
           <ion-icon name="notifications-outline"></ion-icon>
+          <ion-badge *ngIf="unreadNotificationCount && unreadNotificationCount != 0" class="badge"
+            color="primary">{{unreadNotificationCount}}</ion-badge>
         </ion-segment-button>
 
         <!-- <ion-segment-button value="alert">
@@ -37,9 +41,12 @@
     </ion-toolbar>
 
     <div *ngIf="tab === 'notifications'">
-      <div class="notifications" *ngFor="let item of notifications">
+      <!-- <div class="notifications" *ngFor="let item of notifications"> -->
+      <div class="notifications" [class.read]="item?.is_read" [class.unread]="!item?.is_read"
+        *ngFor="let item of notifications">
         <app-notification-item [item]="item" (acceptClicked)="acceptRequest($event)"
-          (ignoreClicked)="ignoreRequest($event)"></app-notification-item>
+          (ignoreClicked)="ignoreRequest($event)"
+          (notificationClicked)="clickNotification($event)"></app-notification-item>
         <!-- <div class="notificationitem">
           <img [src]="item?.profile_image" onerror="this.onerror=null;this.src='/assets/Images/dummy-avatar.png';" />
           <div>

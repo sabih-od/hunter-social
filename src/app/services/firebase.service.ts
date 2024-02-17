@@ -104,7 +104,7 @@ export class FirebaseService {
           const extradata = JSON.parse(notification.data.extra_data)
           console.log('extradata?.channel_id => ', extradata?.channel_id);
           console.log('this.dataService.channel_id => ', this.dataService.channel_id);
-          // this.users.getNotificationCount();
+          this.users.getNotificationCount();
           if (extradata?.channel_id) {
             // const messagescount = localStorage.getItem('messages_count');
             // const countnew = String(Number(messagescount) + 1);

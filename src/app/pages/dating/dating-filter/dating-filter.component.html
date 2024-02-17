@@ -87,8 +87,21 @@
       </ion-col>
     </ion-row>
 
+    <div *ngFor="let ques of questions">
+      <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="questions">
+        <ion-col size="12">
+          <ion-label class="p-holder">{{ques?.label}}</ion-label>
+          <ion-select placeholder="Select Options" multiple="true" class="select"
+            (ionChange)="getSelectedTagOptions($event)" [(ngModel)]="ques.tag_option_ids">
+            <ion-select-option [value]="option.id" *ngFor="let option of ques.tag_options">
+              {{option?.content}}
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </div>
 
-    <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="communicationstylelist.content">
+    <!-- <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="communicationstylelist.content">
       <ion-col size="12">
         <ion-label class="p-holder">{{communicationstylelist.label}}</ion-label>
         <ion-select placeholder="Select Options" multiple="true" class="select" [(ngModel)]="obj.communication">
@@ -126,7 +139,7 @@
             *ngFor="let option of zodiacsign.tag_options">{{option.content}}</ion-select-option>
         </ion-select>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
 
     <ion-row class="ion-no-padding ion-no-margin padd">

@@ -108,7 +108,7 @@ export class HeaderComponent extends BasePage implements OnInit {
         console.log('e => ', e)
         self.getNotificationsCount();
         // this.notifications_count = Number(localStorage.getItem('notifications_count'));
-        console.log('this.notifications_count event => ', this.notifications_count);
+        // console.log('this.notifications_count event => ', this.notifications_count);
         HeaderComponent.instances.forEach((instance) => {
           self.getNotificationsCount();
           // instance.notifications_count = Number(localStorage.getItem('notifications_count'));
@@ -136,7 +136,7 @@ export class HeaderComponent extends BasePage implements OnInit {
 
   getNotificationsCount() {
     this.dataService.notifications_count.subscribe(data => {
-      console.log('header this.dataService.notifications_count data => ', data)
+      // console.log('header this.dataService.notifications_count data => ', data)
       this.notifications_count = data;
     })
   }

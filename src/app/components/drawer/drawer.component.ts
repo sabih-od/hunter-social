@@ -1,5 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
+import { Badge } from '@ionic-native/badge/ngx';
 import { ViewWillEnter } from '@ionic/angular';
 import { PLAN_TYPE } from 'src/app/data/const/enums';
 import { BasePage } from 'src/app/pages/base-page/base-page';
@@ -16,7 +17,7 @@ export class DrawerComponent extends BasePage implements OnInit {
   packageId = 0;
   isEventSubscribed = false;
   isDatingEnabled = false;
-  constructor(injector: Injector) {
+  constructor(injector: Injector, private badge: Badge) {
     super(injector);
   }
 
@@ -237,6 +238,7 @@ export class DrawerComponent extends BasePage implements OnInit {
     }
     let res = await this.network.logout();
     this.users.removeToken();
+    this.badge.clear();
     // localStorage.removeItem('fcm_token')
     localStorage.removeItem('userDataa');
     localStorage.removeItem('notifications_count');
@@ -365,22 +367,7 @@ export class DrawerComponent extends BasePage implements OnInit {
     this.users.interestsList = res.data
   }
 
-  // async getNotificationCount() {
-  //   const noticount = await this.network.getUnreadNotificationCount();
-  //   console.log('getUnreadNotificationCount => ', noticount)
-  //   this.dataService.updateNotificationsCount(noticount?.data?.count);
-  //   // localStorage.setItem('notifications_count', noticount?.data?.count?.toString());
-  //   // if (noticount?.data?.count) {
-  //   // }
-  // }
-
-
-  // async getNotificationCount() {
-  //   const noticount = await this.network.getUnreadMessageAndNotificationCount();
-  //   console.log('getUnreadMessageAndNotificationCount => ', noticount)
-  //   this.dataService.updateUnreadMessageAndNotificationCount(noticount?.data);
-  //   this.dataService.updateNotificationsCount(noticount?.data?.unread_count);
-  // }
+  
 
   openDatingChatRoom() {
     this.nav.navigateTo('pages/dating');

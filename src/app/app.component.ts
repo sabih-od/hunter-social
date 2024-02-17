@@ -25,7 +25,7 @@ export class AppComponent {
   versionNumber;
   // newIOSVersionNumber = "3.6";
   // newAndroidVersion = "1.2"
-  currentVersion = "1.34";
+  currentVersion = "1.35";
   // versionCode;
 
   constructor(
@@ -34,6 +34,7 @@ export class AppComponent {
     private modalController: ModalController,
     public platform: Platform,
     public fcm: FirebaseService,
+    public users: UserService,
     // private sqlite: SqliteService,
     private zone: NgZone,
     private appVersion: AppVersion,
@@ -116,7 +117,19 @@ export class AppComponent {
     }
   }
 
+  onPause() {
+    // Handle the pause event
+    console.log('pause');
+  }
+  onResume() {
+    // Handle the pause event
+    console.log('resume');
+    this.users.getNotificationCount()
+  }
   initializeApp() {
+    document.addEventListener("pause", this.onPause, false);
+    document.addEventListener("resume", this.onResume.bind(this), false);
+
     this.platform.ready().then(async () => {
       // this.badge.clear();
       App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {

@@ -51,15 +51,16 @@ export class ChatRoomPage extends BasePage implements OnInit, ViewWillEnter {
     this.dataService.chat_data = {};
     // this.nav.push('pages/chat');
     await this.getFriends();
-    this.isLoading = false;
+    // this.isLoading = false;
     this.events.subscribe('UPDATE_CHATS', this.getFriends.bind(this));
   }
 
   async getFriends() {
     this.sender_id = this.dataService.dataId;
     let res = await this.network.getFriends(this.page);
+    this.isLoading = false;
     let self = this;
-    console.log('getFriends =>', res);
+    console.log('chat-room a getFriends =>', res);
     if (res && res.data) {
       const friendslist = res.data.map((user) => ({
         ...user,

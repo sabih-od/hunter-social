@@ -167,3 +167,14 @@ ion-segment {
     position: relative;
     border-left: 3px solid #000;
 }
+
+ion-badge.badge {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    margin: 0 auto 0 auto;
+    margin-left: 54%;
+    display: inline-table;
+    // width: 12px;
+}

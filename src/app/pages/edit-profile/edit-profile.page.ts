@@ -10,6 +10,7 @@ import { TermsConditionsPage } from '../terms-conditions/terms-conditions.page';
 
 import { IAPProduct, InAppPurchase2 } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
 import { Capacitor } from '@capacitor/core';
+import { isArray } from 'util';
 
 const PRODUCT_GOLD_KEY = 'com.hunterssocial.app.gold_package_n1';
 const PRODUCT_PLATINUM_KEY = 'com.hunterssocial.app.platinum_package_n1';
@@ -48,16 +49,8 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
   new_package = 1;
 
   ethnicitylist = [];
-  communicationstylelist;
-  receivelove;
-  educationlevel;
-  zodiacsign;
 
   tag_option_ids = [];
-  love = [];
-  communication = [];
-  education;
-  zodiac;
   ethnicity;
 
 
@@ -148,7 +141,7 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
     this.tag_option_ids = this.user.tag_selections.map(x => x.tag_option_id);
     // this.getSelectedTagOptions();
 
-    console.log('a this.tag_option_ids => ', this.tag_option_ids);
+    // console.log('a this.tag_option_ids => ', this.tag_option_ids);
     this.is_lifetime_access = this.user.is_lifetime_access;
     this.selected_package = this.user.profile_detail.package_id;
     this.ethnicity = this.user.profile_detail.ethnicity;
@@ -202,12 +195,10 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
   }
 
   getSelectedTagOptions() {
-    // this.tag_option_ids = [...this.communication, ...this.love,];
-    // if (this.zodiac && this.zodiac != '') this.tag_option_ids.push(this.zodiac);
-    // if (this.education && this.education != '') this.tag_option_ids.push(this.education);
-    const newarr = this.questions.map(ques => ques.tag_option_ids.map(opt => opt));
+    this.questions.map(ques => console.log('quest => ', ques));
+    const newarr = this.questions.map(ques => Array.isArray(ques?.tag_option_ids) ? ques?.tag_option_ids?.map(opt => opt) : ques?.tag_option_ids);
     const mergedArray = [].concat(...newarr);
-    console.log('mergedArray newarr => ', mergedArray)
+    this.tag_option_ids = mergedArray;
   }
 
   questions = [];
@@ -234,21 +225,6 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
           });
         }
         console.log('this.questions data => ', this.questions);
-
-        // this.communicationstylelist = data[0];
-        // this.communication = this.filterTagOptionIdsToValues(this.communicationstylelist);
-        // console.log('this.communication => ', this.communication);
-        // this.receivelove = data[1];
-        // this.love = this.filterTagOptionIdsToValues(this.receivelove);
-        // console.log('this.love => ', this.love);
-        // this.educationlevel = data[2];
-        // this.education = this.filterTagOptionIdsToValues(this.educationlevel);
-        // if (this.education.length > 0) { this.education = this.education[0] }
-        // console.log('this.education => ', this.education);
-        // this.zodiacsign = data[3];
-        // this.zodiac = this.filterTagOptionIdsToValues(this.zodiacsign);
-        // if (this.zodiac.length > 0) { this.zodiac = this.zodiac[0] }
-        // console.log('this.zodiac => ', this.zodiac);
       }
     });
 
@@ -295,11 +271,6 @@ export class EditProfilePage extends BasePage implements OnInit, ViewWillEnter {
       console.log(imageData);
       data.append('profile_image', imageData);
     }
-
-
-
-    console.log('editProfile this.ethnicity => ', this.ethnicity)
-    console.log('editProfile this.tag_option_ids => ', data.get('tag_option_ids'))
 
     let res = await this.network.editUser(data);
     console.log(res);

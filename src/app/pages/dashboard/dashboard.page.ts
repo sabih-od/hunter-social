@@ -2,6 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { BasePage } from '../base-page/base-page';
 import { ChatBatsComponent } from 'src/app/components/chat-bats/chat-bats.component';
 import { AlertController } from '@ionic/angular';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,8 @@ export class DashboardPage extends BasePage implements OnInit {
   user_id: any;
   constructor(
     injector: Injector,
-    private alertController: AlertController
+    private alertController: AlertController,
+    public badge: Badge,
   ) {
     super(injector);
   }
@@ -33,7 +35,8 @@ export class DashboardPage extends BasePage implements OnInit {
 
   async ngOnInit() {
     this.loading = true;
-    this.getfriends()
+    this.getNotificationsObject();
+    this.getfriends();
 
     this.current_user = await this.users.getUser();
     this.user_id = this.current_user.id;
@@ -42,8 +45,70 @@ export class DashboardPage extends BasePage implements OnInit {
 
     // this.getPostAlerts();
     // this.getRecipeAlerts();
+    this.events.subscribe('UPDATE_CHANNELS', this.newMessage.bind(this));
 
   }
+
+  newMessage(data) {
+    console.log('newMessage data => ', data)
+    this.users.getNotificationCount()
+    if (data.sender_id) {
+      const list = this.friends.map(x => {
+        if (x.id == data.sender_id) {
+          // x.hasUnread = true;
+          x.notifications = x.notifications + 1
+        }
+        return x;
+      })
+
+      console.log('list => ', list)
+      // const index = _.findIndex(list, { 'sender_id': data.sender_id });
+      const index = list.findIndex(x => x.id == data.sender_id);
+      console.log('index => ', index)
+      if (index !== -1) {
+        const movedObject = list.splice(index, 1)[0];
+        list.unshift(movedObject);
+      }
+      console.log('list => ', list)
+
+      this.friends = list;
+    }
+  }
+  unreadNotificationCount = 0;
+  friendNotiCount = 0;
+  async getNotificationsObject() {
+    this.dataService.notification_and_message_count.subscribe(data => {
+      console.log('this.dataService.notification_and_message_count data => ', data)
+      this.friendNotiCount = data?.friend;
+      this.unreadNotificationCount = data?.unread_count;
+    })
+  }
+
+  async clickNotification(item) {
+    console.log('clickNotification item => ', item)
+    if (item?.cm_u_id) {
+      this.nav.push('pages/conversations', {
+        type: 'individual',
+      })
+    }
+    else if (item?.admin_user_id) {
+      this.nav.push('pages/chat', {
+        is_admin: 1,
+      })
+    } else {
+      console.log('clickNotification 123 => ')
+      let res = await this.network.readNotifiaction({
+        "ids": item?.id
+      })
+      console.log('clickNotification => ', res)
+      // this.users.getNotificationCount()
+      // const count = JSON.parse(localStorage.getItem('notifications_count'));
+      this.badge.decrease(1);
+      this.users.getNotificationCount();
+    }
+
+  }
+
 
   async getfriends() {
     this.sender_id = this.dataService.dataId;
@@ -286,7 +351,6 @@ export class DashboardPage extends BasePage implements OnInit {
       user.connection_count = user.connection_count + 1;
       this.users.setUser(user)
 
-      this.events.publish('UPDATE_CHATS');
       this.events.publish('UPDATE_CHATS');
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');

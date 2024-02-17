@@ -128,7 +128,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       this.page == 1 && this.scrollToBottom();
       this.page != 1 && this.content.scrollToPoint(0, 220);
     }
-    this.updateNotificationCount()
+    this.users.getNotificationCount();
   }
 
   async getChatbotMessages() {
@@ -196,7 +196,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       this.page == 1 && this.scrollToBottom();
       this.page != 1 && this.content.scrollToPoint(0, 220);
     }
-    this.updateNotificationCount()
+    this.users.getNotificationCount();
   }
 
   async getGruoupChatData() {
@@ -220,7 +220,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       this.page == 1 && this.scrollToBottom();
       this.page != 1 && this.content.scrollToPoint(0, 220);
     }
-    this.updateNotificationCount()
+    this.users.getNotificationCount();
   }
 
   removeTempImg() {
@@ -244,16 +244,16 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     this.channel.bind('chatMessage', ({ message }) => {
       console.log('Event Recieved => ', message);
       let self = this;
-      // if (message.sender_id !== this.user?.id) {
-      this.messages.push({
-        content: message.content,
-        channel_id: message.channel_id,
-        sender_id: message.sender_id,
-        media_upload: message.media_upload,
-        created_at: message.created_at,
-      });
-      self.scrollToBottom();
-      // }
+      if (message.sender_id !== this.user?.id) {
+        this.messages.push({
+          content: message.content,
+          channel_id: message.channel_id,
+          sender_id: message.sender_id,
+          media_upload: message.media_upload,
+          created_at: message.created_at,
+        });
+        self.scrollToBottom();
+      }
     });
   }
 
@@ -266,15 +266,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     }, 500);
   }
 
-  async updateNotificationCount() {
-    // let noticount = await this.network.getUnreadNotificationCount();
-    const noticount = await this.network.getUnreadMessageAndNotificationCount();
-    console.log('getUnreadMessageAndNotificationCount => ', noticount)
-    this.dataService.updateUnreadMessageAndNotificationCount(noticount?.data);
 
-    console.log('noticount => ', noticount.data.unread_count)
-    this.dataService.updateNotificationsCount(noticount.data.unread_count)
-  }
 
   async askChatBot() {
     this.isMsgLoading = true;
@@ -337,14 +329,23 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
         console.log('blob => ', blob)
         formData.append('file', blob);
       }
+      this.messages.push({
+        content: this.text ? this.text : '',
+        channel_id: this.channel_id,
+        sender_id: this.user?.id,
+        media_upload: { url: this._img },
+        created_at: new Date(),
+      });
+      this.text = '';
+      this._img = '';
+      this.scrollToBottom();
       let res = await this.network.sendChatMessages(
-        formData
-        // { content: this.text, file: blob }
-        ,
+        formData,
         this.channel_id
       );
       this.isMsgLoading = false;
       if (res && res.data) {
+
         // this.messages.push({
         //   content: this.text,
         //   channel_id: this.channel_id,
@@ -358,8 +359,8 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       //   time: this.getTime(new Date()),
       //   id: this.messages[this.messages.length - 1]?.id + 1,
       // }); 3
-      this.text = '';
-      this._img = '';
+      // this.text = '';
+      // this._img = '';
     } else {
       this.isMsgLoading = false;
     }

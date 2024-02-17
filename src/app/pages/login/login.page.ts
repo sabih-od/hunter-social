@@ -117,12 +117,17 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
       if (Capacitor.getPlatform() !== 'web') {
         await this.network.setFcmToken(fcmtoken);
       }
-      // let userRes = await this.network.getUserProfile(res.data?.id);
-      this.users.setUser(res.data);
-      this.users.updateUserProfile(res.data)
-      localStorage.setItem('user', JSON.stringify(res.data));
+      let userRes = await this.network.getUserProfile(res.data?.id);
+      console.log('userRes a => ', userRes)
+      this.users.setUser({ ...userRes.data, profile_image: this.image.getImageUrl(userRes?.data?.profile_image) });
+      this.users.updateUserProfile({ ...userRes.data, profile_image: this.image.getImageUrl(userRes?.data?.profile_image) })
+      // this.users.updateUserProfile(res.data)
+      localStorage.setItem('user', JSON.stringify({ ...userRes.data, profile_image: this.image.getImageUrl(userRes?.data?.profile_image) }));
+      this.users.getNotificationCount()
       this.getStates();
-      this.getInterests()
+      this.getInterests();
+      this.getTagQuestions();
+      this.getEthnicities();
       console.log('LOGIN_SUCCESS', res.data.data);
 
       this.aForm.setValue({ email: '', password: '' })
@@ -148,6 +153,19 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
       // this.openWebview();
     } else {
     }
+  }
+
+  async getTagQuestions() {
+    const res = await this.network.getQuestions();
+    console.log('tagQuestions', res);
+    this.users.updateTagQuestions(res && res.data ? res.data : [])
+  }
+
+  async getEthnicities() {
+    const res = await this.network.getQuestions();
+    const ethnicities = ['Alaska Native', 'Asian', 'African American', 'Hispanic', 'Native Hawaiian', 'White'];
+    console.log('ethnicities', res);
+    this.users.updateEthnicities(ethnicities)
   }
 
   async getStates() {

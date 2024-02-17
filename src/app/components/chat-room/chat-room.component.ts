@@ -52,14 +52,13 @@ export class ChatRoomComponent extends BasePage implements OnInit {
   }
 
   async initialize() {
-    this.loading = true;
     this.dataService.chat_data = {};
     // this.nav.push('pages/chat');
-    await this.getFriends();
-    this.loading = false;
     this.events.subscribe('UPDATE_CHATS', this.getFriends.bind(this));
     this.events.subscribe('UPDATE_CHANNELS', this.newMessage.bind(this));
-
+    this.loading = true;
+    await this.getFriends();
+    this.loading = false;
   }
 
   async initPusher() {
@@ -102,14 +101,13 @@ export class ChatRoomComponent extends BasePage implements OnInit {
   async getFriends() {
     this.sender_id = this.dataService.dataId;
     let res = await this.network.getFriends(this.page);
-    let self = this;
-    console.log('getFriends', res);
+    console.log('chat-room component getFriends', res);
     if (res && res.data) {
       if (res.data.next_page_url) this.next_page_url = res.data.next_page_url;
       const friendslist = res.data.data.map((user) => ({
         ...user,
-        hasUnread: self.sender_id === user.id,
-        profile_image: self.image.getImageUrl(user.profile_image),
+        hasUnread: this.sender_id === user.id,
+        profile_image: this.image.getImageUrl(user.profile_image),
       }));
 
       this.friends = this.page != 1 ? [...this.friends, ...friendslist] : friendslist;

@@ -16,11 +16,11 @@ export class NotificationItemComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('item => ', this.item)
-    if (this.item.cm_name) {
+    console.log('item => ', this.item.content)
+    if (this.item.cm_name && !this.item.content.includes('sent message')) {
       this.item.content = `${this.item.cm_name} sent message "${this.item.content}"`;
     }
-    else if (this.item.admin_user_name) {
+    else if (this.item.admin_user_name && !this.item.admin_user_name.includes('New message')) {
       this.item.content = `New message from Admin "${this.item.content}"`;
       this.item.profile_image = '/assets/Images/ov-logo.png'
     }

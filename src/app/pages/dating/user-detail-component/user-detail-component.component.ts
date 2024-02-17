@@ -18,10 +18,10 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
     city: '',
 
     tag_option_ids: [],
-    love: [],
-    communication: [],
-    education: '',
-    zodiac: '',
+    // love: [],
+    // communication: [],
+    // education: '',
+    // zodiac: '',
     ethnicity: '',
 
   };
@@ -34,18 +34,8 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
     super(injector);
   }
 
-  // communicationstylelist = ["Big time texter", "Phone Caller", "Video chatter", "Bad texter", "Better in person"];
-  // receivelove = ["Thoughtful gestures", "Presents", "Touch", "Compliments", "Time together"];
-  // educationlevel = ["Bechelors", "In College", "High School", "PhD", "In Grad School", "Masters", "Trade School"];
-  // zodiacsign = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
-  // ethnicitylist = ['Alaska Native', 'Asian', 'African American', 'Hispanic', 'Native Hawaiian', 'White'];
   ethnicitylist = [];
-  communicationstylelist = [];
-  receivelove = [];
-  educationlevel = [];
-  zodiacsign = [];
-  tagquestionslist = [];
-  // tag_option_ids: {};
+  questions = [];
 
   ngOnInit() {
     this.getStates();
@@ -58,29 +48,38 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
   }
 
   async getTagQuestions() {
-    // const response = await this.network.getQuestions();
+
     this.users.ethnicities.subscribe(data => {
       this.ethnicitylist = data
     });
     this.users.tagQuestions.subscribe(data => {
-      this.communicationstylelist = data[0];
-      this.receivelove = data[1];
-      this.educationlevel = data[2];
-      this.zodiacsign = data[3];
+      if (data) {
+        if (data) {
+          this.questions = data.map((ques) => {
+            return {
+              ...ques,
+              tag_option_ids: ques.is_multi_select == 1 ? [] : ''
+            }
+          });
+        }
+        console.log('this.questions data => ', this.questions);
+        console.log('this.data.tag_option_ids data => ', this.data.tag_option_ids);
+      }
+
     });
-    // console.log('getTagQuestions response.data => ', response.data);
-    // this.tagquestionslist = response.data;
 
   }
-  // async getTagQuestions() {
-  //   const response = await this.network.getQuestions();
-  //   // console.log('getTagQuestions response.data => ', response.data);
-  //   this.tagquestionslist = response.data;
-  //   this.communicationstylelist = response.data[0];
-  //   this.receivelove = response.data[1];
-  //   this.educationlevel = response.data[2];
-  //   this.zodiacsign = response.data[3];
-  // }
+
+  getSelectedTagOptions($event) {
+    // this.questions.map(ques => console.log('quest => ', ques));
+    console.log('event => ', $event.target.value);
+    const newarr = this.questions.map(ques => Array.isArray(ques?.tag_option_ids) ? Object.keys(ques?.tag_option_ids).filter(key => ques?.tag_option_ids[key] === true) : ques?.tag_option_ids != '' && ques?.tag_option_ids);
+    const mergedArray = [].concat(...newarr).filter(Boolean);
+    const arrayOfNumbers: number[] = mergedArray.map(item => typeof item === 'string' ? parseInt(item, 10) : item);
+    this.data.tag_option_ids = arrayOfNumbers;
+    console.log('this.data.tag_option_ids => ', this.data.tag_option_ids);
+  }
+
 
   async getStates() {
     this.states = this.users.states.value;
@@ -89,7 +88,7 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
     // console.log('States', res);
     // this.states = res && res.data ? res.data : [];
   }
-
+  _loading = false;
   async register() {
     if (!this.isValid()) {
       this.utility.presentFailureToast('Please fill out all required data');
@@ -97,27 +96,18 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
     }
     let date = new Date(this.data.dob);
     console.log(date.toDateString);
-    const communication = Object.keys(this.data.communication).filter(key => this.data.communication[key] === true);
-    const love = Object.keys(this.data.love).filter(key => this.data.love[key] === true);
-    this.data.tag_option_ids = [...communication, ...love];
-    this.data.education != '' && this.data.tag_option_ids.push(this.data.education);
-    this.data.zodiac != '' && this.data.tag_option_ids.push(this.data.zodiac);
-    this.data.tag_option_ids = this.data.tag_option_ids.map(Number);
     this.data.dob = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-    const newdata = { ...this.data }
-    delete newdata.communication;
-    delete newdata.love;
-    delete newdata.zodiac;
-    delete newdata.education;
 
-    console.log('newdata => ', newdata);
 
-    // return;
+    console.log('this.data.dob => ', this.data);
+    this._loading = true;
+    // // return;
     let res = await this.network.switchToDatingProfile({
-      ...newdata,
+      ...this.data,
       dob: `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`,
     });
     console.log('register', res);
+    this._loading = false;
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
       this.modals.dismiss({ success: true });
@@ -133,21 +123,21 @@ export class UserDetailComponentComponent extends BasePage implements OnInit {
 
   isValid() {
     let data = this.data;
-    const communication = Object.keys(this.data.communication).filter(key => this.data.communication[key] === true);
-    console.log('communication => ', communication)
-    const love = Object.keys(this.data.love).filter(key => this.data.love[key] === true);
-    console.log('love => ', love)
+    console.log('this.questions => ', this.questions)
+    // const checktagids = this.questions.some(obj => Array.isArray(obj.tag_option_ids) ? obj.tag_option_ids.length > 0 : obj.tag_option_ids != '');
+    // const checktagids = any(item.get("tag_option_ids") and len(item["tag_option_ids"]) > 0 for item in this.questions)
+    const abcd = this.questions.map(item => { return Array.isArray(item.tag_option_ids) ? item.tag_option_ids.length > 0 : item.tag_option_ids != '' })
+    const checktagids = abcd.every(element => element === true);
+    console.log('checktagids => ', checktagids);
+
     return (
       !this.isNullOrEmpty(data.brief_yourself)
       && !this.isNullOrEmpty(data.dob)
       && !this.isNullOrEmpty(data.phone)
       && !this.isNullOrEmpty(data.state)
       && !this.isNullOrEmpty(data.interests)
-      && !this.isNullOrEmpty(data.zodiac)
-      && !this.isNullOrEmpty(data.education)
+      && checktagids
       && !this.isNullOrEmpty(data.ethnicity)
-      && communication.length != 0
-      && love.length != 0
     );
   }
 

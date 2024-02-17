@@ -602,7 +602,8 @@ export class NetworkService {
 
 
   getDashboardFriends(page, limit) {
-    return this.httpGetResponse(`users/dashboard-friends?search=&page=${page}&limit=${limit}`, null);
+    // return this.httpGetResponse(`users/dashboard-friends?search=&page=${page}&limit=${limit}`, null);
+    return this.httpGetResponse(`users/friends?page=${page}&orderBy=created_at&sortedBy=desc`, null);
   }
   getNotifications(page, limit) {
     return this.httpGetResponse(`users/notifications?page=${page}&limit=${limit}`, null);
