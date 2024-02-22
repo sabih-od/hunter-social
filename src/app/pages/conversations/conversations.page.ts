@@ -15,6 +15,11 @@ export class ConversationsPage extends BasePage implements OnInit {
   // ngOnInit() {
   // }
 
+
+  ionViewWillEnter() {
+    console.log('enter in view')
+  }
+
   adminNotiCount = 0;
   friendNotiCount = 0;
   groupNotiCount = 0;
@@ -55,7 +60,7 @@ export class ConversationsPage extends BasePage implements OnInit {
   async getNotificationsObject() {
 
     this.dataService.notification_and_message_count.subscribe(data => {
-      console.log('this.dataService.notification_and_message_count data => ', data)
+      console.log('conversation this.dataService.notification_and_message_count data => ', data)
       this.adminNotiCount = data?.admin;
       this.friendNotiCount = data?.friend;
       this.groupNotiCount = data?.group;
@@ -83,7 +88,7 @@ export class ConversationsPage extends BasePage implements OnInit {
       const obj = {
         "id": "chatbot",
         // "email": "johnmartin@mailinator.com",
-        "name": "Big Buck",
+        "name": "Uncle Buck",
         // "created_at": "2023-01-20T17:40:57.000000Z",
         "profile_image": "https://hunterssocial.com/assets/images/udpate-logo.png",
         "hasUnread": false,

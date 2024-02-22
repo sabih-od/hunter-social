@@ -32,6 +32,7 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
 
   ngOnInit() {
     this.checkIfDating();
+    this.getNotificationsObject()
     this.events.subscribe('DATING_PROFILE_CREATED', () => {
       ChatFloatingButtonComponent.instances.forEach((element) => {
         element.isDatingUser = true;
@@ -42,8 +43,6 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
     });
 
     this.events.subscribe('UPDATE_CHANNELS', this.newMessage.bind(this));
-
-    this.getNotificationsObject()
     // this.dataService.messages_count.subscribe(data => {
     //   console.log('this.dataService.messages_count data => ', data)
     //   this.message_count = data;

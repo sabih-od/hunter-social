@@ -2,6 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { BasePage } from '../../base-page/base-page';
 import { Share } from '@capacitor/share';
 import { Capacitor } from '@capacitor/core';
+import { UserDetailComponentComponent } from '../../dating/user-detail-component/user-detail-component.component';
 
 @Component({
   selector: 'app-home-banner',
@@ -41,6 +42,54 @@ export class HomeBannerComponent extends BasePage implements OnInit {
       }
     });
 
+  }
+
+  async navigatetodating() {
+    console.log('menuClicked => ')
+    const user = await this.users.getUser();
+    const packageId = user.profile_detail.package_id;
+
+    let isDatingEnabled = false;
+    if (packageId != 1) {
+      isDatingEnabled = await this.datingEnable();
+      console.log('isDatingEnabled => ', isDatingEnabled)
+
+      if (!isDatingEnabled) {
+        if (packageId === 3) {
+          let data = await this.modals.present(UserDetailComponentComponent);
+          if (data.data?.success) this.navigate('dating');
+        } else {
+          this.utility.presentFailureToast(
+            'You are not allowed to view this page. Please upgrade your account 1.'
+          );
+          // this.navigate('edit-profile');
+        }
+      }else{
+        this.navigate('dating');
+      }
+
+    } else {
+      this.utility.presentFailureToast(
+        'You are not allowed to view this page. Please upgrade your account 2.'
+      );
+      // this.navigate('edit-profile');
+    }
+  }
+
+  datingEnable() {
+    return new Promise<boolean>(async (resolve) => {
+      let user = await this.users.getUser();
+      console.log('checkUser', user);
+      if (
+        user?.profile_detail &&
+          !this.utility.isNullOrEmpty(user?.profile_detail.gender) &&
+          user?.profile_detail.is_dating_profile == 1 ? true : false
+      ) {
+        resolve(true);
+        // this.openDatingChatRoom();
+      } else resolve(false);
+      //else this.editUser();
+    });
   }
 
   navigate(arg) {

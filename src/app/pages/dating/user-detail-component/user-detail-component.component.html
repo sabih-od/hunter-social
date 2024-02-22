@@ -1,4 +1,5 @@
-<app-header [title]="'DATING BIO'" [showcurve]="false" [profileVisible]="false"></app-header>
+<app-header [title]="'DATING BIO'" [showcurve]="false" [profileVisible]="false" [showCart]="false"
+  [showLoginInfo]="false"></app-header>
 
 <ion-content>
   <ion-grid>
@@ -273,7 +274,8 @@
 
     <ion-row>
       <ion-col size="12">
-        <ion-button color="primary" (click)="register()" [disabled]="_loading" expand="block">{{_loading ? 'PLEASE WAIT' :
+        <ion-button color="primary" (click)="register()" [disabled]="_loading" expand="block">{{_loading ? 'PLEASE WAIT'
+          :
           'REGISTER'}} <ion-spinner class="spinner" *ngIf="_loading"></ion-spinner></ion-button>
       </ion-col>
     </ion-row>

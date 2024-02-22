@@ -61,7 +61,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
           this.item = {
             "id": "chatbot",
             // "email": "johnmartin@mailinator.com",
-            "name": "Big Buck",
+            "name": "Uncle Buck",
             // "created_at": "2023-01-20T17:40:57.000000Z",
             "profile_image": "https://hunterssocial.com/assets/images/udpate-logo.png",
             "hasUnread": false,
@@ -81,8 +81,8 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     if (event.detail.scrollTop == 0 && this.next_page_url) {
       this.newmsgloading = true;
       this.page = this.page + 1;
-      console.log('handleScroll this.page => ', this.page)
-      console.log('handleScroll this.item => ', this.item)
+      // console.log('handleScroll this.page => ', this.page)
+      // console.log('handleScroll this.item => ', this.item)
       if (this.item?.is_admin) this.getAdminMessages();
       else if (this.item?.is_chatbot) this.getChatbotMessages();
       else if (this.item?.isGroup) this.getGruoupChatData();
@@ -97,7 +97,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     if (!this.item) {
       this.item = this.dataService.chat_data;
     }
-    console.log('initialize this.item => ', this.item)
+    // console.log('initialize this.item => ', this.item)
     this.user = await this.users.getUser();
     if (this.item?.is_admin) this.getAdminMessages();
     else if (this.item?.is_chatbot) this.getChatbotMessages();
@@ -111,7 +111,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   async getChatData() {
     this.is_group = true;
     let res = await this.network.getChatMessages(this.item?.id, this.page);
-    console.log('getChatData', res);
+    // console.log('getChatData', res);
     this.isLoading = false;
     this.newmsgloading = false;
     if (res && res.data) {

@@ -114,6 +114,7 @@ export class PusherService {
         // this is used for user friend request notification
 
         console.log('USER NOTIFICATION', e);
+        this.users.getNotificationCount();
         // let notifications_count = JSON.parse(localStorage.getItem('notifications_count'))
         // notifications_count = parseInt(notifications_count);
         // localStorage.setItem('notifications_count', notifications_count + 1)

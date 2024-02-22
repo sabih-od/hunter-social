@@ -68,7 +68,7 @@
             </ion-row>
           </ion-grid>
           <ion-grid *ngIf="item.response_content != ''" class="ion-no-padding chatitem response_content">
-            <p style="font-weight: bold; font-size: 1.5vh; margin-bottom: 3px; margin-left: 2px;">Big Buck</p>
+            <p style="font-weight: bold; font-size: 1.5vh; margin-bottom: 3px; margin-left: 2px;">Uncle Buck</p>
             <ion-row class="ion-no-padding">
               <ion-col class="ion-no-padding" size="12">
                 <ion-card class="ion-padding ion-no-margin f-pop-m" style="border-bottom-right-radius: 0px;">
@@ -115,9 +115,9 @@
 
 <ion-footer style="background-color: white" *ngIf="!item?.is_admin && !item?.is_chatbot">
   <div class="bottominputbox">
-    <ion-input [(ngModel)]="text" autocapitalize="true" autocomplete="true" spellcheck="true"
+    <ion-textarea [(ngModel)]="text" autocapitalize="true" autocomplete="true" spellcheck="true"
       placeholder="Type your message..." class="inputchat">
-    </ion-input>
+    </ion-textarea>
     <div>
       <ion-button *ngIf="!item?.is_chatbot" fill="clear" (click)="uploadPicture()">
         <!-- <ion-icon name="attach-outline"></ion-icon> -->
@@ -157,9 +157,9 @@
 
 <ion-footer style="background-color: white" *ngIf="item?.is_chatbot">
   <div class="bottominputbox">
-    <ion-input [(ngModel)]="text" autocapitalize="true" autocomplete="true" spellcheck="true"
+    <ion-textarea [(ngModel)]="text" autocapitalize="true" autocomplete="true" spellcheck="true"
       placeholder="Type your message..." class="inputchat">
-    </ion-input>
+    </ion-textarea>
     <div>
       <ion-button fill="clear" (click)="askChatBot()" [disabled]="isMsgLoading">
         <ion-icon name="paper-plane-outline"></ion-icon>

@@ -16,7 +16,7 @@ export class NotificationItemComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('item => ', this.item.content)
+    // console.log('item => ', this.item.content)
     if (this.item.cm_name && !this.item.content.includes('sent message')) {
       this.item.content = `${this.item.cm_name} sent message "${this.item.content}"`;
     }
