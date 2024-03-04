@@ -53,6 +53,11 @@
     "role": 2
   },
   {
+    "title": "Contact Us",
+    "url": "pages/contact-us",
+    "role": 2
+  },
+  {
     "title": "More..",
     "isOpened": false,
     "submenus": [

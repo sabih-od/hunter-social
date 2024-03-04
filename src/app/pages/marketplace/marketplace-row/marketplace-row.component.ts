@@ -32,20 +32,28 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
   page = 1;
   isMyProductListing = false;
   loading = false;
+  refresh = false;
   states = []
   state_id = ""
   shouldloadmore = true;
+  next_page_url = null;
 
   imagePreview: string;
   constructor(injector: Injector) {
     super(injector);
   }
 
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+  };
+
   ngOnInit() {
     this.getProducts(null);
     this.onFilter();
     this.getStates();
   }
+
   createListing() {
     this.modals.present(CreateListingPage).then(res => {
       console.log('CreateListingPage res => ', res)
@@ -57,6 +65,7 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     // this.nav.navigateTo('pages/create-listing');
     console.log('jshdlkjsh');
   }
+
   async user() {
     let data = await this.network.getUser();
     console.log('user id', data.data.user.id);
@@ -72,6 +81,7 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
   //   console.log('this is products', data);
   //   this.productList = data.data.data;
   // }
+
   async getStates() {
     let res = await this.users.states.subscribe(states => {
       this.states = states;
@@ -80,6 +90,7 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     // console.log('getStates', res);
     // this.states = res.data;
   }
+
   async myListing(item) {
     console.log('user', this.userId);
     this.selectedCategoryId = null;
@@ -122,11 +133,13 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
       this.isMyProductListing = false;
       this.productList = [];
       this.page = 1;
+      this.next_page_url = null;
     }
 
     if (item?.id) {
       this.productList = [];
       this.page = 1;
+      this.next_page_url = null;
     }
     console.log('category id', item?.id);
     console.log('selectedCategoryId id', this.selectedCategoryId);
@@ -137,12 +150,17 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
       category_id: this.selectedCategoryId,
       state_id: this.state_id
     }
-    let response = await this.network.getProductss(params, this.page);
-    if (response?.data?.data?.length == 0) this.shouldloadmore = false; else this.shouldloadmore = true;
+    let res = await this.network.getProductss(params, this.page);
+    if (res.data.next_page_url) { this.next_page_url = res.data.next_page_url; } else { this.next_page_url = null; }
+    console.log('this.next_page_url => ', this.next_page_url)
+    // if (res?.data?.data?.length == 0) this.shouldloadmore = false; else this.shouldloadmore = true;
     this.loading = false;
-    console.log('filter', response);
-    // this.filterProducts = response.data.data;
-    this.productList = this.page == 1 ? response.data.data : [...this.productList, ...response.data.data];
+    if (this.eventref) {
+      this.eventref.target.complete();
+    }
+    console.log('filter', res);
+    // this.filterProducts = res.data.data;
+    this.productList = this.page == 1 ? res.data.data : [...this.productList, ...res.data.data];
     console.log('this.productList => ', this.productList);
   }
 
@@ -198,16 +216,22 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     });
   }
 
+  eventref = null;
 
   onIonInfinite($event) {
-    this.page = this.page + 1;
-    if (this.isMyProductListing) this.myListing(null)
-    else this.getProducts(null)
-    // this.onFilter();
-    setTimeout(() => {
+    this.eventref = $event;
+    if (this.next_page_url != null) {
+      this.page = this.page + 1;
+      if (this.isMyProductListing) this.myListing(null)
+      else this.getProducts(null)
+      // this.onFilter();
+      // setTimeout(() => {
+      //   $event.target.complete();
+      //   // (ev as IonInfiniteScrollContent).target.complete();
+      // }, 500);
+    } else {
       $event.target.complete();
-      // (ev as IonInfiniteScrollContent).target.complete();
-    }, 500);
+    }
   }
 
 }

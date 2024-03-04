@@ -1,5 +1,6 @@
 import { BasePage } from 'src/app/pages/base-page/base-page';
 import { Component, OnInit, Input, Injector } from '@angular/core';
+import { ImageViewerModalComponent } from 'src/app/components/image-viewer-modal/image-viewer-modal.component';
 
 @Component({
   selector: 'app-product-details',
@@ -17,6 +18,10 @@ export class ProductDetailsComponent extends BasePage implements OnInit {
     super(Injector);
   }
 
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+  };
   async ngOnInit() {
     this.user_id = JSON.parse(await this.storage.get('user')).id;
     console.log('product data => ', this.data);
@@ -28,6 +33,18 @@ export class ProductDetailsComponent extends BasePage implements OnInit {
       this.data.user.profile_image = proimage;
     }
 
+  }
+
+  async openImageViewer(index, images) {
+    let res = await this.modals.present(ImageViewerModalComponent, { index, images });
+    // const modal = await this.modals.create({
+    //   component: ImageViewerModalComponent,
+    //   componentProps: {
+    //     items: this.imageUrls,
+    //     initialSlide: index,
+    //   },
+    // });
+    // await modal.present();
   }
 
   async mark(productid) {

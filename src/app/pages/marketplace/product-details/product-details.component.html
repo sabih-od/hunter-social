@@ -2,7 +2,19 @@
 <ion-content>
   <div>
     <div class="prodimage">
-      <img [src]="data.image_url ? data.image_url : 'assets/car.jpg'" alt="" />
+
+      <ion-slides pager="true" [options]="slideOpts" *ngIf="data.media.length > 1">
+        <ion-slide *ngFor="let x of data.media; index as i">
+          <div class="slideitem" (click)="openImageViewer(i, data.media)">
+            <img [src]="x.original_url"
+              onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
+          </div>
+        </ion-slide>
+      </ion-slides>
+
+      <img *ngIf="data.media && data.media.length <= 1" [src]="data.image_url ? data.image_url : 'assets/car.jpg'"
+        alt="" />
+
       <ion-button (click)="mark(data.id)" class="marksold" *ngIf="!isMark && data.user_id === user_id">Mark As
         Sold</ion-button>
       <ion-button (click)="opentosell(data.id)" class="marksold" *ngIf="isMark && data.user_id === user_id">Open To

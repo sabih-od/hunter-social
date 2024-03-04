@@ -13,4 +13,4 @@ import { HeaderModule } from 'src/app/components/header/header.module';
   ],exports:[ProductDetailsComponent]
 })
 export class ProductDetailsModule { }
-HeaderModule
+

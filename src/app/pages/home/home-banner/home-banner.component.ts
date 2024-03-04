@@ -64,7 +64,7 @@ export class HomeBannerComponent extends BasePage implements OnInit {
           );
           // this.navigate('edit-profile');
         }
-      }else{
+      } else {
         this.navigate('dating');
       }
 
@@ -90,6 +90,20 @@ export class HomeBannerComponent extends BasePage implements OnInit {
       } else resolve(false);
       //else this.editUser();
     });
+  }
+
+  gotoChatBot() {
+    const obj = {
+      "id": "chatbot",
+      // "email": "johnmartin@mailinator.com",
+      "name": "Uncle Buck",
+      // "created_at": "2023-01-20T17:40:57.000000Z",
+      "profile_image": "https://hunterssocial.com/assets/images/udpate-logo.png",
+      "hasUnread": false,
+      "is_chatbot": true,
+    }
+    this.dataService.chat_data = obj;
+    this.nav.push('pages/chat');
   }
 
   navigate(arg) {

@@ -1,0 +1,21 @@
+.imageviewer {
+    margin-top: constant(safe-area-inset-top);
+    margin-top: env(safe-area-inset-top);
+    --background: #000;
+    --overflow: hidden;
+
+    .slidescontainer {
+        height: calc(100vh);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    ion-button {
+        position: absolute;
+        top: var(--ion-safe-area-top);
+        right: 15px;
+        z-index: 5;
+    }
+
+}

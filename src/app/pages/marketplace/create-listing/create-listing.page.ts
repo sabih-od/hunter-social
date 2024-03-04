@@ -8,6 +8,7 @@ import {
   Injector,
   Input,
 } from '@angular/core';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-create-listing',
@@ -47,25 +48,78 @@ export class CreateListingPage extends BasePage implements OnInit {
   toggleItem(item) {
     item.expanded = !item.expanded;
   }
-  async doGetPicture() {
-    // return new Promise(async resolve => {
-    const _img = await this.image.openCamera();
-    console.log(_img);
-    if (_img) {
-      // this.user_image = _img.base64;
-      this.picture = _img;
 
-      // let blob = await this.image.b64toBlob(
-      //   _img['base64String'],
-      //   'image/' + _img['format']
-      // );
-      // console.log(blob);
-      // this.user["profile_image"] = blob;
-      //   const res = await this.imageReceived(blob);
-      //   resolve(res);
-      // })
+  pickedImages = [];
+  blobImages = [];
+  blob;
+  async doGetPicture() {
+    const images = await Camera.pickImages({
+      quality: 90,
+      limit: 6
+    });
+
+    console.log('imageUrl => ', images);
+    if (images && images.photos) {
+      this.pickedImages = images.photos;
+      // const imageData = this.pickedImages[0];
+      // let datasrc = await this.image.readFilePath(imageData.path);
+      // this.blob = await this.image.base64ToBlob('data:image/png;base64,' + datasrc)
+      // console.log('this.blob => ', this.blob);
+      // let blob = await res.blob();
+      // console.log('blob => ', blob);
+      // let reader: FileReader = new FileReader();
+      // reader.onloadend = (fileLoadedEvent: any) => {
+      //   let imgSrcData = fileLoadedEvent.target.result;
+      //   console.log('imgSrcData => ', imgSrcData);
+      // }
+      // reader.readAsDataURL(blob);
     }
+    // this.pickedImages.map(async (item) => {
+    //   const newimage = await this.convertImagePathToBlob(item.path);
+    //   console.log('newimage => ', newimage);
+    //   this.blobImages.push(newimage);
+
+    // });
+    console.log('this.blobImages => ', this.blobImages);
+
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+
+
+    // // return new Promise(async resolve => {
+    // const _img = await this.image.openCamera();
+    // console.log(_img);
+    // if (_img) {
+    //   // this.user_image = _img.base64;
+    //   this.picture = _img;
+
+    //   // let blob = await this.image.b64toBlob(
+    //   //   _img['base64String'],
+    //   //   'image/' + _img['format']
+    //   // );
+    //   // console.log(blob);
+    //   // this.user["profile_image"] = blob;
+    //   //   const res = await this.imageReceived(blob);
+    //   //   resolve(res);
+    //   // })
+    // }
   }
+
+  isFileTypeAllowed(filePath: string): boolean {
+    const allowedFileTypes = ['.jpeg', '.png', '.jpg', '.gif'];
+    const fileType = filePath.toLowerCase().substr(filePath.lastIndexOf('.'));
+
+    return allowedFileTypes.includes(fileType);
+  }
+
+
+  removeimage(ind) {
+    this.pickedImages = this.pickedImages.filter((item, index) => ind != index);
+  }
+
+
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     const reader = new FileReader();
@@ -128,7 +182,7 @@ export class CreateListingPage extends BasePage implements OnInit {
     this.aForm = this.formBuilder.group({
       title: ['', Validators.compose([Validators.required])],
       price: ['', Validators.compose([Validators.required])],
-      description: [ '', Validators.compose([Validators.required]), ],
+      description: ['', Validators.compose([Validators.required]),],
       condition: ['', Validators.compose([Validators.required])],
       category: ['', Validators.compose([Validators.required])],
       state_id: ['', Validators.compose([Validators.required])],
@@ -141,14 +195,16 @@ export class CreateListingPage extends BasePage implements OnInit {
     console.log('setupForm,', this.aForm.value);
   }
 
+
+
   async post() {
-    const newblog = await this.image.base64ToBlob(this.picture)
-    console.log('newblog => ', newblog)
-    let blob = (newblog) as string;
+    // const newblog = await this.image.base64ToBlob(this.picture)
+    // console.log('newblog => ', newblog)
+    // let blob = (newblog) as string;
 
-    console.log('blob => ', blob)
+    // console.log('blob => ', blob)
 
-    console.log('setupForm,', this.aForm.value);
+    // console.log('setupForm,', this.aForm.value);
     let datas = new FormData();
 
     datas.append('title', this.aForm.value.title);
@@ -157,12 +213,28 @@ export class CreateListingPage extends BasePage implements OnInit {
     datas.append('condition', this.aForm.value.condition);
     datas.append('category', this.selected);
     datas.append('state_id', this.aForm.value.state_id);
-    datas.append('images[]', blob);
+    // datas.append('images[]', this.blob);
+
+
+    const promises = this.pickedImages.map(async (item, i) => {
+      let datasrc = await this.image.readFilePath(item.path);
+      this.blob = await this.image.base64ToBlob('data:image/png;base64,' + datasrc)
+      console.log(`images[${i}] => `, this.blob);
+      datas.append(`images[${i}]`, this.blob);
+    });
+    await Promise.all(promises);
+
+    // if (this.pickedImages.length > 0) {
+    //   for (var i = 0; i < this.pickedImages?.length; i++) {
+    //     datas.append(`images[${i}]`, this.pickedImages[i].webPath);
+    //   }
+    // }
+
     datas.append('user_id', this.userId);
     datas.append('category_id', this.category_id);
     datas.append('picture', this.picture);
-    console.log('datas.append("images" => ', datas.get('images[]'));
-    console.log('datas => ', datas) 
+    console.log('datas.append("images" => ', datas.get('images'));
+    console.log('datas => ', datas)
     // https://testv23.demowebsitelinks.com/hunter_social.com/public/api/marketplace/product/create
     // https://testv23.demowebsitelinks.com/hunter_social.com/public/api/marketplace/product/create
 

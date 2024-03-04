@@ -1,0 +1,18 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Image Viewer</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
+<ion-content class="imageviewer">
+  <ion-button (click)="closeModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
+  <div class="slidescontainer">
+    <ion-slides [options]="slideOpts"> <!-- pager="true" -->
+      <ion-slide *ngFor="let image of slideImages">
+        <img [src]="image" />
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>

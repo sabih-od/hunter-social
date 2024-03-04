@@ -13,6 +13,7 @@
   position: absolute;
   bottom: 15px;
   right: 10px;
+  z-index: 5;
 }
 
 ion-card-title {
@@ -112,4 +113,17 @@ ion-avatar {
   margin-right: 7px;
   display: inline-block;
   vertical-align: middle;
+}
+
+.slideitem {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.slideitem img {
+  /* position: absolute; */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
