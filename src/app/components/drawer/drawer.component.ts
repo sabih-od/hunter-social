@@ -240,12 +240,13 @@ export class DrawerComponent extends BasePage implements OnInit {
     this.users.removeToken();
     this.badge.clear();
     // localStorage.removeItem('fcm_token')
+    localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userDataa');
     localStorage.removeItem('notifications_count');
     localStorage.removeItem('dating_tips_read');
     localStorage.setItem('messages_count', '0');
     this.users.removeUser();
-    this.nav.push('pages/login');
+    this.nav.push('login');
     console.log(res);
   }
 

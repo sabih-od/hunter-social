@@ -1,0 +1,452 @@
+[
+    {
+        "userPicture": "https://hunterssocial.com/storage/uploads/655cee096f6f8.jpeg",
+        "userId": 1,
+        "userName": "Sarah Thompson",
+        "currentItem": 0,
+        "items": [
+            {
+                "date": "2024-04-07T18:55:01.000000Z",
+                "duration": "5",
+                "id": "3",
+                "media": "https://hunterssocial.com/assets/images/img1.jpg",
+                "seen": false,
+                "type": 0,
+                "views": 5
+            }
+        ],
+        "seen": false
+    },
+    {
+        "userPicture": "http://service.demowebsitelinks.com:3015/storage/uploads/655b8b581a8ee.jpeg",
+        "userId": 2,
+        "userName": "Jessica Martinez",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-04-06T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/assets/images/hiking/img1.png",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-04-05T18:55:01.000000Z",
+                "duration": "84",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/186/Coal-Grilled-Fish--Cook-Your-Catch--ADRENO_v240P.mp4",
+                "seen": false,
+                "type": 1,
+                "views": null
+            },
+            {
+                "date": "2024-04-04T18:55:01.000000Z",
+                "duration": "5",
+                "id": "3",
+                "media": "https://hunterssocial.com/assets/images/hiking/img7.png",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "http://service.demowebsitelinks.com:3015/storage/uploads/65541ccd1ae00.jpeg",
+        "userId": 1,
+        "userName": "John Martin",
+        "currentItem": 0,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "3",
+                "media": "https://hunterssocial.com/assets/images/img1.jpg",
+                "seen": false,
+                "type": 0,
+                "views": 5
+            }
+        ],
+        "seen": false
+    },
+    {
+        "userPicture": "http://service.demowebsitelinks.com:3015/storage/uploads/6553e07dd8c54.jpeg",
+        "userId": 2,
+        "userName": "John Smith",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/assets/images/hiking/img1.png",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/assets/images/hiking/img8.png",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/assets/images/hiking/img7.png",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "https://hunterssocial.com/storage/uploads/655cee096f6f8.jpeg",
+        "userId": 1,
+        "userName": "Sarah Thompson",
+        "currentItem": 0,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "3",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": true,
+                "type": 0,
+                "views": 5
+            }
+        ],
+        "seen": true
+    },
+    {
+        "userPicture": "http://service.demowebsitelinks.com:3015/storage/uploads/655b8b581a8ee.jpeg",
+        "userId": 2,
+        "userName": "Jessica Martinez",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "http://service.demowebsitelinks.com:3015/storage/uploads/65541ccd1ae00.jpeg",
+        "userId": 2,
+        "userName": "John Martin",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "http://service.demowebsitelinks.com:3015/storage/uploads/6553e07dd8c54.jpeg",
+        "userId": 2,
+        "userName": "John Smith",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "https://hunterssocial.com/storage/uploads/655cee096f6f8.jpeg",
+        "userId": 2,
+        "userName": "Flávio",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "http://service.demowebsitelinks.com:3015/storage/uploads/655b8b581a8ee.jpeg",
+        "userId": 2,
+        "userName": "Flávio",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "http://service.demowebsitelinks.com:3015/storage/uploads/65541ccd1ae00.jpeg",
+        "userId": 2,
+        "userName": "Flávio",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "http://service.demowebsitelinks.com:3015/storage/uploads/6553e07dd8c54.jpeg",
+        "userId": 2,
+        "userName": "Flávio",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "https://hunterssocial.com/storage/uploads/655cee096f6f8.jpeg",
+        "userId": 2,
+        "userName": "Flávio",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    },
+    {
+        "userPicture": "https://hunterssocial.com/storage/uploads/655cee096f6f8.jpeg",
+        "userId": 2,
+        "userName": "Flávio",
+        "currentItem": 0,
+        "seen": false,
+        "items": [
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "4",
+                "id": "64",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "3",
+                "id": "74",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            },
+            {
+                "date": "2024-02-09T18:55:01.000000Z",
+                "duration": "5",
+                "id": "84",
+                "media": "https://hunterssocial.com/storage/502/blob",
+                "seen": false,
+                "type": 0,
+                "views": null
+            }
+        ]
+    }
+]

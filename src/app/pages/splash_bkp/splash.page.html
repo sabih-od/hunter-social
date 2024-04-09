@@ -1,0 +1,16 @@
+<ion-content fullscreen="true" class="dark-background" [scrollY]="false">
+  <!-- [style.background-image]="'url('+ fullbackground +')'" -->
+  <!-- <div
+    class="fullbg"
+  ></div> -->
+  <img
+    class="fullbg"
+    [hidden]="!bgLoaded"
+    [src]="fullbackground"
+    (load)="updateBackgroundView()"
+  />
+  <div class="overlay-image">
+    <div class="ov-logo fade-in" *ngIf="showLogo"></div>
+  </div>
+  <!-- <img [src]="" class="center-logo-image" /> -->
+</ion-content>

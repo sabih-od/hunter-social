@@ -1,0 +1,73 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button *ngIf="showMenu" (click)="toggleMenu()">
+        <img src="../../../assets/Images/menu.png" />
+      </ion-button>
+
+      <ion-button (click)="goBack()" *ngIf="back">
+        <ion-icon class="back-icon" name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title [class.titlepadding]="isIOS" *ngIf="!isSearchVisible">
+      <ion-label class="title f-anton">{{ title }} </ion-label>
+    </ion-title>
+    <!-- <ion-searchbar
+      (ionInput)="onTextChanged($event)"
+      placeholder="Find Your Text"
+      *ngIf="isSearchVisible"
+      style="width: 110%"
+    >
+    </ion-searchbar> -->
+
+
+    <ion-input placeholder="Find Your Text" *ngIf="isSearchVisible" style="border-bottom: 2px solid lightgray"
+      [(ngModel)]="search_text" (ionChange)="searchNow()"></ion-input>
+
+    <ion-buttons slot="end" *ngIf="showLoginInfo">
+      <ion-button (click)="searchNow()" *ngIf="!isSearchVisible && search_text && search_text.length > 0">
+        <ion-icon style="margin-right: -5px" name="search"></ion-icon>
+      </ion-button>
+
+      <ion-button *ngIf="profileVisible" (click)="searchClicked()">
+        <ion-icon *ngIf="showSearch" style="margin-right: -5px"
+          [name]="isSearchVisible ? 'close-outline' : 'search'"></ion-icon>
+      </ion-button>
+
+      <ion-badge *ngIf="isSearchVisible && total_found > 0">{{
+        total_found
+        }}</ion-badge>
+
+      <ion-button *ngIf="profileVisible && showLoginInfo" (click)="gotoDashboard()">
+        <!-- <ion-icon class="side-icon" name="person-circle-outline"></ion-icon> -->
+
+        <ion-avatar>
+          <img class="img-border" [src]="user_image"
+            onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
+        </ion-avatar>
+      </ion-button>
+
+      <ion-button *ngIf="showCart && showLoginInfo" (click)="gotoCart()">
+        <ion-icon class="side-icon" name="cart-outline"></ion-icon>
+        <ion-badge *ngIf="cart_count > 0" class="online" color="primary">
+          {{ cart_count }}
+        </ion-badge>
+      </ion-button>
+
+      <!-- <ion-col size="1.5"> -->
+      <ion-button *ngIf="showLoginInfo" (click)="gotoNotifications()">
+        <ion-icon class="side-icon" name="notifications-outline"></ion-icon>
+        <ion-badge *ngIf="notifications_count != null && notifications_count != 0" class="online" color="primary">
+          {{ notifications_count }}
+        </ion-badge>
+      </ion-button>
+      <!-- </ion-col> -->
+    </ion-buttons>
+  </ion-toolbar>
+  <!-- <ion-toolbar color="primary" *ngIf="searchVisible">
+    <ion-searchbar (ionInput)="onTextChanged($event)" placeholder="Search...">
+    </ion-searchbar>
+  </ion-toolbar> -->
+</ion-header>
+<div class="curve-bottom-red" *ngIf="showcurve"></div>

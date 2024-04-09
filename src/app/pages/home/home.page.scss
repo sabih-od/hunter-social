@@ -185,3 +185,14 @@ ion-slides {
 }
 
 
+
+.spinner {
+  flex-direction: column;
+  height: 60vh;
+
+  p {
+    margin-bottom: 0;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+}

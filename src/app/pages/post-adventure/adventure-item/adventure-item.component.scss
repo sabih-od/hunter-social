@@ -1,12 +1,14 @@
 .card {
-  border-radius: 0;
+  border-radius: 10px;
+  box-shadow: 1px 1px 25px #ddd !important;
   // border: 1px solid #f1f1f1;
 
   ion-item {
     --padding-start: 12px !important;
     --padding-end: 0px !important;
-    --background: #f7f7f7;
+    // --background: #f7f7f7;
     --inner-padding-end: 0px !important;
+    border-bottom: 1px solid #eee;
 
     p {
       font-size: 12px;
@@ -16,6 +18,8 @@
 
   h2 {
     text-transform: capitalize;
+    font-family: 'Anton';
+    font-weight: normal;
   }
 
   ion-card-content {
@@ -89,6 +93,12 @@
     font-weight: 5600;
     padding: 12px 30px
   }
+}
+
+.likescounts {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .pop-over:after {

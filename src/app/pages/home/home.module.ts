@@ -28,6 +28,15 @@ import { AppSearchModule } from 'src/app/components/app-search/app-search.module
 // import { ChatFloatingButtonComponent } from 'src/app/components/chat-floating-button/chat-floating-button.component';
 // import { DisclaimerComponent } from 'src/app/components/disclaimer/disclaimer.component';
 import { DisclaimerModule } from 'src/app/components/disclaimer/disclaimer.module';
+import { CommentsComponent } from '../post-adventure/comments/comments.component';
+import { MenusComponent } from '../post-adventure/menus/menus.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { AdventureItemModule } from '../post-adventure/adventure-item/adventure-item.module';
+import { CreateAdventureComponent } from 'src/app/components/create-adventure/create-adventure.component';
+import { PeopleYouMayKnowComponent } from 'src/app/components/people-you-may-know/people-you-may-know.component';
+import { DatingItemComponent } from '../dating/dating-item/dating-item.component';
+import { FriendItemComponent } from '../dating/friend-item/friend-item.component';
+import { StoriesAvatarSliderComponent } from 'src/app/components/stories-avatar-slider/stories-avatar-slider.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -43,19 +52,28 @@ import { DisclaimerModule } from 'src/app/components/disclaimer/disclaimer.modul
     LawsModule,
     ChatFloatingButtonModule,
     FooterModule,
+    Ng2SearchPipeModule,
+    AdventureItemModule,
     DisclaimerModule
   ],
   declarations: [
     HomePage,
-    AboutUsComponent,
-    HuntersComponent,
-    ImagesComponent,
-    LogosComponent,
-    HomeBannerComponent,
-    ReviewsComponent,
-    NewsLetterComponent,
+    CreateAdventureComponent,
+    PeopleYouMayKnowComponent,
+    FriendItemComponent,
+    StoriesAvatarSliderComponent,
+    // AboutUsComponent,
+    // HuntersComponent,
+    // ImagesComponent,
+    // LogosComponent,
+    // HomeBannerComponent,
+    // ReviewsComponent,
+    // NewsLetterComponent,
     // ChatFloatingButtonComponent,
-    // DisclaimerComponent
+    // DisclaimerComponent,
+
+    CommentsComponent,
+    MenusComponent,
   ],
 })
 export class HomePageModule { }

@@ -64,7 +64,7 @@ export class AppComponent {
       false
     );
     if (Capacitor.getPlatform() !== 'web') {
-      this.setStatusBarStyleDark()
+      this.setStatusBarStyleLight()
     }
   }
 
@@ -98,14 +98,14 @@ export class AppComponent {
     await StatusBar.setStyle({ style: Style.Dark });
   };
 
-  // setStatusBarStyleLight = async () => {
-  //   await StatusBar.setStyle({ style: Style.Light });
-  // };
+  setStatusBarStyleLight = async () => {
+    await StatusBar.setStyle({ style: Style.Light });
+  };
 
   initialize() {
 
     if (Capacitor.getPlatform() !== 'web') {
-      this.setStatusBarStyleDark()
+      this.setStatusBarStyleLight()
     }
 
     if (

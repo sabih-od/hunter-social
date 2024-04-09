@@ -1,0 +1,28 @@
+.uploadphoto {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+
+    i {
+        font-size: 102px;
+        color: #ddd;
+    }
+
+
+    h5 {
+        margin: 10px 0px 4px 0px;
+    }
+
+    p {
+        width: 75%;
+        font-size: 13px;
+        color: #666;
+        margin: 0;
+        text-align: center;
+    }
+}

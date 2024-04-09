@@ -57,9 +57,15 @@ textarea {
 
 .preview {
     position: relative;
-    // border-radius: 10px;
-    margin-top: 15px;
-    // overflow: hidden;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 10px;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
 }
 
 .close {
@@ -73,4 +79,48 @@ textarea {
     --padding-end: 0;
     font-size: 14px;
 
+}
+
+
+video {
+    width: 100%;
+}
+
+.uploadphoto {
+    background: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 220px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.uploadphoto h5 {
+    margin: 10px 0px 4px 0px;
+}
+
+.uploadphoto p {
+    width: 75%;
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+    text-align: center;
+}
+
+.textcontent p {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 6px;
+    font-family: 'Anton';
+    font-weight: 100;
+    text-transform: capitalize;
+}
+
+.textcontent textarea {
+    font-size: 14px;
+    outline: none;
 }

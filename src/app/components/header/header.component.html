@@ -1,8 +1,9 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
+  <ion-toolbar style="--background: #f7f7f7;"> <!--color="primary"--> <!--style="--background: #f7f7f7;"-->
     <ion-buttons slot="start">
       <ion-button *ngIf="showMenu" (click)="toggleMenu()">
-        <img src="../../../assets/Images/menu.png" />
+        <!-- <img src="../../../assets/Images/menu.png" /> -->
+        <i class="iconsax" icon-name="text-align-left" style="font-size: 24px;"></i>
       </ion-button>
 
       <ion-button (click)="goBack()" *ngIf="back">
@@ -31,34 +32,38 @@
       </ion-button>
 
       <ion-button *ngIf="profileVisible" (click)="searchClicked()">
-        <ion-icon *ngIf="showSearch" style="margin-right: -5px"
-          [name]="isSearchVisible ? 'close-outline' : 'search'"></ion-icon>
+        <i *ngIf="showSearch" class="iconsax" icon-name="search-normal-2" style="font-size: 22px;"></i>
+        <!-- <ion-icon *ngIf="showSearch" style="margin-right: -5px"
+          [name]="isSearchVisible ? 'close-outline' : 'search'"></ion-icon> -->
       </ion-button>
 
       <ion-badge *ngIf="isSearchVisible && total_found > 0">{{
         total_found
         }}</ion-badge>
 
-      <ion-button *ngIf="profileVisible && showLoginInfo" (click)="gotoDashboard()">
-        <!-- <ion-icon class="side-icon" name="person-circle-outline"></ion-icon> -->
-
+      <!-- <ion-button *ngIf="profileVisible && showLoginInfo" (click)="gotoDashboard()">
         <ion-avatar>
           <img class="img-border" [src]="user_image"
             onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
         </ion-avatar>
-      </ion-button>
+      </ion-button> -->
 
-      <ion-button *ngIf="showCart && showLoginInfo" (click)="gotoCart()">
-        <ion-icon class="side-icon" name="cart-outline"></ion-icon>
+      <!-- <ion-icon class="side-icon" name="cart-outline"></ion-icon> -->
+      <!-- <ion-button *ngIf="showCart && showLoginInfo" (click)="gotoCart()">
+        <i class="iconsax" icon-name="shopping-cart" style="font-size: 24px;"></i>
         <ion-badge *ngIf="cart_count > 0" class="online" color="primary">
           {{ cart_count }}
         </ion-badge>
-      </ion-button>
+      </ion-button> -->
 
       <!-- <ion-col size="1.5"> -->
-      <ion-button *ngIf="showLoginInfo" (click)="gotoNotifications()">
-        <ion-icon class="side-icon" name="notifications-outline"></ion-icon>
-        <ion-badge *ngIf="notifications_count != null && notifications_count != 0" class="online" color="primary">
+      <ion-button *ngIf="showLoginInfo" (click)="gotoNotifications()" style="
+      --padding-end: 9px !important;
+      height: 43px;
+  ">
+        <i class="iconsax" icon-name="bell-1" style="font-size: 24px;"></i>
+        <!-- <ion-icon class="side-icon" name="notifications-outline"></ion-icon> -->
+        <ion-badge *ngIf="notifications_count != null && notifications_count != 0" class="online" color="danger">
           {{ notifications_count }}
         </ion-badge>
       </ion-button>

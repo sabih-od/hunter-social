@@ -1,0 +1,35 @@
+<!-- <div style="margin-top: 15px;margin-bottom: 0px; margin-right: -15px;">
+  <ion-slides [options]="slideOpts">
+    <ion-slide *ngFor="let item of stories">
+      <div class="slideitem" [ngStyle]="{'background-image': 'url(' + item.items[0].media + ')'}">
+          <ion-avatar>
+            <img class="card-img" [src]="item.userPicture"
+              onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
+          </ion-avatar>
+          <img class="card-img" [src]="item.items[0].media" />
+      </div>
+    </ion-slide>
+  </ion-slides>
+</div> -->
+
+<div style="margin-top: 15px;margin-bottom: 0px; margin-right: -15px;">
+  <ion-slides [options]="slideOpts">
+    <ion-slide (click)="createreel()">
+      <div class="avatarstatus addstory">
+        <ion-avatar>
+          <img class="card-img" [src]="user?.profile_image"
+            onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
+        </ion-avatar>
+        <div class="plusstory">+</div>
+      </div>
+    </ion-slide>
+    <ion-slide *ngFor="let item of stories; let x = index" (click)="openreel(item, x)">
+      <div class="avatarstatus" [class.seen]="item.seen">
+        <ion-avatar>
+          <img class="card-img" [src]="item.userPicture"
+            onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
+        </ion-avatar>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</div>

@@ -3,11 +3,13 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { IonTabs, ViewWillEnter } from '@ionic/angular';
 import { PromotionsComponent } from 'src/app/components/promotions/promotions.component';
 import { BasePage } from '../base-page/base-page';
-import { Plugins } from '@capacitor/core';
+import { Capacitor, Plugins } from '@capacitor/core';
 const { LocalNotifications } = Plugins;
 import { PusherService } from 'src/app/services/pusher-service.service';
 import { UserDetailComponentComponent } from '../dating/user-detail-component/user-detail-component.component';
 import { Config } from 'src/app/config/main.config';
+import { PostAdventureContentPage } from '../post-adventure-content/post-adventure-content.page';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-home',
@@ -15,60 +17,12 @@ import { Config } from 'src/app/config/main.config';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage extends BasePage implements OnInit {
-  guideLocators = [
-    {
-      image: 'assets/images/home1.png',
-    },
-    {
-      image: 'assets/images/hbt4.png',
-    },
-    {
-      image: 'assets/images/home3.png',
-    },
-    {
-      image: 'assets/images/home3.png',
-    },
-    {
-      image: 'assets/images/home3.png',
-    },
-    {
-      image: 'assets/images/home3.png',
-    },
-  ];
 
-  adventures = [
-    {
-      image: 'assets/images/home-row-1.png',
-    },
-    {
-      image: 'assets/images/home-row-12.png',
-    },
-    {
-      image: 'assets/images/home-row-1.png',
-    },
-  ];
-
-  datings;
-  items = [];
-
-  showmodal = true;
-
-  laws = [
-    {
-      image: 'assets/images/hunt.png',
-      title: 'States Directory Regarding',
-      description: 'Lorem Ipsum',
-    },
-    {
-      image: 'assets/images/fish_hunt.png',
-      title: 'States Directory Regarding',
-      description: 'Lorem Ipsum',
-    },
-  ];
-  dashboardData;
-  user: any = [];
-  packageId: 0;
-  isLoading = false;
+  items;
+  closed = false;
+  loading = false;
+  refresh = false;
+  user
 
   constructor(
     injector: Injector,
@@ -76,45 +30,90 @@ export class HomePage extends BasePage implements OnInit {
     private pusher: PusherService
   ) {
     super(injector);
-    this.callPusherService();
+    // this.callPusherService();
   }
 
 
   async ngOnInit() {
-    // const notifs = await LocalNotifications.schedule({
-    //   notifications: [
-    //     {
-    //       title: 'Title',
-    //       body: 'Body',
-    //       id: 1,
-    //       schedule: { at: new Date(Date.now() + 1000) },
-    //       sound: null,
-    //       attachments: null,
-    //       actionTypeId: '',
-    //       extra: null,
-    //       actions: [
-    //         {
-    //           id: 'ignore',
-    //           title: 'Ignore',
-    //           requiresAuthentication: false,
-    //           foreground: true,
-    //         },
-    //         {
-    //           id: 'accept',
-    //           title: 'Accept',
-    //           requiresAuthentication: false,
-    //           foreground: true,
-    //         },
-    //       ],
-    //     },
-    //   ],
+    // this.events.subscribe('UPDATE_POSTS', this.getData.bind(this));
+    // this.events.subscribe('POST_ADDED', this.addPost.bind(this));
+    this.events.subscribe('POST_DELETED', this.deletePost.bind(this));
+
+    // this.events.subscribe('HOW_TO_POST_UPDATED', () => {
+    //   console.log('uyyyyy686796789');
+    //   this.getData();
     // });
-    // console.log('scheduled notifications', notifs);
-    //  this.initialize();
-    //this.modals.present(UserDetailComponentComponent);
+    this.user = await this.users.getUser()
+    console.log('this.user => ', this.user)
+    this.getData();
+    if (Capacitor.getPlatform() !== 'web') {
+      this.setStatusBarStyleLight()
+    }
   }
 
-  
+  setStatusBarStyleLight = async () => {
+    await StatusBar.setStyle({ style: Style.Light });
+  };
+
+  addPost(data) {
+    // console.log('addPost POST_ADDED_data => ', data)
+    data.comments = [];
+    data.user = this.user
+    this.items.unshift(data)
+    // this.items = [...data, this.items]
+    console.log('this.items => ', this.items)
+    this.updateItems(this.items)
+    console.log('this.items => ', this.items)
+  }
+  deletePost(data) {
+    console.log('POST_DELETED_data => ', data)
+    this.items = this.items.filter(x => x.id != data.data)
+  }
+
+  handleRefresh(event) {
+    setTimeout(() => {
+      this.getData();
+      event.target.complete();
+    }, 2000);
+  }
+
+  async getData() {
+    this.loading = true;
+    let res = await this.network.getPosts();
+    // let user = await this.users.getUser();
+    console.log('USER', this.user);
+
+    console.log('response', res);
+    if (res && res.data) {
+      this.updateItems(res.data)
+    }
+    this.loading = false;
+  }
+
+  updateItems(data) {
+    this.items = data.map((item) => ({
+      ...item,
+      created_at: this.utility.calculateTime(item.created_at),
+      isMyPost: this.user.id === item.user_id,
+      user: {
+        ...item.user,
+        profile_image: item.user.profile_image
+          ? this.image.getImageUrl(item.user.profile_image)
+          : Config.URL + 'public/assets/images/ph-avatar.png',
+      },
+      isVideo: this.image.isVideo(item.media_upload.mime_type),
+      // videoPath:
+      //   item.media_upload.url && item.media_upload.url.includes('blob')
+      //     ? URL.createObjectURL(item.media_upload)
+      //     : '',
+    }));
+  }
+
+  close() {
+    console.log('Closed', closed);
+
+    this.closed = true;
+  }
 
 
   async callPusherService() {
@@ -131,78 +130,19 @@ export class HomePage extends BasePage implements OnInit {
     }
   }
 
+  async create() {
+    let res = await this.modals.present(PostAdventureContentPage);
+    if (res && res?.data?.id) {
+      console.log('res.data => ', res.data)
+      console.log('POST_ADDED_data => ', res.data)
+      this.addPost(res.data)
+    }
+    // console.log(res);
+    // if (res && res.data.refresh) this.getData();
+  }
+
   async initialize() {
-    this.datings = this.dataService.getDatings();
-    this.packageId = await this.user.profile_detail.package_id;
 
-    console.log(localStorage.getItem('token'));
-    this.dashboardData = this.dataService.getDashboardData();
-    console.log(this.dashboardData);
-
-    let res = await this.network.getUser();
-    console.log(res);
-    if (res && res.data && res.data.user) {
-      this.users.setUser(res.data.user);
-      this.events.publish('USER_DATA_RECEIVED', res.data.user);
-
-      // get post data
-      this.getData();
-    } else {
-      // this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
-      this.nav.push('pages/login');
-    }
   }
 
-  async getData() {
-    let res = await this.network.getPosts();
-
-    console.log('response', res);
-    if (res && res.data) {
-      this.items = res.data.map((item) => {
-        if (Array.isArray(item.media_upload)) {
-          item.image = item.media_upload[0]
-            ? item.media_upload[0].url
-            : 'assets/images/adventure-3.png';
-        } else {
-          item.image = item.media_upload
-            ? item.media_upload.url
-            : 'assets/images/adventure-3.png';
-        }
-
-        return item;
-      });
-    }
-  }
-
-  openPostAdventure() {
-    this.nav.push('pages/post-adventure');
-  }
-
-  openDatingAdventure() {
-    this.nav.push('pages/dating');
-  }
-
-  setCurrentTab() {
-    // HomePage.selectedTab = this.tabs.getSelected();
-  }
-
-  ionViewDidEnter() { }
-
-  openWebview() {
-    const browser = this.iab.create(Config.URL + '/public/', '_self', {
-      location: 'no',
-      zoom: 'no',
-    }); /*3*/
-  }
-
-  hideModal() {
-    this.showmodal = false;
-  }
-
-  async doRefresh($event) {
-    this.isLoading = true;
-    await this.getData();
-    $event.target.complete();
-    this.isLoading = false;
-  }
 }

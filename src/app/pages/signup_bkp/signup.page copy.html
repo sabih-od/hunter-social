@@ -1,0 +1,166 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button (click)="nav.pop()">
+        <ion-icon color="medium" name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="signup">
+  <form [formGroup]="aForm">
+    <ion-grid class="ion-margin">
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <h1 style="font-size: 3rem" class="f-anton heading">SIGN UP</h1>
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-row>
+        <ion-col size="12">
+          <ion-img src="assets/transparent.png" class="avatar-icon"></ion-img>
+
+          <div class="camera-icon">
+            <ion-img src="assets/images/camera-dark-bg.png"></ion-img>
+          </div>
+        </ion-col>
+      </ion-row> -->
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-label class="authinputlabel">Full Name</ion-label>
+          <ion-input placeholder="Enter Full Name..." class="input" formControlName="name"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-label class="authinputlabel">Email Address</ion-label>
+          <ion-input placeholder="Email Address" class="input" formControlName="email"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-row>
+        <ion-col size="12">
+          <ion-input placeholder="Phone Number" class="input" formControlName="phone"></ion-input>
+        </ion-col>
+      </ion-row> -->
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-label class="authinputlabel">Password</ion-label>
+          <ion-input type="password" placeholder="Enter Password..." class="input"
+            formControlName="password"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-label class="authinputlabel">Confirm Password</ion-label>
+          <ion-input type="password" placeholder="Enter Confirm Password..." class="input"
+            formControlName="password_confirmation">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showpackage">
+        <ion-col>
+          <h2 style="font-weight: bold">Please Select Your Package</h2>
+          <h5 *ngFor="let item of packages">
+            <input type="radio" color="blue" [value]="signupObj.package_id" name="packages"
+              [checked]="signupObj.package_id === item.id" (change)="onPackageSelected(item.id)" />
+            {{item.name}}
+          </h5>
+          <!-- <form action="">
+            <input type="radio" name="package" value="Free" />
+            <h5>Free - $0/Month</h5>
+            <input type="radio" name="package" value="Gold" />
+            <h5>Gold - $9.95/Month</h5>
+            <input type="radio" name="package" value="Platinum" />
+            <h5>Platinum - $31.95/Month</h5>
+          </form> -->
+        </ion-col>
+      </ion-row>
+
+
+      <!-- *ngIf="isIOS" -->
+      <!-- [hidden]="aForm.invalid" -->
+      <!-- *ngIf="isIOS" [hidden]="aForm.invalid" -->
+
+
+
+      <div class="privacyterms">
+        <a (click)="privacyPolicy()">Privacy Policy</a>
+        <a (click)="TermofUse()"> Term of Use</a>
+      </div>
+
+      <ion-row>
+        <ion-col>
+          <ion-button class="f-pop-r btn" expand="block" color="primary" (click)="singUp()">
+            {{loading ? 'PLEASE WAIT' : 'CREATE Account'}}
+            <ion-spinner class="spinner" *ngIf="loading"></ion-spinner>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+
+      <div class="ion-margin-vertical">
+        <ion-row>
+          <ion-col class="ion-text-center donthavebtn">
+            <ion-button (click)="openLogin()" fill="clear" style="margin: 0;height: auto;">
+              <ion-label>
+                <ion-text class="f-pop-li" color="medium"> Already Have an Account? <span class="authactionlink">Login Now</span> </ion-text>
+                <!-- <h2 class="sign1 f-pop-m" color="primary">Sign In</h2> -->
+              </ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <div class="freeuserslimittext" *ngIf="!showpackage">
+        <h2>First Lifetime User</h2>
+        <p>{{usertoavail}} / 5000</p>
+      </div>
+
+      <div>
+        <!-- <ion-row>
+          <ion-col class="ion-text-center donthavebtn">
+            <ion-button (click)="openLogin()" fill="clear" class="login-btn">
+              <ion-label>
+                <ion-text class="f-pop-li" color="medium" style="margin-right: 5px">
+                  Already Have an Account? <br />
+                </ion-text>
+                <h2 class="f-pop-m" color="primary"> Sign In </h2>
+              </ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row> -->
+
+        <app-feeback></app-feeback>
+        <!-- <ion-grid>
+          <form class="feedbackfrom" [formGroup]="feedbackForm">
+            <ion-row>
+              <ion-col size="12">
+                <p>Please be patient, the application is under construction, please leave a feedback for us that would
+                  help
+                  us improve</p>
+                <div style=" display: flex; align-items: center; margin-top: 10px; ">
+                  <ion-input formControlName="comment" class="input f-pop-li" placeholder="Write feedback..."
+                    style="margin: 0;"></ion-input>
+                  <ion-button class="planebtn" expand="block" color="primary" (click)="submitFeedback()" style=" height: 50px;
+                    margin: 0;">
+                    <ion-icon name="paper-plane-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </form>
+        </ion-grid> -->
+
+      </div>
+    </ion-grid>
+  </form>
+
+  <footer [linksVisible]="false"></footer>
+</ion-content>

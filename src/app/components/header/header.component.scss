@@ -76,19 +76,20 @@ ion-icon {
 
 .title {
   font-size: 20px;
-  margin-left: 5px;
-  font-weight: 100;
+  // margin-left: 5px;
+  font-weight: normal;
 }
 
 .online {
   position: absolute;
-  margin-left: 15px;
+  margin-left: 14px;
   border-radius: 80%;
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
   margin-bottom: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
+  font-size: 12px;
 } 

@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { DatingComponent } from '../dating/dating.component';
 import { DatingFilterComponent } from 'src/app/pages/dating/dating-filter/dating-filter.component';
 import { DatingItemComponent } from 'src/app/pages/dating/dating-item/dating-item.component';
+import { DatingItemModule } from 'src/app/pages/dating/dating-item/dating-item.module';
 // import { ChatRowComponent } from 'src/app/pages/chat-room/chat-row/chat-row.component';
 // import { ChatRowComponent as ChatRowComponent2 } from 'src/app/pages/chat-rooms/chat-row/chat-row.component';
 
@@ -34,7 +35,7 @@ import { DatingItemComponent } from 'src/app/pages/dating/dating-item/dating-ite
     ChatRoomsComponent,
     DatingComponent,
     DatingFilterComponent,
-    DatingItemComponent,
+    // DatingItemComponent,
     // ChatRowComponent,
     // ChatRowComponent2,
   ],
@@ -46,6 +47,7 @@ import { DatingItemComponent } from 'src/app/pages/dating/dating-item/dating-ite
     ChatRowModule,
     ChatRow2Module,
     FormsModule,
+    DatingItemModule
   ],
   exports: [ChatFloatingButtonComponent],
 })

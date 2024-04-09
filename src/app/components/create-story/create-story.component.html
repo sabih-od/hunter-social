@@ -1,0 +1,25 @@
+<!-- <ion-header>
+  <ion-toolbar style="--background: #f7f7f7;">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <i class="iconsax" icon-name="x-circle" style="font-size: 22px;"></i>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" [class.titlepadding]="isIOS">
+      Create Story
+    </ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <ion-button (click)="close()" class="closebutton">
+    <i class="iconsax" icon-name="x-circle" style="font-size: 22px;"></i>
+  </ion-button>
+  <div class="uploadphoto" (click)="file.click()" *ngIf="!post_image">
+    <i class="iconsax" icon-name="picture-add"></i>
+    <h5>Upload Your Photo</h5>
+    <p>Just tap here to browse your gallery to upload photo</p>
+  </div>
+  <input [hidden]="true" style="margin-left: 60px; height: 0px" type="file" id="fileInput" name="fileInput"
+    accept="video/mp4,video/x-m4v,video/*,image/png,image/jpg,image/*" onchange="fileSelected()" #file />
+</ion-content>

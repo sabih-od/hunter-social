@@ -136,7 +136,8 @@ export class AdventureItemComponent extends BasePage implements OnInit {
       console.log('DELETE_POST_Response', res);
       if (res && res.data?.post) {
         this.utility.presentSuccessToast(res.message);
-        this.events.publish('UPDATE_POSTS');
+        this.events.publish('POST_DELETED', { data: this.item.id });
+        // this.events.publish('UPDATE_POSTS');
       } else
         this.utility.presentFailureToast(
           res?.message ?? 'Something went wrong'

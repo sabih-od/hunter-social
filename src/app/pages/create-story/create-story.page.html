@@ -1,0 +1,45 @@
+<ion-content>
+  <div swipe-vertical class="verticleswipe" (onSwipeDown)="close()"></div>
+  <!-- <ion-button (click)="close()" class="closebutton">
+    <i class="iconsax" icon-name="x-circle" style="font-size: 22px;"></i>
+  </ion-button> -->
+
+  <div class="reelauthor">
+    <div style="display: flex; align-items: center;">
+      <ion-avatar>
+        <img class="card-img" [src]="user.profile_image"
+          onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
+      </ion-avatar>
+      <div class="username">
+        <p>{{user.name}}</p>
+        <span>{{user.email}}</span>
+      </div>
+    </div>
+    <!-- <div class="sendbtn" *ngIf="post_image" (click)="postStory()">
+      <ion-icon name="paper-plane-outline"></ion-icon>
+    </div> -->
+  </div>
+
+  <div class="uploadphoto" (click)="file.click()" *ngIf="!post_image">
+    <i class="iconsax" icon-name="picture-add"></i>
+    <h5>Upload Your Photo</h5>
+    <p>Just tap here to browse your gallery to upload photo</p>
+  </div>
+  <input [hidden]="true" style="margin-left: 60px; height: 0px" type="file" id="fileInput" name="fileInput"
+    accept="video/mp4,video/x-m4v,video/*,image/png,image/jpg,image/*" onchange="fileSelected()" #file />
+
+  <div class="preview" *ngIf="post_image">
+    <!-- <ion-button class="close" color="danger" (click)="removeMedia()"><ion-icon
+        name="close-outline"></ion-icon></ion-button> -->
+    <img *ngIf="!isVideo" [src]="post_image" />
+    <video *ngIf="isVideo" width="320" [poster]="posterimage" height="240" preload="none" controls>
+      <source [src]="post_image" type="video/mp4" />
+    </video>
+  </div>
+  <!-- <i class="iconsax" icon-name="send-1" style="font-size: 22px;"></i> -->
+  <div *ngIf="post_image" class="submitbuttons">
+    <div class="sendbtn">
+      <ion-icon name="paper-plane-outline"></ion-icon>
+    </div>
+  </div>
+</ion-content>

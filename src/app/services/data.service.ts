@@ -15,6 +15,7 @@ const profile_items = require('src/app/data/profile-items.json');
 const stores = require('src/app/data/stores.json');
 const dashboard = require('src/app/data/dashboard.json');
 const footerLinks = require('src/app/data/links.json');
+const reels = require('src/app/data/reels.json');
 
 @Injectable({
   providedIn: 'root',
@@ -86,6 +87,10 @@ export class DataService {
 
   getMenus() {
     return menus;
+  }
+
+  getReels() {
+    return reels;
   }
 
   getSpecificMenus(arr) {

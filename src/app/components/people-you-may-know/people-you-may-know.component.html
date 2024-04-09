@@ -1,0 +1,11 @@
+<p class="f-anton" style="font-size: 18px; text-transform: uppercase;margin-bottom: -5px;">People You May Know</p>
+<div style="">
+  <div class="peopleloader" *ngIf="loading">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+  </div>
+  <ion-slides [options]="slideOpts" *ngIf="!loading">
+    <ion-slide *ngFor="let item of datings" style="">
+      <div class="frienditem"><friend-item [item]="item" (update)="getData()"></friend-item></div>
+    </ion-slide>
+  </ion-slides>
+</div>

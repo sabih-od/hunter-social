@@ -1,0 +1,187 @@
+<ion-header *ngIf="showForgotpass" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button (click)="showLoginSignup()">
+        <ion-icon color="medium" name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header *ngIf="!showForgotpass" class="loginhead"></ion-header>
+
+<ion-content class="login">
+  <div class="authcontainer">
+    <ion-grid *ngIf="!showForgotpass">
+      <ion-row>
+        <ion-col>
+          <img src="../../../assets/Images/ov-logo.svg" class="authlogo" />
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <h1 class="f-anton heading">LOGIN</h1>
+        </ion-col>
+      </ion-row>
+
+      <form [formGroup]="aForm">
+        <ion-row>
+          <ion-col size="12">
+            <ion-label class="authinputlabel">Email Address</ion-label>
+            <ion-input formControlName="email" class="input f-pop-li" placeholder="Enter Email Address..."></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-label class="authinputlabel">Password</ion-label>
+            <div class="inputfield">
+              <ion-input formControlName="password" [type]="passwordType" class="input f-pop-li"
+                placeholder="Enter Password...">
+              </ion-input>
+              <div (click)="togglePasswordVisibility()" class="eyeicon">
+                <!-- <ion-icon [name]="passwordIcon"></ion-icon> -->
+                <i class="iconsax" *ngIf="passwordIcon == 'eye'" icon-name="eye" style="font-size: 20px;"></i>
+                <i class="iconsax" *ngIf="passwordIcon == 'eye-slash'" icon-name="eye-slash" style="font-size: 20px;"></i>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-text-right" (click)="showForgotPassword()">
+            <ion-text color="primary" class="authforgetlink">
+              Forgot Password?
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+      </form>
+
+      <ion-row>
+        <ion-col>
+          <ion-button class="f-pop-r btn" [disabled]="loading" expand="block" color="primary" (click)="login()">
+            {{loading ? 'PLEASE WAIT' : 'LOGIN'}}
+            <ion-spinner class="spinner" *ngIf="loading"></ion-spinner>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <div class="ion-margin-vertical">
+        <ion-row>
+          <ion-col class="ion-text-center donthavebtn">
+            <ion-button (click)="openSignup()" fill="clear" style="margin: 0;height: auto;">
+              <ion-label>
+                <ion-text class="f-pop-li" color="medium"> Don't Have an Account? <span class="authactionlink">Register
+                    Now</span></ion-text>
+              </ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <div class="freeuserslimittext" *ngIf="!showpackage">
+        <!-- <h5>First 5000 Members <strong>Free Lifetime Membership</strong></h5> -->
+        <h2>First Lifetime User</h2>
+        <p>{{usertoavail}} / 5000</p>
+      </div>
+
+      <!-- <ion-row>
+        <ion-col class="ion-text-center" (click)="showForgotPassword()">
+          <ion-text color="primary" class="forgetpassword">
+            Forgotten Password?
+          </ion-text>
+        </ion-col>
+      </ion-row> -->
+
+      <!-- <div style="height: 30px"></div>
+
+    <ion-row class="social-div ion-margin-top">
+      <ion-col class="ion-text-center">
+        <ion-text color="primary" class="f-pop-smb">OR</ion-text>
+        <br />
+        <ion-text class="f-pop-m">Continue With Social Media</ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" (click)="loginWithFacebook()" class="btn social-btn f-pop-smb"
+          style="--background: #395895">
+          <ion-img src="assets/images/fb.png"></ion-img>
+          <span class="ion-margin-horizontal"> | </span>
+          LOGIN WITH FACEBOOK
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" class="btn social-btn f-pop-smb" color="primary" (click)="loginWithGoogle()">
+          <ion-img src="assets/images/google-plus.png"></ion-img>
+          <span class="ion-margin-horizontal"> | </span>
+          LOGIN WITH GOOGLE+
+        </ion-button>
+      </ion-col>
+    </ion-row> -->
+    </ion-grid>
+
+    <ion-grid *ngIf="showForgotpass">
+      <ion-row>
+        <ion-col>
+          <h1 class="f-anton heading">RECOVER PASSWORD</h1>
+          <p class="f-pop-r subheading"></p>
+        </ion-col>
+      </ion-row>
+
+      <form [formGroup]="forgetPasswordForm">
+        <ion-row>
+          <ion-col size="12">
+            <ion-input formControlName="email" class="input f-pop-li" placeholder="Email Address">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+      </form>
+
+      <ion-row>
+        <ion-col>
+          <ion-button class="f-pop-r btn" expand="block" color="primary" [disabled]="loading"
+            (click)="forgetPassword()"> Submit
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <div class="ion-margin-vertical">
+        <ion-row>
+          <ion-col class="ion-text-center donthavebtn">
+            <ion-button (click)="showLoginSignup()" fill="clear" style="margin: 0;height: auto;">
+              <ion-label>
+                <ion-text class="f-pop-li" color="medium"> Already have an Account?<br /> </ion-text>
+                <h2 class="sign1 f-pop-m" color="primary">Login Now</h2>
+              </ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <!-- <ion-row>
+        <ion-col class="ion-text-center" (click)="showLoginSignup()">
+          <ion-label>
+            <ion-text class="f-pop-r" color="medium">
+              Already have an Account?<br />
+            </ion-text>
+            <ion-text style="font-size: 18px" color="primary" class="f-pop-m">
+              Sign In
+            </ion-text>
+          </ion-label>
+        </ion-col>
+      </ion-row> -->
+
+    </ion-grid>
+
+    <app-feeback></app-feeback>
+  </div>
+
+  <!-- <footer [linksVisible]="false"></footer> -->
+</ion-content>

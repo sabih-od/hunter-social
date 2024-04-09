@@ -1,0 +1,85 @@
+.story {
+    position: relative;
+    display: inline-block;
+    color: #999;
+    margin-left: 10px;
+    padding: 2px;
+
+    &.unseen {
+        color: #000;
+
+        img {
+            box-shadow: 0px 0px 0px 2px #f00;
+        }
+    }
+
+    img {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0px 0px 0px 2px #999;
+    }
+
+    span {
+        max-width: 55px;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+ion-avatar {
+    // width: 33px;
+    // height: 33px;
+    // margin: 8px;
+    width: 50px;
+    height: 50px;
+}
+
+.slideitem {
+    width: 100%;
+    height: 140px;
+    border-radius: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.avatarstatus {
+    padding: 3px;
+    border: 1px solid #f00;
+    border-radius: 30px;
+}
+
+.seen.avatarstatus {
+    border-color: #ddd;
+}
+
+.addstory {
+    border-color: transparent;
+    padding: 0;
+
+    ion-avatar {
+        width: 57px;
+        height: 57px;
+    }
+}
+
+.plusstory {
+    position: absolute;
+    z-index: 6;
+    background: #000;
+    width: 23px;
+    height: 23px;
+    display: block;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    bottom: -2px;
+    border-radius: 12px;
+    padding-bottom: 0px;
+    border: 2px solid #fff;
+}
