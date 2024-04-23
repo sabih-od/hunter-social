@@ -3,6 +3,8 @@ import { BasePage } from 'src/app/pages/base-page/base-page';
 import { StoryViewerPage } from 'src/app/pages/story-viewer/story-viewer.page';
 import { CreateStoryComponent } from '../create-story/create-story.component';
 import { CreateStoryPage } from 'src/app/pages/create-story/create-story.page';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-stories-avatar-slider',
@@ -16,13 +18,34 @@ export class StoriesAvatarSliderComponent extends BasePage implements OnInit {
 
   user
   stories = []
-  constructor(injector: Injector) {
+  constructor(injector: Injector, private sanitizer: DomSanitizer) {
     super(injector);
+  }
+
+  sanitizeImageUrl(url: string): SafeResourceUrl {
+    const basePath = 'https://hunterssocial.com/storage/uploads/';
+    const sanitizedUrl = basePath + url;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(sanitizedUrl);
   }
 
   async ngOnInit() {
     this.setUserImage();
-    this.stories = this.dataService.getReels();
+    this.getData()
+    // this.stories = this.stories.map(story => ({
+    //   ...story,
+    //   items: story.items.map(item => ({
+    //     ...item,
+    //     date: this.utility.calculateTime(item.date)
+    //   }))
+    // }))
+  }
+
+  async getData() {
+    console.log('getting data')
+    this.stories = await this.network.getStories() // this.dataService.getReels();
+    this.stories = this.stories["data"].data;
+    this.stories = this.stories.filter(story => story.items.length > 0);
+
   }
 
   async setUserImage() {
@@ -43,18 +66,20 @@ export class StoriesAvatarSliderComponent extends BasePage implements OnInit {
     }
   }
 
+
   async openreel(item, index) {
     // console.log('openreel index => ', index);
-    let res = await this.modals.present(StoryViewerPage, { item: item, tapped: index });
+    let res = await this.modals.present(StoryViewerPage, { item: item, tapped: index, stories: this.stories });
+    this.stories = res.data.stories;
     console.log('StoryViewerPage res => ', res);
     // if (res && res.data.refresh){}
   }
 
   async createreel() {
-    console.log('createreel => ')
+    console.log('createreel => ');
     let res = await this.modals.present(CreateStoryPage);
     console.log(res);
-    // if (res && res.data.refresh) this.getData();
+    console.log('create reel function done')
+    await this.getData(); // Call getData if refresh flag is true
   }
-
 }

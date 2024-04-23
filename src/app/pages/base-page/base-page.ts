@@ -26,7 +26,7 @@ export abstract class BasePage {
   public network: NetworkService;
   public storage: StorageService;
   public users: UserService;
-  public  dataService: DataService;
+  public dataService: DataService;
   public image: ImageService;
   public alert: AlertsService;
   public permission: PermissionService;

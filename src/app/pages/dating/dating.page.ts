@@ -231,15 +231,12 @@ export class DatingPage
     if (data.data?.success) this.getData();
   }
 
-  onIonInfinite(ev) {
+  async onIonInfinite(ev) {
 
     if (this.next_page_url != null) {
       this.page = this.page + 1;
-      this.getData();
-      setTimeout(() => {
-        ev.target.complete();
-        // (ev as IonInfiniteScrollContent).target.complete();
-      }, 500);
+      await this.getData();
+      ev.target.complete();
     } else {
       ev.target.complete();
     }

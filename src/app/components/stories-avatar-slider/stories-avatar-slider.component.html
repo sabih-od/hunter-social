@@ -26,10 +26,11 @@
     <ion-slide *ngFor="let item of stories; let x = index" (click)="openreel(item, x)">
       <div class="avatarstatus" [class.seen]="item.seen">
         <ion-avatar>
-          <img class="card-img" [src]="item.userPicture"
+          <img class="card-img" [src]="sanitizeImageUrl(item?.userPicture)"
             onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
         </ion-avatar>
       </div>
     </ion-slide>
+    
   </ion-slides>
 </div>

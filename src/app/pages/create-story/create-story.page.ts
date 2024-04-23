@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, Injector, OnInit } from '@angular/core';
 import { BasePage } from 'src/app/pages/base-page/base-page';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, Validators } from '@angular/forms';
+import { LoadingController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-create-story',
@@ -16,13 +18,19 @@ export class CreateStoryPage extends BasePage implements OnInit {
   post_image;
   _item;
   mediaRemoved = 0;
-  user;
+  user: any = {
+    profile_image: '', // Set default profile image URL
+    name: '',
+    email: ''
+  };
+
   isVideo = false;
   type;
   loadingimage = false;
   isIOS = false;
+  postfile
 
-  constructor(injector: Injector, public dom: DomSanitizer, private cdr: ChangeDetectorRef) {
+  constructor(injector: Injector, public dom: DomSanitizer, private cdr: ChangeDetectorRef, private loadingController: LoadingController) {
     super(injector);
   }
 
@@ -42,7 +50,9 @@ export class CreateStoryPage extends BasePage implements OnInit {
       // self.loadingimage = true;
       //alert('Selected file: ' + value);
       let file = value.target.files[0];
+      self.postfile = file;
       console.log(file);
+      console.log('self.postfile => ', self.postfile)
       if (!file) return;
       const reader = self.getFileReader();
 
@@ -79,6 +89,7 @@ export class CreateStoryPage extends BasePage implements OnInit {
       };
     };
   }
+
   removeMedia() {
     this.mediaRemoved = 1;
     this._img = null;
@@ -98,8 +109,47 @@ export class CreateStoryPage extends BasePage implements OnInit {
     this.modals.dismiss()
   }
 
-  postStory() {
-    this.modals.dismiss()
+  async post() {
+    const loading = await this.loadingController.create({
+      message: 'Posting...',
+    });
+    await loading.present();
+  
+    try {
+      let data = new FormData();
+      data.append('content', this.content);
+      if (this._img) {
+        data.append('media', this.postfile)
+        data.append('title', 'title')
+      } else {
+        data.append('media', '');
+        data.append('title', 'title')
+      }
+  
+      if (this._item) {
+        data.append('_method', 'PUT');
+        data.append('is_media_remove', this.mediaRemoved.toString());
+      }
+  
+      let res = await this.network.createStory(data);
+  
+      if (res && res.data) {
+        this.utility.presentSuccessToast(res.message);
+        this.modals.dismiss(res.data)
+      } else {
+        this.utility.presentFailureToast(
+          res?.message
+            ? res.message
+            : res?.error && res.error.errors.post_file
+              ? res.error.errors.post_file
+              : 'Something went wrong'
+        );
+      }
+    } catch (error) {
+      console.error('Error while posting:', error);
+      this.utility.presentFailureToast('Something went wrong');
+    } finally {
+      await loading.dismiss();
+    }
   }
-
 }

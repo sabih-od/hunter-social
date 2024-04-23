@@ -1,16 +1,17 @@
-<ion-content (press)="pauseStory()" (panstart)="pauseStory()" (panend)="playStory()">
+<ion-content (press)="pauseStory()" (panstart)="pauseStory()" (panend)="playStory()" (swipe)="onSwipe($event)">
   <!-- swipe-vertical -->
-  <div swipe-vertical class="verticleswipe" (onSwipeDown)="closeStoryViewer()"></div>
-  <ion-slides (ionSlideDidChange)="setStorySeen()" #slides (click)="nextStoryItem()"><!--[options]="slideOpts"-->
+  <ion-slides (ionSlideDidChange)="setStorySeen()" #slides><!--[options]="slideOpts"-->
     <ion-slide *ngFor="let story of stories; let indexStory = index">
       <div class="reelauthor">
         <ion-avatar>
-          <img class="card-img" [src]="story.userPicture"
+          <img class="card-img" [src]="sanitizeImageUrl(story.userPicture)"
             onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
         </ion-avatar>
         <div class="username">
           <p>{{story.userName}}</p>
-          <span>{{story.items[story.currentItem].date}}</span>
+          <span *ngFor="let item of story.items; let index = index" [hidden]="story.currentItem !== index">
+            {{item.date}}
+          </span>
         </div>
       </div>
 
@@ -33,7 +34,17 @@
       </div>
     </ion-slide>
   </ion-slides>
+
+  <!-- Div for navigating to the next slide -->
+  <div class="slide-navigation slide-next" (click)="nextStoryItem()" ></div>
+
+  <div class="slide-navigation slide-prev" (click)="prevStoryItem()" ></div>
+  <div class="closeBtn" (click)="closeStoryViewer()">
+    x
+  </div>
+
 </ion-content>
+
 
 <!-- <ion-content (press)="pauseStory()" (pressup)="playStory()" (panstart)="pauseStory()" (panend)="playStory()"
     swipe-vertical (onSwipeUp)="onSwipeUp()" (onSwipeDown)="closeStoryViewer()">

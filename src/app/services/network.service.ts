@@ -79,9 +79,9 @@ export class NetworkService {
     return this.httpPostResponse('user/edit', data, null, true);
   }
 
-  getPosts(orderBy = 'created_at', sortedBy = 'desc') {
+  getPosts(page = 1, orderBy = 'created_at', sortedBy = 'desc') {
     return this.httpGetResponse(
-      `posts?orderBy=${orderBy}&sortedBy=${sortedBy}`,
+      `posts?orderBy=${orderBy}&sortedBy=${sortedBy}&page=${page}`,
       null,
       false
     );
@@ -230,6 +230,19 @@ export class NetworkService {
 
     return this.httpGetResponse(str, null, false);
   }
+  getRecommendedPeople(search, page) {
+    var str = `users/random-people?orderBy=created_at&sortedBy=desc`;
+
+    // if (dating_users && dating_users != '') {
+    //   str += `&dating_users=${dating_users}`;
+    // }
+    if (search && search != '') {
+      str += `&search=name:${search};email:${search}`;
+    }
+    str += page ? `&page=${page}` : `&page=1`;
+
+    return this.httpGetResponse(str, null, false);
+  }
 
   searchDatingUsers(data) {
     var str = `users/dating?orderBy=created_at&sortedBy=desc`;
@@ -299,6 +312,18 @@ export class NetworkService {
 
   getSearch(data) {
     return this.httpPostResponse(`products`, data, false);
+  }
+
+  getStories() {
+    return this.httpGetResponse(`story`, null, false);
+  }
+
+  createStory(data) {
+    return this.httpPostResponse(`story`, data, false, false,);
+  }
+
+  setStorySeen(data) {
+    return this.httpPostResponse(`story-viewer`, data, false, false,);
   }
 
   createListing(data) {

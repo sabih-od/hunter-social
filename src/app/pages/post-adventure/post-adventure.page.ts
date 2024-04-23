@@ -13,6 +13,8 @@ export class PostAdventurePage extends BasePage implements OnInit {
   closed = false;
   loading = false;
   refresh = false;
+  page = 1;
+  next_page_url = null;
   constructor(injector: Injector) {
     super(injector);
   }
@@ -24,26 +26,27 @@ export class PostAdventurePage extends BasePage implements OnInit {
     });
     // this.events.subscribe('UPDATE_POSTS', this.getData.bind(this));
     //this.items = this.dataService.getAdventres();
+    this.loading = true;
     this.getData();
   }
 
-  handleRefresh(event) {
-    setTimeout(() => {
-      // Any calls to load data go here
-      this.getData();
-      event.target.complete();
-    }, 2000);
-  }
+  // handleRefresh(event) {
+  //   setTimeout(() => {
+  //     // Any calls to load data go here
+  //     this.getData();
+  //     event.target.complete();
+  //   }, 2000);
+  // }
 
   async getData() {
-    this.loading = true;
-    let res = await this.network.getPosts();
+    let res = await this.network.getPosts(this.page);
     let user = await this.users.getUser();
     console.log('USER', user);
 
     console.log('response', res);
     if (res && res.data) {
-      this.items = res.data.map((item) => ({
+      if (res.data.next_page_url) this.next_page_url = res.data.next_page_url;
+      const newposts = res.data.data.map((item) => ({
         ...item,
         created_at: this.utility.calculateTime(item.created_at),
         isMyPost: user.id === item.user_id,
@@ -59,6 +62,7 @@ export class PostAdventurePage extends BasePage implements OnInit {
         //     ? URL.createObjectURL(item.media_upload)
         //     : '',
       }));
+      this.items = this.page == 1 ? newposts : [...this.items, ...newposts];
     }
     this.loading = false;
   }
@@ -71,7 +75,26 @@ export class PostAdventurePage extends BasePage implements OnInit {
 
   close() {
     console.log('Closed', closed);
-
     this.closed = true;
+  }
+
+  async doRefresh($event) {
+    this.page = 1;
+    await this.getData();
+    $event.target.complete();
+  }
+
+  async onIonInfinite(ev) {
+    if (this.next_page_url != null) {
+      this.page = this.page + 1;
+      await this.getData();
+      ev.target.complete();
+      // setTimeout(() => {
+        
+      //   // (ev as IonInfiniteScrollContent).target.complete();
+      // }, 500);
+    } else {
+      ev.target.complete();
+    }
   }
 }

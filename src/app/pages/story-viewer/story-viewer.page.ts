@@ -3,6 +3,7 @@ import { IonSlides, ViewDidEnter } from '@ionic/angular';
 import { BasePage } from '../base-page/base-page';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-story-viewer',
@@ -52,19 +53,19 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
   isWaiting: boolean = false;
   constructor(
     injector: Injector,
+    private sanitizer: DomSanitizer
   ) {
     super(injector);
   }
 
+  sanitizeImageUrl(url: string): SafeResourceUrl {
+    const basePath = 'https://hunterssocial.com/storage/uploads/';
+    const sanitizedUrl = basePath + url;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(sanitizedUrl);
+  }
+
   ngOnInit() {
-    const reels = this.dataService.getReels();
-    this.stories = reels.map(story => ({
-      ...story,
-      items: story.items.map(item => ({
-        ...item,
-        date: this.utility.calculateTime(item.date)
-      }))
-    }))
+
     if (Capacitor.getPlatform() !== 'web') {
       this.setStatusBarStyleDark()
     }
@@ -83,7 +84,8 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
   }
 
   closeStoryViewer() {
-    this.modals.dismiss();
+    if (this.video) this.video.pause();
+    this.modals.dismiss({ stories: this.stories });
   }
 
   async getCurrentStory() {
@@ -93,6 +95,7 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
 
   async nextStoryItem() {
     const currentStory = await this.getCurrentStory()
+    if (this.video) this.video.pause();
     // console.log('currentStory => ', currentStory)
     // console.log('currentStory.items => ', currentStory.items)
     if (currentStory.currentItem < currentStory.items.length - 1) {
@@ -109,6 +112,29 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
     }
   }
 
+  async prevStoryItem() {
+    const currentStory = await this.getCurrentStory();
+    if (this.video) this.video.pause();
+  
+    if (currentStory.currentItem > 0) {
+      currentStory.currentItem--;
+      this.setStorySeen();
+    } else {
+      const isBeginning = await this.slides.isBeginning();
+      if (!isBeginning) {
+        this.slides.slidePrev();
+        // If you want to set the last item of the previous story as seen when going back
+        const prevStory = await this.getCurrentStory();
+        prevStory.currentItem = prevStory.items.length - 1;
+        this.setStorySeen();
+      } else {
+        // If you're at the beginning of the first story, you might want to handle this case accordingly
+        // Maybe close the story viewer or loop to the end of the last story
+        console.log('Already at the beginning');
+      }
+    }
+  }
+  
   pauseStory() {
     console.log('pause')
     this.isPaused = true;
@@ -142,38 +168,45 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
   }
 
   changeStoryItem(event: any, story: any) {
+    console
+    if (!event || !event.center || !this.platform || !this.platform.width()) return;
+  
+    const screenWidth = this.platform.width();
+  
     if (event.center.y < 70 || event.center.y > this.platform.height() - 70) return;
-
-    if (event.center.x < this.platform.width() / 2) {
+  
+    if (event.center.x < screenWidth / 2) {
+      // Tapped on the left side, go to previous slide
       if (story.currentItem > 0) {
         story.currentItem--;
-
         this.setStorySeen();
       } else {
         this.slides.slidePrev();
       }
     } else {
+      // Tapped on the right side, go to next slide
       this.nextStoryItem();
     }
   }
-
-  onSwipeUp() {
-    console.log("Swipe Up!");
-  }
-
+  
   async setStorySeen() {
+    console.log('setStorySeen => ')
     this.activeIndex = await this.slides.getActiveIndex();
     let story = await this.getCurrentStory();
     let storyItem = await this.getCurrentStoryItem();
-
+    console.log('storyItem.seen => ', storyItem.seen)
     if (!storyItem.seen) {
-      if (story.currentItem === story.items.length - 1) story.seen = true;
+      if (story.currentItem === story.items.length - 1) {
+        story.seen = true;
+        console.log('story.seen => ', story.seen)
+      }
       storyItem.seen = true;
+      console.log('storyItem.seen => ', storyItem.seen)
     }
   }
 
   ionViewDidEnter() {
     this.setStorySeen();
   }
-
+  
 }

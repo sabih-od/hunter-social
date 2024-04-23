@@ -10,6 +10,7 @@ import { UserDetailComponentComponent } from '../dating/user-detail-component/us
 import { Config } from 'src/app/config/main.config';
 import { PostAdventureContentPage } from '../post-adventure-content/post-adventure-content.page';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { StoriesAvatarSliderComponent } from 'src/app/components/stories-avatar-slider/stories-avatar-slider.component';
 
 @Component({
   selector: 'app-home',
@@ -17,11 +18,14 @@ import { StatusBar, Style } from '@capacitor/status-bar';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage extends BasePage implements OnInit {
+  @ViewChild(StoriesAvatarSliderComponent) storiesAvatarSliderComponent: StoriesAvatarSliderComponent;
 
   items;
   closed = false;
   loading = false;
   refresh = false;
+  page = 1;
+  next_page_url = null;
   user
 
   constructor(
@@ -45,6 +49,7 @@ export class HomePage extends BasePage implements OnInit {
     // });
     this.user = await this.users.getUser()
     console.log('this.user => ', this.user)
+    this.loading = true;
     this.getData();
     if (Capacitor.getPlatform() !== 'web') {
       this.setStatusBarStyleLight()
@@ -70,28 +75,29 @@ export class HomePage extends BasePage implements OnInit {
     this.items = this.items.filter(x => x.id != data.data)
   }
 
-  handleRefresh(event) {
-    setTimeout(() => {
-      this.getData();
-      event.target.complete();
-    }, 2000);
-  }
+  // handleRefresh(event) {
+  //   setTimeout(() => {
+  //     this.getData();
+  //     event.target.complete();
+  //   }, 2000);
+  // }
 
   async getData() {
-    this.loading = true;
-    let res = await this.network.getPosts();
+    let res = await this.network.getPosts(this.page);
     // let user = await this.users.getUser();
     console.log('USER', this.user);
 
     console.log('response', res);
     if (res && res.data) {
-      this.updateItems(res.data)
+      if (res.data.next_page_url) this.next_page_url = res.data.next_page_url;
+      this.updateItems(res.data.data)
     }
     this.loading = false;
+    this.refresh = false;
   }
 
   updateItems(data) {
-    this.items = data.map((item) => ({
+    const newposts = data.map((item) => ({
       ...item,
       created_at: this.utility.calculateTime(item.created_at),
       isMyPost: this.user.id === item.user_id,
@@ -107,6 +113,8 @@ export class HomePage extends BasePage implements OnInit {
       //     ? URL.createObjectURL(item.media_upload)
       //     : '',
     }));
+
+    this.items = this.page == 1 ? newposts : [...this.items, ...newposts];
   }
 
   close() {
@@ -143,6 +151,28 @@ export class HomePage extends BasePage implements OnInit {
 
   async initialize() {
 
+  }
+
+
+  async doRefresh($event) {
+    this.page = 1;
+    await this.getData();
+    $event.target.complete();
+    this.storiesAvatarSliderComponent.getData()
+  }
+
+  async onIonInfinite(ev) {
+    if (this.next_page_url != null) {
+      this.page = this.page + 1;
+      await this.getData();
+      ev.target.complete();
+      // setTimeout(() => {
+
+      //   // (ev as IonInfiniteScrollContent).target.complete();
+      // }, 500);
+    } else {
+      ev.target.complete();
+    }
   }
 
 }

@@ -6,11 +6,11 @@
 
   <div class="reelauthor">
     <div style="display: flex; align-items: center;">
-      <ion-avatar>
-        <img class="card-img" [src]="user.profile_image"
+      <ion-avatar *ngIf="user">
+        <img class="card-img" [src]="user.profile_image || '../../../assets/Images/dummy-avatar.png'"
           onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
       </ion-avatar>
-      <div class="username">
+      <div class="username" *ngIf="user">
         <p>{{user.name}}</p>
         <span>{{user.email}}</span>
       </div>
@@ -37,7 +37,7 @@
     </video>
   </div>
   <!-- <i class="iconsax" icon-name="send-1" style="font-size: 22px;"></i> -->
-  <div *ngIf="post_image" class="submitbuttons">
+  <div *ngIf="post_image" class="submitbuttons" (click)="post()">
     <div class="sendbtn">
       <ion-icon name="paper-plane-outline"></ion-icon>
     </div>

@@ -94,7 +94,7 @@ export class PeopleYouMayKnowComponent extends BasePage implements OnInit {
       slideShadows: false,
     }
   }
-  friends = [1, 2, 3, 4, 5, 6, 7, 8]
+
 
 
   async getData(data = null) {
@@ -125,7 +125,7 @@ export class PeopleYouMayKnowComponent extends BasePage implements OnInit {
 
     console.log('this._search => ', this._search)
 
-    let res = await this.network.getDatings(this.dating_users, this._search, this.page);
+    let res = await this.network.getRecommendedPeople(this._search, this.page);
     console.log('getDating => ', res?.data?.data);
     this.next_page_url = res?.data?.next_page_url;
     console.log('this.next_page_url => ', this.next_page_url)
@@ -136,7 +136,7 @@ export class PeopleYouMayKnowComponent extends BasePage implements OnInit {
         profile_image: obj.profile_image
           ? this.image.getImageUrl(obj.profile_image)
           : this.image.getDefaultImg(),
-        age: this.getAge(obj.profile_detail.dob),
+        // age: this.getAge(obj.profile_detail.dob),
         canRequest:
           !obj.is_sent_friend_request &&
           !obj.is_friend &&

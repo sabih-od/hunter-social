@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Hunter Social</string>
-    <string name="title_activity_main">Hunter Social</string>
+    <string name="app_name">Hunters Social</string>
+    <string name="title_activity_main">Hunters Social</string>
     <string name="package_name">com.huntersocial.app</string>
     <string name="custom_url_scheme">com.huntersocial.app</string>
 </resources>
