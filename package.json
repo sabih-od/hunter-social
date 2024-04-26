@@ -39,7 +39,7 @@
     "@awesome-cordova-plugins/sqlite": "^6.3.0",
     "@awesome-cordova-plugins/stripe": "^6.6.0",
     "@capacitor-community/http": "^1.4.1",
-    "@capacitor/android": "^5.3.0",
+    "@capacitor/android": "^6.0.0",
     "@capacitor/app": "^5.0.6",
     "@capacitor/browser": "1.0.7",
     "@capacitor/camera": "^5.0.9",

@@ -105,6 +105,7 @@ export class CreateStoryPage extends BasePage implements OnInit {
   }
 
   close() {
+    console.log('close working')
     this.removeMedia()
     this.modals.dismiss()
   }
@@ -114,7 +115,7 @@ export class CreateStoryPage extends BasePage implements OnInit {
       message: 'Posting...',
     });
     await loading.present();
-  
+
     try {
       let data = new FormData();
       data.append('content', this.content);
@@ -125,14 +126,14 @@ export class CreateStoryPage extends BasePage implements OnInit {
         data.append('media', '');
         data.append('title', 'title')
       }
-  
+
       if (this._item) {
         data.append('_method', 'PUT');
         data.append('is_media_remove', this.mediaRemoved.toString());
       }
-  
+
       let res = await this.network.createStory(data);
-  
+
       if (res && res.data) {
         this.utility.presentSuccessToast(res.message);
         this.modals.dismiss(res.data)

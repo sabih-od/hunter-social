@@ -1,5 +1,6 @@
 <ion-content (press)="pauseStory()" (panstart)="pauseStory()" (panend)="playStory()" (swipe)="onSwipe($event)">
   <!-- swipe-vertical -->
+  <div swipe-vertical class="verticleswipe" (onSwipeDown)="closeStoryViewer()"></div>
   <ion-slides (ionSlideDidChange)="setStorySeen()" #slides><!--[options]="slideOpts"-->
     <ion-slide *ngFor="let story of stories; let indexStory = index">
       <div class="reelauthor">
@@ -36,12 +37,9 @@
   </ion-slides>
 
   <!-- Div for navigating to the next slide -->
-  <div class="slide-navigation slide-next" (click)="nextStoryItem()" ></div>
+  <div class="slide-navigation slide-next" (click)="nextStoryItem()"></div>
 
-  <div class="slide-navigation slide-prev" (click)="prevStoryItem()" ></div>
-  <div class="closeBtn" (click)="closeStoryViewer()">
-    x
-  </div>
+  <div class="slide-navigation slide-prev" (click)="prevStoryItem()"></div>
 
 </ion-content>
 

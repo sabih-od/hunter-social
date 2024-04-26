@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "16281969723",
+    "project_id": "hunterssocial-d4ad7",
+    "storage_bucket": "hunterssocial-d4ad7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16281969723:android:647f874cd950b50476a81e",
+        "android_client_info": {
+          "package_name": "com.huntersocial.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCSS3tCkOyVnDB3QHpnTyEmCn0OB96bp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
