@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, Injector, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Injector, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ChooserResult } from '@awesome-cordova-plugins/chooser/ngx';
@@ -24,6 +24,8 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
   isIOS = false;
   postfile
 
+  @ViewChild('file') fileInput!: ElementRef;
+
   @Input() set item(val) {
     this._item = val;
     console.log(val);
@@ -42,14 +44,49 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
   async ngOnInit() {
     this.permission.checkStoragePermissions();
     this.user_image = (await this.users.getUser()).profile_image;
-    this.handleFileClick();
+    // this.handleFileClick();
 
     this.isIOS = this.platform.is('ios');
   }
 
+  fileSelected(event: any) {
+    let self = this;
+    
+    const file: File = event.target.files[0]; // Get the selected file
+    if (file) {
+      self.postfile = file;
+      console.log(file);
+      console.log('self.postfile => ', self.postfile)
+      if (!file) return;
+      const reader = self.getFileReader();
+
+      reader.readAsArrayBuffer(file);
+
+      reader.onload = () => {
+        console.log('OnLoaded');
+        const arrayBuffer = reader.result as ArrayBuffer;
+        const blob = new Blob([arrayBuffer], { type: file.type });
+        self._img = blob;
+        const imageUrl = self.dom.bypassSecurityTrustUrl(URL.createObjectURL(blob));
+        self.post_image = imageUrl;
+        console.log('self.post_image => ', self.post_image)
+
+        self.isVideo = self.image.isVideo(file.name);
+        self.cdr.detectChanges();
+      };
+
+      reader.onerror = (error) => {
+        // self.loadingimage = false;
+        console.log('Error Occured');
+        console.log(error);
+        //handle errors
+      };
+    }
+  }
+
   handleFileClick() {
     let self = this;
-
+    
     document.getElementById('fileInput').onchange = function (value: any) {
       // self.loadingimage = true;
       //alert('Selected file: ' + value);
@@ -71,21 +108,7 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
         self.post_image = imageUrl;
         console.log('self.post_image => ', self.post_image)
 
-        // // get the blob of the image:
-        // console.log(reader);
-
-        // let blob: Blob = new Blob([
-        //   new Uint8Array(reader.result as ArrayBuffer),
-        // ]);
-        // // self.loadingimage = false;
-        // console.log(blob);
-        // self.post_image = self.dom.bypassSecurityTrustUrl(
-        //   URL.createObjectURL(blob)
-        // );
-        // self._img = blob;
-        // console.log('self._img => ', self._img)
         self.isVideo = self.image.isVideo(file.name);
-        // create blobURL, such that we could use it in an image element:
         self.cdr.detectChanges();
       };
 
@@ -95,110 +118,14 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
         console.log(error);
         //handle errors
       };
-    };
+    }
+    
   }
-
-  // async getVideoPoster(blobUrl: string): Promise<string> {
-  //   return new Promise<string>((resolve, reject) => {
-  //     const video = document.createElement('video');
-  //     video.src = blobUrl;
-  //     video.addEventListener('loadeddata', () => {
-  //       const canvas = document.createElement('canvas');
-  //       canvas.width = video.videoWidth;
-  //       canvas.height = video.videoHeight;
-  //       canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-  //       const posterImageUrl = canvas.toDataURL(); // Convert canvas to data URL
-  //       resolve(posterImageUrl);
-  //     });
-  //     video.addEventListener('error', (error) => {
-  //       reject(error);
-  //     });
-  //   });
-  // }
-
-  // async doGetPicture() {
-  //   // let isImage = await this.alert.presentConfirm(
-  //   //   'Image',
-  //   //   'Video',
-  //   //   'Source',
-  //   //   'Choose source'
-  //   // );
-  //   // if (isImage) {
-  //   //   let res = await this.image.openCamera();
-  //   //   const { base64, blob } = res;
-  //   //   this._img = blob;
-  //   //   this.post_image = base64;
-  //   //   //   this.type = ffile.mediaType;
-  //   //   this.isVideo = false;
-  //   // } else {
-  //   let file = await this.image.pickMediaFiles();
-  //   if (file) {
-  //     console.log('Selected file', file);
-  //     const { base64, blob, path, isVideo } = file;
-  //     // var objectURL = URL.createObjectURL(file);
-  //     // this._img = objectURL;
-  //     this.post_image = this.dom.bypassSecurityTrustUrl(
-  //       URL.createObjectURL(blob)
-  //     );
-  //     this._img = blob;
-  //     console.log('this._img => ', this._img)
-  //     this.isVideo = isVideo;
-
-  //     //}
-  //     // if (file) {
-  //     //   // if (this.platform.is('ios')) {
-  //     //   //   let ffile = file as ChooserResult;
-  //     //   //   console.log(ffile);
-  //     //   //   this.post_image = ffile.name;
-  //     //   //file = file.replace('file:///', 'http://localhost/_capacitor_file_/');
-
-  //     //   // URL.revokeObjectURL(this._img);
-  //     //   // this._img = URL.createObjectURL(file);
-  //     //   //const blob = await fetch(file.toString()).then((r) => r.blob());
-  //     //   //   console.log('blob', blob);
-  //     //   // var objectURL = URL.createObjectURL(file);
-  //     //   // console.log(objectURL);
-
-  //     //   this._img = file;
-  //     //   this.post_image = file;
-  //     //   //   this.type = ffile.mediaType;
-  //     //   this.isVideo = true; //this.image.isVideo(ffile.mediaType);
-  //     //   // } else {
-  //     //   //   let ffile = file as FileSelectResult;
-  //     //   //   this.post_image = ffile.path;
-  //     //   //   const blob = await fetch(file.toString()).then((r) => r.blob());
-  //     //   //   console.log('blob', blob);
-  //     //   //   this._img = file;
-  //     //   //   this.type = blob.type;
-  //     //   //   this.isVideo = this.image.isVideo(blob.type);
-  //     //   // }
-
-  //     //   // let path = file.path.toString().replace('_capacitor_file_', '');
-  //     //   // this._img = path;
-  //     //   // console.log('FilePath', path);
-  //     // }
-  //   }
-  //   // return;
-  //   // this._img = await this.image.openCamera();
-  //   // if (this._img && this._img['base64String'])
-  //   //   this.post_image = `data:image/${this._img['format']};base64,${this._img['base64String']}`;
-  //   // console.log('image', this.post_image);
-  // }
-
   async post() {
     let data = new FormData();
     data.append('content', this.content);
     if (this._img) {
       console.log('post this._img => ', this._img)
-      // let blob = await this.image.b64toBlob(
-      //   this._img['base64String'],
-      //   'image/' + this._img['format']
-      // );
-      // let obj = {
-      //   uri: filePath,
-      //   name: file.name,
-      //   type: file.type,
-      // };
       data.append('post_file', this.postfile)
       // data.append('post_file', this._img);
     } else data.append('post_file', '');
@@ -232,9 +159,15 @@ export class PostAdventureContentPage extends BasePage implements OnInit {
   }
 
   removeMedia() {
+    console.log('remove button working')
     this.mediaRemoved = 1;
     this._img = null;
     this.post_image = null;
+
+    this.fileInput.nativeElement.value = '';
+
+    // After updating the post_image, trigger change detection
+    this.cdr.detectChanges();
   }
 
   getFileReader(): FileReader {
