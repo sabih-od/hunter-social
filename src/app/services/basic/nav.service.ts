@@ -49,7 +49,6 @@ export class NavService {
   }
 
   navigateTo(link, data?: NavigationExtras) {
-    console.log(link);
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([link], data);
   }

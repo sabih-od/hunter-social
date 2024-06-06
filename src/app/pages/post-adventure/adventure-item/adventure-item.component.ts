@@ -23,7 +23,6 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   userid
 
   ngOnInit() {
-    // console.log(this.item);
 
     // this.likerstext = '';
     // if (this.item.has_liked && this.item?.likers?.data.length == 1) { this.likerstext += 'You liked'; }
@@ -36,12 +35,9 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     // this.getuser()
 
 
-    // console.log('likerstext => ', likeMessage)
-    // console.log('this.item?.likers?.data.length => ', this.item?.likers?.data.length)
 
     // if(this.item.content === undefined){
     //   this.contentLabel = this.item.content;
-    //   console.log("this.contentLabel",this.contentLabel);
     // } else{
     //   this.contentLabel = ""
     // }
@@ -64,7 +60,6 @@ export class AdventureItemComponent extends BasePage implements OnInit {
 
 
   openPopup($event) {
-    console.log(this.item);
     if (this.item.is_reported == false) {
       this.alert.presentPopoverReportingComponent($event, {
         item_id: this.item.id,
@@ -80,14 +75,11 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     const user = await this.users.getUser()
     this.userid = user?.id
 
-    console.log('likers => ', this.item?.likers?.data)
     const likeMessage = this.generateLikeMessage(this.item?.likers?.data);
-    console.log('likerstext => ', likeMessage)
   }
 
   async like() {
     let res = await this.network.likePost(this.item.id);
-    console.log(res);
     if (this.item.has_liked) this.item.count_likes--;
     else this.item.count_likes++;
     this.item.has_liked = !this.item.has_liked;
@@ -112,13 +104,11 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     });
     menu.present();
     let data = await menu.onDidDismiss();
-    console.log(data);
     if (data.data?.type === 'delete') this.deletePost();
     else if (data.data?.type === 'edit') {
       let res = await this.modals.present(PostAdventureContentPage, {
         item: this.item,
       });
-      console.log(res);
       if (res && res.data.refresh) this.events.publish('UPDATE_POSTS');
     }
   }
@@ -130,10 +120,8 @@ export class AdventureItemComponent extends BasePage implements OnInit {
       'Confirmation',
       'Are you sure want to delete this post?'
     );
-    console.log(confirm);
     if (confirm === true) {
       let res = await this.network.deletePost(this.item.id);
-      console.log('DELETE_POST_Response', res);
       if (res && res.data?.post) {
         this.utility.presentSuccessToast(res.message);
         this.events.publish('POST_DELETED', { data: this.item.id });
@@ -151,7 +139,6 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     });
     menu.present();
     let data = await menu.onDidDismiss();
-    console.log(data);
     if (data.data?.type) this.onSocialShare(data.data?.type);
   }
 

@@ -20,7 +20,6 @@ export class NewsLetterComponent extends BasePage implements OnInit {
   async subscribeNewsletter() {
     this.network.subscribeNewsletter({ email: this.email }).then((e) => {
       this.utility.presentSuccessToast('Successfully Subscribed');
-      console.log(e);
 
       if (e.error) {
         this.subs = false;

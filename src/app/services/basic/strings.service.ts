@@ -11,7 +11,6 @@ export class StringsService {
     var numberString = phoneNumber;
     var numberInDigits = numberString.replace(/[^\d]/g, '');
     var numberVal = parseInt(numberInDigits);
-    console.log(numberVal);
     return numberVal.toString();
   }
 
@@ -152,7 +151,6 @@ export class StringsService {
         f2 = phoneNumber.toString().substring(3, 6);
         var f3 = phoneNumber.toString().substring(6, 10);
 
-        console.log(phoneNumber, f3);
         return f1 + ' ' + f2 + '-' + f3;
     }
 

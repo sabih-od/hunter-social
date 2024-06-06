@@ -39,9 +39,7 @@ export class HowToPage extends BasePage implements OnInit {
   async getData() {
     let res = await this.network.howToVideos(this.page);
     this.next_page_url = res?.data?.next_page_url;
-    console.log('this.next_page_url => ', this.next_page_url)
     if (res.data.data.length > 0) {
-      console.log('howToVideos', res);
       let user = await this.users.getUser();
       if (res && res.data) {
         let listdata = res.data.data.map((item) => ({
@@ -52,9 +50,7 @@ export class HowToPage extends BasePage implements OnInit {
           },
           selfPost: item.user_id === user.id,
         }));
-        console.log('listdata => ', listdata)
         this.list = [...this.list, ...listdata]
-        console.log('this.list => ', this.list)
       } else {
         this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
       }

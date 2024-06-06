@@ -68,7 +68,6 @@ export class ImageService {
     //       destinationType: 0,
     //     })
     //     .then(async (imageData) => {
-    //       console.log('Took a picture!', imageData);
     //       if (this.isPngOrJpg(imageData)) {
     //         let base64 = 'data:image/png;base64,' + imageData;
     //         let blob = await this.base64ToBlob(base64);
@@ -81,7 +80,6 @@ export class ImageService {
     //       }
     //     })
     //     .catch((e) => {
-    //       console.log('Error occurred while taking a picture', e);
     //     });
     // });
 
@@ -151,7 +149,6 @@ export class ImageService {
     //   };
     //   Camera.getPhoto(cameraOptions).then(
     //     async (imageData) => {
-    //       // console.log('imageData', imageData.base64String);
     //       if (this.isPngOrJpg(imageData.base64String)) {
     //         let base64 = 'data:image/png;base64,' + imageData.base64String;
     //         let blob = await this.base64ToBlob(base64);
@@ -202,7 +199,6 @@ export class ImageService {
     this.cordovaCamera.getPicture(options).then(
       (imageData) => {
         // imageData is either a base64 encoded string or a file URI
-        console.log(imageData);
 
         // this.croppedImagePath = 'data:image/jpeg;base64,' + imageData;
       },
@@ -219,7 +215,6 @@ export class ImageService {
       this.file
         .readAsDataURL(filePath, fileName)
         .then((file64) => {
-          console.log(file64); //base64url...
           resolve(file64);
         })
         .catch((err) => {
@@ -240,19 +235,15 @@ export class ImageService {
       this.cordovaCamera.getPicture(options).then(
         async (imageData) => {
           // imageData is either a base64 encoded string or a file URI
-          console.log(imageData);
 
           if (imageData.includes('file')) {
             var split = imageData.replace(/^.*[\\\/]/, '');
-            console.log(split);
             var path = imageData.replace(split, '').slice(0, -1);
-            console.log(path);
 
             window.requestFileSystem(
               this.file.externalApplicationStorageDirectory,
               0,
               function (fs) {
-                console.log('file system open: ' + fs.name);
                 fs.root.getFile(
                   'bot.png',
                   { create: true, exclusive: false },
@@ -296,11 +287,9 @@ export class ImageService {
             );
 
             // const res = await this.getBase64StringByFilePath(imageData);
-            // console.log(res);
 
             // var reader = new FileReader();
             // reader.onloadend = function (e) {
-            //   console.log(this.result);
             // };
 
             // reader.readAsDataURL(path, split);
@@ -309,20 +298,16 @@ export class ImageService {
             //   .readAsArrayBuffer(path, split)
             //   .then(
             //     (result) => {
-            //       console.log(result);
             //       let blob = new Blob([result], { type: 'video/mp4' });
             //       //then upload the blob to firebase storage
             //       // this.uploadToFirebase(blob);
             //     },
             //     (err) => {
-            //       console.log(err);
             //     }
             //   )
             //   .catch((err) => {
-            //     console.log(err);
             //   });
 
-            // console.log(d);
 
             // resolve(d);
           } else {
@@ -353,7 +338,6 @@ export class ImageService {
   //     };
   //     Camera.getPhoto(cameraOptions).then(
   //       (imageData) => {
-  //         console.log('imageData', imageData);
   //         res(imageData.base64String);
   //       },
   //       (err) => {
@@ -397,7 +381,6 @@ export class ImageService {
       this.chooser
         .getFile()
         .then(async (file) => {
-          console.log(file ? file.name : 'canceled');
           // let file = v[0];
           let blob = await this.base64ToBlob(file.dataURI);
           res({ base64: file.dataURI, blob });
@@ -411,20 +394,16 @@ export class ImageService {
         extensions: [],
       })
         .then(async (v) => {
-          console.log('FILES', v);
           let file = v[0];
           let blob = await this.base64ToBlob(file.dataURI);
           res({ base64: file.dataURI, blob });
           //} else res(file);
         })
         .catch((e) => {
-          console.log(e);
           res(null);
         });
       // }
 
-      // console.log();
-      // console.log('pickFiles', files);
 
       //   let multiple_selection = false;
       //   //let ext = [".jpg",".png",".pdf",".jpeg"] // list of extensions
@@ -466,7 +445,6 @@ export class ImageService {
       //       let file = data.item(0);
       //       res(file);
       //       // for (var i = 0; i < data.length; i++) {
-      //       //   console.log(data.item(i));
       //       //   formData.append(
       //       //     'myfile[]',
       //       //     data.item(i),
@@ -492,7 +470,6 @@ export class ImageService {
       this.cordovaCamera.getPicture(options).then(
         async (imageData) => {
           // imageData is either a base64 encoded string or a file URI
-          console.log('image data', imageData);
           let path = imageData.includes('content://')
             ? await this.getNativePath(imageData)
             : imageData.includes('file://')
@@ -502,11 +479,9 @@ export class ImageService {
           // let res = await this.makeFileIntoBlob(path);
 
           // let res = Capacitor.convertFileSrc(path);
-          // console.log('CapacitorPath', res);
           // const fileNameIndex: number = path.lastIndexOf('/');
           let data = await this.readFilePath(path);
           let isVideo = this.isVideo(path);
-          //console.log('ReadFilePath', data);
           let type = isVideo ? 'video/mp4' : 'image/png';
           let base64 = `data:${type};base64,${data}`;
           let blob = await this.base64ToBlob(base64);
@@ -519,10 +494,8 @@ export class ImageService {
           //  FB_IMG_1532921240445.jpg?1532982282636
           // const filePath = imageData.substring(0, fileNameIndex + 1);
           // let fileName = imageData.split('/')[imageData.split('/').length - 1];
-          // console.log('FilePath', filePath, 'fileName', fileName);
 
           // let b64 = await this.resolveBase64(`${filePath}`, fileName);
-          // console.log('b64', b64);
 
           return;
 
@@ -533,11 +506,9 @@ export class ImageService {
           // fetch(croppedImagePath)
           //   .then((res) => res.blob())
           //   .then((res) => {
-          //     console.log('Successfully made blob', res);
           //     resolve(res);
           //   })
           //   .catch((err) => {
-          //     console.log('Unsucess', err);
           //     resolve(null);
           //   });
 
@@ -551,14 +522,12 @@ export class ImageService {
           //   // Capacitor.convertFileSrc(imageData)
           // );
           // URL.revokeObjectURL(imageData);
-          //console.log('SAFE_URL', this.safeUrl);
 
           // var filename = imageData.substring(imageData.lastIndexOf('/') + 1);
           // var path = imageData.substring(0, imageData.lastIndexOf('/') + 1);
           //then use it in the readAsDataURL method of cordova file plugin
           //this.file is declared in constructor file :File
           // this.file.readAsDataURL(path, filename).then((res) => {
-          //   console.log('readAsDataURL', res);
           //   // resolve(res);
           // });
 
@@ -572,7 +541,6 @@ export class ImageService {
           //   ? `image/${this.getExtension(croppedImagePath)}`
           //   : `video/${this.getExtension(croppedImagePath)}`;
 
-          // console.log('TYPE', 'type');
           // let blob = await this.b64toBlob(croppedImagePath);
 
           // resolve(blob);
@@ -591,11 +559,9 @@ export class ImageService {
       fetch(base64)
         .then((res) => res.blob())
         .then((res) => {
-          console.log('Successfully made blob', res);
           resolve(res);
         })
         .catch((err) => {
-          console.log('Unsucess', err);
           resolve(null);
         });
     });
@@ -674,8 +640,6 @@ export class ImageService {
 
           // get the path..
           let path = nativeURL.substring(0, nativeURL.lastIndexOf('/'));
-          console.log('path', path);
-          console.log('fileName', name);
 
           fileName = name;
 
@@ -684,7 +648,6 @@ export class ImageService {
           return this.file.readAsArrayBuffer(path, name);
         })
         .then((buffer) => {
-          console.log('Reading Buffer');
 
           // get the buffer and make a blob to be saved
           let imgBlob = new Blob([buffer], {
@@ -692,14 +655,12 @@ export class ImageService {
               _imagePath.split('/')[_imagePath.split('/').length - 1]
             }`,
           });
-          console.log(imgBlob.type, imgBlob.size);
           resolve({
             fileName,
             imgBlob,
           });
         })
         .catch((e) => {
-          console.log('makeFileIntoBlob Error:', e);
           reject(e);
         });
     });
@@ -721,12 +682,10 @@ export class ImageService {
       //     let blob = await fetch(x.webPath).then((res) => res.blob());
       //     data.push({ blob, path: x.webPath });
       //     // .catch((error) => {
-      //     //   console.log('Fetch error', error);
       //     // });
       //     //});
       //     resolve(data);
       //     // let res = await this.makeFileIntoBlob(imageData.photos[0].path);
-      //     // console.log('makeFileIntoBlob', res);
       //   },
       //   (err) => {
       //     resolve(null);
@@ -741,7 +700,6 @@ export class ImageService {
         path: path,
       });
 
-      console.log('data:', contents?.data);
       resolve(contents.data);
       //return contents.data;
     });
@@ -755,11 +713,9 @@ export class ImageService {
       this.filePath
         .resolveNativePath(path)
         .then((filePath) => {
-          console.log('getNativePath s', filePath);
           resolve(filePath);
         })
         .catch((err) => {
-          console.log('getNativePath e', err);
           resolve(null);
         });
     });
@@ -770,11 +726,9 @@ export class ImageService {
       this.file
         .readAsDataURL(path, file)
         .then((res) => {
-          console.log('resolveBase64', res);
           resolve(res);
         })
         .catch((err) => {
-          console.log('resolveBase64', err);
           resolve(null);
         });
     });

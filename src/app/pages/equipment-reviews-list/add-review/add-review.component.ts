@@ -17,7 +17,6 @@ export class AddReviewComponent extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.reviewItem);
 
     this.item = this.dataService.equipment;
     if (this.tag == 'edit') {
@@ -41,7 +40,7 @@ export class AddReviewComponent extends BasePage implements OnInit {
         rating: this.rating - 1,
       };
       let res = await this.network.addReview(data, this.item.id);
-      console.log(res, 'addReview');
+
       if (res && res.data) {
         this.utility.presentSuccessToast('Review posted successfully!');
         this.close(true);
@@ -55,7 +54,7 @@ export class AddReviewComponent extends BasePage implements OnInit {
       data.append('content', this.review);
       data.append('rating', String(this.rating));
       let res = await this.network.editreview(data, this.reviewItem.id);
-      console.log(res, 'addReview');
+
       if (res && res.data) {
         this.utility.presentSuccessToast('Review updated successfully!');
         this.close(true);
@@ -71,7 +70,7 @@ export class AddReviewComponent extends BasePage implements OnInit {
     data.append('content', this.review);
     data.append('rating', String(this.rating - 1));
     const res = await this.network.editreview(data, this.item.id);
-    console.log(res);
+
   }
 
   close(refresh) {

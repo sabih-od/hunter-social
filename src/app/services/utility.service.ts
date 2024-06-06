@@ -91,7 +91,6 @@ export class UtilityService {
   }
 
   openExternalUrl(url, target = '_self') {
-    console.log('Opening', url);
     Browser.open({ url });
   }
 
@@ -106,14 +105,11 @@ export class UtilityService {
 
   calculateTime(past) {
     //var past = new Date('2015-06-24 19:57:00');
-    // console.log(past);
 
     past = Date.parse(past);
-    //  console.log('Parsed', past);
     var now = Date.parse(new Date().toISOString());
     var diff = this.msToTime(now - past);
 
-    //  console.log(diff.toString());
     return diff;
   }
 
@@ -163,7 +159,6 @@ export class UtilityService {
       xhr.onload = () => {
         if (xhr.status === 200) {
           const blob = xhr.response;
-          console.log('this.file.dataDirectory => ', this.file.dataDirectory)
           this.file.writeFile(this.file.dataDirectory, targetFileName, blob, { replace: true })
             .then(_ => resolve())
             .catch(error => reject(error));

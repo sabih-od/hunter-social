@@ -30,7 +30,6 @@ export class DatingPage
 
   ionViewWillLeave() {
     this.dataService.searchValueChanged.unsubscribe();
-    console.log('Unsubscribed');
   }
 
   ionViewWillEnter() {
@@ -38,8 +37,6 @@ export class DatingPage
       this.datings = this.all_datings.filter((dating) =>
         dating.name?.toLowerCase().includes(e.toLowerCase())
       );
-      console.log('dataService.searchValueChanged res => ', this.datings);
-      console.log('DatingPage Search', e);
     });
   }
 
@@ -56,7 +53,6 @@ export class DatingPage
   }
 
   showTips() {
-    console.log('DISCLAIMER_CLOSED');
     const tipsread = localStorage.getItem('dating_tips_read');
     if (!tipsread) {
       setTimeout(() => {
@@ -70,7 +66,6 @@ export class DatingPage
     // import IntroJS
     const IntroJs = require("./../../../../node_modules/intro.js/intro");
     let intro = IntroJs();
-    console.log("inside intro.js");
     intro.setOptions({
       steps: [
         {
@@ -106,7 +101,6 @@ export class DatingPage
 
   async checkUser() {
     // let res = await this.network.getUser();
-    // console.log('checkUser', res);
 
     // if (
     //   res &&
@@ -127,7 +121,6 @@ export class DatingPage
   }
 
   async getData(data = null) {
-    console.log('getData data => ', data)
     if (data) {
       // this.datings.find(x => x.id == data.addressee_id)
       const index = this.datings.findIndex(x => x.id == data.addressee_id)
@@ -148,12 +141,10 @@ export class DatingPage
       } else if (data.type == 'block') {
         this.datings = this.datings.filter(x => x.id != data.addressee_id)
       }
-      console.log('getData', this.datings);
       return;
     }
 
     let res = await this.network.getDatings(this.dating_users, this.search, this.page);
-    console.log('network.getDatings res => ', res);
     if (res && res.data) {
       if (res.data.next_page_url) this.next_page_url = res.data.next_page_url;
       const newDatingData = res?.data?.data?.map((obj) => ({
@@ -173,14 +164,12 @@ export class DatingPage
 
     this.all_datings = [...this.datings];
 
-    console.log('Here Datings getData dating.page.ts => ', this.datings);
     this.loading = false;
     this.refresh = false;
   }
 
   async searchData(d) {
     this.datings = [];
-    console.log('Searching', d);
 
     let res = await this.network.searchDatingUsers(d);
     if (res && res.data) {
@@ -202,7 +191,6 @@ export class DatingPage
 
     this.all_datings = [...this.datings];
 
-    console.log('Here Datings searchData ', this.datings);
     this.loading = false;
   }
 
@@ -227,7 +215,6 @@ export class DatingPage
 
   async editUser() {
     let data = await this.modals.present(UserDetailComponentComponent);
-    console.log(data);
     if (data.data?.success) this.getData();
   }
 
@@ -272,12 +259,9 @@ export class DatingPage
       // this.filters,
       'halfmodal'
     );
-    console.log('Filter_Data', data);
 
     const d = data.data;
-    console.log('d => ', d);
     this.filters = d.data;
-    console.log('this.filters => ', this.filters);
 
     this.ages = d.data?.ages ? d.data?.ages.split('|') : '';
     this.genders = d.data?.genders ? d.data?.genders.split('|') : '';
@@ -291,7 +275,6 @@ export class DatingPage
     this.tag_option_ids = d.data.tag_option_ids;
 
 
-    console.log('d', d);
     if (d.data != 'A') {
       this.loading = true;
       this.searchData(d.data);

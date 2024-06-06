@@ -30,13 +30,11 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
 
   ionViewWillLeave() {
     this.dataService.searchValueChanged.unsubscribe();
-    console.log('Unsubscribed');
   }
 
   onSearch(clear) {
     if (clear) this._search = '';
     else this._search = this._search;
-    console.log('this._search', this._search)
     if (this.timeToken) clearTimeout(this.timeToken);
     this.timeToken = setTimeout(() => {
       this.loading = true;
@@ -49,7 +47,6 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   datingEnable() {
     return new Promise<boolean>(async (resolve) => {
       let res = await this.network.getUser();
-      console.log('checkUser', res);
 
       if (
         res &&
@@ -74,20 +71,18 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
     // this.loading = false;
     const res = await this.users.getUser();
     this.role_id = res.role_id;
-    console.log('USRE', this.role_id);
 
     this.dataService.searchValueChanged.subscribe((e) => {
       this.datings = this.all_datings.filter((dating) =>
         dating.name?.toLowerCase().includes(e.toLowerCase())
       );
-      console.log('DatingPage Search', e);
     });
     // let data = await this.modals.present(UserDetailComponentComponent);
   }
 
   async checkUser() {
     // let res = await this.network.getUser();
-    // console.log('checkUser', res);
+  
 
     // if (
     //   res &&
@@ -109,7 +104,6 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   }
 
   async getData(data = null) {
-    console.log('dating component getData data => ', data)
     if (data) {
       // this.datings.find(x => x.id == data.addressee_id)
       const index = this.datings.findIndex(x => x.id == data.addressee_id)
@@ -130,16 +124,12 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
       } else if (data.type == 'block') {
         this.datings = this.datings.filter(x => x.id != data.addressee_id)
       }
-      console.log('getData', this.datings);
       return;
     }
 
-    console.log('this._search => ', this._search)
 
     let res = await this.network.getDatings(this.dating_users, this._search, this.page);
-    console.log('getDating => ', res?.data?.data);
     this.next_page_url = res?.data?.next_page_url;
-    console.log('this.next_page_url => ', this.next_page_url)
     if (res && res?.data?.data) {
       // var newdata = res.data.splice(0,10)
       const newDatingData = res?.data?.data.map((obj) => ({
@@ -155,13 +145,11 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
           !obj.is_friend_requested &&
           !obj.is_friend_blocked,
       }));
-      console.log('newDatingData => ', newDatingData)
       this.datings = this.page == 1 ? newDatingData : [...this.datings, ...newDatingData];
     }
     this.all_datings = this.datings; //[...this.datings];
 
     this.loading = false;
-    console.log('Here Datings getData com', this.datings);
   }
 
   getAge(dob: any) {
@@ -180,7 +168,6 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
 
   async editUser() {
     let data = await this.modals.present(UserDetailComponentComponent);
-    console.log(data);
     if (data.data?.success) this.getData();
   }
 
@@ -200,7 +187,6 @@ export class DatingComponent extends BasePage implements OnInit, ViewWillLeave {
   timeToken;
 
   updateSearchResults() {
-    console.log('this._search', this._search)
     if (this.timeToken) clearTimeout(this.timeToken);
     this.timeToken = setTimeout(() => {
       this.loading = true;

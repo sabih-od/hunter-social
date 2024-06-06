@@ -21,7 +21,6 @@ export class MyOrdersPage extends BasePage implements OnInit {
 
   async getOrders() {
     const res = await this.network.getUserOrders();
-    console.log('getUserOrders => ', res)
     this.loading = false;
     if (res && res.data) {
       this.orders = res.data;

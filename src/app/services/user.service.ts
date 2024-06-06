@@ -67,10 +67,8 @@ export class UserService {
   getUser() {
     return new Promise<any>((res) => {
       let json = localStorage.getItem('user');
-      // console.log('getUser() json => ', json)
       if (json && json !== '') {
         let obj = JSON.parse(json);
-        //console.log('USER_OBJ', obj);
         if (obj.profile_image && !obj.profile_image.includes('storage/uploads'))
           obj.profile_image = this.image.getImageUrl(obj.profile_image);
 
@@ -86,7 +84,6 @@ export class UserService {
   async getIsAuthenticated() {
     return new Promise<boolean>(async (resolve) => {
       let res = await this.network.getUser();
-      console.log('getUserFromAPI', res);
       if (res && res.data && res.data.user) resolve(true);
       else resolve(false);
     });
@@ -97,7 +94,6 @@ export class UserService {
   // getUser() {
   //   return new Promise(async (resolve) => {
   //     let token = await this.getToken();
-  //     console.log(token);
   //     let record = users.find((x) => parseInt(x.id) == parseInt(token));
   //     if (record) {
   //       this.user = record;
@@ -111,7 +107,6 @@ export class UserService {
 
   async getNotificationCount() {
     const noticount = await this.network.getUnreadMessageAndNotificationCount();
-    console.log('getUnreadMessageAndNotificationCount => ', noticount)
     this.dataService.updateUnreadMessageAndNotificationCount(noticount?.data);
     this.dataService.updateNotificationsCount(noticount?.data?.unread_count);
 

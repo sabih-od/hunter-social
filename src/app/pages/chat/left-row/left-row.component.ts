@@ -31,7 +31,6 @@ export class LeftRowComponent implements OnInit {
   //   const reader = new FileReader();
   //   reader.addEventListener('load', () => {
   //     this.imageSrc = reader.result;
-  //     console.log('this.imageSrc => ', this.imageSrc)
   //   }, false);
 
   //   reader.readAsDataURL(imageBlob);
@@ -55,7 +54,6 @@ export class LeftRowComponent implements OnInit {
   //     xhr.onload = () => {
   //       if (xhr.status === 200) {
   //         const blob = xhr.response;
-  //         console.log('targetPath1 => ', targetPath)
   //         this.saveBlobToFile(blob, targetPath)
   //           .then(() => resolve())
   //           .catch(error => reject(error));
@@ -73,17 +71,14 @@ export class LeftRowComponent implements OnInit {
   // }
 
   // private saveBlobToFile(blob: Blob, targetPath: string): Promise<void> {
-  //   console.log('targetPath2 => ', targetPath)
   //   return new Promise<void>((resolve, reject) => {
   //     const reader = new FileReader();
   //     reader.onloadend = () => {
-  //       console.log('targetPath => ', targetPath)
   //       this.writeFile(targetPath, reader.result)
   //         .then(() => resolve())
   //         .catch(error => reject(error));
   //     };
   //     reader.onerror = error => {
-  //       console.log('onerror => ', error)
   //       reject(error);
   //     };
   //     reader.readAsArrayBuffer(blob);
@@ -91,7 +86,6 @@ export class LeftRowComponent implements OnInit {
   // }
 
   // private writeFile(filePath: string, data: any): Promise<void> {
-  //   console.log('filePath => ', filePath)
   //   return new Promise<void>((resolve, reject) => {
   //     window.resolveLocalFileSystemURL(
   //       filePath,
@@ -127,29 +121,29 @@ export class LeftRowComponent implements OnInit {
   async base64FromPath(path: string): Promise<string> {
     try {
       const response = await fetch(path);
-      console.log('response => ', response);
+  
       const blob = await response.blob();
-      console.log('Blob size:', blob.size);
+  
       return new Promise<string>((resolve, reject) => {
         // const reader = new FileReader();
         let reader = this.getFileReader();
-        console.log('reader:', reader);
+    
 
         // const zoneOriginalInstance = (reader as any)["__zone_symbol__originalInstance"];
         // if (zoneOriginalInstance) {
-        //   console.log('zoneOriginalInstance:', zoneOriginalInstance);
+    
         // }
 
         reader.onerror = reject;
         reader.onload = () => {
-          console.log('onload callback executed');
+      
           if (typeof reader.result === 'string') {
             resolve(reader.result);
           } else {
             reject('Method did not return a string');
           }
         };
-        console.log('Blob size inner:', blob.size);
+    
         reader.readAsDataURL(blob);
       });
     } catch (error) {
@@ -163,9 +157,9 @@ export class LeftRowComponent implements OnInit {
   async downloadimage(url) {
     this.downloading = true;
     // this.photoLibrary.requestAuthorization().then((res) => {
-    //   console.log('photoLibrary => ', res)
+
     //   // this.photoLibrary.savePhoto(imageData, 'My Image').then((libraryItem: LibraryItem) => {
-    //   //   console.log('Image saved to library:', libraryItem);
+
     //   // }).catch((err) => {
     //   //   console.error('Error saving image:', err);
     //   // });
@@ -182,11 +176,11 @@ export class LeftRowComponent implements OnInit {
       const fileName = Capacitor.getPlatform() == 'ios' ? `${new Date().getTime()}.jpg` : `Download/${new Date().getTime()}.jpg`;
 
       // url = 'http://172.17.0.9:8028/public/test.jpg';
-      console.log('url => ', url)
-      console.log('fileName => ', fileName)
+  
+  
 
       const base64Data = await this.base64FromPath(url!);
-      console.log('base64Data => ', base64Data)
+  
 
       const directory = Capacitor.getPlatform() == 'ios' ? Directory.Library : Directory.ExternalStorage
 
@@ -196,7 +190,7 @@ export class LeftRowComponent implements OnInit {
       //     directory: directory,
       //     recursive: true, // Create parent directories if they don't exist
       //   });
-      //   console.log("savedFilea ", savedFilea);
+  
       // } catch (e) {
       //   //console.error("Unable to make directory", e);
       // }
@@ -210,16 +204,16 @@ export class LeftRowComponent implements OnInit {
       });
 
       if (savedFile) {
-        console.log('savedFile => ', savedFile.uri)
+    
 
         // if (Capacitor.getPlatform() == 'ios') {
         //   const targetpath = `file:///var/mobile/Media/DCIM/100APPLE/${fileName}`;
-        //   console.log('targetpath => ', targetpath)
+    
         //   const copiedFile = await Filesystem.copy({
         //     from: savedFile.uri,
         //     to: targetpath,
         //   });
-        //   console.log('copied file => ', copiedFile)
+    
         // }
 
         this.utility.presentSuccessToast('image downloaded successfully');
@@ -244,7 +238,7 @@ export class LeftRowComponent implements OnInit {
 
     // this.utility.downloadAndSaveImage(url, 'image.jpg')
     //   .then(() => {
-    //     console.log('Image download and save complete');
+
     //   })
     //   .catch(error => {
     //     console.error('Error: ' + error.message);
@@ -286,7 +280,7 @@ export class LeftRowComponent implements OnInit {
 
     // this.utility.downloadImage(url).subscribe(
     //   (success) => {
-    //     console.log('sucess image downloaded')
+
     //     this.utility.presentSuccessToast('image downloaded successfully');
     //   },
     //   (error) => {

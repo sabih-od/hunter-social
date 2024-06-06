@@ -26,13 +26,11 @@ export class FriendItemComponent extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    // console.log("this.item.profile_image.includes('ph-avatar.png') => ", this.item.profile_image.includes('ph-avatar.png'))
     if (this.item.profile_image.includes('ph-avatar.png')) { this.item.profile_image = '/assets/Images/dummy-profile.jpg' }
   }
 
 
   openPopup($event) {
-    console.log(this.item);
     this.alert.presentPopoverReportingComponent($event, {
       item_id: this.item.id,
       item_desc: this.item.content,
@@ -43,7 +41,6 @@ export class FriendItemComponent extends BasePage implements OnInit {
   async unfriend() {
     this.loading = true;
     let res = await this.network.unfriend(this.item.id);
-    console.log('unfriend', res);
     if (res && res.data) {
       // this.utility.presentSuccessToast(res.message);
       // this.update.emit({ update: true });
@@ -62,7 +59,6 @@ export class FriendItemComponent extends BasePage implements OnInit {
   async acceptRequest() {
     this.loading = true;
     let res = await this.network.acceptRequest(this.item.id);
-    console.log('acceptRequest', res);
     if (res && res.data) {
       // this.utility.presentSuccessToast(res.message);
       this.events.publish('DATING_UPDATED', { addressee_id: this.item.id, type: 'acceptRequest' });
@@ -74,7 +70,6 @@ export class FriendItemComponent extends BasePage implements OnInit {
   async cancelRequest() {
     this.loading = true;
     let res = await this.network.cancelRequest(this.item.id);
-    console.log('cancelRequest', res);
     if (res && res.data) {
       // this.utility.presentSuccessToast(res.message);
       // this.update.emit({ update: true });
@@ -91,9 +86,7 @@ export class FriendItemComponent extends BasePage implements OnInit {
       this.loading = false;
       return this.utility.presentToast('Friend Request Already Sent');
     }
-    console.log('add Friend')
     let res = await this.network.addFriend(this.item.id);
-    console.log('addFriend', res);
 
     if (res && res.data) {
       // this.utility.presentSuccessToast('Success');
@@ -108,12 +101,10 @@ export class FriendItemComponent extends BasePage implements OnInit {
 
   async unblockFriend() {
     let res = await this.network.unblockFriend(this.item.id);
-    console.log('unblockFriend', res);
     this.update.emit({ update: true });
   }
 
   async goToProfile() {
-    console.log('ITEM', this.item);
     let isOpen = await this.modals.isModalOpen();
     if (isOpen) this.modals.dismiss({ date: 'A' });
     this.nav.navigateTo('pages/profile', {

@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivate {
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         // Check if the user is authenticated
-        console.log('localStorage.getItem(isLoggedIn) => ', localStorage.getItem('isLoggedIn'))
         if (localStorage.getItem('isLoggedIn') === 'true') {
             return true;
         } else {

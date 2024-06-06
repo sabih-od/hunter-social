@@ -29,7 +29,6 @@ export class GeolocationsService {
             resolve(null);
           }
         } else {
-          console.log({results, status})
           resolve(null)
         }
       });

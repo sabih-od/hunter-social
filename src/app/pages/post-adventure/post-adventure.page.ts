@@ -21,7 +21,6 @@ export class PostAdventurePage extends BasePage implements OnInit {
 
   ngOnInit() {
     this.events.subscribe('HOW_TO_POST_UPDATED', () => {
-      console.log('uyyyyy686796789');
       this.getData();
     });
     // this.events.subscribe('UPDATE_POSTS', this.getData.bind(this));
@@ -41,9 +40,9 @@ export class PostAdventurePage extends BasePage implements OnInit {
   async getData() {
     let res = await this.network.getPosts(this.page);
     let user = await this.users.getUser();
-    console.log('USER', user);
+  
 
-    console.log('response', res);
+  
     if (res && res.data) {
       if (res.data.next_page_url) this.next_page_url = res.data.next_page_url;
       const newposts = res.data.data.map((item) => ({
@@ -69,12 +68,12 @@ export class PostAdventurePage extends BasePage implements OnInit {
 
   async addNew() {
     let res = await this.modals.present(PostAdventureContentPage);
-    console.log(res);
+  
     if (res && res.data.refresh) this.getData();
   }
 
   close() {
-    console.log('Closed', closed);
+  
     this.closed = true;
   }
 

@@ -37,10 +37,7 @@ export class EventsService {
   }
 
   unsubscribe(key) {
-    console.log('unsubscribe', key);
-    console.log('unsubscribe-array', this.subscriptions);
     const item = this.subscriptions.find( x => x.key === key);
-    console.log(item);
     if(item){
       const subs = item['subs'];
       subs.unsubscribe();

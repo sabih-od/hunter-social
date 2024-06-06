@@ -17,7 +17,6 @@ export class RecipeComponent extends BasePage implements OnInit {
   async ngOnInit() {
     if (this.item.auth_review) this.rating = this.item.auth_review.rating;
     this.userData = await this.users.getUser();
-    console.log('USER', this.userData);
   }
   userData(arg0: string, userData: any) {
     throw new Error('Method not implemented.');
@@ -28,7 +27,6 @@ export class RecipeComponent extends BasePage implements OnInit {
   }
 
   openPopup($event) {
-    console.log(this.item);
     if (this.item.is_reported) {
       this.alert.presentFailureToast('Already reported!');
     } else {
@@ -46,7 +44,6 @@ export class RecipeComponent extends BasePage implements OnInit {
 
   async rateRecipe() {
     let res = await this.network.rateRecipe(this.item.id, this.rating);
-    console.log('rateRecipe', res);
 
     if (res && res.data)
       this.events.publish('RECEIPE_UPDATED', {

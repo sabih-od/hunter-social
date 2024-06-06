@@ -28,7 +28,6 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
   constructor(injector: Injector) {
     super(injector);
-    console.log(Config);
   }
 
   async ngOnInit() {
@@ -58,9 +57,7 @@ export class ProfileUIComponent extends BasePage implements OnInit {
             })
           }
         });
-        console.log('this.questions data => ', this.questions)
 
-        // console.log('this.tag_option_ids => ', this.tag_option_ids)
         // this.communication = data[0].tag_options.filter(x => this.tag_option_ids.includes(x.id))
         // this.love = data[1].tag_options.filter(x => this.tag_option_ids.includes(x.id))
         // this.education = data[2].tag_options.filter(x => this.tag_option_ids.includes(x.id))
@@ -73,12 +70,10 @@ export class ProfileUIComponent extends BasePage implements OnInit {
     // this.getUser();
     this.current_user = await this.users.getUser();
     this.isOwnProfile = this.current_user.id == this.user_id;
-    console.log('this.isOwnProfile => ', this.isOwnProfile);
     if (!this.isOwnProfile) {
       const user_profile_data = await this.network.getUserProfile(this.user_id);
       user_profile_data.data.profile_image = this.image.getImageUrl(user_profile_data.data.profile_image)
       this.user_profile = user_profile_data.data;
-      console.log('user_profile_data => ', this.user_profile)
       this.profileLoading = false
     } else {
       this.user_profile = this.current_user
@@ -88,10 +83,8 @@ export class ProfileUIComponent extends BasePage implements OnInit {
     }
 
     // this.users.userprofile.subscribe(profile => {
-    //   console.log('this.users.userprofile => ', profile)
     // })
 
-    console.log('this.user_profile => ', this.user_profile)
     if (this.isOwnProfile) this.dataService.user_data = this.user_profile;
     // const posts_count_data = await this.network.getPostCount(this.user_id);
     // this.posts_count = posts_count_data.data.count;
@@ -105,28 +98,21 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
   async getUser() {
     let userRes = await this.network.getUser();
-    console.log(userRes);
     if (userRes && userRes.data && userRes.data.user) {
       this.user = userRes.data.user;
-      console.log('this.user', this.user);
 
       if (this.user['profile_image'] && this.user['profile_image'] !== '')
-        console.log('hello');
       if (this.isOwnProfile) {
         this.user_image = this.user['profile_image'] == null ? '../../../assets/Images/dummy-avatar.png' : this.image.getImageUrl(this.user['profile_image']);
-        console.log('user_image', this.user_image);
       } else {
         this.user_image = this.user_profile?.profile_image == null ? '../../../assets/Images/dummy-avatar.png' : this.image.getImageUrl(this.user_profile?.profile_image);
-        // console.log('this.user_profile => ', this.user_profile.profile_image);
       }
 
-      console.log('this.user_profile => ', this.user_profile);
     } else
       this.utility.presentFailureToast(userRes?.message ?? 'Something went wrong');
   }
   async getUserPosts(paginate = false) {
     const { data } = await this.network.getUserPosts(this.user_id);
-    console.log(data);
     this.posts = data.data.map((item: any) => ({
       ...item,
       isMyPost: this.current_user.id === item.user_id,
@@ -147,8 +133,6 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
   async getStates() {
     let res = await this.network.getStates();
-    console.log('getStates', res);
-    console.log(this.user_profile);
     let states =
       res && res.data
         ? res.data.filter(
@@ -164,7 +148,6 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
   async getCities(id) {
     let res = await this.network.getCities(id);
-    console.log(res);
     if (res && res.data) {
       let cities =
         res && res.data
@@ -213,7 +196,6 @@ export class ProfileUIComponent extends BasePage implements OnInit {
 
   async blockUser() {
     let formData = new FormData();
-    console.log('block user => ', this.user_id)
     formData.append('user_id', this.user_id);
     // alert(JSON.stringify(formData))
     // alert(JSON.stringify(this.user_id))

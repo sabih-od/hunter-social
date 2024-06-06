@@ -15,7 +15,6 @@ export class NetworkService {
     public router: Router,
     private events: EventsService
   ) {
-    // console.log('Hello NetworkProvider Provider');
   }
 
   serialize = (obj) => {
@@ -552,7 +551,6 @@ export class NetworkService {
   }
 
   deleteRecipe(id) {
-    console.log(id);
 
     return this.httpDeleteResponse(`recipes/${id}`);
   }
@@ -637,7 +635,6 @@ export class NetworkService {
     return this.httpGetResponse(`users/notifications/unread-count`, null);
   }
   readNotifiaction(data) {
-    console.log('readNotifiaction data => ', data)
     return this.httpPostResponse(`users/notifications/unread-notifications`, data, null);
   }
 
@@ -747,7 +744,6 @@ export class NetworkService {
   httpDeleteResponse(key) {
     return new Promise<any>((resolve, reject) => {
       this.api.delete(key).subscribe((res: any) => {
-        console.log(res);
         //if (showloader === true) {
         this.utility.hideLoader();
         //}
@@ -812,13 +808,11 @@ export class NetworkService {
         },
         (err) => {
           const error = err.error;
-          console.log('err', err);
 
           this.utility.hideLoader();
           if (showError) {
             let errorKeys = error?.errors ? Object.keys(error.errors) : [];
             if (errorKeys && errorKeys.length) {
-              console.log('Error is', error.errors[errorKeys[0]]);
 
               this.utility.presentFailureToast(error.errors[errorKeys[0]][0]);
             } else {

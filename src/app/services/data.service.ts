@@ -153,7 +153,6 @@ export class DataService {
   }
 
   getRaceEvents(id) {
-    console.log(id);
 
     return [];
   }

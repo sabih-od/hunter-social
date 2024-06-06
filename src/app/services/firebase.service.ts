@@ -39,7 +39,6 @@ export class FirebaseService {
 
   async setTokenToServer() {
     const fcm_token = await this.getFCMToken();
-    console.log('setTokenToServer fcm_token => ', fcm_token)
     if (fcm_token) {
       this.network.saveFcmToken({ token: fcm_token }).then(
         (dats) => { },
@@ -51,9 +50,7 @@ export class FirebaseService {
   }
 
   async setupFMC() {
-    console.log('setupFMC => ')
     if (Capacitor.getPlatform() !== 'web') {
-      console.log('this.setupNativePush => ',)
       await this.setupNativePush();
     }
 
@@ -86,10 +83,8 @@ export class FirebaseService {
         }
       });
 
-      console.log('setupNativePush a => ')
       // On success, we should be able to receive notifications
       PushNotifications.addListener('registration', (token: Token) => {
-        console.log('registration FCM_TOKEN', token.value);
         localStorage.setItem('fcm_token', token.value);
       });
 
@@ -100,10 +95,7 @@ export class FirebaseService {
       PushNotifications.addListener(
         'pushNotificationReceived',
         (notification: PushNotificationSchema) => {
-          console.log('NOTIFICATION_RECEIVED', notification);
           const extradata = JSON.parse(notification.data.extra_data)
-          console.log('extradata?.channel_id => ', extradata?.channel_id);
-          console.log('this.dataService.channel_id => ', this.dataService.channel_id);
           this.users.getNotificationCount();
           if (extradata?.channel_id) {
             // const messagescount = localStorage.getItem('messages_count');
@@ -114,7 +106,6 @@ export class FirebaseService {
           }
 
           if (extradata?.channel_id != this.dataService.channel_id) {
-            console.log('wokring');
             this.events.publish('dashboard:notificationReceived', notification);
             this.events.publish('dashboard:refreshpage', notification);
           }
@@ -124,18 +115,14 @@ export class FirebaseService {
       PushNotifications.addListener(
         'pushNotificationActionPerformed',
         (notification) => {
-          console.log('pushNotificationActionPerformed', notification.notification);
           const extradata = JSON.parse(notification.notification.data.extra_data)
           if (extradata?.channel_id) {
-            console.log('extradata?.type => ', extradata?.type)
             if (extradata?.type == 'individual') {
-              console.log('Here in individual')
               this.nav.push('pages/conversations', {
                 type: 'individual',
               })
             }
             else if (extradata?.type == 'group') {
-              console.log('Here in group')
               this.nav.push('pages/conversations', {
                 type: 'groups',
               })
@@ -145,7 +132,6 @@ export class FirebaseService {
             // this.dataService.updateMessageCount(0);
           } else {
             if (extradata?.type == 'admin') {
-              console.log('Here in individual')
               this.nav.push('pages/chat', {
                 is_admin: 1,
               })
@@ -175,7 +161,6 @@ export class FirebaseService {
   async getFCMToken() {
     return new Promise((resolve) => {
       const token = localStorage.getItem('fcm_token');
-      console.log(token);
       if (token) {
         resolve(token);
         // this.sqlite.setFcmToken(token);
@@ -186,13 +171,11 @@ export class FirebaseService {
 
       // resolve(true);
       // this.fcm.getToken().then(v => resolve(v), (err) =>
-      // { console.log(err); resolve(null) }).catch(v => { console.log(v); resolve(null) })
     });
   }
 
   // getDeliveredNotifications = async () => {
   //   const notificationList =
   //     await PushNotifications.getDeliveredNotifications();
-  //   console.log('delivered notifications', notificationList);
   // };
 }

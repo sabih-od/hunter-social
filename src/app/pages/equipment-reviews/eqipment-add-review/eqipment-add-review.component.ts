@@ -18,7 +18,6 @@ export class EqipmentAddReviewComponent extends BasePage implements OnInit {
 
   async ngOnInit() {
     let res = await this.network.getUser();
-    console.log(res);
     if (res && res.data && res.data.user) {
       this.user = res.data.user;
     }

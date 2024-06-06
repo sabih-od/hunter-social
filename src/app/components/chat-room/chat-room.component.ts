@@ -63,12 +63,10 @@ export class ChatRoomComponent extends BasePage implements OnInit {
 
   async initPusher() {
     let token = localStorage.getItem('token');
-    const user = await this.users.getUser();
-    console.log('user => ', user.id)
+    const user = await this.users.getUser();    
     this.pusher.globalChatNotify(token, user.id);
   }
-  newMessage(data) {
-    console.log('newMessage data => ', data)
+  newMessage(data) {    
     // this.users.getNotificationCount()
     if (data.sender_id) {
       const list = this.friends.map(x => {
@@ -78,16 +76,13 @@ export class ChatRoomComponent extends BasePage implements OnInit {
         }
         return x;
       })
-
-      console.log('list => ', list)
+      
       // const index = _.findIndex(list, { 'sender_id': data.sender_id });
-      const index = list.findIndex(x => x.id == data.sender_id);
-      console.log('index => ', index)
+      const index = list.findIndex(x => x.id == data.sender_id);      
       if (index !== -1) {
         const movedObject = list.splice(index, 1)[0];
         list.unshift(movedObject);
-      }
-      console.log('list => ', list)
+      }      
 
       this.friends = list;
     }
@@ -100,8 +95,7 @@ export class ChatRoomComponent extends BasePage implements OnInit {
 
   async getFriends() {
     this.sender_id = this.dataService.dataId;
-    let res = await this.network.getFriends(this.page);
-    console.log('chat-room component getFriends', res);
+    let res = await this.network.getFriends(this.page);    
     if (res && res.data) {
       if (res.data.next_page_url) this.next_page_url = res.data.next_page_url;
       const friendslist = res.data.data.map((user) => ({
@@ -120,8 +114,7 @@ export class ChatRoomComponent extends BasePage implements OnInit {
       // ]
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
-    this.dataService.dataId = null;
-    console.log('Sender Id destroyed', this.sender_id);
+    this.dataService.dataId = null;    
   }
 
   async addNew() {

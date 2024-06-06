@@ -17,7 +17,6 @@ export class ConversationsPage extends BasePage implements OnInit {
 
 
   ionViewWillEnter() {
-    console.log('enter in view')
   }
 
   adminNotiCount = 0;
@@ -37,12 +36,10 @@ export class ConversationsPage extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log('tab => ', this.tab);
     this.getNotificationsObject()
 
     this.route.queryParams.subscribe((params) => {
       // Get the value of the query parameter
-      console.log('params => ', params)
       if (Object.keys(params).length > 0) {
         if (params['type'] == 'groups') { this.tab = 'groups' }
         if (params['type'] == 'individual') { this.tab = 'friends' }
@@ -52,7 +49,6 @@ export class ConversationsPage extends BasePage implements OnInit {
       } else {
         this.tab = 'friends';
       }
-      console.log('tab => ', this.tab);
     });
 
   }
@@ -60,7 +56,6 @@ export class ConversationsPage extends BasePage implements OnInit {
   async getNotificationsObject() {
 
     this.dataService.notification_and_message_count.subscribe(data => {
-      console.log('conversation this.dataService.notification_and_message_count data => ', data)
       this.adminNotiCount = data?.admin;
       this.friendNotiCount = data?.friend;
       this.groupNotiCount = data?.group;

@@ -27,11 +27,8 @@ export class DrawerComponent extends BasePage implements OnInit {
     let token = localStorage.getItem('token');
     this.appPages = this.dataService.getMenus();
     this.menuCtrl.swipeGesture(false, 'main');
-    console.log('token => ', token);
     if (islogin && token) {
-      const user = JSON.parse(islogin);
-      console.log('islogin => ', user)
-      // console.log('islogin => ', islogin)
+      const user = JSON.parse(islogin);      
       let userRes = await this.network.getUserProfile(user?.id);
       // let interestsRes = await this.network.getInterests();
       this.users.getNotificationCount()
@@ -39,11 +36,9 @@ export class DrawerComponent extends BasePage implements OnInit {
       this.getInterests();
       this.getTagQuestions();
       this.getEthnicities();
-      console.log('res.data.user => ', userRes.data)
       // userRes.data.interests = interestsRes.data
       // userRes.data.profile_image = this.image.getImageUrl(userRes.data.profile_image)
       const fcmtoken = localStorage.getItem('fcm_token')
-      console.log('drawer fcm_token => ', fcmtoken)
       // if (!fcmtoken) {
       if (Capacitor.getPlatform() !== 'web') {
         await this.network.setFcmToken(fcmtoken);
@@ -55,7 +50,6 @@ export class DrawerComponent extends BasePage implements OnInit {
         this.users.updateUserProfile({ ...userRes.data, profile_image: this.image.getImageUrl(userRes?.data?.profile_image) })
         localStorage.setItem('user', JSON.stringify(userRes.data));
         this.events.subscribe('USER_DATA_RECEIVED', async (data) => {
-          console.log('USER_DATA_RECEIVED', data);
           this.packageId = userRes?.data?.user?.profile_detail?.package_id;
         });
       }
@@ -63,24 +57,20 @@ export class DrawerComponent extends BasePage implements OnInit {
 
 
       const messagescount = localStorage.getItem('messages_count');
-      console.log('messagescount => ', messagescount)
       if (messagescount == null) {
         localStorage.setItem('messages_count', '0');
-        console.log('messagescount => ', Number(messagescount))
       } else {
         if (Number(messagescount) != 0) this.dataService.updateMessageCount(Number(messagescount));
         else this.dataService.updateMessageCount(0);
 
       }
-
-      // console.log("localStorage.getItem('user'); => ", localStorage.getItem('user'))
+      
     }
   }
 
   navigate(url) {
     this.packageId = this.user.profile_detail.package_id;
 
-    console.log(url, this.packageId);
     switch (url) {
       case 'pages/ranch-locator':
         if (this.packageId != 1) {
@@ -212,9 +202,7 @@ export class DrawerComponent extends BasePage implements OnInit {
     if (isInternal) {
       this.utility.openInternalUrl(url);
     } else {
-      console.log(token);
       if (token) {
-        console.log(url + '?token=' + token);
         if (url.includes('chat-loading')) {
           window.open(url + '?token=' + token, '_system');
         } else if (url.includes('dating')) {
@@ -247,14 +235,11 @@ export class DrawerComponent extends BasePage implements OnInit {
     localStorage.setItem('messages_count', '0');
     this.users.removeUser();
     this.nav.push('login');
-    console.log(res);
   }
 
   async menuClicked(item) {
-    console.log('menuClicked => ')
     this.user = await this.users.getUser();
     this.packageId = this.user.profile_detail.package_id;
-    console.log('USER', this.user, item.role);
 
     if (item.url == 'pages/dating') {
       if (this.packageId != 1) {
@@ -268,7 +253,6 @@ export class DrawerComponent extends BasePage implements OnInit {
     }
 
     if (item.submenus) {
-      console.log(item.submenus);
       item.isOpened = !item.isOpened;
     } else if (item.fireEvent) {
       this.events.publish(item.fireEvent);
@@ -299,7 +283,6 @@ export class DrawerComponent extends BasePage implements OnInit {
 
   subscibeEvent() {
     this.events.subscribe('DRAWER_OPENED', () => {
-      console.log('On DRAWER_OPENED');
       if (!this.isDatingEnabled) this.checkDatingEnabled();
     });
   }
@@ -307,7 +290,6 @@ export class DrawerComponent extends BasePage implements OnInit {
   datingEnable() {
     return new Promise<boolean>(async (resolve) => {
       let res = await this.network.getUser();
-      console.log('checkUser', res);
 
       if (
         res &&
@@ -328,7 +310,6 @@ export class DrawerComponent extends BasePage implements OnInit {
     this.packageId = this.user.profile_detail.package_id;
     if (this.packageId === 3) {
       let data = await this.modals.present(UserDetailComponentComponent);
-      console.log(data);
       if (data.data?.success) this.openDatingChatRoom();
     } else {
       this.utility.presentFailureToast(
@@ -340,31 +321,26 @@ export class DrawerComponent extends BasePage implements OnInit {
   async getSetting() {
     let res = await this.network.getSettings();
     this.dataService.updateSetting(res.data)
-    console.log('drawer settings => ', res);
   }
 
   async getTagQuestions() {
     const res = await this.network.getQuestions();
-    console.log('tagQuestions', res);
     this.users.updateTagQuestions(res && res.data ? res.data : [])
   }
 
   async getEthnicities() {
     const res = await this.network.getQuestions();
     const ethnicities = ['Alaska Native', 'Asian', 'African American', 'Hispanic', 'Native Hawaiian', 'White'];
-    console.log('ethnicities', res);
     this.users.updateEthnicities(ethnicities)
   }
 
   async getStates() {
     let res = await this.network.getStates();
-    console.log('States', res);
     this.users.updateStates(res && res.data ? res.data : [])
   }
 
   async getInterests() {
     let res = await this.network.getInterests();
-    console.log('interestsList', res);
     this.users.interestsList = res.data
   }
 

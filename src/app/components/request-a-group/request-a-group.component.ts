@@ -27,9 +27,8 @@ export class RequestAGroupComponent extends BasePage implements OnInit {
 
   async getGroups() {
     let res = await this.network.getGroupTypes();
-    console.log('getGroups', res.data);
     if (res && res.data) {
-      // console.log(Object.values(res.data))
+    
       // let arr = Object.values(res.data);
       // this.groups = arr;
       this.groups = Object.values(res.data);
@@ -42,12 +41,10 @@ export class RequestAGroupComponent extends BasePage implements OnInit {
 
   async onSubmitRequest() {
     if (this.requestGroupForm.invalid) {
-      console.log(this.requestGroupForm.errors);
       this.utility.presentFailureToast('Please fill all fields properly');
       return;
     }
 
-    console.log('this.requestGroupForm.value => ', this.requestGroupForm.value)
     let res = await this.network.requestGroup(this.requestGroupForm.value);
     if (res) {
       this.utility.presentSuccessToast('Group request submitted successfully');

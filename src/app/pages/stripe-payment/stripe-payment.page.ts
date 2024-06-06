@@ -104,7 +104,6 @@ export class StripePaymentPage extends BasePage implements OnInit {
             token: res.id,
           };
           this.utility.hideLoader();
-          console.log('TOKEN is', res.id);
 
           //this.updatePackageOnServer();
           this.updateMemberShipPayment(res.id);
@@ -113,7 +112,6 @@ export class StripePaymentPage extends BasePage implements OnInit {
         .catch((err) => {
           // this.updateMemberShipPayment('123');
           this.utility.hideLoader();
-          console.log('Error', err);
           this.utility.presentFailureToast(err);
         });
     } else this.utility.presentFailureToast('Please fill all fields');
@@ -126,7 +124,6 @@ export class StripePaymentPage extends BasePage implements OnInit {
     let pkgId = this.nav.getQueryParams().package_id;
 
     let res = await this.network.updateMemership(user.id, 1, pkgId);
-    console.log('updatePackageOnServer', res);
   }
 
   async updateMemberShipPayment(id) {
@@ -137,13 +134,10 @@ export class StripePaymentPage extends BasePage implements OnInit {
       package_id,
       id
     );
-    console.log('updatePackageOnServer', res);
     if (res && res.data) {
       let _res = await this.network.getUser();
-      console.log('User', _res);
       if (_res && _res.data && _res.data.user) {
         this.users.setUser(_res.data.user);
-        console.log('Updating User');
         this.utility.presentSuccessToast('Package updated successfully!');
         this.utility.hideLoader();
         if (!shouldRedirect) {
@@ -169,7 +163,6 @@ export class StripePaymentPage extends BasePage implements OnInit {
   onChanged(ev, type) {
     if (ev.inputType !== 'deleteContentBackward') {
       const utel = this.strings.getOnlyDigits(ev.target.value);
-      console.log(utel);
 
       if (!isNaN(parseInt(utel))) {
         ev.target.value = utel;

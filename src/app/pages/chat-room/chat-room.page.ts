@@ -60,7 +60,6 @@ export class ChatRoomPage extends BasePage implements OnInit, ViewWillEnter {
     let res = await this.network.getFriends(this.page);
     this.isLoading = false;
     let self = this;
-    console.log('chat-room a getFriends =>', res);
     if (res && res.data) {
       const friendslist = res.data.map((user) => ({
         ...user,
@@ -72,7 +71,6 @@ export class ChatRoomPage extends BasePage implements OnInit, ViewWillEnter {
       this.friends = this.page != 1 ? [...this.friends, ...friendslist] : friendslist;
 
       // const sortedData = _.orderBy(this.friends, ['created_at'], ['asc']);
-      // console.log('sortedData => ', sortedData);
 
       // this.friends = [
       //   {
@@ -84,7 +82,6 @@ export class ChatRoomPage extends BasePage implements OnInit, ViewWillEnter {
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
     this.dataService.dataId = null;
-    console.log('Sender Id destroyed', this.sender_id);
   }
 
   async addNew() {

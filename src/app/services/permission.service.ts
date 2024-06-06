@@ -12,7 +12,6 @@ export class PermissionService {
       this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE,
       this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE,
     ]);
-    console.log('RequestPermission', res);
   }
 
   checkStoragePermissions() {
@@ -22,7 +21,6 @@ export class PermissionService {
       )
       .then(
         (result) => {
-          console.log('Has permission?', result.hasPermission);
           if (!result.hasPermission) this.requestPermission();
         },
         (err) => this.requestPermission()

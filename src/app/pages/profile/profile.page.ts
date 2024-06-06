@@ -14,7 +14,6 @@ export class ProfilePage extends BasePage implements OnInit, ViewDidEnter {
     super(injector);
   }
   ionViewDidEnter(): void {
-    console.log('ionViewDidEnter');
     this.events.publish('PROFILE_PAGE_ENTERED');
   }
 

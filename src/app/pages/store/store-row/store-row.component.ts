@@ -8,7 +8,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class StoreRowComponent implements OnInit {
   @Input() item;
   constructor() {
-    console.log('item', this.item);
   }
 
   ngOnInit() {}

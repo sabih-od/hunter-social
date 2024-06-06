@@ -44,14 +44,12 @@ export class ChatRoomsComponent
     else this.search = this._search;
   }
 
-  ionViewWillEnter() {
-    console.log('ionViewWillEnter');
+  ionViewWillEnter() {    
 
     this.initialize();
   }
 
-  async ngOnInit() {
-    console.log('ngOnInit');
+  async ngOnInit() {    
     this.initialize();
   }
 
@@ -67,8 +65,7 @@ export class ChatRoomsComponent
     this.events.subscribe('UPDATE_NEW_GROUPS', this.newMessage.bind(this));
   }
 
-  newMessage(data) {
-    console.log('newMessage Groups data => ', data)
+  newMessage(data) {    
     // this.users.getNotificationCount()
     if (data.channel_id) {
       const list = this.groups.map(x => {
@@ -78,27 +75,22 @@ export class ChatRoomsComponent
         }
         return x;
       })
-
-      console.log('list => ', list)
+      
       // const index = _.findIndex(list, { 'sender_id': data.channel_id });
-      const index = list.findIndex(x => x.channel_id == data.channel_id);
-      console.log('index => ', index)
+      const index = list.findIndex(x => x.channel_id == data.channel_id);      
       if (index !== -1) {
         const movedObject = list.splice(index, 1)[0];
         list.unshift(movedObject);
-      }
-      console.log('list => ', list)
+      }      
 
       this.groups = list;
     }
   }
 
   async getGroups() {
-    let user = await this.users.getUser();
-    console.log('User_ID', user.id);
+    let user = await this.users.getUser();    
 
-    let res = await this.network.getGroups();
-    console.log('getGroups', res);
+    let res = await this.network.getGroups();    
     if (res && res.data) {
       this.groups = res.data.data?.map((group) => ({
         ...group,

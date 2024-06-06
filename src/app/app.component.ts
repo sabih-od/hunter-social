@@ -58,7 +58,6 @@ export class AppComponent {
         event.preventDefault();
         event.stopPropagation();
         const url = this.router.url;
-        console.log(url);
         this.createBackRoutingLogics(url);
       },
       false
@@ -80,8 +79,6 @@ export class AppComponent {
         const data = await response.json();
 
         if (data.results.length > 0) {
-          console.log('latest data.results => ', data.results);
-          console.log('currentVersion version => ', this.currentVersion);
           const latestVersion = data.results[0].version;
           if (latestVersion !== this.currentVersion) {
             this.presentAlert();
@@ -119,11 +116,9 @@ export class AppComponent {
 
   onPause() {
     // Handle the pause event
-    console.log('pause');
   }
   onResume() {
     // Handle the pause event
-    console.log('resume');
     this.users.getNotificationCount()
   }
   initializeApp() {
@@ -149,11 +144,9 @@ export class AppComponent {
       // this.sqlite
       //   .initialize()
       //   .then(() => {
-      //     console.log('sqlite initialized');
       //   })
       //   .catch((err) => alert(err));
       // let permStatus = await PushNotifications.checkPermissions();
-      // console.log('permisions permStatus => ', permStatus);
 
       await this.fcm.setupFMC();
     });
@@ -173,7 +166,6 @@ export class AppComponent {
       this.utility.hideLoader();
 
       const isModalOpen = await this.modalController.getTop();
-      console.log(isModalOpen);
       if (isModalOpen) {
         this.modalController.dismiss({ data: 'A' });
       } else {
@@ -186,7 +178,6 @@ export class AppComponent {
   }
 
   // checkAppUpdates() {
-  //   console.log('this.versionNumber => ', this.versionNumber)
   //   if (this.platform.is('ios') && this.versionNumber != this.newIOSVersionNumber) {
   //     this.presentAlert();
   //   }
@@ -205,7 +196,6 @@ export class AppComponent {
         text: 'Update Now',
         role: 'update',
         handler: () => {
-          console.log('update app now')
           let appStoreURL = '';
           if (this.platform.is('ios')) {
             appStoreURL = `https://apps.apple.com/lv/app/hunters-social/id1663547600`;

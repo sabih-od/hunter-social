@@ -54,7 +54,6 @@ export class ChatRoomsPage extends BasePage implements OnInit, ViewWillEnter {
   }
 
   newMessage(data) {
-    console.log('newMessage Groups data => ', data)
     // this.users.getNotificationCount()
     if (data.channel_id) {
       const list = this.groups.map(x => {
@@ -65,15 +64,12 @@ export class ChatRoomsPage extends BasePage implements OnInit, ViewWillEnter {
         return x;
       })
 
-      console.log('list => ', list)
       // const index = _.findIndex(list, { 'sender_id': data.channel_id });
       const index = list.findIndex(x => x.id == data.channel_id);
-      console.log('index => ', index)
       if (index !== -1) {
         const movedObject = list.splice(index, 1)[0];
         list.unshift(movedObject);
       }
-      console.log('list => ', list)
 
       this.groups = list;
     }
@@ -81,10 +77,8 @@ export class ChatRoomsPage extends BasePage implements OnInit, ViewWillEnter {
 
   async getGroups() {
     let user = await this.users.getUser();
-    console.log('User_ID', user.id);
 
     let res = await this.network.getGroups();
-    console.log('getGroups', res);
     if (res && res.data) {
       this.groups = res.data.data?.map((group) => ({
         ...group,

@@ -17,8 +17,6 @@ export class ApiService {
   }
 
   post(endpoint: string, body: any, reqOpts?: any) {
-    console.log('reqOpts => ', reqOpts);
-    // console.log('body => ', body);
     return this.http.post(this.url + '/' + endpoint, body, reqOpts);
   }
 

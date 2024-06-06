@@ -23,20 +23,17 @@ export class PeopleComponent extends BasePage implements OnInit {
     });
     menu.present();
     let data = await menu.onDidDismiss();
-    console.log(data);
     if (data.data?.type === 'unfriend') this.unfriend();
     else if (data.data?.type === 'block') this.block();
     //   let res = await this.modals.present(PostAdventureContentPage, {
     //     item: this.item,
     //   });
-    //   console.log(res);
     //   if (res && res.data.refresh) this.events.publish('UPDATE_POSTS');
     // }
   }
 
   async unfriend() {
     let res = await this.network.unfriend(this.item.id);
-    console.log('unfriend', res);
     if (res && res.data) {
 
       let user = await this.users.getUser()
@@ -57,7 +54,6 @@ export class PeopleComponent extends BasePage implements OnInit {
 
   async block() {
     let res = await this.network.block(this.item.id);
-    console.log('unfriend', res);
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
       this.events.publish('PEOPLE_UPDATED');
@@ -67,7 +63,6 @@ export class PeopleComponent extends BasePage implements OnInit {
 
   async unblock() {
     let res = await this.network.unblock(this.item.id);
-    console.log('unfriend', res);
     if (res && res.data) {
 
       let user = await this.users.getUser()
@@ -82,7 +77,6 @@ export class PeopleComponent extends BasePage implements OnInit {
 
   async addFriend() {
     let res = await this.network.addFriend(this.item.id);
-    console.log('addFriend', res);
     if (res && res.data) {
 
       let user = await this.users.getUser()

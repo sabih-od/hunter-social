@@ -88,7 +88,6 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
   async login() {
     // this.nav.push('pages/tabbar');
-    console.log('this.aForm.controls => ', this.aForm.controls)
     if (this.aForm.controls.email?.errors?.required) {
       this.utility.presentFailureToast('Email field is required');
       return;
@@ -109,16 +108,13 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     const formdata = this.aForm.value;
     this.loading = true;
     let res = await this.network.login(this.aForm.value);
-    console.log('login res => ', res);
     if (res && res.data) {
       this.users.setToken(res.data.token);
       const fcmtoken = localStorage.getItem('fcm_token')
-      console.log('login fcm_token => ', fcmtoken)
       if (Capacitor.getPlatform() !== 'web') {
         await this.network.setFcmToken(fcmtoken);
       }
       let userRes = await this.network.getUserProfile(res.data?.id);
-      console.log('userRes a => ', userRes)
       this.users.setUser({ ...userRes.data, profile_image: this.image.getImageUrl(userRes?.data?.profile_image) });
       this.users.updateUserProfile({ ...userRes.data, profile_image: this.image.getImageUrl(userRes?.data?.profile_image) })
       // this.users.updateUserProfile(res.data)
@@ -128,7 +124,6 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
       this.getInterests();
       this.getTagQuestions();
       this.getEthnicities();
-      console.log('LOGIN_SUCCESS', res.data.data);
 
       this.aForm.setValue({ email: '', password: '' })
 
@@ -158,26 +153,22 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
   async getTagQuestions() {
     const res = await this.network.getQuestions();
-    console.log('tagQuestions', res);
     this.users.updateTagQuestions(res && res.data ? res.data : [])
   }
 
   async getEthnicities() {
     const res = await this.network.getQuestions();
     const ethnicities = ['Alaska Native', 'Asian', 'African American', 'Hispanic', 'Native Hawaiian', 'White'];
-    console.log('ethnicities', res);
     this.users.updateEthnicities(ethnicities)
   }
 
   async getStates() {
     let res = await this.network.getStates();
-    console.log('States', res);
     this.users.updateStates(res && res.data ? res.data : [])
   }
 
   async getInterests() {
     let res = await this.network.getInterests();
-    console.log('interestsList', res);
     this.users.interestsList = res.data
   }
 
@@ -200,16 +191,13 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     }
     let formdata = this.forgetPasswordForm.value;
     formdata = { ...formdata, type: 'app' }
-    console.log(formdata);
     try {
       this.loading = true;
       const res = await this.network.forgotPassword(formdata);
       this.showForgotpass = false;
-      console.log(res);
       this.utility.presentSuccessToast('OTP sent on your email');
       this.nav.navigateTo('pages/otp-submit', { queryParams: { email: formdata.email } });
     } catch (err) {
-      console.log(err);
       this.utility.presentFailureToast('Wrong Email');
     } finally {
       this.loading = false;
@@ -241,7 +229,6 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   //   const formdata = this.feedbackForm.value;
   //   this.loading = true;
   //   let res = await this.network.feedback(this.feedbackForm.value);
-  //   console.log('feedback res => ', res);
   //   if (res && res.data) { 
   //     this.utility.presentSuccessToast('Feedback sent successfully');
   //     this.feedbackForm.setValue({ comment: '' })
@@ -254,13 +241,11 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   // }
 
   // async loginWithGoogle() {
-  //   console.log('loginWithGoogle');
 
   //   try {
   //     this.googlePlus
   //       .login({})
   //       .then((resResult) => {
-  //         console.log('loginWithGoogle', resResult);
 
   //         if (resResult && resResult.email) {
   //           let res = {
@@ -297,7 +282,6 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   //     var accessToken = null;
   //     var result = await FacebookLogin.getCurrentAccessToken();
 
-  //     console.log(result);
 
   //     if (!result || !result.accessToken) {
   //       result = await FacebookLogin.login({
@@ -306,7 +290,6 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
 
   //       if (result.accessToken) {
   //         // Login successful.
-  //         console.log(`Facebook access token is ${result.accessToken.token}`);
 
   //         accessToken = result.accessToken;
   //       }
@@ -318,7 +301,6 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   //       fields: ['id', 'name', 'email', 'gender'],
   //     });
 
-  //     console.log('Facebook user is', resResult);
 
   //     let res = {
   //       user: {
@@ -331,7 +313,6 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
   //       },
   //     };
 
-  //     console.log(res);
   //     if (res) {
   //       alert(res);
   //       // this.signUpwithSocial(res, 'fb');

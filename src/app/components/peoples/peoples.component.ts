@@ -22,7 +22,6 @@ export class PeoplesComponent extends BasePage implements OnInit {
 
   async getUsers() {
     let res = await this.network.getUsers();
-    console.log('getUsers', res);
 
     if (res && res.data) {
       this.users = res.data.map((user) => ({
@@ -35,7 +34,6 @@ export class PeoplesComponent extends BasePage implements OnInit {
           !user.is_blocked_by_friend &&
           !user.is_friend_blocked,
       }));
-      console.log('getUsers After', this.users);
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
   }

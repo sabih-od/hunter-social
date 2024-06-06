@@ -27,29 +27,23 @@ export class RightRowComponent implements OnInit {
   async base64FromPath(path: string): Promise<string> {
     try {
       const response = await fetch(path);
-      console.log('response => ', response);
       const blob = await response.blob();
-      console.log('Blob size:', blob.size);
       return new Promise<string>((resolve, reject) => {
         // const reader = new FileReader();
         let reader = this.getFileReader();
-        console.log('reader:', reader);
 
         // const zoneOriginalInstance = (reader as any)["__zone_symbol__originalInstance"];
         // if (zoneOriginalInstance) {
-        //   console.log('zoneOriginalInstance:', zoneOriginalInstance);
         // }
 
         reader.onerror = reject;
         reader.onload = () => {
-          console.log('onload callback executed');
           if (typeof reader.result === 'string') {
             resolve(reader.result);
           } else {
             reject('Method did not return a string');
           }
         };
-        console.log('Blob size inner:', blob.size);
         reader.readAsDataURL(blob);
       });
     } catch (error) {
@@ -68,11 +62,8 @@ export class RightRowComponent implements OnInit {
       const time = date.getTime()
       const fileName = Capacitor.getPlatform() == 'ios' ? `${new Date().getTime()}.jpg` : `Download/${new Date().getTime()}.jpg`;
 
-      console.log('url => ', url)
-      console.log('fileName => ', fileName)
 
       const base64Data = await this.base64FromPath(url!);
-      console.log('base64Data => ', base64Data)
 
       const directory = Capacitor.getPlatform() == 'ios' ? Directory.Library : Directory.ExternalStorage
 
@@ -83,7 +74,6 @@ export class RightRowComponent implements OnInit {
       });
 
       if (savedFile) {
-        console.log('savedFile => ', savedFile.uri)
         this.utility.presentSuccessToast('image downloaded successfully');
       }
 

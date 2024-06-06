@@ -11,11 +11,9 @@ export class StoreRowComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.item);
   }
 
   add() {
-    console.log('add works');
     this.updateQty.emit({ key: 'add', item: this.item });
   }
   sub() {

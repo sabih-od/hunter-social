@@ -33,7 +33,6 @@ export class AddRecipeComponent extends BasePage implements OnInit {
   ngOnInit() {}
 
   setFormValues() {
-    console.log(this.item);
     setTimeout(() => {
       this.id = this.item.id;
       this.aForm.patchValue({
@@ -57,7 +56,6 @@ export class AddRecipeComponent extends BasePage implements OnInit {
       ingredients: ['', Validators.compose([Validators.required])],
       description: ['', Validators.compose([Validators.required])],
     });
-    console.log('setupForm,');
   }
   async addRecipe() {
     if (!this.aForm.valid) {
@@ -74,13 +72,11 @@ export class AddRecipeComponent extends BasePage implements OnInit {
         //   this._img['base64String'],
         //   'image/' + this._img['format']
         // );
-        // console.log(blob);
         formData.append('image', this._img);
       }
       let res = this.id
         ? await this.network.editRecipe(data, this.id)
         : await this.network.addRecipe(formData);
-      console.log('AddRecipe', res);
       if (res && res.data) {
         this.utility.presentSuccessToast(res.message);
         this.modals.dismiss({ success: true });
@@ -94,7 +90,6 @@ export class AddRecipeComponent extends BasePage implements OnInit {
   async doGetPicture() {
     return new Promise(async (resolve) => {
       let resa = await this.image.openCapCamera();
-      // console.log('res ->', res);
 
       // if (res) {
       //   const { base64, blob } = res;
@@ -106,7 +101,6 @@ export class AddRecipeComponent extends BasePage implements OnInit {
       //   _img['base64String'],
       //   'image/' + _img['format']
       // );
-      // console.log(res);
       this._img = resa;
       this._image = resa;
       // const res = await this.imageReceived(blob);

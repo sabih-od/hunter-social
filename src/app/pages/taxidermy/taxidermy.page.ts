@@ -49,7 +49,6 @@ export class TaxidermyPage extends BasePage implements OnInit {
   async getTexidermy(state) {
     state = this.path ? this.path : state;
     let res = await this.network.getTaxidermy(state, this.taxidermyPage);
-    console.log('getTexidermy', res.data.data);
     if (res && res.data.data){
       this.taxidermyLastPage = res.data.last_page;
       this.taxidermies = res.data.data.sort((a, b) =>
@@ -67,7 +66,6 @@ export class TaxidermyPage extends BasePage implements OnInit {
   async getProcessing(state) {
     state = this.path ? this.path : state;
     let res = await this.network.getProcessing(state, this.processingPage);
-    console.log('getProcessing', res.data.data);
     if (res && res.data.data){
       this.processingLastPage = res.data.last_page;
       this.processing = res.data.data.sort((a, b) =>
@@ -85,7 +83,6 @@ export class TaxidermyPage extends BasePage implements OnInit {
   }
 
   pathClicked(item) {
-    console.log(item);
     this.taxidermyPage = 1;
   this.processingPage = 1;
     this.getData(item);

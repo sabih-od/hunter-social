@@ -44,11 +44,9 @@ export class HomePage extends BasePage implements OnInit {
     this.events.subscribe('POST_DELETED', this.deletePost.bind(this));
 
     // this.events.subscribe('HOW_TO_POST_UPDATED', () => {
-    //   console.log('uyyyyy686796789');
     //   this.getData();
     // });
     this.user = await this.users.getUser()
-    console.log('this.user => ', this.user)
     this.loading = true;
     this.getData();
     if (Capacitor.getPlatform() !== 'web') {
@@ -61,17 +59,13 @@ export class HomePage extends BasePage implements OnInit {
   };
 
   addPost(data) {
-    // console.log('addPost POST_ADDED_data => ', data)
     data.comments = [];
     data.user = this.user
     this.items.unshift(data)
     // this.items = [...data, this.items]
-    console.log('this.items => ', this.items)
     this.updateItems(this.items)
-    console.log('this.items => ', this.items)
   }
   deletePost(data) {
-    console.log('POST_DELETED_data => ', data)
     this.items = this.items.filter(x => x.id != data.data)
   }
 
@@ -85,9 +79,7 @@ export class HomePage extends BasePage implements OnInit {
   async getData() {
     let res = await this.network.getPosts(this.page);
     // let user = await this.users.getUser();
-    console.log('USER', this.user);
 
-    console.log('response', res);
     if (res && res.data) {
       if (res.data.next_page_url) this.next_page_url = res.data.next_page_url;
       this.updateItems(res.data.data)
@@ -118,7 +110,6 @@ export class HomePage extends BasePage implements OnInit {
   }
 
   close() {
-    console.log('Closed', closed);
 
     this.closed = true;
   }
@@ -127,7 +118,6 @@ export class HomePage extends BasePage implements OnInit {
   async callPusherService() {
     let token = localStorage.getItem('token');
     let user = await this.users.getUser();
-    console.log('callPusherService => ', user);
     if (user) {
       this.users.setUser(user);
       // get post data
@@ -141,11 +131,8 @@ export class HomePage extends BasePage implements OnInit {
   async create() {
     let res = await this.modals.present(PostAdventureContentPage);
     if (res && res?.data?.id) {
-      console.log('res.data => ', res.data)
-      console.log('POST_ADDED_data => ', res.data)
       this.addPost(res.data)
     }
-    // console.log(res);
     // if (res && res.data.refresh) this.getData();
   }
 

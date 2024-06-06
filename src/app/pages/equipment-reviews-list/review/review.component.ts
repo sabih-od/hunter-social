@@ -26,7 +26,6 @@ export class ReviewComponent extends BasePage implements OnInit {
   }
   async deleteReview() {
     let res = await this.network.deleteReview(this.item.id);
-    console.log('deleteReview', res);
     if (res && res.data) {
       this.utility.presentSuccessToast('Review deleted successfully!');
       this.events.publish('UPDATE_REVIEWS');

@@ -23,14 +23,12 @@ export class PeopleYouMayKnowComponent extends BasePage implements OnInit {
   constructor(injector: Injector) { super(injector); }
 
   ionViewWillLeave() {
-    this.dataService.searchValueChanged.unsubscribe();
-    console.log('Unsubscribed');
+    this.dataService.searchValueChanged.unsubscribe();  
   }
 
   datingEnable() {
     return new Promise<boolean>(async (resolve) => {
-      let res = await this.network.getUser();
-      console.log('checkUser', res);
+      let res = await this.network.getUser();    
 
       if (
         res &&
@@ -54,21 +52,19 @@ export class PeopleYouMayKnowComponent extends BasePage implements OnInit {
     this.checkUser();
     // this.loading = false;
     const res = await this.users.getUser();
-    this.role_id = res.role_id;
-    console.log('USRE', this.role_id);
+    this.role_id = res.role_id;  
 
     this.dataService.searchValueChanged.subscribe((e) => {
       this.datings = this.all_datings.filter((dating) =>
         dating.name?.toLowerCase().includes(e.toLowerCase())
-      );
-      console.log('DatingPage Search', e);
+      );    
     });
     // let data = await this.modals.present(UserDetailComponentComponent);
   }
 
   async checkUser() {
     // let res = await this.network.getUser();
-    // console.log('checkUser', res);
+  //
 
     // if (
     //   res &&
@@ -97,8 +93,7 @@ export class PeopleYouMayKnowComponent extends BasePage implements OnInit {
 
 
 
-  async getData(data = null) {
-    console.log('dating component getData data => ', data)
+  async getData(data = null) {  
     if (data) {
       // this.datings.find(x => x.id == data.addressee_id)
       const index = this.datings.findIndex(x => x.id == data.addressee_id)
@@ -118,17 +113,13 @@ export class PeopleYouMayKnowComponent extends BasePage implements OnInit {
         this.datings[index].is_friend = true
       } else if (data.type == 'block') {
         this.datings = this.datings.filter(x => x.id != data.addressee_id)
-      }
-      console.log('getData', this.datings);
+      }    
       return;
     }
+  
 
-    console.log('this._search => ', this._search)
-
-    let res = await this.network.getRecommendedPeople(this._search, this.page);
-    console.log('getDating => ', res?.data?.data);
-    this.next_page_url = res?.data?.next_page_url;
-    console.log('this.next_page_url => ', this.next_page_url)
+    let res = await this.network.getRecommendedPeople(this._search, this.page);  
+    this.next_page_url = res?.data?.next_page_url;  
     if (res && res?.data?.data) {
       // var newdata = res.data.splice(0,10)
       const newDatingData = res?.data?.data.map((obj) => ({
@@ -143,14 +134,12 @@ export class PeopleYouMayKnowComponent extends BasePage implements OnInit {
           !obj.is_blocked_by_friend &&
           !obj.is_friend_requested &&
           !obj.is_friend_blocked,
-      }));
-      console.log('newDatingData => ', newDatingData)
+      }));    
       this.datings = this.page == 1 ? newDatingData : [...this.datings, ...newDatingData];
     }
     this.all_datings = this.datings; //[...this.datings];
 
-    this.loading = false;
-    console.log('Here Datings getData com', this.datings);
+    this.loading = false;  
   }
 
   getAge(dob: any) {

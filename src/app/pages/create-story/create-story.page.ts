@@ -38,7 +38,6 @@ export class CreateStoryPage extends BasePage implements OnInit {
   async ngOnInit() {
     this.permission.checkStoragePermissions();
     this.user = (await this.users.getUser())
-    console.log('this.user => ', this.user)
     this.handleFileClick();
 
     this.isIOS = this.platform.is('ios');
@@ -51,30 +50,24 @@ export class CreateStoryPage extends BasePage implements OnInit {
       //alert('Selected file: ' + value);
       let file = value.target.files[0];
       self.postfile = file;
-      console.log(file);
-      console.log('self.postfile => ', self.postfile)
       if (!file) return;
       const reader = self.getFileReader();
 
       reader.readAsArrayBuffer(file);
 
       reader.onload = () => {
-        console.log('OnLoaded');
 
         // get the blob of the image:
-        console.log(reader);
 
         let blob: Blob = new Blob([
           new Uint8Array(reader.result as ArrayBuffer),
         ]);
         // self.loadingimage = false;
-        console.log(blob);
         self.post_image = self.dom.bypassSecurityTrustUrl(
           URL.createObjectURL(blob)
         );
 
         self._img = blob;
-        console.log('self._img => ', self._img)
         self.isVideo = self.image.isVideo(file.name);
         // create blobURL, such that we could use it in an image element:
 
@@ -83,8 +76,6 @@ export class CreateStoryPage extends BasePage implements OnInit {
 
       reader.onerror = (error) => {
         // self.loadingimage = false;
-        console.log('Error Occured');
-        console.log(error);
         //handle errors
       };
     };
@@ -105,7 +96,6 @@ export class CreateStoryPage extends BasePage implements OnInit {
   }
 
   close() {
-    console.log('close working')
     this.removeMedia()
     this.modals.dismiss()
   }

@@ -32,7 +32,6 @@ export class HomeBannerComponent extends BasePage implements OnInit {
     // this.getSetting();
 
     this.dataService.settings.subscribe((settings) => {
-      // console.log('subscribe => ', settings)
       if (settings) {
         this.userslimit = settings?.lifetime_users_limit;
         this.usertoavail = 5000 - this.userslimit
@@ -45,14 +44,12 @@ export class HomeBannerComponent extends BasePage implements OnInit {
   }
 
   async navigatetodating() {
-    console.log('menuClicked => ')
     const user = await this.users.getUser();
     const packageId = user.profile_detail.package_id;
 
     let isDatingEnabled = false;
     if (packageId != 1) {
       isDatingEnabled = await this.datingEnable();
-      console.log('isDatingEnabled => ', isDatingEnabled)
 
       if (!isDatingEnabled) {
         if (packageId === 3) {
@@ -79,7 +76,6 @@ export class HomeBannerComponent extends BasePage implements OnInit {
   datingEnable() {
     return new Promise<boolean>(async (resolve) => {
       let user = await this.users.getUser();
-      console.log('checkUser', user);
       if (
         user?.profile_detail &&
           !this.utility.isNullOrEmpty(user?.profile_detail.gender) &&

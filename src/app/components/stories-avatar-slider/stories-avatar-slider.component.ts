@@ -41,7 +41,6 @@ export class StoriesAvatarSliderComponent extends BasePage implements OnInit {
   }
 
   async getData() {
-    console.log('getting data')
     this.stories = await this.network.getStories() // this.dataService.getReels();
     this.stories = this.stories["data"].data;
     this.stories = this.stories.filter(story => story.items.length > 0);
@@ -68,18 +67,14 @@ export class StoriesAvatarSliderComponent extends BasePage implements OnInit {
 
 
   async openreel(item, index) {
-    // console.log('openreel index => ', index);
+  
     let res = await this.modals.present(StoryViewerPage, { item: item, tapped: index, stories: this.stories });
     this.stories = res.data.stories;
-    console.log('StoryViewerPage res => ', res);
     // if (res && res.data.refresh){}
   }
 
   async createreel() {
-    console.log('createreel => ');
     let res = await this.modals.present(CreateStoryPage);
-    console.log(res);
-    console.log('create reel function done')
     await this.getData(); // Call getData if refresh flag is true
   }
 }

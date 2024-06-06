@@ -19,7 +19,6 @@ export class StripeService {
     let res = await this.network.getUserSettings();
     if(res && res.data){
       this.settings = res.data;
-      console.log('settings => ', this.settings);
       const stripe_key = res.data.stripe_is_test_mode == '1' ? res.data.stripe_test_key : res.data.stripe_public_key
       this.stripe.setPublishableKey(
         // 'pk_live_51LphEFDlVwvNPd3Id77f7BuGkVeWudwFty5xGNQeHfF0n28RU0gcR81G2WD8p0udfsxrhZC1fOEVcl5QVeJPsoTy00QvFzcEAj'
@@ -27,7 +26,6 @@ export class StripeService {
         // 'pk_test_0rY5rGJ7GN1xEhCB40mAcWjg'
         stripe_key
       );
-      console.log('stripe_key => ', stripe_key);
 
     }
     // this.stripe.setPublishableKey(
@@ -36,7 +34,6 @@ export class StripeService {
     //   'pk_test_0rY5rGJ7GN1xEhCB40mAcWjg'
     // );
 
-    // console.log('Init');
     
   }
 
@@ -45,7 +42,6 @@ export class StripeService {
   //   if(res && res.data){
   //     this.settings = res.data
   //   }
-  //   console.log('settings => ', this.settings);
   // }
 
   makePayment(card) {

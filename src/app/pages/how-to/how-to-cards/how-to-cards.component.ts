@@ -25,7 +25,6 @@ export class HowToCardsComponent extends BasePage implements OnInit {
   }
 
   async openPopup($event) {
-    console.log(this.item);
     if (this.item.is_reported) {
       this.alert.presentFailureToast('Already reported!');
     } else {
@@ -45,13 +44,11 @@ export class HowToCardsComponent extends BasePage implements OnInit {
   //   });
   //   menu.present();
   //   let data = await menu.onDidDismiss();
-  //   console.log(data);
   //   if (data.data?.type === 'delete') this.deletePost();
   //   else if (data.data?.type === 'edit') {
   //     let res = await this.modals.present(CardSubmissionComponent, {
   //       item: this.item,
   //     });
-  //     console.log(res);
   //     if (res && res.data.refresh) this.events.publish('UPDATE_POSTS');
   //   }
   // }
@@ -98,7 +95,6 @@ export class HowToCardsComponent extends BasePage implements OnInit {
   async getComments() {
     let user = await this.users.getUser();
     let res = await this.network.getHowToVideoComments(this.item.id);
-    // console.log('getComments', res);
 
     if (res && res.data) {
       this.comments = res.data.data.map((item) => ({
@@ -127,7 +123,6 @@ export class HowToCardsComponent extends BasePage implements OnInit {
   }
 
   editVideo() {
-    console.log('Edit Video');
     this.events.publish('EDIT_VIDEO', this.item);
   }
 }

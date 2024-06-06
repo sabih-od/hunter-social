@@ -28,17 +28,6 @@ export class FooterComponent extends BasePage implements OnInit {
   init() {
     this.links = this.dataService.getFooterLinks();
     this.getSetting();
-
-    // if (this.platform.is('cordova')) {
-    //   this.appVersion.getVersionNumber().then(res => {
-    //     console.log('getVersionNumber => ', res);
-    //     this.versionNumber = res;
-    //     // console.log('this.versionNumber => ', this.versionNumber);
-    //   }).catch(error => {
-    //     console.log(error);
-    //   });
-    // }
-
   }
 
   navigate(page) {
@@ -46,15 +35,13 @@ export class FooterComponent extends BasePage implements OnInit {
   }
 
   async getSetting() {
-    this.dataService.settings.subscribe((settings) => {
-      // console.log('subscribe => ', settings)
+    this.dataService.settings.subscribe((settings) => {      
       if (settings) {
         this.settings = settings
       }
     });
     // let res = await this.network.getSettings();
-    // this.dataService.updateSetting(res.data)
-    // console.log('settings => ', res);
+    // this.dataService.updateSetting(res.data)    
     // if (res && res.data) {
     //   this.settings = res.data
     // }

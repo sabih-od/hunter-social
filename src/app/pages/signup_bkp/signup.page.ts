@@ -85,7 +85,6 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     // document.getElementById('package').onchange = function (ev) {
-    //   console.log(ev);
     // };
   }
 
@@ -141,7 +140,6 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
   //   const formdata = this.feedbackForm.value;
   //   this.loading = true;
   //   let res = await this.network.feedback(this.feedbackForm.value);
-  //   console.log('feedback res => ', res);
   //   if (res && res.data) { 
   //     this.utility.presentSuccessToast('Feedback sent successfully');
   //     this.feedbackForm.setValue({ comment: '' })
@@ -191,7 +189,6 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
     // });
 
     if (this.aForm.invalid) {
-      console.log(this.aForm.errors);
       this.utility.presentFailureToast('Please fill all fields properly');
       return;
     }
@@ -202,17 +199,14 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
       //  password_confirmation: this.aForm.value['password'],
     };
 
-    console.log(formdata);
     localStorage.setItem('userDataa', JSON.stringify(formdata));
 
     // formdata['phone'] = '+1' + this.strings.getOnlyDigits(formdata['phone']);
 
-    // console.log(formdata);
 
     this.loading = true;
 
     const res = await this.network.register(formdata);
-    console.log(res);
 
     var token = null;
     if (res?.data?.user?.token) {
@@ -248,7 +242,6 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
           });
         }
       } else {
-        console.log('freee');
         let _res = await this.network.getUser();
         this.users.setUser(_res.data.user);
         this.utility.presentSuccessToast('Success');
@@ -274,13 +267,11 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
 
   async getStates() {
     let res = await this.network.getStates();
-    console.log('States', res);
     this.users.updateStates(res && res.data ? res.data : [])
   }
 
   async getInterests() {
     let res = await this.network.getInterests();
-    console.log('interestsList', res);
     this.users.interestsList = res.data
   }
 
@@ -290,7 +281,6 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
         ev.target.value,
         false
       );
-      console.log(utel);
       ev.target.value = utel;
       this.aForm.controls['phone'].patchValue(utel);
       // ev.target.value = utel;
@@ -302,7 +292,6 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
   }
 
   onPackageSelected(value) {
-    console.log(value);
     this.signupObj.package_id = value;
   }
 
@@ -333,6 +322,5 @@ export class SignupPage extends BasePage implements OnInit, AfterViewInit {
   }
 
   // packageChanged($event) {
-  //   console.log(params);
   // }
 }

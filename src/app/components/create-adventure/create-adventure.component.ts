@@ -20,7 +20,6 @@ export class CreateAdventureComponent implements OnInit {
 
   async setUserImage() {
     let user = await this.users.getUser();
-    console.log('setUserImage => ', user.profile_image);
     this.user_image = user.profile_image;
   }
 

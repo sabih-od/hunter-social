@@ -23,7 +23,6 @@ export class CommentsComponent extends BasePage implements OnInit {
         profile_image: this.image.getImageUrl(item.user.profile_image),
       },
     }));
-    console.log('this._comments', this._comments);
   }
 
   get commments() {
@@ -44,7 +43,6 @@ export class CommentsComponent extends BasePage implements OnInit {
 
   async ngOnInit() {
     this.userData = await this.users.getUser();
-    console.log('USER', this.userData);
 
     this.events.subscribe('HOW_TO_POST_UPDATED_DELETECOMMENT', () => {
       this.modals.dismiss();
@@ -53,7 +51,6 @@ export class CommentsComponent extends BasePage implements OnInit {
 
   openPopup(item: any, $event) {
 
-    console.log(item);
     if (item.is_reported == false)
       this.alert.presentPopoverReportingComponent($event, {
         item_id: item.id,
@@ -67,7 +64,6 @@ export class CommentsComponent extends BasePage implements OnInit {
   }
 
   async addComment() {
-    console.log(this.comment);
 
     if (!this.comment || this.comment === '') return;
 
@@ -75,14 +71,12 @@ export class CommentsComponent extends BasePage implements OnInit {
       comment: this.comment,
       post_id: this._post_id,
     });
-    console.log(res);
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
       this.close(true, res.data.comments);
     }
   }
   async openreport(item) {
-    console.log('ReportComponent', item);
 
     await this.modals.present(ReportPage);
   }

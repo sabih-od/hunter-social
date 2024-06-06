@@ -34,7 +34,6 @@ export class NotificationsPage extends BasePage implements OnInit {
     // window.dispatchEvent(event);
 
     let response = await this.network.getNotifications(this.page, this.limit);
-    console.log('getNotifications response => ', response)
     this.next_page_url = response?.data?.next_page_url;
     const notiitems = response?.data?.data.map((notifi) => ({
       ...notifi,
@@ -43,7 +42,6 @@ export class NotificationsPage extends BasePage implements OnInit {
       profile_image: this.image.getImageUrl(notifi?.user?.profile_image),
     }));
     this.notifications = this.page != 1 ? [...this.notifications, ...notiitems] : notiitems;
-    console.log('this.notifications => ', this.notifications)
 
 
     // for (let i = 0; i < response?.data?.data.length; i++) {
@@ -61,9 +59,6 @@ export class NotificationsPage extends BasePage implements OnInit {
     //   this.notifications.push(obj)
     // }
 
-    console.log('this.notifications => ', this.notifications)
-    // console.log('this.currentFriends => ', this.notifications)
-    // console.log('this.currentFriends[1].profile_image => ', this.notifications[1].profile_image)
     // this.notifications = response?.data?.data
     this.loading = false;
   }
@@ -71,9 +66,7 @@ export class NotificationsPage extends BasePage implements OnInit {
 
   async acceptRequest(params) {
     const { userid, id } = params;
-    // console.log('userid, id => ', userid, id)
     let res = await this.network.acceptRequest(userid);
-    console.log('acceptRequest', res);
     if (res && res.data) {
       // this.utility.presentSuccessToast(res.message);
       const index = this.notifications.findIndex(x => x.id == id)
@@ -92,7 +85,6 @@ export class NotificationsPage extends BasePage implements OnInit {
   async ignoreRequest(params) {
     const { userid, id } = params;
     let res = await this.network.ignoreRequest(userid);
-    console.log('ignoreRequest', res);
     if (res && res.data) {
       this.notifications = this.notifications.filter(x => x.id != id)
       // this.utility.presentSuccessToast(res.message);
@@ -102,7 +94,6 @@ export class NotificationsPage extends BasePage implements OnInit {
   }
 
   async clickNotification(item) {
-    console.log('clickNotification item => ', item)
     if (item?.cm_u_id) {
       this.nav.push('pages/conversations', {
         type: 'individual',
@@ -113,11 +104,9 @@ export class NotificationsPage extends BasePage implements OnInit {
         is_admin: 1,
       })
     } else {
-      console.log('clickNotification 123 => ')
       let res = await this.network.readNotifiaction({
         "ids": item?.id
       })
-      console.log('clickNotification => ', res)
       // this.users.getNotificationCount()
       // const count = JSON.parse(localStorage.getItem('notifications_count'));
       this.badge.decrease(1);
@@ -132,11 +121,9 @@ export class NotificationsPage extends BasePage implements OnInit {
   }
 
   // async clickNotification(id) {
-  //   console.log('clickNotification id => ', id)
   //   let res = await this.network.readNotifiaction({
   //     "ids": id
   //   })
-  //   console.log('clickNotification => ', res)
   //   // const count = JSON.parse(localStorage.getItem('notifications_count'));
 
   //   this.getNotificationCount();
@@ -151,7 +138,6 @@ export class NotificationsPage extends BasePage implements OnInit {
 
   async getNotificationCount() {
     const noticount = await this.network.getUnreadNotificationCount();
-    console.log('getUnreadNotificationCount notifications page => ', noticount)
     this.dataService.updateNotificationsCount(noticount?.data?.count);
   }
 

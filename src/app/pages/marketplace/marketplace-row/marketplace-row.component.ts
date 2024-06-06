@@ -56,43 +56,35 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
 
   createListing() {
     this.modals.present(CreateListingPage).then(res => {
-      console.log('CreateListingPage res => ', res)
       if (res?.data?.refresh) {
         this.getProducts(null)
         this.onFilter();
       }
     })
     // this.nav.navigateTo('pages/create-listing');
-    console.log('jshdlkjsh');
   }
 
   async user() {
     let data = await this.network.getUser();
-    console.log('user id', data.data.user.id);
     this.userId = data.data.user.id;
   }
 
   // async products() {
   //   this.isMyProductListing = true;
-  //   console.log('user', this.userId);
   //   this.user();
   //   // let data = await this.network.getMyProducts({id:this.userId})
   //   let data = await this.network.getMyProducts();
-  //   console.log('this is products', data);
   //   this.productList = data.data.data;
   // }
 
   async getStates() {
     let res = await this.users.states.subscribe(states => {
       this.states = states;
-      console.log('this.states => ', this.states);
     });
-    // console.log('getStates', res);
     // this.states = res.data;
   }
 
   async myListing(item) {
-    console.log('user', this.userId);
     this.selectedCategoryId = null;
     this.loading = true;
     if (!this.isMyProductListing) {
@@ -105,8 +97,6 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
       this.productList = [];
       this.page = 1;
     }
-    console.log('category id', item?.id);
-    console.log('selectedCategoryId id', this.selectedCategoryId);
     if (item?.id) this.selectedCategoryId = item?.id;
 
     // this.user();
@@ -119,10 +109,8 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     let response = await this.network.getMyListing(params, this.page);
     if (response?.data?.data?.length == 0) this.shouldloadmore = false; else this.shouldloadmore = true;
     this.loading = false;
-    console.log('this is mylisting', response.data.data);
     // this.productList = response.data.data;
     this.productList = this.page == 1 ? response.data.data : [...this.productList, ...response.data.data];
-    console.log('this is mylisting this.productList => ', this.productList);
   }
 
   async getProducts(item) {
@@ -141,8 +129,6 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
       this.page = 1;
       this.next_page_url = null;
     }
-    console.log('category id', item?.id);
-    console.log('selectedCategoryId id', this.selectedCategoryId);
     if (item?.id) this.selectedCategoryId = item?.id;
     // let data = await this.network.getProductss({query:null,category_id:item.id})
     const params = {
@@ -152,32 +138,26 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     }
     let res = await this.network.getProductss(params, this.page);
     if (res.data.next_page_url) { this.next_page_url = res.data.next_page_url; } else { this.next_page_url = null; }
-    console.log('this.next_page_url => ', this.next_page_url)
     // if (res?.data?.data?.length == 0) this.shouldloadmore = false; else this.shouldloadmore = true;
     this.loading = false;
     if (this.eventref) {
       this.eventref.target.complete();
     }
-    console.log('filter', res);
     // this.filterProducts = res.data.data;
     this.productList = this.page == 1 ? res.data.data : [...this.productList, ...res.data.data];
-    console.log('this.productList => ', this.productList);
   }
 
   async onFilter() {
     let data = await this.network.getCategories(this.searchTerm);
-    console.log('this is', data);
     this.categories = data;
   }
   onInput(event: any) {
     this.searchTerm = event.target.value;
-    console.log('sdaskjdhasjdlkjh', this.searchTerm);
   }
   timeToken;
   async onTopInput(event: any) {
     this.topSearch = event.target.value;
     this.page = 1;
-    // console.log('top value', this.searchTerm);
     // let data = await this.network.getProductss({
     //   query: this.topSearch,
     //   category_id: null,
@@ -198,13 +178,11 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
       //   query: this.topSearch,
       // });
       // this.productList = data.data;
-      // console.log('filter', data);
     }
 
   }
 
   details(item: any) {
-    console.log('prodct detail', item);
     let data = item;
     this.modals.present(ProductDetailsComponent, {
       data,

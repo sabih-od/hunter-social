@@ -40,37 +40,30 @@ export class CreateStoryComponent extends BasePage implements OnInit {
     document.getElementById('fileInput').onchange = function (value: any) {
       // self.loadingimage = true;
       //alert('Selected file: ' + value);
-      let file = value.target.files[0];
-      console.log(file);
+      let file = value.target.files[0];      
       if (!file) return;
       const reader = self.getFileReader();
 
       reader.readAsArrayBuffer(file);
 
-      reader.onload = () => {
-        console.log('OnLoaded');
+      reader.onload = () => {        
 
-        // get the blob of the image:
-        console.log(reader);
+        // get the blob of the image:        
 
         let blob: Blob = new Blob([
           new Uint8Array(reader.result as ArrayBuffer),
         ]);
-        // self.loadingimage = false;
-        console.log(blob);
+        // self.loadingimage = false;        
         self.post_image = self.dom.bypassSecurityTrustUrl(
           URL.createObjectURL(blob)
         );
-        self._img = blob;
-        console.log('self._img => ', self._img)
+        self._img = blob;        
         self.isVideo = self.image.isVideo(file.name);
         // create blobURL, such that we could use it in an image element:
       };
 
       reader.onerror = (error) => {
-        // self.loadingimage = false;
-        console.log('Error Occured');
-        console.log(error);
+        // self.loadingimage = false;                
         //handle errors
       };
     };

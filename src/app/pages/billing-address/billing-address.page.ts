@@ -42,18 +42,14 @@ export class BillingAddressPage extends BasePage implements OnInit {
       shipping_state: ['', Validators.compose([])],
       shipping_zip: ['', Validators.compose([])],
     });
-    console.log('setupForm,');
 
     // this.aForm.controls['first_name'].setValue('asdasd')
     // this.aForm.controls['last_name'].setValue('asdasd')
   }
   ngOnInit() {
     this.cart = this.dataService.cart;
-    console.log(this.cart);
-    // console.log('this.dataService.user_data => ', this.dataService.user_data)
     this.users.getUser().then((user) => {
       this.user = user;
-      console.log('this.user => ', this.user)
 
       user?.customer?.first_name && this.aForm.controls['first_name'].setValue(user?.customer?.first_name)
       user?.customer?.last_name && this.aForm.controls['last_name'].setValue(user?.customer?.last_name)
@@ -100,10 +96,8 @@ export class BillingAddressPage extends BasePage implements OnInit {
       delete data.shipping_country;
       delete data.shipping_state;
       delete data.shipping_zip;
-      console.log('SENDING_DATA', data);
 
       let res = await this.network.checkOut(data);
-      console.log('checkOut', res);
       if (res && res.data) {
         this.utility.presentSuccessToast(res.message);
 

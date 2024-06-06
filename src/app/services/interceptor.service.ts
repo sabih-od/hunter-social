@@ -30,29 +30,9 @@ export class InterceptorService implements HttpInterceptor {
 
       let token = localStorage.getItem('token');
       resolve(token);
-      // this.sqlite.getCurrentUserAuthorizationToken().then( v => {
-      //   // console.log("token must be here", v);
-      //   resolve(v);
-      // }).catch( err => {
-      //   console.error(err);
-      //   resolve(null)
-      // });
 
     });
   }
-
-  // private addSecret(request: HttpRequest<any>, value: any){
-  //   let v = value ? value : '';
-  //   let clone = request.clone({
-  //     setHeaders : {
-  //       Authorization: 'Bearer ' + v,
-  //       Accept: "*",
-  //       'Content-Type': "application/json",
-  //       'X-Requested-With': 'XMLHttpRequest'
-  //     }
-  //   })
-  //   return clone;
-  // }
 
   private addSecret(request: HttpRequest<any>, value: any) {
 
@@ -70,7 +50,6 @@ export class InterceptorService implements HttpInterceptor {
     if (cnt == 'application/json') {
       obj['Content-Type'] = request.headers.get('Content-Type');
     }
-    // console.log('Here => ', obj);
     
 
     const clone = request.clone(

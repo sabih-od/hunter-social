@@ -20,12 +20,10 @@ export class ProductReviewPage extends BasePage implements OnInit {
   
 
   async ngOnInit() {
-    console.log('review', this.review);
     if (this.review) {
       this.setReviewForEdit();
     }
     let res = await this.network.getUser();
-    console.log(res);
     if (res && res.data && res.data.user) {
       this.user = res.data.user;
     }
@@ -68,7 +66,6 @@ export class ProductReviewPage extends BasePage implements OnInit {
   }
 
   changeRating(_rating) {
-    console.log('_rating => ', _rating) 
     this.rating = _rating;
   }
 }

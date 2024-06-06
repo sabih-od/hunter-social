@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, Inject, Injector, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef, Injector, Input, ChangeDetectorRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ChooserResult } from '@awesome-cordova-plugins/chooser/ngx';
-import { FileSelectResult } from 'capacitor-file-select';
 import { BasePage } from '../base-page/base-page';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Capacitor } from '@capacitor/core';
+import { Filesystem } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-post-adventure-content',
@@ -11,170 +11,142 @@ import { BasePage } from '../base-page/base-page';
   styleUrls: ['./post-adventure-content.page.scss'],
 })
 export class PostAdventureContentPage extends BasePage implements OnInit {
-  aForm: FormGroup;
-  _img;
-  content;
-  post_image;
-  _item;
-  mediaRemoved = 0;
-  user_image;
+  @ViewChild('file') fileInput!: ElementRef;
+  @Input() item: any;
+  post_image; // Ensure post_image can handle Blob or string
+  content = '';
   isVideo = false;
-  type;
   loadingimage = false;
   isIOS = false;
-  postfile
-
-  @ViewChild('file') fileInput!: ElementRef;
-
-  @Input() set item(val) {
-    this._item = val;
-    console.log(val);
-    this.content = val.content;
-    this.post_image = val.media_upload.url;
-  }
-
-  get item() {
-    return this._item;
-  }
+  viewImage;
 
   constructor(injector: Injector, public dom: DomSanitizer, private cdr: ChangeDetectorRef) {
     super(injector);
   }
 
-  async ngOnInit() {
-    this.permission.checkStoragePermissions();
-    this.user_image = (await this.users.getUser()).profile_image;
-    // this.handleFileClick();
-
+  ngOnInit() {
     this.isIOS = this.platform.is('ios');
   }
 
-  fileSelected(event: any) {
-    let self = this;
-    
-    const file: File = event.target.files[0]; // Get the selected file
+  async takePicture() {
+    if (Capacitor.isPluginAvailable('Camera')) {
+      try {
+        const image = await Camera.getPhoto({
+          quality: 90,
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Camera
+        });
+        this.viewImage = this.dom.bypassSecurityTrustUrl(image.webPath);
+        const response = await fetch(image.webPath!);
+        const blob = await response.blob();
+        this.post_image = blob;
+        this.isVideo = false;
+        this.cdr.detectChanges();
+      } catch (error) {
+        console.error('Error taking picture', error);
+        this.utility.presentFailureToast('Error taking picture');
+      }
+    } else {
+      this.utility.presentFailureToast('Camera not available');
+    }
+  }
+
+  async pickImage() {
+    if (Capacitor.isPluginAvailable('Camera')) {
+      try {
+        const image = await Camera.getPhoto({
+          quality: 90,
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Photos
+        });
+        this.viewImage = this.dom.bypassSecurityTrustUrl(image.webPath);
+        if (image.webPath.startsWith('http')) {
+          const blob = await fetch(image.webPath).then(r => r.blob());
+          this.post_image = blob;
+        } else {
+          // Assuming Filesystem.readFile returns a base64 encoded string
+          const file = await Filesystem.readFile({
+            path: image.path
+          });
+          // Convert base64 string to Blob
+          this.post_image = this.b64toBlob(file.data, 'image/jpeg');
+        }
+        this.isVideo = image.format === 'video';
+        this.cdr.detectChanges();
+      } catch (error) {
+        console.error('Error picking image', error);
+        this.utility.presentFailureToast('Error picking image');
+      }
+    } else {
+      this.utility.presentFailureToast('Camera/Photos not available');
+    }
+  }
+
+  b64toBlob(b64Data, contentType = 'image/jpeg', sliceSize = 512) {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+      const byteNumbers = new Array(slice.length).fill(null).map((_, i) => slice.charCodeAt(i));
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    return new Blob(byteArrays, { type: contentType });
+  }
+
+  handleFileInput(event: any) {
+    const file = event.target.files[0];
     if (file) {
-      self.postfile = file;
-      console.log(file);
-      console.log('self.postfile => ', self.postfile)
-      if (!file) return;
-      const reader = self.getFileReader();
-
-      reader.readAsArrayBuffer(file);
-
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
       reader.onload = () => {
-        console.log('OnLoaded');
-        const arrayBuffer = reader.result as ArrayBuffer;
-        const blob = new Blob([arrayBuffer], { type: file.type });
-        self._img = blob;
-        const imageUrl = self.dom.bypassSecurityTrustUrl(URL.createObjectURL(blob));
-        self.post_image = imageUrl;
-        console.log('self.post_image => ', self.post_image)
-
-        self.isVideo = self.image.isVideo(file.name);
-        self.cdr.detectChanges();
-      };
-
-      reader.onerror = (error) => {
-        // self.loadingimage = false;
-        console.log('Error Occured');
-        console.log(error);
-        //handle errors
+        this.post_image = reader.result;
+        this.isVideo = file.type.startsWith('video');
+        this.cdr.detectChanges();
       };
     }
   }
 
-  handleFileClick() {
-    let self = this;
-    
-    document.getElementById('fileInput').onchange = function (value: any) {
-      // self.loadingimage = true;
-      //alert('Selected file: ' + value);
-      let file = value.target.files[0];
-      self.postfile = file;
-      console.log(file);
-      console.log('self.postfile => ', self.postfile)
-      if (!file) return;
-      const reader = self.getFileReader();
-
-      reader.readAsArrayBuffer(file);
-
-      reader.onload = () => {
-        console.log('OnLoaded');
-        const arrayBuffer = reader.result as ArrayBuffer;
-        const blob = new Blob([arrayBuffer], { type: file.type });
-        self._img = blob;
-        const imageUrl = self.dom.bypassSecurityTrustUrl(URL.createObjectURL(blob));
-        self.post_image = imageUrl;
-        console.log('self.post_image => ', self.post_image)
-
-        self.isVideo = self.image.isVideo(file.name);
-        self.cdr.detectChanges();
-      };
-
-      reader.onerror = (error) => {
-        // self.loadingimage = false;
-        console.log('Error Occured');
-        console.log(error);
-        //handle errors
-      };
-    }
-    
-  }
   async post() {
-    let data = new FormData();
-    data.append('content', this.content);
-    if (this._img) {
-      console.log('post this._img => ', this._img)
-      data.append('post_file', this.postfile)
-      // data.append('post_file', this._img);
-    } else data.append('post_file', '');
+    this.loadingimage = true;
+    try {
+      let data = new FormData();
+      data.append('content', this.content);
+      if (this.post_image && this.post_image instanceof Blob) {
+        data.append('post_file', this.post_image, 'uploaded_image.jpg'); // Correct handling of Blob
+      }
 
-    if (this._item) {
-      console.log('this._item => ', this._item)
-      data.append('_method', 'PUT');
-      data.append('is_media_remove', this.mediaRemoved.toString());
+      await this.processPost(data); // Send data to your server
+    } catch (error) {
+      console.error('Error while posting:', error);
+      this.utility.presentFailureToast('Something went wrong');
+      this.loadingimage = false;
     }
+  }
 
-    console.log('data => ', data.get('post_file'))
-    let res = await this.network.postData(data, this._item?.id);
-    console.log(res);
+  async processPost(data: FormData) {
+    let res = await this.network.postData(data, this.item?.id); // Ensure network.postData can handle FormData
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
-      // this.events.publish('POST_ADDED', { data: res.data });
-      this.modals.dismiss(res.data)
-      // this.close(true);
-    } else
+      this.modals.dismiss(res.data);
+      console.log(res)
+    } else {
       this.utility.presentFailureToast(
         res?.message
           ? res.message
-          : res?.error && res.error.errors.post_file
-            ? res.error.errors.post_file
-            : 'Something went wrong'
+          : 'Something went wrong'
       );
+    }
+    this.loadingimage = false;
+  }
+
+  removeMedia() {
+    this.post_image = null;
+    this.fileInput.nativeElement.value = '';
+    this.cdr.detectChanges();
   }
 
   close(refresh) {
     this.modals.dismiss({ refresh: refresh });
-  }
-
-  removeMedia() {
-    console.log('remove button working')
-    this.mediaRemoved = 1;
-    this._img = null;
-    this.post_image = null;
-
-    this.fileInput.nativeElement.value = '';
-
-    // After updating the post_image, trigger change detection
-    this.cdr.detectChanges();
-  }
-
-  getFileReader(): FileReader {
-    const fileReader = new FileReader();
-    const zoneOriginalInstance = (fileReader as any)[
-      '__zone_symbol__originalInstance'
-    ];
-    return zoneOriginalInstance || fileReader;
   }
 }

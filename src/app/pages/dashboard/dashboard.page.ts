@@ -50,7 +50,6 @@ export class DashboardPage extends BasePage implements OnInit {
   }
 
   newMessage(data) {
-    console.log('newMessage data => ', data)
     this.users.getNotificationCount()
     if (data.sender_id) {
       const list = this.friends.map(x => {
@@ -61,15 +60,12 @@ export class DashboardPage extends BasePage implements OnInit {
         return x;
       })
 
-      console.log('list => ', list)
       // const index = _.findIndex(list, { 'sender_id': data.sender_id });
       const index = list.findIndex(x => x.id == data.sender_id);
-      console.log('index => ', index)
       if (index !== -1) {
         const movedObject = list.splice(index, 1)[0];
         list.unshift(movedObject);
       }
-      console.log('list => ', list)
 
       this.friends = list;
     }
@@ -78,14 +74,12 @@ export class DashboardPage extends BasePage implements OnInit {
   friendNotiCount = 0;
   async getNotificationsObject() {
     this.dataService.notification_and_message_count.subscribe(data => {
-      console.log('this.dataService.notification_and_message_count data => ', data)
       this.friendNotiCount = data?.friend;
       this.unreadNotificationCount = data?.unread_count;
     })
   }
 
   async clickNotification(item) {
-    console.log('clickNotification item => ', item)
     if (item?.cm_u_id) {
       this.nav.push('pages/conversations', {
         type: 'individual',
@@ -96,11 +90,9 @@ export class DashboardPage extends BasePage implements OnInit {
         is_admin: 1,
       })
     } else {
-      console.log('clickNotification 123 => ')
       let res = await this.network.readNotifiaction({
         "ids": item?.id
       })
-      console.log('clickNotification => ', res)
       // this.users.getNotificationCount()
       // const count = JSON.parse(localStorage.getItem('notifications_count'));
       this.badge.decrease(1);
@@ -114,7 +106,6 @@ export class DashboardPage extends BasePage implements OnInit {
     this.sender_id = this.dataService.dataId;
     let res = await this.network.getDashboardFriends(this.friendspage, 20);
     this.loading = false;
-    console.log('friends response => ', res?.data?.data)
     let self = this;
     if (res && res?.data?.data) {
       const friendslist = res?.data?.data.map((item) => ({
@@ -123,7 +114,6 @@ export class DashboardPage extends BasePage implements OnInit {
         profile_image: this.image.getImageUrl(item?.profile_image),
       }));
       this.friends = this.friendspage != 1 ? [...this.friends, ...friendslist] : friendslist;
-      console.log('this.friends => ', this.friends)
 
       // this.friends = [
       //   {
@@ -135,18 +125,15 @@ export class DashboardPage extends BasePage implements OnInit {
     } else
       this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
     // this.dataService.dataId = null;
-    // console.log('Sender Id destroyed', this.sender_id);
 
     // this.friends = response?.data?.data.map((item) => ({
     //   ...item,
     //   // hasUnread: self.sender_id === item.id,
     //   profile_image: this.image.getImageUrl(item.profile_image),
     // }));
-    console.log('this.friends => ', this.friends)
     // this.friends = response?.data?.data
 
     const resp = await this.network.getUserOrders();
-    console.log('orders resp => ', resp)
     if (resp && resp?.data) {
       this.orderslength = resp?.data.length || 0;
     }
@@ -163,41 +150,35 @@ export class DashboardPage extends BasePage implements OnInit {
 
   // async getNotifications() {
   //   let response = await this.network.getNotifications(1, 10);
-  //   console.log('getNotifications response => ', response)
   //   this.notifications = response?.data?.data.map((item) => ({
   //     ...item,
   //     // hasUnread: self.sender_id === item.id,
   //     profile_image: this.image.getImageUrl(item?.notificationable?.addressee?.profile_image),
   //   }));
-  //   console.log('this.notifications => ', this.notifications)
   //   this.notifications = response?.data?.data
   // }
 
   async getRecipeAlerts() {
     let response = await this.network.getRecipeAlerts(1, 10);
     this.loading = false;
-    console.log('recipesAlerts response => ', response?.data?.data)
     response.message != '' && this.utility.presentSuccessToast(response.message);
     // this.recipesAlerts = response?.data?.data.map((item) => ({
     //   ...item,
     //   // hasUnread: self.sender_id === user.id,
     //   // profile_image: this.image.getImageUrl(user.profile_image),
     // }));
-    // console.log('this.recipesAlerts => ', this.recipesAlerts)
     if (response?.data?.data) { this.recipesAlerts = response?.data?.data ? response?.data?.data : [] }
   }
 
   async getPostAlerts() {
     let response = await this.network.getPostAlerts(1, 10);
     this.loading = false;
-    console.log('postAlerts response => ', response?.data?.data)
     response.message != '' && this.utility.presentSuccessToast(response.message);
     // this.postAlerts = response?.data?.data.map((item) => ({
     //   ...item,
     //   // hasUnread: self.sender_id === item.id,
     //   profile_image: this.image.getImageUrl(item.media_upload?.url),
     // }));
-    // console.log('this.postAlerts => ', this.postAlerts)
     if (response?.data?.data) { this.postAlerts = response?.data?.data ? response?.data?.data : [] }
   }
 
@@ -222,7 +203,6 @@ export class DashboardPage extends BasePage implements OnInit {
 
     let response = await this.network.getNotifications(1, 10);
 
-    console.log('getNotifications response => ', response)
     const notiitems = response?.data?.data.map((notifi) => ({
       ...notifi,
       // hasUnread: self.sender_id === notifi.id,
@@ -230,7 +210,6 @@ export class DashboardPage extends BasePage implements OnInit {
       profile_image: this.image.getImageUrl(notifi?.user?.profile_image),
     }));
     this.notifications = this.page != 1 ? [...this.notifications, ...notiitems] : notiitems;
-    console.log('this.notifications => ', this.notifications)
 
     // this.notifications = []
     // for (let i = 0; i < response?.data?.data.length; i++) {
@@ -247,14 +226,11 @@ export class DashboardPage extends BasePage implements OnInit {
     //   }
     //   this.notifications.push(obj)
     // }
-    // console.log('this.currentFriends => ', this.notifications)
-    // console.log('this.currentFriends[1].profile_image => ', this.notifications[1].profile_image)
     // this.notifications = response?.data?.data
     this.loading = false;
   }
 
   segmentChanged($event) {
-    console.log('event.target.value => ', $event.target.value)
     if ($event.target.value == 'settings') {
       this.tab = $event.target.value;
       // this.goToProfile()
@@ -304,13 +280,11 @@ export class DashboardPage extends BasePage implements OnInit {
           // } else {
           //   this.ProcActivo = false;
           // }
-          console.log('No')
         }
       },
       {
         text: 'Yes',
         handler: () => {
-          console.log('Yes')
           this.deleteAccount('');
         }
       }
@@ -322,7 +296,6 @@ export class DashboardPage extends BasePage implements OnInit {
 
   async blockUser() {
     let formData = new FormData();
-    console.log('block user => ', this.user_id)
     formData.append('user_id', this.user_id);
     // alert(JSON.stringify(formData))
     // alert(JSON.stringify(this.user_id))
@@ -338,9 +311,7 @@ export class DashboardPage extends BasePage implements OnInit {
 
   async acceptRequest(params) {
     const { userid, id } = params;
-    // console.log('userid, id => ', userid, id)
     let res = await this.network.acceptRequest(userid);
-    console.log('acceptRequest', res);
     if (res && res.data) {
       // this.utility.presentSuccessToast(res.message);
       const index = this.notifications.findIndex(x => x.id == id)
@@ -359,7 +330,6 @@ export class DashboardPage extends BasePage implements OnInit {
   async ignoreRequest(params) {
     const { userid, id } = params;
     let res = await this.network.ignoreRequest(userid);
-    console.log('ignoreRequest', res);
     if (res && res.data) {
       this.notifications = this.notifications.filter(x => x.id != id)
       // this.utility.presentSuccessToast(res.message);

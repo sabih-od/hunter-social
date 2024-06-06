@@ -27,7 +27,6 @@ export class FeebackComponent implements OnInit {
 
   async submitFeedback() {
     const formdata = this.feedbackForm.value;
-    console.log('formdata res => ', this.feedbackForm.controls.comment?.errors?.minlength);
     if (this.feedbackForm.controls.comment?.errors?.required) {
       this.utility.presentFailureToast('Please privde a valid feedback');
       return;
@@ -43,7 +42,6 @@ export class FeebackComponent implements OnInit {
 
     this.loading = true;
     let res = await this.network.feedback(this.feedbackForm.value);
-    console.log('feedback res => ', res);
     if (res && res.data) {
       this.utility.presentSuccessToast('Feedback sent successfully');
       this.feedbackForm.setValue({ comment: '' })

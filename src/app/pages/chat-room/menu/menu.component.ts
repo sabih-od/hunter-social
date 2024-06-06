@@ -26,7 +26,6 @@ export class MenuComponent extends BasePage implements OnInit {
     this.popoverController.dismiss({ type });
   }
   async openreport() {
-    console.log('PING432634', this.item);
 
     if (this.item.is_reported) {
       this.alert.presentFailureToast('Already reported!');

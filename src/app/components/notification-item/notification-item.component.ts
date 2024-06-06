@@ -15,8 +15,6 @@ export class NotificationItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
-    // console.log('item => ', this.item.content)
     if (this.item.cm_name && !this.item.content.includes('sent message')) {
       this.item.content = `${this.item.cm_name} sent message "${this.item.content}"`;
     }
@@ -42,30 +40,5 @@ export class NotificationItemComponent implements OnInit {
   ignoreRequest(userid, id) {
     this.ignoreClicked.emit({ userid, id });
   }
-
-  // async acceptRequest(userid, id) {
-  //   // let res = await this.network.acceptRequest(userid);
-  //   // console.log('acceptRequest', res);
-  //   // if (res && res.data) {
-  //   //   // this.utility.presentSuccessToast(res.message);
-  //   //   const index = this.notifications.findIndex(x => x.id == id)
-  //   //   this.notifications[index].notificationable.user.is_friend_requested = false;
-  //   //   this.notifications[index].notificationable.user.is_friend = true;
-  //   //   this.events.publish('UPDATE_CHATS');
-  //   // } else
-  //   //   this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
-  // }
-
-  // async ignoreRequest(userid, id) {
-  //   // let res = await this.network.ignoreRequest(userid);
-  //   // console.log('ignoreRequest', res);
-  //   // if (res && res.data) {
-  //   //   this.notifications = this.notifications.filter(x => x.id != id)
-  //   //   // this.utility.presentSuccessToast(res.message);
-  //   //   this.events.publish('UPDATE_CHATS');
-  //   // } else
-  //   //   this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
-  // }
-
 
 }

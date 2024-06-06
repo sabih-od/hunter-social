@@ -20,7 +20,6 @@ export class ContactUsPage extends BasePage implements OnInit {
   ngOnInit() {
     this.user = localStorage.getItem('user');
     this.user = JSON.parse(this.user);
-    console.log('this.user => ', this.user)
     this.initializeForm();
   }
 
@@ -71,7 +70,6 @@ export class ContactUsPage extends BasePage implements OnInit {
   }
 
   async sumit() {
-    console.log('this.contactForm.controls => ', this.contactForm.controls)
     if (this.contactForm.controls.fname?.errors?.required) { this.utility.presentFailureToast('First name is required'); return; }
     if (this.contactForm.controls.fname?.errors?.pattern) { this.utility.presentFailureToast('Please provide valid first name'); return; }
     if (this.contactForm.controls.lname?.errors?.required) { this.utility.presentFailureToast('Last name is required'); return; }
@@ -97,7 +95,6 @@ export class ContactUsPage extends BasePage implements OnInit {
 
     const formdata = this.contactForm.value;
     this.loading = true;
-    console.log('formdata => ', formdata)
 
     try {
       let res = await this.network.contactUs(formdata);
@@ -107,7 +104,6 @@ export class ContactUsPage extends BasePage implements OnInit {
         // this.nav.pop();
       } else this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
     } catch (err) {
-      console.log(err);
       // this.utility.presentFailureToast('Something Went Wrong');
     } finally {
       this.loading = false;

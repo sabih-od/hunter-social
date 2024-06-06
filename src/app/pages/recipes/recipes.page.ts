@@ -35,7 +35,6 @@ export class RecipesPage extends BasePage implements OnInit {
 
   ngOnInit() {
     this.events.subscribe('RECEIPE_UPDATED', (data) => {
-      console.log('recipe_updated');
       // this.recipies = [];
       // this.page_num = 1;
       // this.getData(); 
@@ -65,7 +64,6 @@ export class RecipesPage extends BasePage implements OnInit {
       this.page_num > 1 ? this.page_num : null
     );
     let user = await this.users.getUser();
-    console.log('getrecipes', res);
     if (res && res.data) {
       this.recipies = [
         ...this.recipies,

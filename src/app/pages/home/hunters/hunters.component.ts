@@ -25,7 +25,6 @@ export class HuntersComponent extends BasePage implements OnInit {
   navigate(url) {
     // if (url === 'post1') this.nav.push('pages/post-adventure');
     this.packageId = this.user?.profile_detail?.package_id;
-    console.log(url, this.packageId);
 
     if (this.packageId != 1) {
       this.goto('pages/post-adventure');

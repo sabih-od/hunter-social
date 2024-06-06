@@ -29,7 +29,6 @@ export class PopoverComponent extends BasePage implements OnInit {
     this.getUser();
     this.current_user = await this.users.getUser();
     this.isOwnProfile = this.current_user.id == this.user_id;
-    console.log(this.isOwnProfile);
     const user_profile_data = await this.network.getUserProfile(this.user_id);
     this.user_profile = user_profile_data.data;
     if (this.isOwnProfile) this.dataService.user_data = this.user_profile;
@@ -39,7 +38,6 @@ export class PopoverComponent extends BasePage implements OnInit {
   async ionViewWillEnter() {
     this.current_user = await this.users.getUser();
 
-    console.log('userid', this.current_user.id, this.data.user_id);
 
     // if(this.data.user_id === this.current_user.id){
     this.showDelete = this.data.user_id === this.current_user.id;
@@ -59,9 +57,7 @@ export class PopoverComponent extends BasePage implements OnInit {
 
   async block() {
     this.popover.dismiss()
-    console.log('this.data => ', this.data.item_id)
     let formData = new FormData();
-    console.log('block user => ', this.data.item_id)
     formData.append('user_id', this.data.item_id);
     // alert(JSON.stringify(formData))
     // alert(JSON.stringify(this.data.item_id))
@@ -75,7 +71,6 @@ export class PopoverComponent extends BasePage implements OnInit {
   }
 
   async deleteComment() {
-    console.log(this.data);
     let res = await this.network.deleteHowToComment(this.data.item_id);
     if (res && res.data) {
       this.events.publish('HOW_TO_POST_UPDATED');

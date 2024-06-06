@@ -25,12 +25,10 @@ export class EquipmentReviewsListPage extends BasePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log('fdsafdsafdsafdsafdsa');
   }
 
   async addNew() {
     let res = await this.modals.present(AddReviewComponent);
-    console.log(res, 'addNew');
 
     if (res && res.data?.refresh) this.getData();
   }
@@ -50,14 +48,12 @@ export class EquipmentReviewsListPage extends BasePage implements OnInit {
     );
 
     this.network.getEquipmentShow(item.id).then((data) => {
-      console.log(data);
       if (data.data) {
         let f = data.data;
         this.videos = f.videos;
       }
     });
 
-    console.log(res);
 
     if (res && res.data) {
       let user = await this.users.getUser();

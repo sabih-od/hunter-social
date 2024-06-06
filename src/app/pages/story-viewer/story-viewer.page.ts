@@ -25,13 +25,10 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
   @ViewChild("video") set videoElement(video: ElementRef) {
     if (video) {
       this.video = video.nativeElement;
-      console.log('this.video => ', this.video)
       this.video.onwaiting = () => {
-        console.log('this.video.onwaiting this.isWaiting => ', this.isWaiting)
         this.isWaiting = true;
       };
       this.video.onready = this.video.onload = this.video.onplaying = this.video.oncanplay = () => {
-        console.log('this.video.oncanplay this.isWaiting => ', this.isWaiting);
         this.isWaiting = false;
       };
 
@@ -69,9 +66,6 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
     if (Capacitor.getPlatform() !== 'web') {
       this.setStatusBarStyleDark()
     }
-    console.log('this.stories => ', this.stories)
-    console.log('item => ', this.item)
-    console.log('this.tapped => ', this.tapped)
   }
 
   setStatusBarStyleDark = async () => {
@@ -89,21 +83,17 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
   }
 
   async getCurrentStory() {
-    // console.log('this.stories[await this.slides.getActiveIndex()] => ', this.stories[await this.slides.getActiveIndex()])
     return this.stories[await this.slides.getActiveIndex()];
   }
 
   async nextStoryItem() {
     const currentStory = await this.getCurrentStory()
     if (this.video) this.video.pause();
-    // console.log('currentStory => ', currentStory)
-    // console.log('currentStory.items => ', currentStory.items)
     if (currentStory.currentItem < currentStory.items.length - 1) {
       currentStory.currentItem++;
       this.setStorySeen();
     } else {
       const isEnd = await this.slides.isEnd();
-      console.log('isEnd => ', isEnd)
       if (isEnd) {
         this.closeStoryViewer();
       } else {
@@ -130,19 +120,16 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
       } else {
         // If you're at the beginning of the first story, you might want to handle this case accordingly
         // Maybe close the story viewer or loop to the end of the last story
-        console.log('Already at the beginning');
       }
     }
   }
   
   pauseStory() {
-    console.log('pause')
     this.isPaused = true;
     if (this.video) this.video.pause();
   }
 
   playStory() {
-    console.log('pause')
     this.isPaused = false;
     if (this.video) this.video.play();
   }
@@ -168,7 +155,6 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
   }
 
   changeStoryItem(event: any, story: any) {
-    console
     if (!event || !event.center || !this.platform || !this.platform.width()) return;
   
     const screenWidth = this.platform.width();
@@ -190,18 +176,14 @@ export class StoryViewerPage extends BasePage implements OnInit, AfterViewInit, 
   }
   
   async setStorySeen() {
-    console.log('setStorySeen => ')
     this.activeIndex = await this.slides.getActiveIndex();
     let story = await this.getCurrentStory();
     let storyItem = await this.getCurrentStoryItem();
-    console.log('storyItem.seen => ', storyItem.seen)
     if (!storyItem.seen) {
       if (story.currentItem === story.items.length - 1) {
         story.seen = true;
-        console.log('story.seen => ', story.seen)
       }
       storyItem.seen = true;
-      console.log('storyItem.seen => ', storyItem.seen)
     }
   }
 

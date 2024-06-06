@@ -23,12 +23,7 @@ export class ImageViewerModalComponent extends BasePage implements OnInit {
   };
 
   ngOnInit() {
-    console.log('index => ', this.index);
-    console.log('images => ', this.images);
-
     this.slideImages = this.images.map(item => item.original_url);
-    console.log('this.slideImages => ', this.slideImages);
-
   }
 
   closeModal() {

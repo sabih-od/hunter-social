@@ -28,7 +28,6 @@ export class StripeService {
 //   }
 
 //   async init() {
-//     console.log('stripe here')
 //     this.stripe = await loadStripe(environment.stripe.publishableKey);
 //   }
 

@@ -43,10 +43,8 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       // Get the value of the query parameter
-      console.log('params => ', params)
       if (params) {
         if (params?.is_admin == '1') {
-          console.log('andar gaya')
           this.item = {
             "id": "admin",
             // "email": "johnmartin@mailinator.com",
@@ -57,7 +55,6 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
             "is_admin": true,
           }
         } else if (params?.is_chatbot) {
-          console.log('Chatbot pe gaya')
           this.item = {
             "id": "chatbot",
             // "email": "johnmartin@mailinator.com",
@@ -76,13 +73,13 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   newmsgloading = false;
   handleScroll(event) {
     // Your custom logic when scroll reaches the top
-    // console.log('Scroll reached the top!', event);
-    // console.log('Scroll reached the top!', event.detail.scrollTop);
+  
+  
     if (event.detail.scrollTop == 0 && this.next_page_url) {
       this.newmsgloading = true;
       this.page = this.page + 1;
-      // console.log('handleScroll this.page => ', this.page)
-      // console.log('handleScroll this.item => ', this.item)
+    
+    
       if (this.item?.is_admin) this.getAdminMessages();
       else if (this.item?.is_chatbot) this.getChatbotMessages();
       else if (this.item?.isGroup) this.getGruoupChatData();
@@ -97,7 +94,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     if (!this.item) {
       this.item = this.dataService.chat_data;
     }
-    // console.log('initialize this.item => ', this.item)
+  
     this.user = await this.users.getUser();
     if (this.item?.is_admin) this.getAdminMessages();
     else if (this.item?.is_chatbot) this.getChatbotMessages();
@@ -111,12 +108,11 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   async getChatData() {
     this.is_group = true;
     let res = await this.network.getChatMessages(this.item?.id, this.page);
-    // console.log('getChatData', res);
+  
     this.isLoading = false;
     this.newmsgloading = false;
     if (res && res.data) {
       this.next_page_url = res.data?.messages.next_page_url;
-      console.log('next_page_url => ', this.next_page_url);
       this.channel_id = res.data.channel_id;
       this.dataService.channel_id = res.data.channel_id;
       this.listenMessages();
@@ -133,16 +129,13 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
 
   async getChatbotMessages() {
     let res = await this.network.getChatbotMessages(this.page);
-    console.log('getChatbotMessages', res);
     this.isLoading = false;
     if (res && res.data) {
       this.next_page_url = res.data.next_page_url;
-      console.log('next_page_url => ', this.next_page_url);
       res.data.data.sort((a, b) => {
         return b.created_at - a.created_at;
       });
       const reversemessages = res.data.data.reverse();
-      console.log('reversemessages => ', reversemessages);
       this.messages = this.page != 1 ? [...reversemessages, ...this.messages] : reversemessages;
       if (this.messages.length == 0) {
         this.messages.push({
@@ -158,11 +151,9 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
 
   async getAdminMessages() {
     let res = await this.network.getAdminMessages(this.page);
-    console.log('getAdminMessages', res);
     this.isLoading = false;
     if (res && res.data) {
       this.next_page_url = res.data.next_page_url;
-      console.log('next_page_url => ', this.next_page_url);
       res.data.data.sort((a, b) => {
         return b.created_at - a.created_at;
       });
@@ -170,9 +161,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       let token = localStorage.getItem('token');
       this.pusher.initAdminChannel('admin-chat', token);
       this.channel = this.pusher.getChannel();
-      console.log('this.channel => ', this.channel)
       this.channel.bind('adminChatMessage', async ({ message }) => {
-        console.log('AdminChatMessage Event Recieved => ', message);
         let self = this;
         // if (message.sender_id !== this.user?.id) {
         this.messages.push({
@@ -201,11 +190,9 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
 
   async getGruoupChatData() {
     let res = await this.network.getChatRoomMessages(this.item.channel_id, this.page);
-    console.log('getGruoupChatData', res);
     this.isLoading = false;
     if (res && res.data) {
       this.next_page_url = res.data?.messages?.next_page_url;
-      console.log('next_page_url => ', this.next_page_url);
       this.channel_id = res.data?.channel_id;
       this.listenMessages();
       res.data?.messages?.data?.sort((a, b) => {
@@ -230,7 +217,6 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   async uploadPicture() {
     // return new Promise(async resolve => {
     this._img = await this.image.openCamera();
-    console.log(this._img)
 
     // let blob = (await this.image.base64ToBlob(this._img)) as string;
 
@@ -242,7 +228,6 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     this.pusher.init(this.channel_id, token);
     this.channel = this.pusher.getChannel();
     this.channel.bind('chatMessage', ({ message }) => {
-      console.log('Event Recieved => ', message);
       let self = this;
       if (message.sender_id !== this.user?.id) {
         this.messages.push({
@@ -270,7 +255,6 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
 
   async askChatBot() {
     this.isMsgLoading = true;
-    console.log('this.text => ', this.text);
     this.messages.push({
       prompt_content: this.text,
       response_content: '',
@@ -283,7 +267,6 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
       { content: newtext }
     );
 
-    console.log('sentChatbotMessages => ', res)
     this.isMsgLoading = false;
     if (res && res.data.answer) {
       const replica = [...this.messages];
@@ -303,11 +286,9 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
 
   async sendMessage() {
     this.isMsgLoading = true;
-    console.log(this.text);
 
     // if(this._img != '' || (this._img == '' && this.text != '') || (this._img != '' && this.text != '')){
     // }
-    console.log('this._img => ', this._img)
     if ((this._img && this._img != '') || (this.text && this.text != '')) {
       // if (this.text && this.text !== '') {
       // let blob = (await this.image.base64ToBlob(this._img)) as string;
@@ -326,7 +307,6 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
         //   type: 'image/jpeg', // Specify the MIME type of the image
         // });
 
-        console.log('blob => ', blob)
         formData.append('file', blob);
       }
       this.messages.push({
@@ -379,7 +359,6 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
     );
     if (isLeave) {
       let res = await this.network.leaveGroup(this.channel_id);
-      console.log('leave group', res);
       if (res && res.data) {
         this.utility.presentSuccessToast(res.message);
         this.nav.pop();
@@ -393,7 +372,7 @@ export class ChatPage extends BasePage implements OnInit, AfterViewInit {
   // loadmoremessages(ev) {
   //   if (this.next_page_url) {
   //     this.page = this.page + 1;
-  //     console.log('this.page => ', this.page)
+
   //     if (this.item?.is_admin) this.getAdminMessages();
   //     else if (this.user) this.getChatData();
   //     setTimeout(() => {

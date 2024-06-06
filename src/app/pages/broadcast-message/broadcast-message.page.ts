@@ -21,11 +21,9 @@ export class BroadcastMessagePage extends BasePage implements OnInit {
 
   async sendMessage() {
     this.isMsgLoading = true;
-    console.log(this.text);
 
     // if(this._img != '' || (this._img == '' && this.text != '') || (this._img != '' && this.text != '')){
     // }
-    console.log('this._img => ', this._img)
     if ((this._img && this._img != '') || (this.text && this.text != '')) {
       // if (this.text && this.text !== '') {
       // let blob = (await this.image.base64ToBlob(this._img)) as string;
@@ -44,7 +42,6 @@ export class BroadcastMessagePage extends BasePage implements OnInit {
         //   type: 'image/jpeg', // Specify the MIME type of the image
         // });
 
-        console.log('blob => ', blob)
         formData.append('file', blob);
       }
       let res = await this.network.sendChatMessages(
@@ -78,7 +75,6 @@ export class BroadcastMessagePage extends BasePage implements OnInit {
   async uploadPicture() {
     // return new Promise(async resolve => {
     this._img = await this.image.openCamera();
-    console.log(this._img)
 
     // let blob = (await this.image.base64ToBlob(this._img)) as string;
 

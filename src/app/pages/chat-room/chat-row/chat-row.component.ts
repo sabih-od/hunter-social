@@ -17,7 +17,7 @@ export class ChatRowComponent extends BasePage implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.item);
+
   }
 
   async showMenu($event) {
@@ -28,7 +28,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
     });
     menu.present();
     let data = await menu.onDidDismiss();
-    console.log(data);
     if (!data || !data.data) return;
     switch (data.data.type) {
       case 'unfriend':
@@ -51,14 +50,13 @@ export class ChatRowComponent extends BasePage implements OnInit {
     //   let res = await this.modals.present(PostAdventureContentPage, {
     //     item: this.item,
     //   });
-    //   console.log(res);
+
     //   if (res && res.data.refresh) this.events.publish('UPDATE_POSTS');
     // }
   }
 
   async acceptRequest() {
     let res = await this.network.acceptRequest(this.item.id);
-    console.log('acceptRequest', res);
     if (res && res.data) {
 
       let user = await this.users.getUser()
@@ -73,7 +71,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
 
   async ignoreRequest() {
     let res = await this.network.ignoreRequest(this.item.id);
-    console.log('ignoreRequest', res);
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
       this.events.publish('UPDATE_CHATS');
@@ -83,7 +80,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
 
   async unfriend() {
     let res = await this.network.unfriend(this.item.id);
-    console.log('unfriend', res);
     if (res && res.data) {
       let user = await this.users.getUser()
       user.connection_count = user.connection_count - 1;
@@ -96,7 +92,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
   }
 
   async viewChat(item) {
-    console.log('viewChat item => ', item)
     this.dataService.chat_data = item;
     let isOpen = await this.modals.isModalOpen();
     if (isOpen) this.modals.dismiss({ date: 'A' });
@@ -109,7 +104,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
 
   async block() {
     let res = await this.network.block(this.item.id);
-    console.log('unfriend', res);
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
       this.events.publish('UPDATE_CHATS');

@@ -22,7 +22,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
     let res = await this.network.joinChatRoom({
       channel_id: this.item.channel_id,
     });
-    console.log('joinChatRoom', res);
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
       this.events.publish('UPDATE_GROUPS');
@@ -44,7 +43,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
     );
     if (isLeave) {
       let res = await this.network.leaveGroup(this.item.channel_id);
-      console.log('leave group', res);
       if (res && res.data) {
         this.utility.presentSuccessToast(res.message);
         this.events.publish('UPDATE_GROUPS');
@@ -56,7 +54,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
   }
 
   async viewGroup(item) {
-    console.log('viewGroup item => ', item)
     if (!item.canJoin) {
       // Iser is already joined move to chat page
       this.dataService.chat_data = { ...item, isGroup: true };
@@ -76,7 +73,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
     });
     menu.present();
     let data = await menu.onDidDismiss();
-    console.log(data);
     if (!data || !data.data) return;
     switch (data.data.type) {
       case 'leave':
@@ -104,7 +100,6 @@ export class ChatRowComponent extends BasePage implements OnInit {
     //   let res = await this.modals.present(PostAdventureContentPage, {
     //     item: this.item,
     //   });
-    //   console.log(res);
     //   if (res && res.data.refresh) this.events.publish('UPDATE_POSTS');
     // }
   }

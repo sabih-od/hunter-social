@@ -28,7 +28,7 @@ export class SqliteService {
     private platform: Platform,
     private sqlite: SQLite,
     private utility: UtilityService
-  ) {}
+  ) { }
 
   public initialize() {
     return new Promise((resolve) => {
@@ -85,7 +85,6 @@ export class SqliteService {
   }
 
   public async setUserInDatabase(_user) {
-    console.log({ _user }, 'hey user');
 
     return new Promise(async (resolve) => {
       // set user role in database
@@ -125,7 +124,6 @@ export class SqliteService {
 
       await this.execute(sql, values);
 
-      console.log('checkToken', _user.token);
       if (_user.token) {
         const sql3 = 'UPDATE users SET active = ?';
         const values3 = [0];

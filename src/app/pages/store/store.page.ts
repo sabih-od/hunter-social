@@ -20,7 +20,6 @@ export class StorePage extends BasePage implements OnInit {
 
   async getData() {
     let res = await this.network.getProducts();
-    console.log('getProducts', res);
     if (res && res.data) {
       this.loading = false;
       this.stores = res.data;

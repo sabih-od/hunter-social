@@ -56,7 +56,6 @@ export class PusherService {
         headers: { Authorization: `Bearer ${token}` },
       },
     });
-    console.log('channel_id -> ', channel_id)
     this.channel = pusher.subscribe('private-' + channel_id);
   }
 
@@ -79,13 +78,10 @@ export class PusherService {
         },
       });
       this.gChannel = pusher.subscribe(`private-user-${userId}`);
-      console.log('harvey');
       this.gChannel.bind('chatNotify', async (e) => {
-        console.log('Event Recieved chatNotify => ', e);
         if (e.chat_type == 'individual') this.eventService.publish('UPDATE_CHANNELS', e);
         if (e.chat_type == 'group') this.eventService.publish('UPDATE_NEW_GROUPS', e);
         this.dataService.dataId = e.sender_id;
-        console.log('MEYOUUSER', e.sender_id, this.userId);
         this.users.getNotificationCount();
         if (!this.nav.router.url.includes('pages/chat-room')) {
           let url = window.location.href;
@@ -113,7 +109,6 @@ export class PusherService {
       this.gChannel.bind('userNotification', async (e) => {
         // this is used for user friend request notification
 
-        console.log('USER NOTIFICATION', e);
         this.users.getNotificationCount();
         // let notifications_count = JSON.parse(localStorage.getItem('notifications_count'))
         // notifications_count = parseInt(notifications_count);
@@ -165,7 +160,6 @@ export class PusherService {
 
       if (Capacitor.getPlatform() !== 'web') {
         LocalNotifications.addListener('localNotificationActionPerformed', (notificationAction: ActionPerformed) => {
-          console.log('notificationAction', notificationAction);
           if (notificationAction.actionId == 'tap') {
             this.nav.push('pages/notifications')
           }

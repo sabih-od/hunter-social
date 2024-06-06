@@ -20,12 +20,10 @@ export class CartPage extends BasePage implements OnInit {
   async init() {
     const res = await this.network.getCart();
     this.cart = res.data;
-    console.log(this.cart);
     this.id = this.nav.getQueryParams()?.id;
   }
 
   updateQty($event) {
-    console.log($event);
 
     var key = $event.key;
     var it = $event.item;
@@ -46,7 +44,6 @@ export class CartPage extends BasePage implements OnInit {
     if (item.qty < item.product.qty) {
       item.qty++;
       let res = await this.network.increaseDecrese(this.getCartItemData(item));
-      console.log(res);
       this.init();
     }
   }
@@ -58,7 +55,6 @@ export class CartPage extends BasePage implements OnInit {
         this.getCartItemData(item),
         false
       );
-      console.log(res);
       this.init();
     }
   }

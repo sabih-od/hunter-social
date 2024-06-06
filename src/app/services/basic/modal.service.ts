@@ -32,7 +32,6 @@ export class ModalService {
   isModalOpen() {
     return new Promise<boolean>(async (resolve) => {
       let modal = await this.modal?.getTop();
-      console.log(modal);
       resolve(modal !== null && modal !== undefined);
     });
   }

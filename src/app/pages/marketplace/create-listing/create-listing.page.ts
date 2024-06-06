@@ -41,8 +41,6 @@ export class CreateListingPage extends BasePage implements OnInit {
 
   ngOnInit() {
     this.setupForm();
-    console.log('image', this.image_url);
-    console.log('categrosdsdas', this.data);
   }
 
   toggleItem(item) {
@@ -58,29 +56,23 @@ export class CreateListingPage extends BasePage implements OnInit {
       limit: 6
     });
 
-    console.log('imageUrl => ', images);
     if (images && images.photos) {
       this.pickedImages = images.photos;
       // const imageData = this.pickedImages[0];
       // let datasrc = await this.image.readFilePath(imageData.path);
       // this.blob = await this.image.base64ToBlob('data:image/png;base64,' + datasrc)
-      // console.log('this.blob => ', this.blob);
       // let blob = await res.blob();
-      // console.log('blob => ', blob);
       // let reader: FileReader = new FileReader();
       // reader.onloadend = (fileLoadedEvent: any) => {
       //   let imgSrcData = fileLoadedEvent.target.result;
-      //   console.log('imgSrcData => ', imgSrcData);
       // }
       // reader.readAsDataURL(blob);
     }
     // this.pickedImages.map(async (item) => {
     //   const newimage = await this.convertImagePathToBlob(item.path);
-    //   console.log('newimage => ', newimage);
     //   this.blobImages.push(newimage);
 
     // });
-    console.log('this.blobImages => ', this.blobImages);
 
     // image.webPath will contain a path that can be set as an image src.
     // You can access the original file using image.path, which can be
@@ -90,7 +82,6 @@ export class CreateListingPage extends BasePage implements OnInit {
 
     // // return new Promise(async resolve => {
     // const _img = await this.image.openCamera();
-    // console.log(_img);
     // if (_img) {
     //   // this.user_image = _img.base64;
     //   this.picture = _img;
@@ -99,7 +90,6 @@ export class CreateListingPage extends BasePage implements OnInit {
     //   //   _img['base64String'],
     //   //   'image/' + _img['format']
     //   // );
-    //   // console.log(blob);
     //   // this.user["profile_image"] = blob;
     //   //   const res = await this.imageReceived(blob);
     //   //   resolve(res);
@@ -129,7 +119,6 @@ export class CreateListingPage extends BasePage implements OnInit {
       // this.imageFormControl.setValue(base64String);
     };
     reader.readAsDataURL(file);
-    console.log('dsdsdsdsd', file);
     this.image_url = file;
   }
   // onFileSelected(event): void {
@@ -149,9 +138,7 @@ export class CreateListingPage extends BasePage implements OnInit {
   }
   async getUser() {
     let user = await this.network.getUser();
-    console.log('this.network.getUser', user.data.user.id);
     this.userId = user.data.user.id;
-    console.log('dsss', this.userId);
 
 
     this.getStates();
@@ -160,22 +147,18 @@ export class CreateListingPage extends BasePage implements OnInit {
 
   async getStates() {
     let res = await this.network.getStates();
-    console.log('getStates', res);
     this.states = res.data;
   }
 
   async getCategoriess() {
     let res = await this.network.getCategoriess(this.data);
-    console.log('all categories', res.id);
     res.map((x) => {
-      console.log('id', x.id);
       this.category_id = x.id;
     });
     this.category = res;
   }
   onParagraphClick(event: MouseEvent) {
     const paragraphValue = (event.target as HTMLElement).textContent;
-    console.log(paragraphValue);
     this.selected = paragraphValue;
   }
   setupForm() {
@@ -192,19 +175,15 @@ export class CreateListingPage extends BasePage implements OnInit {
       picture: ['', Validators.compose([Validators.required])],
     });
 
-    console.log('setupForm,', this.aForm.value);
   }
 
 
 
   async post() {
     // const newblog = await this.image.base64ToBlob(this.picture)
-    // console.log('newblog => ', newblog)
     // let blob = (newblog) as string;
 
-    // console.log('blob => ', blob)
 
-    // console.log('setupForm,', this.aForm.value);
     let datas = new FormData();
 
     datas.append('title', this.aForm.value.title);
@@ -219,7 +198,6 @@ export class CreateListingPage extends BasePage implements OnInit {
     const promises = this.pickedImages.map(async (item, i) => {
       let datasrc = await this.image.readFilePath(item.path);
       this.blob = await this.image.base64ToBlob('data:image/png;base64,' + datasrc)
-      console.log(`images[${i}] => `, this.blob);
       datas.append(`images[${i}]`, this.blob);
     });
     await Promise.all(promises);
@@ -233,8 +211,6 @@ export class CreateListingPage extends BasePage implements OnInit {
     datas.append('user_id', this.userId);
     datas.append('category_id', this.category_id);
     datas.append('picture', this.picture);
-    console.log('datas.append("images" => ', datas.get('images'));
-    console.log('datas => ', datas)
     // https://testv23.demowebsitelinks.com/hunter_social.com/public/api/marketplace/product/create
     // https://testv23.demowebsitelinks.com/hunter_social.com/public/api/marketplace/product/create
 
@@ -246,7 +222,6 @@ export class CreateListingPage extends BasePage implements OnInit {
 
     let data = await this.network.createListing(datas);
     if (data) {
-      console.log('this is data', data);
       // this.nav.pop();
       this.modals.dismiss({ refresh: true })
     }

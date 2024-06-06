@@ -17,10 +17,9 @@ export class ReportPage extends BasePage implements OnInit {
     super(injector);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async submit() {
-    console.log(this.item);
 
     if (this.reason == '' || !this.reason) {
       return this.utility.presentFailureToast('Please Enter reason');

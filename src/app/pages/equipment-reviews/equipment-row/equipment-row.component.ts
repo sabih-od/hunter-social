@@ -37,7 +37,6 @@ export class EquipmentRowComponent extends BasePage implements OnInit {
       item: this.item,
     });
     let refresh = res.data.refresh;
-    console.log(res, 'addNew', refresh);
     if (refresh) this.events.publish('UPDATE_REVIEWS');
   }
 }

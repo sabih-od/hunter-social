@@ -26,21 +26,17 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
     document.getElementById('fileInput').onchange = function (value: any) {
       //alert('Selected file: ' + value);
       let file = value.target.files[0];
-      console.log('file => ', file);
       if (!file) return;
       const reader = self.getFileReader();
-      console.log('reader => ', reader);
 
       reader.readAsArrayBuffer(file);
 
       reader.onload = () => {
-        console.log('OnLoaded');
 
         // get the blob of the image:
         let blob: Blob = new Blob([
           new Uint8Array(reader.result as ArrayBuffer),
         ]);
-        console.log(blob);
 
         // create blobURL, such that we could use it in an image element:
         self.video = self.dom.bypassSecurityTrustUrl(URL.createObjectURL(blob));
@@ -48,16 +44,13 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
       };
 
       reader.onerror = (error) => {
-        console.log('Error Occured');
 
-        console.log(error);
 
         //handle errors
       };
     };
 
     this.events.subscribe('EDIT_VIDEO', (item) => {
-      console.log('ITEM', item);
       this.title = item.title;
       this.videoloading = false;
       this.video = item.media_upload.url;
@@ -88,9 +81,7 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
   async selectVideo() {
     let file = await this.image.pickMediaFiles(true);
     if (file) {
-      console.log('Selected file', file);
       const { base64, blob, path, isVideo } = file;
-      console.log('path => ', path)
       this.video = this.dom.bypassSecurityTrustUrl(URL.createObjectURL(blob));
       this.post_file = blob;
     }
@@ -120,14 +111,12 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
     let data = new FormData();
     data.append('title', this.title);
     // let filePath = this.post_file;
-    // console.log('filePath', filePath);
     // var filename = filePath.replace(/^.*[\\\/]/, '');
     // let obj: any = {
     //   uri: filePath,
     //   name: filename,
     //   type: 'video/mp4',
     // };
-    // console.log('UPLOAD_FILE', obj);
     if (!this.item || (this.item && this.item.media_upload.url !== this.video))
       data.append('video', this.post_file);
     else data.append('video', '');
@@ -135,7 +124,6 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
     if (this.item) data.append('_method', 'PUT');
     // data.append('video', this.post_file);
     let res = await this.network.postHowToVideo(data, this.item?.id);
-    console.log('postData', res);
     if (res && res.data) {
       this.utility.presentSuccessToast(res.message);
       this.events.publish('HOW_TO_POST_UPDATED');
@@ -156,14 +144,12 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
 
     let data = new FormData();
     data.append('title', this.title);
-    console.log('filePath', filePath);
     // var filename = filePath.replace(/^.*[\\\/]/, '');
     // let obj: any = {
     //   uri: filePath,
     //   name: filename,
     //   type: 'video/mp4',
     // };
-    //console.log('UPLOAD_FILE', obj);
     //  data.append('video', obj);
 
     fetch(Config.URL + 'public/api/how-to-videos', {
@@ -173,25 +159,20 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
       redirect: 'follow',
     })
       .then((response) => response.text())
-      .then((result) => console.log('File Upload Result', result))
-      .catch((error) => console.log('File Upload Error', error));
   }
 
   async doPost(filePath) {
     let data = new FormData();
     data.append('title', this.title);
-    console.log('filePath', filePath);
     var filename = filePath.replace(/^.*[\\\/]/, '');
     var directory = filePath.match(/(.*)[\/\\]/)[1] || '';
 
-    console.log('Directory', directory);
 
     let obj: any = {
       uri: filePath,
       name: filename,
       type: 'video/mp4',
     };
-    console.log('UPLOAD_FILE', obj);
     data.append('video', obj);
     const options = {
       url: Config.URL + 'public/api/how-to-videos',
@@ -205,8 +186,6 @@ export class CardSubmissionComponent extends BasePage implements OnInit {
     };
 
     const response = await Http.uploadFile(options);
-    console.log('Http Response', response);
-    console.log('Http Response data', response?.data);
 
     // or...
     // const response = await Http.request({ ...options, method: 'POST' })

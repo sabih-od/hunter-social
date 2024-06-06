@@ -56,46 +56,37 @@ export class HeaderComponent extends BasePage implements OnInit {
       this.init();
     });
     this.init();
-    this.isIOS = this.platform.is('ios');
-    console.log('platform => ', this.isIOS)
+    this.isIOS = this.platform.is('ios');    
 
     this.ref.detectChanges();
   }
 
   async init() {
-    let token = localStorage.getItem('token');
-    console.log('token => ', token)
+    let token = localStorage.getItem('token');    
     if (token && token != '1') {
-      // const res = await this.network.getCart();
-      // console.log('getCart', res);
+      // const res = await this.network.getCart();      
       // HeaderComponent.instances.forEach((instance) => {
       //   instance.cart_count = res.data?.data[0]?.qty?.substring(0, 1) ?? 0;
       // });
 
 
-      this.dataService.notifications_count.subscribe(data => {
-        console.log('this.dataService.notifications_count data => ', data)
+      this.dataService.notifications_count.subscribe(data => {        
         if (data != null) {
           this.notifications_count = data;
           if (this.platform.is('cordova')) {
-            this.badge.get().then((count) => {
-              console.log('this.badge.get count => ', count)
+            this.badge.get().then((count) => {              
               this.badge.set(data);
             });
           }
         }
       })
       // this.getNotificationsCount();
-      // const localnotification = localStorage.getItem('notifications_count');
-      // console.log('localnotification asd => ', localnotification)
-      // console.log('localnotification => ', Number(localnotification))
+      // const localnotification = localStorage.getItem('notifications_count');            
       // // // if (localnotification) localStorage.setItem('notifications_count', '0');
-      // // this.notifications_count = localnotification == null ? 0 : Number(localStorage.getItem('notifications_count'));
-      // // console.log('this.notifications_count => ', this.notifications_count);
+      // // this.notifications_count = localnotification == null ? 0 : Number(localStorage.getItem('notifications_count'));      
       // if (!localnotification || isNaN(Number(localnotification))) {
       //   this.notifications_count = 0;
-      //   const noticount = await this.network.getUnreadNotificationCount();
-      //   console.log('noticount => ', noticount.data.count)
+      //   const noticount = await this.network.getUnreadNotificationCount();      
       //   if (noticount.data.count) {
       //     localStorage.setItem('notifications_count', noticount.data.count.toString());
       //     this.notifications_count = noticount.data.count;
@@ -104,11 +95,9 @@ export class HeaderComponent extends BasePage implements OnInit {
       //   this.notifications_count = Number(localnotification);
       // }
       const self = this;
-      window.addEventListener('storageChange', function (e) {
-        console.log('e => ', e)
+      window.addEventListener('storageChange', function (e) {        
         self.getNotificationsCount();
-        // this.notifications_count = Number(localStorage.getItem('notifications_count'));
-        // console.log('this.notifications_count event => ', this.notifications_count);
+        // this.notifications_count = Number(localStorage.getItem('notifications_count'));        
         HeaderComponent.instances.forEach((instance) => {
           self.getNotificationsCount();
           // instance.notifications_count = Number(localStorage.getItem('notifications_count'));
@@ -116,16 +105,14 @@ export class HeaderComponent extends BasePage implements OnInit {
         // Handle the storage change event here 
       });
 
-      window.addEventListener('profilePicUpdated', (e) => {
-        console.log('header profilePicUpdated => ')
+      window.addEventListener('profilePicUpdated', (e) => {        
         this.showLoginInfo && this.getUser();
       })
 
       // this.storage.get('notifications_count').then(data => {
       //   if (!data) {
       //     this.storage.set('notifications_count', 0)
-      //   } else {
-      //     console.log('async notification => ', data)
+      //   } else {      
       //     this.notifications_count = data;
       //   }
       // })
@@ -135,16 +122,14 @@ export class HeaderComponent extends BasePage implements OnInit {
 
 
   getNotificationsCount() {
-    this.dataService.notifications_count.subscribe(data => {
-      // console.log('header this.dataService.notifications_count data => ', data)
+    this.dataService.notifications_count.subscribe(data => {      
       this.notifications_count = data;
     })
   }
 
   async getUser() {
 
-    // let user = JSON.parse(localStorage.getItem('user'));
-    // console.log('header user => ', user)
+    // let user = JSON.parse(localStorage.getItem('user'));    
     // if (user?.profile_image) this.user_image = this.image.getImageUrl(user?.profile_image);
     // HeaderComponent.instances.forEach((instance) => {
     //   instance.user_image = this.user_image;
@@ -154,16 +139,13 @@ export class HeaderComponent extends BasePage implements OnInit {
     //   return;
     // };
 
-
-    // console.log('here => ')
-    // this.users.userprofile.subscribe(user => {
-    //   console.log('eidt profile this.users.userprofile => ', user)
+    
+    // this.users.userprofile.subscribe(user => {    
     //   if (user) {
     //     this.user_image = user['profile_image'];
     //     if (user['profile_image'] && user['profile_image'] !== '') {
     //       HeaderComponent.instances.forEach((instance) => {
-    //         // if (!user['profile_image'].includes('storage/uploads')) {
-    //         //   console.log('storage/uploads')
+    //         // if (!user['profile_image'].includes('storage/uploads')) {    
     //         //   instance.user_image = this.image.getImageUrl(user['profile_image']);
     //         // } else {
     //         instance.user_image = user['profile_image'];
@@ -174,24 +156,18 @@ export class HeaderComponent extends BasePage implements OnInit {
     //   // else
     //   //   this.utility.presentFailureToast('Something went wrong');
     // })
+    
 
-    console.log('this.showLoginInfo => ', this.showLoginInfo)
-
-    let user = await this.users.getUser();
-    console.log('header getUser => ', user);
+    let user = await this.users.getUser();    
     if (user) {
       this.cart_count = user.cart?.quantity || 0
-      // this.user_image = user['profile_image'];
-      console.log('header this.user_image => ', this.user_image);
+      // this.user_image = user['profile_image'];      
       // if (user['profile_image'] && user['profile_image'] !== '') {
-      HeaderComponent.instances.forEach((instance) => {
-        // console.log('instance => ', instance)
+      HeaderComponent.instances.forEach((instance) => {        
 
-        if (user['profile_image'] && user['profile_image'] !== '' && !user['profile_image'].includes('storage/uploads')) {
-          // console.log('storage/uploads')
+        if (user['profile_image'] && user['profile_image'] !== '' && !user['profile_image'].includes('storage/uploads')) {          
           instance.user_image = this.image.getImageUrl(user['profile_image']);
-        } else {
-          // console.log('not storage/uploads')
+        } else {          
           instance.user_image = user['profile_image'];
         }
       });
@@ -235,8 +211,7 @@ export class HeaderComponent extends BasePage implements OnInit {
       this.nav.push('pages/cart');
   }
 
-  toggleMenu() {
-    console.log('toggleMenu');
+  toggleMenu() {    
     if (!this.menuCtrl.isEnabled('main')) this.menuCtrl.enable(true, 'main');
 
     this.menuCtrl.toggle();
@@ -244,15 +219,13 @@ export class HeaderComponent extends BasePage implements OnInit {
   }
 
   onTextChanged($event) {
-    let search = $event.target.value;
-    console.log(search);
+    let search = $event.target.value;    
     this.search_text = search;
     this.search();
     //this.dataService.searchValueChanged.next(search);
   }
 
-  searchNow() {
-    console.log(this.search_text);
+  searchNow() {    
     this.search();
   }
 
@@ -267,8 +240,7 @@ export class HeaderComponent extends BasePage implements OnInit {
   search() {
 
     this.searchTextChange.emit(this.search_text);
-    const currentRoute = this.nav.router.url;
-    console.log('Current Active Route:', currentRoute);
+    const currentRoute = this.nav.router.url;    
     // if (currentRoute != '/pages/how-to') {
     this.first_selected = false;
     this.removeHighlight();
@@ -317,8 +289,7 @@ export class HeaderComponent extends BasePage implements OnInit {
         // if (!this.first_selected) {
 
         const currentRoute = this.nav.router.url;
-        if (currentRoute != '/pages/how-to' && currentRoute != '/pages/equipment-reviews-list') {
-          console.log('Scrolling');
+        if (currentRoute != '/pages/how-to' && currentRoute != '/pages/equipment-reviews-list') {          
           tag.scrollIntoView({ behavior: 'smooth' });
         }
         if (currentRoute == '/pages/how-to' || currentRoute == '/pages/equipment-reviews-list') {

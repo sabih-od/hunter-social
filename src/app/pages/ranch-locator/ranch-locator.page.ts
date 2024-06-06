@@ -40,10 +40,8 @@ export class RanchLocatorPage extends BasePage implements OnInit {
 
   async getRanches(state) {
     state = this.path ? this.path : state;
-    console.log(this.ranchPage)
     let res = await this.network.getRanches(state, this.ranchPage);
     this.loading = false;
-    console.log('getRanches', res.data.data);
     if (res && res.data.data) {
       this.ranchLastPage = res.data.last_page;
       // if (!state) this.ranches = res.data.data;
@@ -64,7 +62,6 @@ export class RanchLocatorPage extends BasePage implements OnInit {
       state,
       this.huntingPage
     );
-    console.log('getRanches', hunting_guides.data.data);
     if (hunting_guides && hunting_guides.data.data) {
       this.huntingLastPage = hunting_guides.data.last_page;
       // if (!state) this.hunting_guides = hunting_guides.data.data;
@@ -96,7 +93,6 @@ export class RanchLocatorPage extends BasePage implements OnInit {
   }
 
   pathClicked(item) {
-    console.log(item);
     this.ranchPage = 1;
     this.huntingPage = 1;
     this.ranchLastPage = -1;

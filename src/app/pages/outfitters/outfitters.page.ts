@@ -16,7 +16,6 @@ export class OutfittersPage extends BasePage implements OnInit {
     this.items = this.dataService.getOutfitters();
   }
   pathClicked(item) {
-    console.log(item);
     // this.getData(item);
   }
 

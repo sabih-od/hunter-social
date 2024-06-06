@@ -124,3 +124,13 @@ video {
     font-size: 14px;
     outline: none;
 }
+
+.cameraCont {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    ion-button{
+        flex: 1;
+    }
+}

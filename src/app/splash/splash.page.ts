@@ -29,14 +29,12 @@ export class SplashPage extends BasePage implements OnInit {
       setTimeout(async () => {
         let token = localStorage.getItem('token');
         if (token && token != '1') {
-          console.log('TOKEN iS ', token);
 
           let isAuthenticated = await this.users.getIsAuthenticated();
           if (isAuthenticated) {
             this.navigate('home');
             this.menuCtrl.enable(true, 'main');
           } else {
-            console.log('Navigating to login');
             // this.navigate('login');
             this.nav.push('welcome-screen');
           }

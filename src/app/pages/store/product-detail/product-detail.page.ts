@@ -26,20 +26,16 @@ export class ProductDetailPage extends BasePage implements OnInit {
     this.id = await this.nav.getQueryParams().product_id;
     const res = await this.network.getProductDetail(this.id);
     const review_res = await this.network.getProductReviews(this.id);
-    console.log('review_res => ',review_res);
     this.reviews = review_res.data;
     this.product_detail = res.data;
-    console.log(this.product_detail);
 
     this.user = await this.users.getUser();
-    console.log('this.user => ', this.user)
   }
 
   async openAddReview() {
     let res = await this.modals.present(ProductReviewPage, { product_id: this.id });
     if (res && res.data.reload) {
       const review_res = await this.network.getProductReviews(this.id);
-      console.log(review_res);
       this.reviews = review_res.data;
     }
   }
@@ -49,7 +45,6 @@ export class ProductDetailPage extends BasePage implements OnInit {
     // let res = await this.modals.present(AddRecipeComponent);
     if (res && res.data.reload) {
       const review_res = await this.network.getProductReviews(this.id);
-      console.log(review_res);
       this.reviews = review_res.data;
     }
   }
@@ -69,15 +64,11 @@ export class ProductDetailPage extends BasePage implements OnInit {
   async deleteProductReview(reviewid) {
     this.utility.showLoader()
     const res = await this.network.deleteProductReview(reviewid);
-    console.log(res);
     if (res) {
       this.utility.presentSuccessToast(res.message);
       const review_res = await this.network.getProductReviews(this.id);
-      console.log(review_res);
       this.reviews = review_res.data;
-      console.log(this.reviews);
       // this.product_detail = res.data;
-      // console.log(this.product_detail);
     }
   }
 
@@ -88,7 +79,6 @@ export class ProductDetailPage extends BasePage implements OnInit {
     };
 
     const res = await this.network.addToCart(data);
-    console.log(res);
     if (res) {
       this.utility.presentSuccessToast(res.message);
       this.nav.push('pages/cart', { id: this.nav.getQueryParams().product_id });

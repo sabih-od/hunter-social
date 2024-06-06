@@ -20,7 +20,6 @@ export class UserProfilePage extends BasePage implements OnInit {
     // this.user = await this.users.getUser();
     this.profileItems = this.dataService.getProfileItems();
     this.events.subscribe('USER_DATA_RECEIVED', async (data: any) => {
-      console.log('USER_DATA_RECEIVED', data);
       this.user = await this.users.getUser();
     });
   }
@@ -31,9 +30,7 @@ export class UserProfilePage extends BasePage implements OnInit {
 
   async getUser() {
     this.user_id = this.nav.getQueryParams().user_id;
-    console.log("Here user ID", this.user_id);
     let res = await this.network.getUser();
-    console.log(res);
     if (res && res.data && res.data.user) {
       this.user = res.data.user;
       if (this.user['profile_image'] && this.user['profile_image'] !== '')

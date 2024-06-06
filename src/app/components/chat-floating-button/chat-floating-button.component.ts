@@ -21,7 +21,6 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
     ChatFloatingButtonComponent.instances.push(this);
 
     this.events.subscribe('OPEN_CHAT_BAR', () => {
-      console.log('FIRING_EVENT');
       setTimeout(() => {
         this.activated = true;
       }, 500);
@@ -44,7 +43,6 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
 
     this.events.subscribe('UPDATE_CHANNELS', this.newMessage.bind(this));
     // this.dataService.messages_count.subscribe(data => {
-    //   console.log('this.dataService.messages_count data => ', data)
     //   this.message_count = data;
     // })
     // const messagescount = localStorage.getItem('messages_count');
@@ -54,17 +52,14 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
 
   async getNotificationsObject() {
     this.dataService.notification_and_message_count.subscribe(data => {
-      console.log('this.dataService.notification_and_message_count floating data => ', data)
       // if (data?.admin && data?.friend && data?.group) {
       const total = data?.admin + data?.friend + data?.group;
       this.message_count = isNaN(total) ? 0 : total;
-      console.log('this.message_count => ', this.message_count)
       // }
     })
   }
 
   newMessage(data) {
-    console.log('chat floating button new message recieved', data);
     // this.users.getNotificationCount()
   }
 
@@ -79,7 +74,6 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   }
 
   async checkIfDating() {
-    // console.log('checkIfDating => this.network.getUser() => ')
     let res = await this.users.getUser();
 
     if (
@@ -96,7 +90,6 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
   }
 
   async checkUser() {
-    console.log('checkUser => this.network.getUser() => ')
     let res = await this.users.getUser();
 
     if (
@@ -116,7 +109,6 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
 
   async editUser() {
     let data = await this.modals.present(UserDetailComponentComponent);
-    console.log(data);
     if (data.data?.success) this.openDatingChatRoom();
   }
 
@@ -133,7 +125,6 @@ export class ChatFloatingButtonComponent extends BasePage implements OnInit {
     // if (this.platform.is('cordova')) {
     //   const badgecount = await this.badge.get();
     //   const count = localStorage.getItem('messages_count');
-    //   console.log('badgecount => ', badgecount);
     //   if (badgecount != 0 && Number(count) < badgecount) {
     //     this.badge.set(Number(badgecount) - Number(count))
     //   }

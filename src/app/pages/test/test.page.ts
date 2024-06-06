@@ -38,7 +38,6 @@ export class TestPage implements OnInit {
     this.stripe = await this.stripeService.getStripe();
 
     this.user = await this.users.getUser();
-    console.log('this.user testapge => ', this.user)
 
     // Create an instance of the card Element
     const appearance = {
@@ -100,7 +99,6 @@ export class TestPage implements OnInit {
       //   exp_year: 2026,
       //   cvc: '314',
       // };
-      console.log('createCardToken => ')
 
       // const form = document.getElementById('payment-form'); // Replace with the ID of your form
       // form.addEventListener('submit', async (event) => {
@@ -108,16 +106,13 @@ export class TestPage implements OnInit {
 
       // Create a card token
       const { token, error } = await this.stripe.createToken(this.card, { name: this.user?.name });
-      console.log('token => ', token)
 
     } catch (err) {
-      console.log('err => ', err)
     }
   }
 
   async createPaymentMethodFromCard() {
     try {
-      console.log('createPaymentMethodFromCard => ')
 
       this.stripe.createPaymentMethod({
         type: 'card',
@@ -126,11 +121,9 @@ export class TestPage implements OnInit {
           name: this.user.name,
         },
       }).then(function (result) {
-        console.log('result => ', result)
         // Handle result.error or result.paymentMethod
       });
     } catch (err) {
-      console.log('err => ', err)
     }
   }
 
@@ -145,10 +138,8 @@ export class TestPage implements OnInit {
 
       const { paymentIntent, ephemeralKey, customer } = await lastValueFrom(data$)
 
-      console.log('paymentIntent => ', paymentIntent)
 
     } catch (err) {
-      console.log('err => ', err)
     }
   }
 
@@ -157,7 +148,6 @@ export class TestPage implements OnInit {
 
       // be able to get event of PaymentSheet
       Stripe.addListener(PaymentSheetEventsEnum.Completed, () => {
-        console.log('PaymentSheetEventsEnum.Completed');
       });
 
       // Connect to your backend endpoint, and get every key.
@@ -169,7 +159,6 @@ export class TestPage implements OnInit {
 
       const { paymentIntent, ephemeralKey, customer } = await lastValueFrom(data$)
 
-      console.log('paymentIntent => ', paymentIntent)
 
       // prepare PaymentSheet with CreatePaymentSheetOption.
       await Stripe.createPaymentSheet({
@@ -181,13 +170,11 @@ export class TestPage implements OnInit {
 
       // present PaymentSheet and get result.
       const result = await Stripe.presentPaymentSheet();
-      console.log('result => ', result)
       if (result.paymentResult === PaymentSheetEventsEnum.Completed) {
         // Happy path
       }
 
     } catch (err) {
-      console.log('err => ', err)
     }
   }
 
@@ -195,16 +182,12 @@ export class TestPage implements OnInit {
     try {
       // be able to get event of PaymentFlow
       Stripe.addListener(PaymentFlowEventsEnum.Completed, () => {
-        console.log('PaymentFlowEventsEnum.Completed');
       });
 
       // Connect to your backend endpoint, and get every key.
       const data$ = await this.http.post<{ paymentIntent: string; ephemeralKey: string; customer: string; }>(environment.api + 'payment-sheet', this.data).pipe(first());
 
       const { paymentIntent, ephemeralKey, customer } = await lastValueFrom(data$);
-      console.log('paymentIntent => ', paymentIntent)
-      console.log('ephemeralKey => ', ephemeralKey)
-      console.log('customer => ', customer)
 
       // Prepare PaymentFlow with CreatePaymentFlowOption.
       const createFlow = await Stripe.createPaymentFlow({
@@ -216,16 +199,13 @@ export class TestPage implements OnInit {
 
       // // Present PaymentFlow. **Not completed yet.**
       const presentResult = await Stripe.presentPaymentFlow();
-      console.log('presentResult => ', presentResult); // { cardNumber: "●●●● ●●●● ●●●● ****" }
 
       // // Confirm PaymentFlow. Completed.
       const confirmResult = await Stripe.confirmPaymentFlow();
-      console.log('confirmResult => ', confirmResult);
       if (confirmResult.paymentResult === PaymentFlowEventsEnum.Completed) {
         // Happy path
       }
     } catch (err) {
-      console.log('err => ', err)
     }
   }
 
@@ -239,7 +219,6 @@ export class TestPage implements OnInit {
 
     // be able to get event of Apple Pay
     Stripe.addListener(ApplePayEventsEnum.Completed, () => {
-      console.log('ApplePayEventsEnum.Completed');
     });
 
     // Connect to your backend endpoint, and get paymentIntent.

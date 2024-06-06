@@ -31,7 +31,6 @@ export class OtpSubmitPage extends BasePage implements OnInit {
     // this.getSetting();
     this.setupForm();
     this.email = this.nav.getQueryParams()['email']
-    console.log('this.email => ', this.email)
   }
 
   setupForm() {
@@ -58,7 +57,6 @@ export class OtpSubmitPage extends BasePage implements OnInit {
       const res = await this.network.forgotPassword(data);
       this.utility.presentSuccessToast('New OTP sent on your email');
     } catch (err) {
-      console.log(err);
       this.utility.presentFailureToast('Wrong Email');
     }
   }
@@ -71,18 +69,15 @@ export class OtpSubmitPage extends BasePage implements OnInit {
 
     let formdata = this.otpForm.value;
     formdata = { ...formdata, email: this.email, type: 'app' }
-    console.log('formdata => ', formdata)
     this.loading = true;
     try {
       let res = await this.network.submitOTP(formdata);
-      console.log('submitOTP res => ', res)
       if (res && res.data) {
         this.nav.navigateTo('pages/reset-password', { queryParams: { email: res.data.email, token: res.data.token } });
         // this.utility.presentSuccessToast('Password reset successfully');
         this.otpForm.setValue({ otp: '' })
       }
     } catch (err) {
-      console.log(err);
       this.utility.presentFailureToast('Something Went Wrong');
     } finally {
       this.loading = false;
