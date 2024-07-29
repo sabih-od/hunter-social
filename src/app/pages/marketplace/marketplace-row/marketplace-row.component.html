@@ -30,83 +30,63 @@
   ({{ item.count }})
 </p> -->
 <div class="market-place-content">
+
+
   <!-- <h1>Market Place</h1> -->
-
-  <div class="searchtop">
-    <ion-searchbar [(ngModel)]="topSearch" (ionInput)="onTopInput($event)" placeholder="Search Products..."
-      shape="round"></ion-searchbar>
-    <ion-select [(ngModel)]="state_id" (ngModelChange)="getProducts(null)">
-      <ion-select-option value="">Select State</ion-select-option>
-      <ion-select-option *ngFor="let item of states" [value]="item.id">{{item.name}}</ion-select-option>
-    </ion-select>
-  </div>
-
-  <ion-list>
-    <ion-item (click)="getProducts(null)">
-      <ion-label>Browse All</ion-label>
-      <ion-icon *ngIf="!selectedCategoryId && !isMyProductListing" slot="end"
-        name="checkmark-circle-outline"></ion-icon>
-    </ion-item>
-    <ion-item (click)="myListing(null)">
-      <ion-label>My Listing</ion-label>
-      <ion-icon *ngIf="isMyProductListing" slot="end" name="checkmark-circle-outline"></ion-icon>
-    </ion-item>
-  </ion-list>
-  <ion-button expand="block" class="" (click)="createListing()"><ion-icon name="add-outline"></ion-icon>Create New
-    Listing</ion-button>
-  <!-- <ion-button expand="block">Block</ion-button> -->
-  <h1 style="margin-bottom: 0; margin-top: 30px;">Filters</h1>
-  <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onInput($event)" placeholder="Filter Category..."
-    (ionChange)="onFilter()" shape="round"></ion-searchbar>
+  <!-- <ion-button expand="block" class="" (click)="createListing()"><ion-icon name="add-outline"></ion-icon>Create New
+    Listing</ion-button> -->
+<div class="flex-content">
+<ion-button class="sell" size="small" (click)="createListing()">
+Sell
+</ion-button>
+  <h6 class="forYou">For You</h6>
+  
   <ion-list>
     <ion-item>
-      <ion-label><strong>Categories</strong></ion-label>
-    </ion-item>
-    <ion-item *ngFor="let item of categories">
-      <ion-label (click)="getProducts(item)">{{ item?.name }}</ion-label>
-      <ion-icon *ngIf="selectedCategoryId == item?.id" slot="end" name="checkmark-circle-outline"></ion-icon>
+      <ion-select placeholder="Categories" (ionChange)="getProducts($event)">
+        <ion-select-option *ngFor="let item of categories" [value]="item">
+          {{ item.name }}
+        </ion-select-option>
+        <ion-select-option [value]="{id: null, name: 'All'}">All</ion-select-option>
+      </ion-select>
+
     </ion-item>
   </ion-list>
-</div>
+  
+  <ion-spinner *ngIf="loading" name="crescent"></ion-spinner> 
 
-<div class="spinner" *ngIf="loading && !refresh">
-  <ion-spinner name="lines" color="primary"></ion-spinner>
-  <p>Loading...</p>
+  
+
 </div>
 
 <ion-grid class="ion-no-padding">
   <ion-row>
-    <ion-col *ngFor="let item of productList" size-md="6" size-xs="12">
+    <ion-col *ngFor="let item of productList" size-md="6" size-xs="6">
       <ion-card (click)="details(item)">
-        <!-- <div class="image" style="background-repeat: no-repeat; background-size: cover;" [style.background-image]="'url(' + item.image_url + ')'"></div> -->
         <div class="cover-photo">
           <div *ngIf="item.is_sold" class="solditem">Sold</div>
-
           <ion-slides pager="true" [options]="slideOpts" *ngIf="item.media.length > 1">
             <ion-slide *ngFor="let x of item.media">
-              <img [src]="x.original_url"
-                onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
+              <img [src]="x.original_url" onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
             </ion-slide>
           </ion-slides>
-
-          <img *ngIf="item.media && item.media.length <= 1" [src]="item.image_url"
-            onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
+          <img *ngIf="item.media && item.media.length <= 1" [src]="item.image_url" onerror="this.onerror=null;this.src='./../../../assets/Images/dummy-image-square.jpg';" />
         </div>
         <ion-card-header>
-          <ion-card-title>{{ item.price | currency }}</ion-card-title>
           <ion-card-subtitle>{{ item.title }}</ion-card-subtitle>
+          <ion-card-subtitle>{{ item.price | currency }}</ion-card-subtitle>
         </ion-card-header>
       </ion-card>
     </ion-col>
-    <div *ngIf="productList?.length == 0 && !loading"
-      style="text-align: center;width: 100%;background: #f2f2f2;margin: 0 15px;">
+    <div *ngIf="productList?.length == 0 && !loading" style="text-align: center;width: 100%;background: #f2f2f2;margin: 0 15px;">
       <p>No products found</p>
     </div>
-    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
   </ion-row>
 </ion-grid>
+<ion-infinite-scroll threshold="100px" (ionInfinite)="onIonInfinite($event)">
+  <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+
 
 <div style="height: 15px;"></div>
 

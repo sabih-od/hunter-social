@@ -110,6 +110,18 @@ export class CreateListingPage extends BasePage implements OnInit {
   }
 
 
+  // removeimage(ind) {
+  //   this.pickedImages = this.pickedImages.filter((item, index) => ind != index);
+  // }
+
+  changeCategory(value) {
+    const selectedCategory = this.category.find(cat => cat.name === value);
+    if (selectedCategory) {
+      this.category_id = selectedCategory.id;
+      this.aForm.patchValue({ category_id: selectedCategory.id });
+    }
+  }
+
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     const reader = new FileReader();
@@ -152,11 +164,19 @@ export class CreateListingPage extends BasePage implements OnInit {
 
   async getCategoriess() {
     let res = await this.network.getCategoriess(this.data);
+
     res.map((x) => {
       this.category_id = x.id;
     });
+
+    // Set category to the response, and initialize category_id
+    if (res.length > 0) {
+      this.category_id = res[0].id;
+    }
+
     this.category = res;
   }
+  
   onParagraphClick(event: MouseEvent) {
     const paragraphValue = (event.target as HTMLElement).textContent;
     this.selected = paragraphValue;
@@ -175,6 +195,9 @@ export class CreateListingPage extends BasePage implements OnInit {
       picture: ['', Validators.compose([Validators.required])],
     });
 
+    this.aForm.get('category').valueChanges.subscribe(value => {
+      this.changeCategory(value);
+    });
   }
 
 
@@ -208,6 +231,8 @@ export class CreateListingPage extends BasePage implements OnInit {
     //   }
     // }
 
+    datas.append('images[]', this.blob);
+    datas.append('state_id', this.aForm.value.state_id);
     datas.append('user_id', this.userId);
     datas.append('category_id', this.category_id);
     datas.append('picture', this.picture);

@@ -12,8 +12,18 @@
 </ion-header>
 
 <ion-content>
+  
+
+  <ion-card>
+    <ion-card-header class="">
+      <textarea placeholder="Share a Memory?" [(ngModel)]="content" rows="7"
+        style="width: 100%; background: white; padding: 5px"></textarea>
+    </ion-card-header>
+    <ion-card-content>
+
   <div class="container">
-    <div class="uploadphoto" *ngIf="!viewImage">
+    <div class="uploadphoto" *ngIf="!viewImage" (click)="pickImage()">
+
       <ion-icon name="add-circle-outline" style="font-size: 30px;"></ion-icon>
       <h5>Upload Your Photo</h5>
     </div>

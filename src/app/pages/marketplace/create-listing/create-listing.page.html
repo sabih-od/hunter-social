@@ -31,7 +31,17 @@
           class="file-label" [style.background-image]="'url(' + picture + ')'">
           <i class="fa fa-upload"></i>
           <p [hidden]="image_url">Your Image Here</p>
-        </label> -->
+
+          <!-- <img [src]="picture"   /> -->
+        </label>
+        <ion-button
+          (click)="doGetPicture()"
+          style="margin-top: 10px; margin-bottom: 30px"
+          color="secondary"
+          >Upload Picture
+        </label> <input type="hidden" formControlName="category_id">
+
+
         <ion-button (click)="doGetPicture()" style="margin-top: 10px; margin-bottom: 30px" color="secondary">Select
           Pictures
         </ion-button>

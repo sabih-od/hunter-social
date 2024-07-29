@@ -61,9 +61,14 @@ ion-searchbar {
   // --border-radius: 20px;
 }
 
+
 ion-button {
-  width: 97%;
-  padding-left: 10px;
+--background: #fff;
+--color:#000;
+--background-hover:none;
+--background-hover:#fff;
+--background-focused:#fff;
+--background-activated:#fff
 }
 
 ion-item {
@@ -93,8 +98,11 @@ ion-image {
     width: 100%;
     // border-radius: 25px 25px 0px 0px;
   }
-}
-
+      height: 145px;
+      object-fit: cover;
+      width: 100%;
+      border-radius: 25px 25px 0px 0px;
+  }
 
 .solditem {
   width: 60px;
@@ -120,6 +128,8 @@ ion-item:last-child {
 
 ion-card-header {
   padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
 }
 
 ion-label strong {
@@ -145,4 +155,27 @@ ion-label strong {
     border-radius: 8px;
     font-size: 14px;
   }
+
+.flex-content{
+  display: flex !important;
+  gap: 20px;
+  align-items: center;
 }
+
+.forYou{
+border: 1px solid black;
+border-radius: 25px;
+padding: 5px 10px 5px 10px;
+
+}
+.sell{
+  padding: 0px !important;
+  background-color: #fff !important;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+ion-select::part(placeholder) {
+  color: #000;
+}
+
