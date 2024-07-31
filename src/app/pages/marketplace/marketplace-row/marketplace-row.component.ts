@@ -55,13 +55,13 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
   }
 
   createListing() {
-    this.modals.present(CreateListingPage).then(res => {
-      if (res?.data?.refresh) {
-        this.getProducts(null)
-        this.onFilter();
-      }
-    })
-    // this.nav.navigateTo('pages/create-listing');
+    // this.modals.present(CreateListingPage).then(res => {
+    //   if (res?.data?.refresh) {
+    //     this.getProducts(null)
+    //     this.onFilter();
+    //   }
+    // })
+    this.nav.navigateTo('pages/create-listing');
   }
 
   async user() {
