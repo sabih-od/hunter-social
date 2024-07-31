@@ -11,6 +11,7 @@ import { CreateListingPage } from '../create-listing/create-listing.page';
 export class MarketplaceRowComponent extends BasePage implements OnInit {
   // @Input() item;
   filter: any;
+  event: any;
   searchTerm: string = '';
   productList: any[] = [];
   categories: any[] = [];
@@ -28,7 +29,6 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
   user_id;
   topSearch;
   selectedCategoryId: any = null;
-
   page = 1;
   isMyProductListing = false;
   loading = false;
@@ -37,7 +37,6 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
   state_id = ""
   shouldloadmore = true;
   next_page_url = null;
-
   imagePreview: string;
   constructor(injector: Injector) {
     super(injector);
@@ -52,15 +51,53 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     this.getProducts(null);
     this.onFilter();
     this.getStates();
+    // this.getCurrentLocation();
   }
 
+// getCurrentLocation() {
+//     this.geolocation.getCurrentPosition().then((resp) => {
+//       this.latitude = resp.coords.latitude;
+//       this.longitude = resp.coords.longitude;
+//       this.reverseGeocode(this.latitude, this.longitude);
+//     }).catch((error) => {
+//       console.log('Error getting location', error);
+//     });
+//   }
+
+  // reverseGeocode(lat: number, lng: number) {
+  //   const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+
+  //   this.http.get(url).subscribe((result: any) => {
+  //     if (result.status === 'OK') {
+  //       const addressComponents = result.results[0].address_components;
+  //       let country = '';
+  //       let city = '';
+
+  //       for (const component of addressComponents) {
+  //         if (component.types.includes('country')) {
+  //           country = component.short_name;
+  //         }
+  //         if (component.types.includes('locality') || component.types.includes('administrative_area_level_1')) {
+  //           city = component.long_name;
+  //         }
+  //       }
+
+  //       this.location = `${country},${city}`;
+  //     } else {
+  //       console.log('No results found');
+  //     }
+  //   }, error => {
+  //     console.log('Error in reverse geocoding', error);
+  //   });
+  // }
   createListing() {
-    // this.modals.present(CreateListingPage).then(res => {
-    //   if (res?.data?.refresh) {
-    //     this.getProducts(null)
-    //     this.onFilter();
-    //   }
-    // })
+    this.modals.present(CreateListingPage).then(res => {
+      if (res?.data?.refresh) {
+        this.getProducts(null)
+        this.onFilter();
+      }
+    })
+ 
     this.nav.navigateTo('pages/create-listing');
   }
 
@@ -113,7 +150,34 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     this.productList = this.page == 1 ? response.data.data : [...this.productList, ...response.data.data];
   }
 
-  async getProducts(item) {
+  // async getProducts(item) {
+  //   this.loading = true;
+
+
+  //   if (this.isMyProductListing) {
+  //     this.isMyProductListing = false;
+  //     this.productList = [];
+  //     this.page = 1;
+  //     this.next_page_url = null;
+  //   }
+
+  //   if (item?.id) {
+  //     this.productList = [];
+  //     this.page = 1;
+  //     this.next_page_url = null;
+  //   }
+  //   if (item?.id) this.selectedCategoryId = item?.id;
+  //   let data = await this.network.getProductss({query:null,category_id:item.id})
+  //   // let data = await this.network.getProductss();
+  //   console.log('filter', data);
+  //   this.filterProducts = data;
+  //   this.productList = this.filterProducts;
+  // }
+  async getProducts(event?) {
+    if(event){
+    this.event = event.target.value
+  } 
+
     this.loading = true;
 
 
@@ -124,13 +188,15 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
       this.next_page_url = null;
     }
 
-    if (item?.id) {
+    if (this.event?.id === null) {
+      this.selectedCategoryId = null;
+    } else if (this.event?.id) {
+      this.selectedCategoryId = this.event.id;
       this.productList = [];
       this.page = 1;
       this.next_page_url = null;
     }
-    if (item?.id) this.selectedCategoryId = item?.id;
-    // let data = await this.network.getProductss({query:null,category_id:item.id})
+  
     const params = {
       query: this.topSearch,
       category_id: this.selectedCategoryId,

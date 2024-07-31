@@ -97,16 +97,36 @@ export class CreateListingPage extends BasePage implements OnInit {
     // }
   }
 
+  // isFileTypeAllowed(filePath: string): boolean {
+  //   const allowedFileTypes = ['.jpeg', '.png', '.jpg', '.gif'];
+  //   const fileType = filePath.toLowerCase().substr(filePath.lastIndexOf('.'));
+
+  //   return allowedFileTypes.includes(fileType);
+  // }
+
+
+  removeimage(ind) {
+    this.pickedImages = this.pickedImages.filter((item, index) => ind != index);
+  }
+
+
+  // removeimage(ind) {
+  //   this.pickedImages = this.pickedImages.filter((item, index) => ind != index);
+  // }
+
+  // changeCategory(value) {
+  //   const selectedCategory = this.category.find(cat => cat.name === value);
+  //   if (selectedCategory) {
+  //     this.category_id = selectedCategory.id;
+  //     this.aForm.patchValue({ category_id: selectedCategory.id });
+  //   }
+  // }
+
   isFileTypeAllowed(filePath: string): boolean {
     const allowedFileTypes = ['.jpeg', '.png', '.jpg', '.gif'];
     const fileType = filePath.toLowerCase().substr(filePath.lastIndexOf('.'));
 
     return allowedFileTypes.includes(fileType);
-  }
-
-
-  removeimage(ind) {
-    this.pickedImages = this.pickedImages.filter((item, index) => ind != index);
   }
 
 
@@ -164,16 +184,10 @@ export class CreateListingPage extends BasePage implements OnInit {
 
   async getCategoriess() {
     let res = await this.network.getCategoriess(this.data);
-
-    res.map((x) => {
-      this.category_id = x.id;
-    });
-
     // Set category to the response, and initialize category_id
     if (res.length > 0) {
       this.category_id = res[0].id;
     }
-
     this.category = res;
   }
   
@@ -194,10 +208,10 @@ export class CreateListingPage extends BasePage implements OnInit {
       category_id: ['', Validators.compose([Validators.required])],
       picture: ['', Validators.compose([Validators.required])],
     });
-
     this.aForm.get('category').valueChanges.subscribe(value => {
       this.changeCategory(value);
     });
+  
   }
 
 
@@ -214,23 +228,6 @@ export class CreateListingPage extends BasePage implements OnInit {
     datas.append('description', this.aForm.value.description);
     datas.append('condition', this.aForm.value.condition);
     datas.append('category', this.selected);
-    datas.append('state_id', this.aForm.value.state_id);
-    // datas.append('images[]', this.blob);
-
-
-    const promises = this.pickedImages.map(async (item, i) => {
-      let datasrc = await this.image.readFilePath(item.path);
-      this.blob = await this.image.base64ToBlob('data:image/png;base64,' + datasrc)
-      datas.append(`images[${i}]`, this.blob);
-    });
-    await Promise.all(promises);
-
-    // if (this.pickedImages.length > 0) {
-    //   for (var i = 0; i < this.pickedImages?.length; i++) {
-    //     datas.append(`images[${i}]`, this.pickedImages[i].webPath);
-    //   }
-    // }
-
     datas.append('images[]', this.blob);
     datas.append('state_id', this.aForm.value.state_id);
     datas.append('user_id', this.userId);
