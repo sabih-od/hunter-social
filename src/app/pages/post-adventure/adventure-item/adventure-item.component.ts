@@ -16,31 +16,15 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   show = false;
   @Input() item: any;
   contentLabel = '';
+  likerstext = '';
+  userid: string;
+
   constructor(injector: Injector, public popoverController: PopoverController) {
     super(injector);
   }
-  likerstext = '';
-  userid
 
   ngOnInit() {
-
-    // this.likerstext = '';
-    // if (this.item.has_liked && this.item?.likers?.data.length == 1) { this.likerstext += 'You liked'; }
-    // else if (this.item.has_liked && this.item?.likers?.data.length == 2) { this.likerstext += 'You and '; }
-
-    // this.item?.likers?.data.map(x => {
-    //   this.likerstext += `${x.name} and ${this.item?.likers?.data.length - 1} likes`;
-    //   return;
-    // })
-    // this.getuser()
-
-
-
-    // if(this.item.content === undefined){
-    //   this.contentLabel = this.item.content;
-    // } else{
-    //   this.contentLabel = ""
-    // }
+    // Initialization logic if any
   }
 
   generateLikeMessage(likers) {
@@ -58,10 +42,9 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     }
   }
 
-
-  openPopup($event) {
-    if (this.item.is_reported == false) {
-      this.alert.presentPopoverReportingComponent($event, {
+  async openPopup(event: Event) {
+    if (!this.item.is_reported) {
+      this.alert.presentPopoverReportingComponent(event, {
         item_id: this.item.id,
         item_desc: this.item.content,
         tag: 'post',
@@ -72,16 +55,18 @@ export class AdventureItemComponent extends BasePage implements OnInit {
   }
 
   async getuser() {
-    const user = await this.users.getUser()
-    this.userid = user?.id
-
-    const likeMessage = this.generateLikeMessage(this.item?.likers?.data);
+    const user = await this.users.getUser();
+    this.userid = user?.id;
+    this.likerstext = this.generateLikeMessage(this.item?.likers?.data);
   }
 
   async like() {
     let res = await this.network.likePost(this.item.id);
-    if (this.item.has_liked) this.item.count_likes--;
-    else this.item.count_likes++;
+    if (this.item.has_liked) {
+      this.item.count_likes--;
+    } else {
+      this.item.count_likes++;
+    }
     this.item.has_liked = !this.item.has_liked;
   }
 
@@ -97,19 +82,22 @@ export class AdventureItemComponent extends BasePage implements OnInit {
     }
   }
 
-  async showMenu($event) {
+  async showMenu(event: Event) {
     let menu = await this.popoverController.create({
       component: MenusComponent,
-      event: $event,
+      event: event,
     });
-    menu.present();
+    await menu.present();
     let data = await menu.onDidDismiss();
-    if (data.data?.type === 'delete') this.deletePost();
-    else if (data.data?.type === 'edit') {
+    if (data.data?.type === 'delete') {
+      this.deletePost();
+    } else if (data.data?.type === 'edit') {
       let res = await this.modals.present(PostAdventureContentPage, {
         item: this.item,
       });
-      if (res && res.data.refresh) this.events.publish('UPDATE_POSTS');
+      if (res && res.data.refresh) {
+        this.events.publish('UPDATE_POSTS');
+      }
     }
   }
 
@@ -125,42 +113,43 @@ export class AdventureItemComponent extends BasePage implements OnInit {
       if (res && res.data?.post) {
         this.utility.presentSuccessToast(res.message);
         this.events.publish('POST_DELETED', { data: this.item.id });
-        // this.events.publish('UPDATE_POSTS');
-      } else
+      } else {
         this.utility.presentFailureToast(
           res?.message ?? 'Something went wrong'
         );
+      }
     }
   }
-  async share($event) {
+
+  async share(event: Event) {
     let menu = await this.popoverController.create({
       component: SocialMenusComponent,
-      event: $event,
+      event: event,
     });
-    menu.present();
+    await menu.present();
     let data = await menu.onDidDismiss();
-    if (data.data?.type) this.onSocialShare(data.data?.type);
+    if (data.data?.type) {
+      this.onSocialShare(data.data?.type);
+    }
   }
 
-  onSocialShare(type) {
+  onSocialShare(type: string) {
     switch (type) {
       case 'Facebook':
         this.utility.openExternalUrl(
-          'https://www.facebook.com/login.php?skip_api_login=1&api_key=966242223397117&signed_next=1&next=https%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php%3Fu%3Dhttps%253A%252F%252Fcustom.designwebdemos.com%252Fhunter_social.com%252Fpublic%26title%3D0%26description%3D0%26quote%26hashtag%3D%2523hunterSocial&cancel_url=https%3A%2F%2Fwww.facebook.com%2Fdialog%2Fclose_window%2F%3Fapp_id%3D966242223397117%26connect%3D0%23_%3D_&display=popup&locale=en_GB',
+          'https://www.facebook.com/sharer/sharer.php?u=https://custom.designwebdemos.com/hunter_social.com/public',
           '_system'
         );
         break;
-
       case 'Twitter':
         this.utility.openExternalUrl(
-          'https://twitter.com/intent/tweet?text=0&url=https%3A%2F%2Fcustom.designwebdemos.com%2Fhunter_social.com%2Fpublic&hashtags=hunterSocial',
+          'https://twitter.com/intent/tweet?text=Check this out&url=https://custom.designwebdemos.com/hunter_social.com/public&hashtags=hunterSocial',
           '_system'
         );
         break;
-
       case 'Linkedin':
         this.utility.openExternalUrl(
-          'https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcustom.designwebdemos.com%2Fhunter_social.com%2Fpublic',
+          'https://www.linkedin.com/sharing/share-offsite/?url=https://custom.designwebdemos.com/hunter_social.com/public',
           '_system'
         );
         break;
@@ -172,13 +161,4 @@ export class AdventureItemComponent extends BasePage implements OnInit {
       queryParams: { user_id: item.user.id },
     });
   }
-  //  async showPopover(){
-  //    let popover = await this.popoverController.create({
-  //       component: 'popover-example-page',
-  //       event: ev,
-  //       translucent: true,
-  //     });
-  //     currentPopover = popover;
-  //     return popover.present();
-  //   }
 }

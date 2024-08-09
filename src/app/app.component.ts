@@ -46,10 +46,10 @@ export class AppComponent {
     platform.ready().then(() => {
 
       // if (this.platform.is('cordova')) {
-      if (this.platform.is('ios')) {
-        this.checkForUpdate();
-      }
-      this.initialize();
+      // if (this.platform.is('ios')) {
+      //   this.checkForUpdate();
+      // }
+      // this.initialize();
 
     });
     document.addEventListener(

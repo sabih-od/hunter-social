@@ -76,7 +76,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="cities && cities.length > 0">
+    <!-- <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="cities && cities.length > 0">
       <ion-col size="12">
         <ion-label position="stacked" class="p-holder">Cities</ion-label>
         <ion-select placeholder="Select Cities" multiple="false" class="select" [(ngModel)]="obj.city">
@@ -85,7 +85,7 @@
             }}</ion-select-option>
         </ion-select>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <div *ngFor="let ques of questions">
       <ion-row class="ion-no-padding ion-no-margin padd" *ngIf="questions">

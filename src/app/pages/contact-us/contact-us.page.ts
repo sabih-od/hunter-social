@@ -1,6 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { BasePage } from '../base-page/base-page';
 import { FormGroup, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-contact-us',
@@ -9,7 +10,7 @@ import { FormGroup, Validators } from '@angular/forms';
 })
 export class ContactUsPage extends BasePage implements OnInit {
   loading = false;
-  constructor(injector: Injector) {
+  constructor(injector: Injector, private location: Location) {
     super(injector);
   }
 
@@ -99,9 +100,9 @@ export class ContactUsPage extends BasePage implements OnInit {
     try {
       let res = await this.network.contactUs(formdata);
       if (res && res.data) {
+        this.location.back();
         this.utility.presentSuccessToast(res.message);
         this.contactForm.setValue({ message: '' })
-        // this.nav.pop();
       } else this.utility.presentFailureToast(res?.message ?? 'Something went wrong');
     } catch (err) {
       // this.utility.presentFailureToast('Something Went Wrong');

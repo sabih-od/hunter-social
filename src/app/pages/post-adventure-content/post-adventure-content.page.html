@@ -12,75 +12,62 @@
 </ion-header>
 
 <ion-content>
-<<<<<<< Updated upstream
-  
-
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
   <ion-card>
-    <ion-card-header class="">
+    <ion-card-header>
       <textarea placeholder="Share a Memory?" [(ngModel)]="content" rows="7"
         style="width: 100%; background: white; padding: 5px"></textarea>
     </ion-card-header>
     <ion-card-content>
-<<<<<<< Updated upstream
+      <div class="container">
+        <div class="uploadphoto" *ngIf="!viewImage" (click)="pickImage()">
+          <ion-icon name="add-circle-outline" style="font-size: 30px;"></ion-icon>
+          <h5>Upload Your Photo</h5>
+        </div>
 
-  <div class="container">
-    <div class="uploadphoto" *ngIf="!viewImage" (click)="pickImage()">
+        <div class="preview" *ngIf="viewImage">
+          <ion-button class="close" color="danger" (click)="removeMedia()">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+          <img *ngIf="!isVideo" [src]="viewImage" />
+          <video *ngIf="isVideo" width="320" [poster]="viewImage" height="240" preload="none" controls>
+            <source [src]="viewImage" type="video/mp4" />
+          </video>
+        </div>
 
-=======
-=======
-  <div class="container">
-    <div class="uploadphoto" *ngIf="!viewImage" (click)="pickImage()">
->>>>>>> Stashed changes
-      <ion-icon name="add-circle-outline" style="font-size: 30px;"></ion-icon>
-      <h5>Upload Your Photo</h5>
-    </div>
+        <div class="cameraCont">
+          <ion-button (click)="pickImage()" fill="outline" expand="block">
+            <ion-icon slot="start" name="images-outline"></ion-icon>
+            Upload Picture
+          </ion-button>
+          <ion-button (click)="takePicture()" fill="outline" expand="block">
+            <ion-icon slot="start" name="camera-outline"></ion-icon>
+            Take Picture
+          </ion-button>
+        </div>
 
-    <div class="preview" *ngIf="viewImage">
-      <ion-button class="close" color="danger" (click)="removeMedia()">
-        <ion-icon name="close-outline"></ion-icon>
-      </ion-button>
-      <img *ngIf="!isVideo" [src]="viewImage" />
-      <video *ngIf="isVideo" width="320" [poster]="viewImage" height="240" preload="none" controls>
-        <source [src]="viewImage" type="video/mp4" />
-      </video>
-    </div>
-    <div class="cameraCont">
-      <ion-button (click)="pickImage()" fill="outline" expand="block">
-        <ion-icon slot="start" name="images-outline"></ion-icon>
-        Upload Picture
-      </ion-button>
-      <ion-button (click)="takePicture()" fill="outline" expand="block">
-        <ion-icon slot="start" name="camera-outline"></ion-icon>
-        Take Picture
-      </ion-button>
-    </div>
+        <!-- <div class="textcontent">
+          <p>Share your memory</p>
+          <textarea placeholder="What's on your mind?" [(ngModel)]="content" rows="3"></textarea>
+        </div> -->
 
-    <div class="textcontent">
-      <p>Share your memory</p>
-      <textarea placeholder="What's on your mind?" [(ngModel)]="content" rows="3"></textarea>
-    </div>
-    <!-- <input [hidden]="true" type="file" accept="image/*,video/*" (change)="handleFileInput($event)" #fileInput> -->
-    <div>
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
-      <ion-grid class="ion-no-padding">
-        <ion-row>
-          <ion-col>
-            <ion-button size="large" style="width: 100%" class="postpagebtn postbtn" (click)="post()">
-              Post Adventure<ion-icon name="paper-plane-outline"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <div class="spinner" *ngIf="loadingimage">
-        <ion-spinner name="lines" color="primary"></ion-spinner>
-        <p>Loading...</p>
+        <!-- <input [hidden]="true" type="file" accept="image/*,video/*" (change)="handleFileInput($event)" #fileInput> -->
+
+        <div>
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              <ion-col>
+                <ion-button size="large" style="width: 100%" class="postpagebtn postbtn" (click)="post()">
+                  Post Adventure <ion-icon name="paper-plane-outline"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <div class="spinner" *ngIf="loadingimage">
+            <ion-spinner name="lines" color="primary"></ion-spinner>
+            <p>Loading...</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

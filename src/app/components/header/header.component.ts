@@ -56,13 +56,13 @@ export class HeaderComponent extends BasePage implements OnInit {
       this.init();
     });
     this.init();
-    this.isIOS = this.platform.is('ios');    
+    this.isIOS = this.platform.is('ios');
 
     this.ref.detectChanges();
   }
 
   async init() {
-    let token = localStorage.getItem('token');    
+    let token = localStorage.getItem('token');
     if (token && token != '1') {
       // const res = await this.network.getCart();      
       // HeaderComponent.instances.forEach((instance) => {
@@ -70,11 +70,11 @@ export class HeaderComponent extends BasePage implements OnInit {
       // });
 
 
-      this.dataService.notifications_count.subscribe(data => {        
+      this.dataService.notifications_count.subscribe(data => {
         if (data != null) {
           this.notifications_count = data;
           if (this.platform.is('cordova')) {
-            this.badge.get().then((count) => {              
+            this.badge.get().then((count) => {
               this.badge.set(data);
             });
           }
@@ -95,7 +95,7 @@ export class HeaderComponent extends BasePage implements OnInit {
       //   this.notifications_count = Number(localnotification);
       // }
       const self = this;
-      window.addEventListener('storageChange', function (e) {        
+      window.addEventListener('storageChange', function (e) {
         self.getNotificationsCount();
         // this.notifications_count = Number(localStorage.getItem('notifications_count'));        
         HeaderComponent.instances.forEach((instance) => {
@@ -105,7 +105,7 @@ export class HeaderComponent extends BasePage implements OnInit {
         // Handle the storage change event here 
       });
 
-      window.addEventListener('profilePicUpdated', (e) => {        
+      window.addEventListener('profilePicUpdated', (e) => {
         this.showLoginInfo && this.getUser();
       })
 
@@ -122,7 +122,7 @@ export class HeaderComponent extends BasePage implements OnInit {
 
 
   getNotificationsCount() {
-    this.dataService.notifications_count.subscribe(data => {      
+    this.dataService.notifications_count.subscribe(data => {
       this.notifications_count = data;
     })
   }
@@ -139,7 +139,7 @@ export class HeaderComponent extends BasePage implements OnInit {
     //   return;
     // };
 
-    
+
     // this.users.userprofile.subscribe(user => {    
     //   if (user) {
     //     this.user_image = user['profile_image'];
@@ -156,18 +156,18 @@ export class HeaderComponent extends BasePage implements OnInit {
     //   // else
     //   //   this.utility.presentFailureToast('Something went wrong');
     // })
-    
 
-    let user = await this.users.getUser();    
+
+    let user = await this.users.getUser();
     if (user) {
       this.cart_count = user.cart?.quantity || 0
       // this.user_image = user['profile_image'];      
       // if (user['profile_image'] && user['profile_image'] !== '') {
-      HeaderComponent.instances.forEach((instance) => {        
+      HeaderComponent.instances.forEach((instance) => {
 
-        if (user['profile_image'] && user['profile_image'] !== '' && !user['profile_image'].includes('storage/uploads')) {          
+        if (user['profile_image'] && user['profile_image'] !== '' && !user['profile_image'].includes('storage/uploads')) {
           instance.user_image = this.image.getImageUrl(user['profile_image']);
-        } else {          
+        } else {
           instance.user_image = user['profile_image'];
         }
       });
@@ -177,9 +177,14 @@ export class HeaderComponent extends BasePage implements OnInit {
   }
 
   async goBack() {
+    console.log('goBack called');
     let isModalExist = await this.modals.isModalOpen();
-    if (isModalExist) this.modals.dismiss({});
-    else this.nav.pop();
+    console.log('isModalExist:', isModalExist);
+    if (isModalExist) {
+      this.modals.dismiss({});
+    } else {
+      this.nav.pop();
+    }
   }
 
   gotoProfile() {
@@ -211,7 +216,7 @@ export class HeaderComponent extends BasePage implements OnInit {
       this.nav.push('pages/cart');
   }
 
-  toggleMenu() {    
+  toggleMenu() {
     if (!this.menuCtrl.isEnabled('main')) this.menuCtrl.enable(true, 'main');
 
     this.menuCtrl.toggle();
@@ -219,13 +224,13 @@ export class HeaderComponent extends BasePage implements OnInit {
   }
 
   onTextChanged($event) {
-    let search = $event.target.value;    
+    let search = $event.target.value;
     this.search_text = search;
     this.search();
     //this.dataService.searchValueChanged.next(search);
   }
 
-  searchNow() {    
+  searchNow() {
     this.search();
   }
 
@@ -240,7 +245,7 @@ export class HeaderComponent extends BasePage implements OnInit {
   search() {
 
     this.searchTextChange.emit(this.search_text);
-    const currentRoute = this.nav.router.url;    
+    const currentRoute = this.nav.router.url;
     // if (currentRoute != '/pages/how-to') {
     this.first_selected = false;
     this.removeHighlight();
@@ -289,7 +294,7 @@ export class HeaderComponent extends BasePage implements OnInit {
         // if (!this.first_selected) {
 
         const currentRoute = this.nav.router.url;
-        if (currentRoute != '/pages/how-to' && currentRoute != '/pages/equipment-reviews-list') {          
+        if (currentRoute != '/pages/how-to' && currentRoute != '/pages/equipment-reviews-list') {
           tag.scrollIntoView({ behavior: 'smooth' });
         }
         if (currentRoute == '/pages/how-to' || currentRoute == '/pages/equipment-reviews-list') {

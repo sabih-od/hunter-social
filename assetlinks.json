@@ -7,7 +7,8 @@
       "namespace": "android_app",
       "package_name": "com.huntersocial.app",
       "sha256_cert_fingerprints": [
-        "CA:25:88:5E:DC:07:6F:46:AD:2F:2D:CF:69:99:43:25:69:DB:0A:05:83:27:80:41:FC:33:91:DC:34:89:A5:94"
+        "CA:25:88:5E:DC:07:6F:46:AD:2F:2D:CF:69:99:43:25:69:DB:0A:05:83:27:80:41:FC:33:91:DC:34:89:A5:94",
+        "F0:C9:5B:9C:0F:4E:06:70:57:57:06:5C:6D:F0:8E:41:12:4A:B3:17:4E:67:A6:C4:06:68:A7:9F:DC:77:A7:99"
       ]
     }
   }

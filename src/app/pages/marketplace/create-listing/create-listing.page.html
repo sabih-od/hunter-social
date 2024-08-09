@@ -4,19 +4,6 @@
   <div class="create-listing-main">
     <form [formGroup]="aForm">
       <div class="upload-image">
-        <!--
-        <div *ngIf="image_url" class="image" [style.background-image]="'url(' +
-          image_url + ')'"
-          style="
-          height: 200px;
-          width: 100%;
-          background-repeat: no-repeat;
-          background-size: cover;
-          border: 1px solid black;"
-          for="file-input">
-
-        </div> -->
-
         <div class="images">
           <div class="image" *ngFor="let image of pickedImages; index as i">
             <ion-button (click)="removeimage(i)">
@@ -26,54 +13,61 @@
           </div>
         </div>
 
-        <!-- <label for="file-input"
-          style=" height: 200px; width: 100%; background-repeat: no-repeat; background-size: cover; border: 1px solid black; "
-          class="file-label" [style.background-image]="'url(' + picture + ')'">
-          <i class="fa fa-upload"></i>
-          <p [hidden]="image_url">Your Image Here</p>
-
-          <!-- <img [src]="picture"   /> -->
-        </label>
+        <!-- Removed the misplaced <label> tag and cleaned up the buttons -->
         <ion-button
           (click)="doGetPicture()"
           style="margin-top: 10px; margin-bottom: 30px"
           color="secondary"
-          >Upload Picture
-        </label> <input type="hidden" formControlName="category_id">
-
-        <ion-button (click)="doGetPicture()" style="margin-top: 10px; margin-bottom: 30px" color="secondary">Select
-          Pictures
+        >
+          Upload Picture
         </ion-button>
+
+        <!-- <ion-button
+          (click)="doGetPicture()"
+          style="margin-top: 10px; margin-bottom: 30px"
+          color="secondary"
+        >
+          Select Pictures
+        </ion-button> -->
+        
+        <input type="hidden" formControlName="category_id">
       </div>
+
       <div class="title">
-        <input type="text" id="" placeholder="Title" formControlName="title" />
+        <input type="text" placeholder="Title" formControlName="title" />
       </div>
+      
       <div class="price">
-        <input type="number" id="" placeholder="Price" formControlName="price" />
+        <input type="number" placeholder="Price" formControlName="price" />
       </div>
+
       <select formControlName="state_id" class="category">
         <option value="">Select State</option>
-        <option *ngFor="let item of states" value="{{item.id}}">{{ item.name }}</option>
+        <option *ngFor="let item of states" [value]="item.id">{{ item.name }}</option>
       </select>
+      
       <select formControlName="category" class="category">
         <option value="">Select Category</option>
-        <option *ngFor="let item of category">{{ item.name }}</option>
+        <option *ngFor="let item of category" [value]="item.id">{{ item.name }}</option>
       </select>
 
       <div class="condition">
-        <select name="Condition" formControlName="condition">
+        <select formControlName="condition">
           <option value="">Select Condition</option>
           <option value="New">New</option>
           <option value="Used">Used</option>
         </select>
       </div>
+      
       <div class="description">
         <ion-textarea placeholder="Write description..." formControlName="description"></ion-textarea>
       </div>
-      <div class="post" (click)="post()">
-        <ion-button>Post Listing</ion-button>
+
+      <div class="post">
+        <ion-button [disabled]="aForm.invalid" (click)="post()">Post Listing</ion-button>
       </div>
     </form>
+
     <div class="preview">
       <div class="imagePreview">
         <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" />

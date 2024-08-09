@@ -9,119 +9,66 @@ import { CreateListingPage } from '../create-listing/create-listing.page';
   styleUrls: ['./marketplace-row.component.scss'],
 })
 export class MarketplaceRowComponent extends BasePage implements OnInit {
-  // @Input() item;
   filter: any;
   event: any;
   searchTerm: string = '';
   productList: any[] = [];
   categories: any[] = [];
   filterProducts: any[] = [];
-  item: any;
-  userId;
-  category_id;
+  userId: any;
+  category_id: any;
   category: any[] = [];
-  imageFormControl;
   image_url: any;
-  selected: any;
-  data: any;
-  _img;
-  user_image;
-  user_id;
-  topSearch;
   selectedCategoryId: any = null;
-  page = 1;
-  isMyProductListing = false;
-  loading = false;
-  refresh = false;
-  states = []
-  state_id = ""
-  shouldloadmore = true;
-  next_page_url = null;
-  imagePreview: string;
-  constructor(injector: Injector) {
-    super(injector);
-  }
+  page: number = 1;
+  isMyProductListing: boolean = false;
+  loading: boolean = false;
+  refresh: boolean = false;
+  states: any[] = [];
+  state_id: string = "";
+  shouldloadmore: boolean = true;
+  next_page_url: string | null = null;
+  imagePreview: string = '';
+  topSearch: string = '';
 
   slideOpts = {
     initialSlide: 0,
     speed: 400,
   };
 
+  constructor(injector: Injector) {
+    super(injector);
+  }
+
   ngOnInit() {
     this.getProducts(null);
     this.onFilter();
     this.getStates();
-    // this.getCurrentLocation();
   }
 
-// getCurrentLocation() {
-//     this.geolocation.getCurrentPosition().then((resp) => {
-//       this.latitude = resp.coords.latitude;
-//       this.longitude = resp.coords.longitude;
-//       this.reverseGeocode(this.latitude, this.longitude);
-//     }).catch((error) => {
-//       console.log('Error getting location', error);
-//     });
-//   }
-
-  // reverseGeocode(lat: number, lng: number) {
-  //   const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
-
-  //   this.http.get(url).subscribe((result: any) => {
-  //     if (result.status === 'OK') {
-  //       const addressComponents = result.results[0].address_components;
-  //       let country = '';
-  //       let city = '';
-
-  //       for (const component of addressComponents) {
-  //         if (component.types.includes('country')) {
-  //           country = component.short_name;
-  //         }
-  //         if (component.types.includes('locality') || component.types.includes('administrative_area_level_1')) {
-  //           city = component.long_name;
-  //         }
-  //       }
-
-  //       this.location = `${country},${city}`;
-  //     } else {
-  //       console.log('No results found');
-  //     }
-  //   }, error => {
-  //     console.log('Error in reverse geocoding', error);
-  //   });
-  // }
-  createListing() {
-    this.modals.present(CreateListingPage).then(res => {
-      if (res?.data?.refresh) {
-        this.getProducts(null)
-        this.onFilter();
-      }
-    })
- 
+  async createListing() {
     this.nav.navigateTo('pages/create-listing');
   }
 
   async user() {
-    let data = await this.network.getUser();
-    this.userId = data.data.user.id;
+    try {
+      const data = await this.network.getUser();
+      this.userId = data.data.user.id;
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
   }
-
-  // async products() {
-  //   this.isMyProductListing = true;
-  //   this.user();
-  //   // let data = await this.network.getMyProducts({id:this.userId})
-  //   let data = await this.network.getMyProducts();
-  //   this.productList = data.data.data;
-  // }
 
   async getStates() {
-    let res = await this.users.states.subscribe(states => {
+    try {
+      const states = await this.users.states.toPromise();
       this.states = states;
-    });
-    // this.states = res.data;
+    } catch (error) {
+      console.error('Error fetching states:', error);
+    }
   }
 
-  async myListing(item) {
+  async myListing(item?) {
     this.selectedCategoryId = null;
     this.loading = true;
     if (!this.isMyProductListing) {
@@ -133,53 +80,32 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
     if (item?.id) {
       this.productList = [];
       this.page = 1;
+      this.selectedCategoryId = item.id;
     }
-    if (item?.id) this.selectedCategoryId = item?.id;
 
-    // this.user();
-    // let data = await this.network.getMyListing({ id: this.userId });
     const params = {
       query: this.topSearch,
       category_id: this.selectedCategoryId,
-      state_id: this.state_id
+      state_id: this.state_id,
+    };
+
+    try {
+      const response = await this.network.getMyListing(params, this.page);
+      this.shouldloadmore = response.data.data.length !== 0;
+      this.productList = this.page === 1 ? response.data.data : [...this.productList, ...response.data.data];
+    } catch (error) {
+      console.error('Error fetching my listing:', error);
+    } finally {
+      this.loading = false;
     }
-    let response = await this.network.getMyListing(params, this.page);
-    if (response?.data?.data?.length == 0) this.shouldloadmore = false; else this.shouldloadmore = true;
-    this.loading = false;
-    // this.productList = response.data.data;
-    this.productList = this.page == 1 ? response.data.data : [...this.productList, ...response.data.data];
   }
 
-  // async getProducts(item) {
-  //   this.loading = true;
-
-
-  //   if (this.isMyProductListing) {
-  //     this.isMyProductListing = false;
-  //     this.productList = [];
-  //     this.page = 1;
-  //     this.next_page_url = null;
-  //   }
-
-  //   if (item?.id) {
-  //     this.productList = [];
-  //     this.page = 1;
-  //     this.next_page_url = null;
-  //   }
-  //   if (item?.id) this.selectedCategoryId = item?.id;
-  //   let data = await this.network.getProductss({query:null,category_id:item.id})
-  //   // let data = await this.network.getProductss();
-  //   console.log('filter', data);
-  //   this.filterProducts = data;
-  //   this.productList = this.filterProducts;
-  // }
   async getProducts(event?) {
-    if(event){
-    this.event = event.target.value
-  } 
+    if (event) {
+      this.event = event.target.value;
+    }
 
     this.loading = true;
-
 
     if (this.isMyProductListing) {
       this.isMyProductListing = false;
@@ -196,86 +122,76 @@ export class MarketplaceRowComponent extends BasePage implements OnInit {
       this.page = 1;
       this.next_page_url = null;
     }
-  
+
     const params = {
       query: this.topSearch,
       category_id: this.selectedCategoryId,
-      state_id: this.state_id
+      state_id: this.state_id,
+    };
+
+    try {
+      const res = await this.network.getProductss(params, this.page);
+      this.next_page_url = res.data.next_page_url || null;
+      this.productList = this.page === 1 ? res.data.data : [...this.productList, ...res.data.data];
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      this.loading = false;
+      if (this.eventref) {
+        this.eventref.target.complete();
+      }
     }
-    let res = await this.network.getProductss(params, this.page);
-    if (res.data.next_page_url) { this.next_page_url = res.data.next_page_url; } else { this.next_page_url = null; }
-    // if (res?.data?.data?.length == 0) this.shouldloadmore = false; else this.shouldloadmore = true;
-    this.loading = false;
-    if (this.eventref) {
-      this.eventref.target.complete();
-    }
-    // this.filterProducts = res.data.data;
-    this.productList = this.page == 1 ? res.data.data : [...this.productList, ...res.data.data];
   }
 
   async onFilter() {
-    let data = await this.network.getCategories(this.searchTerm);
-    this.categories = data;
+    try {
+      const data = await this.network.getCategories(this.searchTerm);
+      this.categories = data;
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
   }
+
   onInput(event: any) {
     this.searchTerm = event.target.value;
   }
-  timeToken;
+
+  timeToken: any;
+
   async onTopInput(event: any) {
     this.topSearch = event.target.value;
     this.page = 1;
-    // let data = await this.network.getProductss({
-    //   query: this.topSearch,
-    //   category_id: null,
-    // });
-    if (this.topSearch.length == 0) {
-      if (this.isMyProductListing) this.myListing(null)
-      else this.getProducts(null)
-      // this.onFilter();
+
+    if (this.topSearch.length === 0) {
+      this.isMyProductListing ? this.myListing(null) : this.getProducts(null);
     }
+
     if (this.topSearch.length > 3) {
       if (this.timeToken) clearTimeout(this.timeToken);
       this.timeToken = setTimeout(() => {
-        if (this.isMyProductListing) this.myListing(null)
-        else this.getProducts(null)
+        this.isMyProductListing ? this.myListing(null) : this.getProducts(null);
       }, 1000);
-      // let data = await this.network.getProductss({
-      //   category_id: this.selectedCategoryId,
-      //   query: this.topSearch,
-      // });
-      // this.productList = data.data;
     }
-
   }
 
   details(item: any) {
-    let data = item;
-    this.modals.present(ProductDetailsComponent, {
-      data,
-    }).then(res => {
+    const data = item;
+    this.modals.present(ProductDetailsComponent, { data }).then((res) => {
       if (res?.data?.refresh) {
-        this.getProducts(null)
-        // this.onFilter();
+        this.getProducts(null);
       }
     });
   }
 
-  eventref = null;
+  eventref: any = null;
 
-  onIonInfinite($event) {
+  onIonInfinite($event: any) {
     this.eventref = $event;
-    if (this.next_page_url != null) {
-      this.page = this.page + 1;
-      if (this.isMyProductListing) this.myListing(null)
-      else this.getProducts(null)
-      // this.onFilter();
-      // setTimeout(() => {
-      //   $event.target.complete();
-      //   // (ev as IonInfiniteScrollContent).target.complete();
-      // }, 500);
+    if (this.next_page_url) {
+      this.page += 1;
+      this.isMyProductListing ? this.myListing(null) : this.getProducts(null);
     } else {
       $event.target.complete();
     }
   }
-
 }

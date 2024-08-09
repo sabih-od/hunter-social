@@ -2,11 +2,9 @@
   <ion-card-content class="ion-no-padding ion-no-margin ion-margin-horizontal">
     <ion-item class="ion-no-padding" lines="none">
       <ion-avatar>
-        <img class="card-img" [src]="item.user?.profile_image"
-          onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
+        <img class="card-img" [src]="item.user?.profile_image" onerror="this.onerror=null;this.src='../../../assets/Images/dummy-avatar.png';" />
       </ion-avatar>
       <ion-label class="ion-margin-start">
-        <!-- (click)="goToProfile(item)" -->
         <h2>{{ item.user?.name }}</h2>
         <p>{{ item.created_at }}</p>
       </ion-label>
@@ -16,85 +14,48 @@
             <ion-icon id="click-trigger" name="ellipsis-vertical-outline" style="font-size: 14px"></ion-icon>
           </ion-button>
         </ion-buttons>
-        <!-- <ion-icon id="click-trigger" name="ellipsis-vertical"></ion-icon> -->
       </div>
-      <!-- <ion-popover trigger="click-trigger" triggerAction="click">
-        <ng-template>
-          <ion-content class="ion-padding">Hello World!</ion-content>
-        </ng-template>
-      </ion-popover> -->
-      <!-- <div class="pop-over" *ngIf="show" >
-        <span click="openAmenities()"></span><br>
-      </div> -->
-
-      <!-- <ion-list *ngIf="show">
-        <ion-item (click)="openreport()"> Report post </ion-item>
-        <ion-item> Delete Post </ion-item>
-      </ion-list> -->
-
-      <ion-icon *ngIf="item.isMyPost" (click)="showMenu($event)" name="ellipsis-vertical-outline"
-        style="font-size: 14px" slot="end">
-      </ion-icon>
+      <ion-icon *ngIf="item.isMyPost" (click)="showMenu($event)" name="ellipsis-vertical-outline" style="font-size: 14px" slot="end"></ion-icon>
     </ion-item>
 
-    <ion-label class="cardcontent" *ngIf="
-        item.content !== undefined &&
-        item.content !== null &&
-        item.content !== 'undefined' &&
-        item.content !== 'null'
-      ">
+    <ion-label class="cardcontent" *ngIf="item.content && item.content !== 'undefined' && item.content !== 'null'">
       {{ item.content }}
     </ion-label>
-
-    <!-- <br /> -->
 
     <img *ngIf="!item.isVideo && item?.media_upload?.url" [src]="item.media_upload.url" />
     <video *ngIf="item.isVideo" width="100%" height="240" preload="none" controls>
       <source [src]="item.media_upload.url" [type]="item.media_upload.mime_type" />
     </video>
 
-    <ion-row *ngIf="item.count_likes > 0 || item.count_comments > 0 " class="actionslist">
+    <ion-row *ngIf="item.count_likes > 0 || item.count_comments > 0" class="actionslist">
       <ion-col size="12">
         <div class="likescounts">
-          <p *ngIf="item.count_likes == 1 && item.has_liked">{{'You liked'}}</p>
-          <p *ngIf="!item.has_liked && item.count_likes > 1">{{item.count_likes+' Likes'}}</p>
-          <p *ngIf="item.has_liked && item.count_likes > 1">{{'You and '+(item.count_likes - 1)+' other liked'}}</p>
-          <p *ngIf="item.count_comments" (click)="showComments()">{{item.count_comments > 1 ? item.count_comments + " Comments" :
-            item.count_comments + " Comment"}}
-          </p>
+          <p *ngIf="item.count_likes == 1 && item.has_liked">You liked</p>
+          <p *ngIf="!item.has_liked && item.count_likes > 1">{{ item.count_likes + ' Likes' }}</p>
+          <p *ngIf="item.has_liked && item.count_likes > 1">{{ 'You and ' + (item.count_likes - 1) + ' others liked' }}</p>
+          <p *ngIf="item.count_comments" (click)="showComments()">{{ item.count_comments > 1 ? item.count_comments + ' Comments' : item.count_comments + ' Comment' }}</p>
         </div>
       </ion-col>
     </ion-row>
 
-    <ion-row class="actionslist"> <!--class="ion-margin-vertical"-->
+    <ion-row class="actionslist">
       <ion-col size="4">
         <ion-label (click)="like()">
-          <!-- <ion-icon class="left-icon" [name]="item.has_liked ? 'thumbs-up' : 'thumbs-up-outline'"></ion-icon> -->
-          <!-- <ion-icon class="left-icon" [name]="item.has_liked ? 'heart' : 'heart-outline'"></ion-icon> -->
-          <!-- <i class="iconsax" icon-name="home-1" style="font-size: 30px;"></i> -->
           <i class="iconsax" *ngIf="item.has_liked" icon-name="heart-slash" style="font-size: 22px;"></i>
           <i class="iconsax" *ngIf="!item.has_liked" icon-name="heart" style="font-size: 22px;"></i>
-          <ion-text class="action-text">{{item.has_liked ? 'Liked' : 'Like'}}</ion-text>
-          <!-- <ion-text class="action-text">{{ item.count_likes > 0 ? "Likes " + "(" + item.count_likes + ")" : "Like" }} </ion-text> -->
+          <ion-text class="action-text">{{ item.has_liked ? 'Liked' : 'Like' }}</ion-text>
         </ion-label>
       </ion-col>
 
       <ion-col size="5" (click)="showComments()">
         <ion-label>
           <i class="iconsax" icon-name="message-dots" style="font-size: 22px;"></i>
-          <!-- <ion-icon class="left-icon" name="chatbubble-outline"></ion-icon> -->
           <ion-text class="action-text">Comments</ion-text>
-          <!-- <ion-text class="action-text">{{
-            item.count_comments > 0
-            ? "Comments " + "(" + item.count_comments + ")"
-            : "Comment"
-            }}
-          </ion-text> -->
         </ion-label>
       </ion-col>
+      
       <ion-col size="3" (click)="share($event)">
         <ion-label>
-          <!-- <ion-icon class="left-icon" name="share-social-outline"></ion-icon> -->
           <i class="iconsax" icon-name="share" style="font-size: 22px;"></i>
           <ion-text class="action-text">Share</ion-text>
         </ion-label>

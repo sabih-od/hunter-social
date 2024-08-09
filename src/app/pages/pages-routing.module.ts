@@ -276,7 +276,8 @@ const routes: Routes = [
 
       { path: '', redirectTo: '/pages/home', pathMatch: 'full' }
     ]
-  },  {
+  },
+  {
     path: 'story-viewer',
     loadChildren: () => import('./story-viewer/story-viewer.module').then( m => m.StoryViewerPageModule)
   },
