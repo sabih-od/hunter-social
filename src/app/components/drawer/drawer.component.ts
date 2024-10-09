@@ -218,16 +218,18 @@ export class DrawerComponent extends BasePage implements OnInit {
     }
   }
 
-  async logout() {
+ async logout() {
     this.menuCtrl.toggle();
     const fcmtoken = localStorage.getItem('fcm_token')
+    console.log('FCM Token:', fcmtoken); // Debugging
     if (Capacitor.getPlatform() !== 'web') {
-      let fcm = await this.network.deleteFcmToken(fcmtoken);
+        let fcm = await this.network.deleteFcmToken(fcmtoken);
+        console.log('FCM Token Deleted:', fcm); // Debugging
     }
     let res = await this.network.logout();
+    console.log('Logout Response:', res); // Debugging
     this.users.removeToken();
     this.badge.clear();
-    // localStorage.removeItem('fcm_token')
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userDataa');
     localStorage.removeItem('notifications_count');
@@ -235,7 +237,8 @@ export class DrawerComponent extends BasePage implements OnInit {
     localStorage.setItem('messages_count', '0');
     this.users.removeUser();
     this.nav.push('login');
-  }
+}
+
 
   async menuClicked(item) {
     this.user = await this.users.getUser();

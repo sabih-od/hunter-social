@@ -27,6 +27,7 @@ export class FirebaseService {
     public users: UserService,
     public badge: Badge) {
     this.assignEvents();
+    this.setupFMC()
   }
 
 

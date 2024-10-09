@@ -122,6 +122,7 @@ export class AppComponent {
     this.users.getNotificationCount()
   }
   initializeApp() {
+    console.log('--------------------init')
     document.addEventListener("pause", this.onPause, false);
     document.addEventListener("resume", this.onResume.bind(this), false);
 

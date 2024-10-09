@@ -108,6 +108,7 @@ export class LoginPage extends BasePage implements OnInit, ViewWillEnter {
     this.loading = true;
     let res = await this.network.login(this.aForm.value);
     if (res && res.data) {
+      console.log(res.data)
       this.users.setToken(res.data.token);
       const fcmtoken = localStorage.getItem('fcm_token')
       if (Capacitor.getPlatform() !== 'web') {
